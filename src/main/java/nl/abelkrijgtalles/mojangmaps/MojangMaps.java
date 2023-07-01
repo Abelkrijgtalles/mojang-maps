@@ -6,7 +6,8 @@ public final class MojangMaps extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+
+        
 
     }
 
