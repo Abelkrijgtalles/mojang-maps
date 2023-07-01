@@ -20,10 +20,22 @@ public class CustomConfig {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                // why no working brother. just work for me for god's sake
+                Bukkit.getLogger().warning("Could not create the configuration file customconfig.yml");
             }
         }
         customFile = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public static FileConfiguration get() {
+        return customFile;
+    }
+
+    public static void save() {
+        try {
+            customFile.save(file);
+        } catch (IOException e) {
+            Bukkit.getLogger().warning("Could not save the configuration file customconfig.yml");
+        }
     }
 
 }
