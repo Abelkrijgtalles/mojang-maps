@@ -9,8 +9,10 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
+        CustomConfig.setup();
+        CustomConfig.get().addDefault("message", "Hello there");
+        CustomConfig.get().options().copyDefaults(true);
+        CustomConfig.save();
 
         getCommand("message").setExecutor(new MessageCommand());
 

@@ -7,4 +7,4 @@ description: A Google Maps like navigation system for Minecraft.
 website: https://github.com/Abelkrijgtalles/mojang-maps
 commands:
   message:
-    description: Sends the message from the config.yml
+    description: Sends the message from the customconfig.yml
