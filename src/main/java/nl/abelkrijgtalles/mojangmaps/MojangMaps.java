@@ -8,7 +8,11 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
         CustomConfig.setup();
+        CustomConfig.get().addDefault("Do I know what this does", false);
         CustomConfig.get().options().copyDefaults(true);
         CustomConfig.save();
 
