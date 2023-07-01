@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Mojang Maps</name>
+    <name>MojangMaps</name>
 
     <description>A Google Maps like navigation system for Minecraft.</description>
     <properties>
