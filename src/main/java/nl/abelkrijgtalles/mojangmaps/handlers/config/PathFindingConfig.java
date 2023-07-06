@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.files;
+package nl.abelkrijgtalles.mojangmaps.handlers.config;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

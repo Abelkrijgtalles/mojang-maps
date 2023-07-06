@@ -6,7 +6,7 @@
 
     <groupId>nl.abelkrijgtalles</groupId>
     <artifactId>mojangmaps</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MojangMaps</name>
