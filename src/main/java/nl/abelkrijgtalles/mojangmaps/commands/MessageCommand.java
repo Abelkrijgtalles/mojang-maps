@@ -1,6 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
-import nl.abelkrijgtalles.mojangmaps.files.CustomConfig;
+import nl.abelkrijgtalles.mojangmaps.files.PathFindingConfig;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ public class MessageCommand implements CommandExecutor {
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
 
-            player.sendMessage(CustomConfig.get().getString("message"));
+            player.sendMessage(PathFindingConfig.get().getString("message"));
 
         }
 
