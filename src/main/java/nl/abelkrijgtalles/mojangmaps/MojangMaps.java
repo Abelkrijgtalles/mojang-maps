@@ -10,7 +10,7 @@ public final class MojangMaps extends JavaPlugin {
     public void onEnable() {
 
         CustomConfig.setup();
-        CustomConfig.get().addDefault("message", "Hello there");
+        CustomConfig.get().addDefault("algorithm", 1);
         CustomConfig.get().options().copyDefaults(true);
         CustomConfig.save();
 
