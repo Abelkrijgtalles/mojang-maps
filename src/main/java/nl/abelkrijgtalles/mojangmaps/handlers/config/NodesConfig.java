@@ -7,20 +7,20 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class PathFindingConfig {
+public class NodesConfig {
 
     private static File file;
     private static FileConfiguration customFile;
 
     // Idk weird setup I guess
-    public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder(), "pathfindingconfig.yml");
+    public static void setup() {
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder(), "nodes.yml");
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                Bukkit.getLogger().warning("Could not create the configuration file pathfindingconfig.yml");
+                Bukkit.getLogger().warning("Could not create the configuration file nodes.yml");
             }
         }
         customFile = YamlConfiguration.loadConfiguration(file);
@@ -34,7 +34,7 @@ public class PathFindingConfig {
         try {
             customFile.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().warning("Could not save the configuration file pathfindingconfig.yml");
+            Bukkit.getLogger().warning("Could not save the configuration file nodes.yml");
         }
     }
 
