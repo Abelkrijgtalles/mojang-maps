@@ -24,7 +24,7 @@ jobs:
 
           # Should we disable the BuildTools's Java-Version-Check?
           # If enabled, BuildTools is provided the '--disable-java-check' argument
-          disableJavaCheck: false # Optional
+          disableJavaCheck: true # Optional
 
           # Should we download additional files to deobfucate CraftBukkit and NMS?
           # If enabled, BuildTools will also install additional files that are required to deobfuscate CraftBukkit and NMS with the SpecialSource-Plugin
