@@ -5,6 +5,3 @@ api-version: '1.20'
 authors: [ Abelpro678 ]
 description: A Google Maps like navigation system for Minecraft.
 website: https://github.com/Abelkrijgtalles/mojang-maps
-commands:
-  message:
-    description: Sends the message from the customconfig.yml
