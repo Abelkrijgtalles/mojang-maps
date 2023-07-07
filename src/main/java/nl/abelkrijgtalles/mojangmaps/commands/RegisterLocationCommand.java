@@ -21,7 +21,7 @@ public class RegisterLocationCommand implements CommandExecutor {
 
             List<Location> locations = (List<Location>) NodesConfig.get().getList("locations");
             for (Location location : locations) {
-                if (LocationUtil.IsTheSameLocation(p.getLocation(), location)) {
+                if (LocationUtil.isTheSameLocation(p.getLocation(), location)) {
                     p.sendMessage(ChatColor.RED + "This location is already registered");
                     return true;
                 }

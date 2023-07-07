@@ -1,6 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // All this is from the following YouTube video: https://youtu.be/BuvKtCh0SKk
@@ -49,7 +50,7 @@ public class Node implements Comparable<Node> {
         return Integer.compare(this.distance, node.getDistance());
     }
 
-    public void calculateShortestPath(Node source) {
+    public static void calculateShortestPath(Node source) {
         source.setDistance(0);
         Set<Node> settledNodes = new HashSet<>();
         Queue<Node> unsettledNodes = new PriorityQueue<>(Collections.singleton(source));
@@ -66,7 +67,7 @@ public class Node implements Comparable<Node> {
         }
     }
 
-    private void evaluteDistanceAndPath(Node adjacentNode, Integer edgeWeight, Node sourceNode) {
+    private static void evaluteDistanceAndPath(Node adjacentNode, Integer edgeWeight, Node sourceNode) {
         Integer newDistance = sourceNode.getDistance() + edgeWeight;
         if (newDistance < adjacentNode.getDistance()) {
             adjacentNode.setDistance(newDistance);
@@ -74,5 +75,16 @@ public class Node implements Comparable<Node> {
                     Stream.concat(sourceNode.getShortestPath().stream(), Stream.of(sourceNode)).toList()
             );
         }
+    }
+
+    public static void printPaths(List<Node> nodes) {
+        nodes.forEach(node -> {
+            String path = node.getShortestPath().stream()
+                    .map(Node::getName)
+                    .collect(Collectors.joining(" -> "));
+            System.out.println((path.isBlank()
+                    ? "%s : %s".formatted(node.getName(), node.getDistance())
+                    : "%s -> %s : %s".formatted(path, node.getName(), node.getDistance())));
+        });
     }
 }

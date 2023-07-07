@@ -2,23 +2,30 @@ package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
 import nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm.Node;
+import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CalculateDistanceCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        List<Location> locations = (List<Location>) NodesConfig.get().getList("locations");
-        List<Node> nodes = new ArrayList<Node>();
+        if (commandSender instanceof Player) {
+            Player p = (Player) commandSender;
+            List<Location> locations = (List<Location>) NodesConfig.get().getList("locations");
+            locations.add(p.getLocation());
 
-        for (Location location : locations) {
-            nodes.add(new Node(Integer.toString(locations.indexOf(location))));
+            List<Node> nodes = NodeUtil.addAdjacentNodes(locations);
+
+            Node.calculateShortestPath(nodes.get(locations.size() - 1));
+            Node.printPaths(nodes);
+            p.sendMessage(ChatColor.YELLOW + "Because of the tutorial I haven't experimented yet with sending it to the player. It will be sent to the console instead.");
         }
 
 
