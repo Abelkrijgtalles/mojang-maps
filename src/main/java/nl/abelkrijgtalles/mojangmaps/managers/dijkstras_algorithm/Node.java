@@ -40,6 +40,10 @@ public class Node implements Comparable<Node> {
         this.shortestPath = shortestPath;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int compareTo(Node node) {
         return Integer.compare(this.distance, node.getDistance());
