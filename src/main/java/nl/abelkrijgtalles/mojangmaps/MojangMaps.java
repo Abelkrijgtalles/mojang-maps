@@ -1,6 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps;
 
-import nl.abelkrijgtalles.mojangmaps.handlers.config.NodesConfig;
+import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MojangMaps extends JavaPlugin {

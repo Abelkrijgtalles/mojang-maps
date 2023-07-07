@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.dijkstras_algorithm;
+package nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm;
 
 import java.util.*;
 import java.util.stream.Stream;
