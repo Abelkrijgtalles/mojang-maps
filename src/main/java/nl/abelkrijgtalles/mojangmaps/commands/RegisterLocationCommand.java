@@ -1,6 +1,8 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
+import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,6 +20,12 @@ public class RegisterLocationCommand implements CommandExecutor {
             Player p = (Player) commandSender;
 
             List<Location> locations = (List<Location>) NodesConfig.get().getList("locations");
+            for (Location location : locations) {
+                if (LocationUtil.IsTheSameLocation(p.getLocation(), location)) {
+                    p.sendMessage(ChatColor.RED + "This location is already registered");
+                    return true;
+                }
+            }
             locations.add(p.getLocation());
             NodesConfig.save();
 
