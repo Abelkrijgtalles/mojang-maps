@@ -1,32 +1,31 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
+import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
 import org.bukkit.Location;
+
+import java.util.List;
 
 public class LocationUtil {
 
-    public static boolean isTheSameLocation(Location location, Location otherLocation) {
+    public static boolean isTheSameLocation(Location location, Location otherLocation, int gap) {
 
         boolean x = false;
         boolean y = false;
         boolean z = false;
 
-        if (location.getBlockX() == otherLocation.getBlockX()) {
+        if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) <= gap + 1) {
             x = true;
         }
 
-        if (location.getBlockY() == otherLocation.getBlockY()) {
+        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= gap + 1) {
             y = true;
         }
 
-        if (location.getBlockZ() == otherLocation.getBlockZ()) {
+        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= gap + 1) {
             z = true;
         }
 
-        if (x && y && z) {
-            return true;
-        } else {
-            return false;
-        }
+        return x && y && z;
 
     }
 
@@ -38,6 +37,12 @@ public class LocationUtil {
         int z2 = location2.getBlockZ();
 
         return Math.abs(x1 - x2) + Math.abs(z1 - z2);
+
+    }
+
+    public static List<Location> getLocations() {
+
+        return (List<Location>) NodesConfig.get().getList("locations");
 
     }
 

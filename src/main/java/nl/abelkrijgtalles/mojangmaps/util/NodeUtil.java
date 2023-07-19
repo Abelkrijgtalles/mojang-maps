@@ -8,9 +8,11 @@ import java.util.List;
 
 public class NodeUtil {
 
-    public static List<Node> addAdjacentNodes(List<Location> locations) {
+    public static List<Node> addAdjacentNodes() {
         // Create the node list
         List<Node> nodes = new ArrayList<Node>();
+
+        List<Location> locations = LocationUtil.getLocations();
 
         for (Location location : locations) {
             nodes.add(new Node(Integer.toString(locations.indexOf(location))));
@@ -19,9 +21,9 @@ public class NodeUtil {
         // Add Adjacent nodes
         for (Node node : nodes) {
             for (Node adjacentNode : nodes) {
-                if (adjacentNode.getName() != node.getName()) {
+                if (adjacentNode.getName() != node.getName() && LocationUtil.isTheSameLocation(getLocationFromNode(node), getLocationFromNode(adjacentNode), 10)) {
                     // TODO: Clean up this mess of a function
-                    node.addAdjacentNode(adjacentNode, LocationUtil.getDistance(getLocationFromNode(locations, node), getLocationFromNode(locations, adjacentNode)));
+                    node.addAdjacentNode(adjacentNode, LocationUtil.getDistance(getLocationFromNode(node), getLocationFromNode(adjacentNode)));
                 }
             }
         }
@@ -29,9 +31,9 @@ public class NodeUtil {
         return nodes;
     }
 
-    public static Location getLocationFromNode(List<Location> locations, Node node) {
+    public static Location getLocationFromNode(Node node) {
 
-        return locations.get(Integer.valueOf(node.getName()));
+        return LocationUtil.getLocations().get(Integer.valueOf(node.getName()));
 
     }
 
