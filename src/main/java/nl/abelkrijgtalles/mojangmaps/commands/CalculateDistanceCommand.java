@@ -3,7 +3,6 @@ package nl.abelkrijgtalles.mojangmaps.commands;
 import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
 import nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm.Node;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,8 +23,7 @@ public class CalculateDistanceCommand implements CommandExecutor {
             List<Node> nodes = NodeUtil.addAdjacentNodes(locations);
 
             Node.calculateShortestPath(nodes.get(locations.size() - 1));
-            Node.printPaths(nodes);
-            p.sendMessage(ChatColor.YELLOW + "Because of the tutorial I haven't experimented yet with sending it to the player. It will be sent to the console instead.");
+            Node.printPaths(nodes, p);
         }
 
 

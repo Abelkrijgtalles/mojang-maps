@@ -1,5 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm;
 
+import org.bukkit.entity.Player;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -77,12 +79,12 @@ public class Node implements Comparable<Node> {
         }
     }
 
-    public static void printPaths(List<Node> nodes) {
+    public static void printPaths(List<Node> nodes, Player p) {
         nodes.forEach(node -> {
             String path = node.getShortestPath().stream()
                     .map(Node::getName)
                     .collect(Collectors.joining(" -> "));
-            System.out.println((path.isBlank()
+            p.sendMessage((path.isBlank()
                     ? "%s : %s".formatted(node.getName(), node.getDistance())
                     : "%s -> %s : %s".formatted(path, node.getName(), node.getDistance())));
         });
