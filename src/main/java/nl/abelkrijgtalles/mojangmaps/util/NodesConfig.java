@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.managers.config;
+package nl.abelkrijgtalles.mojangmaps.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

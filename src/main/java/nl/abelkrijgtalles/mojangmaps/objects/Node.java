@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm;
+package nl.abelkrijgtalles.mojangmaps.objects;
 
 import org.bukkit.entity.Player;
 

@@ -1,7 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
-import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
 import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

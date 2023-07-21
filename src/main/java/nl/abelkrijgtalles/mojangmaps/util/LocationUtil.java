@@ -1,6 +1,5 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
-import nl.abelkrijgtalles.mojangmaps.managers.config.NodesConfig;
 import org.bukkit.Location;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
-import nl.abelkrijgtalles.mojangmaps.managers.dijkstras_algorithm.Node;
+import nl.abelkrijgtalles.mojangmaps.objects.Node;
 import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
 import org.bukkit.Location;
