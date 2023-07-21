@@ -59,4 +59,10 @@ public class NodesConfigUtil {
 
     }
 
+    public static List<Road> getRoads() {
+
+        return (List<Road>) NodesConfigUtil.get().getList("roads");
+
+    }
+
 }
