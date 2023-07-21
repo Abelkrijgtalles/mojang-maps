@@ -1,7 +1,9 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,34 @@ public class NodeUtil {
     public static Location getLocationFromNode(Node node) {
 
         return NodesConfigUtil.getLocations().get(Integer.valueOf(node.getName()));
+
+    }
+
+    public static void registerLocation(Location location) {
+        // TODO: inLocation needs to be renamed in the following functions
+        List<Location> locations = (List<Location>) NodesConfigUtil.get().getList("locations");
+        for (Location inLocation : locations) {
+            if (LocationUtil.isTheSameLocation(location, inLocation, 0)) {
+                return;
+            }
+        }
+        locations.add(location);
+        NodesConfigUtil.save();
+
+    }
+
+    public static void registerLocation(Player p, Location location) {
+
+        List<Location> locations = (List<Location>) NodesConfigUtil.get().getList("locations");
+        for (Location inLocation : locations) {
+            if (LocationUtil.isTheSameLocation(location, inLocation, 0)) {
+                p.sendMessage(ChatColor.RED + "This location is already registered.");
+                return;
+            }
+        }
+        locations.add(location);
+        NodesConfigUtil.save();
+        p.sendMessage(ChatColor.YELLOW + "Registered a location at x: " + p.getLocation().getBlockX() + ", z: " + p.getLocation().getBlockZ() + ".");
 
     }
 
