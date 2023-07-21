@@ -41,7 +41,7 @@ public class LocationUtil {
 
     public static List<Location> getLocations() {
 
-        return (List<Location>) NodesConfig.get().getList("locations");
+        return (List<Location>) NodesConfigUtil.get().getList("locations");
 
     }
 

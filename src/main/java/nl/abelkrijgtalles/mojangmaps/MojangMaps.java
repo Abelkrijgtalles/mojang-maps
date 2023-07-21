@@ -2,7 +2,7 @@ package nl.abelkrijgtalles.mojangmaps;
 
 import nl.abelkrijgtalles.mojangmaps.commands.CalculateDistanceCommand;
 import nl.abelkrijgtalles.mojangmaps.commands.RegisterLocationCommand;
-import nl.abelkrijgtalles.mojangmaps.util.NodesConfig;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MojangMaps extends JavaPlugin {
@@ -13,7 +13,7 @@ public final class MojangMaps extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
-        NodesConfig.setup();
+        NodesConfigUtil.setup();
 
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("calculatedistance").setExecutor(new CalculateDistanceCommand());
