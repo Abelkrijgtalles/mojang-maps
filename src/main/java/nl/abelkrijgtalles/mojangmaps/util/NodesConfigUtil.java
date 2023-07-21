@@ -65,4 +65,18 @@ public class NodesConfigUtil {
 
     }
 
+    public static void addLocation(Location location) {
+
+        NodesConfigUtil.getLocations().add(location);
+        NodesConfigUtil.save();
+
+    }
+
+    public static void addRoad(Road road) {
+
+        NodesConfigUtil.getRoads().add(road);
+        NodesConfigUtil.save();
+
+    }
+
 }

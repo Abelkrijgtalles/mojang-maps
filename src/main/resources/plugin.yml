@@ -10,3 +10,5 @@ commands:
     description: Register a location.
   calculatedistance:
     description: Calculates the distance to every point.
+  registerroad:
+    description: Register a road.

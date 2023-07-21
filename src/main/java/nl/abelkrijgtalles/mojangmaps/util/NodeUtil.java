@@ -47,8 +47,8 @@ public class NodeUtil {
                 return;
             }
         }
-        locations.add(location);
-        NodesConfigUtil.save();
+
+        NodesConfigUtil.addLocation(location);
 
     }
 
@@ -61,8 +61,9 @@ public class NodeUtil {
                 return;
             }
         }
-        locations.add(location);
-        NodesConfigUtil.save();
+
+        NodesConfigUtil.addLocation(location);
+
         p.sendMessage(ChatColor.YELLOW + "Registered a location at x: " + p.getLocation().getBlockX() + ", z: " + p.getLocation().getBlockZ() + ".");
 
     }
