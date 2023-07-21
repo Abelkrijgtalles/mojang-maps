@@ -28,7 +28,7 @@ public class NodesConfig {
                 NodesConfig.get().options().copyDefaults(true);
                 NodesConfig.save();
             } catch (IOException e) {
-                Bukkit.getLogger().warning("Could not create the configuration file nodes.yml");
+                Bukkit.getLogger().warning("Could not create the configuration file nodes.yml.");
             }
         }
         customFile = YamlConfiguration.loadConfiguration(file);
@@ -42,7 +42,7 @@ public class NodesConfig {
         try {
             customFile.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().warning("Could not save the configuration file nodes.yml");
+            Bukkit.getLogger().warning("Could not save the configuration file nodes.yml.");
         }
     }
 
