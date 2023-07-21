@@ -2,8 +2,6 @@ package nl.abelkrijgtalles.mojangmaps.util;
 
 import org.bukkit.Location;
 
-import java.util.List;
-
 public class LocationUtil {
 
     public static boolean isTheSameLocation(Location location, Location otherLocation, int gap) {
@@ -36,12 +34,6 @@ public class LocationUtil {
         int z2 = location2.getBlockZ();
 
         return Math.abs(x1 - x2) + Math.abs(z1 - z2);
-
-    }
-
-    public static List<Location> getLocations() {
-
-        return (List<Location>) NodesConfigUtil.get().getList("locations");
 
     }
 

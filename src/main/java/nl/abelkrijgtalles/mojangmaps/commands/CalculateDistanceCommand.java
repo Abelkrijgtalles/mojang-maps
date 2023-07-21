@@ -1,8 +1,8 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
-import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +17,7 @@ public class CalculateDistanceCommand implements CommandExecutor {
 
         if (commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            List<Location> locations = LocationUtil.getLocations();
+            List<Location> locations = NodesConfigUtil.getLocations();
             locations.add(p.getLocation());
 
             List<Node> nodes = NodeUtil.addAdjacentNodes();

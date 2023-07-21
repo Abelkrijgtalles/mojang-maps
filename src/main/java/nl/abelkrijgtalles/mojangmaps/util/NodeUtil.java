@@ -12,7 +12,7 @@ public class NodeUtil {
         // Create the node list
         List<Node> nodes = new ArrayList<Node>();
 
-        List<Location> locations = LocationUtil.getLocations();
+        List<Location> locations = NodesConfigUtil.getLocations();
 
         for (Location location : locations) {
             nodes.add(new Node(Integer.toString(locations.indexOf(location))));
@@ -33,7 +33,7 @@ public class NodeUtil {
 
     public static Location getLocationFromNode(Node node) {
 
-        return LocationUtil.getLocations().get(Integer.valueOf(node.getName()));
+        return NodesConfigUtil.getLocations().get(Integer.valueOf(node.getName()));
 
     }
 
