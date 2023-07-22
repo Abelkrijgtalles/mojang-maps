@@ -1,10 +1,13 @@
 package nl.abelkrijgtalles.mojangmaps.objects;
 
 import org.bukkit.Location;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Road {
+public class Road implements ConfigurationSerializable {
 
     private String name;
 
@@ -37,4 +40,33 @@ public class Road {
         return locations.size() - 1;
 
     }
+
+    public static Road deserialize(Map<String, Object> args) {
+
+        if (args.containsKey("name")) {
+
+            return new Road(args.get("name").toString(), (List<Location>) args.get("locations"));
+
+        }
+
+        return new Road((List<Location>) args.get("locations"));
+
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+
+        Map<String, Object> data = new HashMap<>();
+
+        if (name != null) {
+
+            data.put("name", this.name);
+
+        }
+
+        data.put("locations", this.locations);
+
+        return data;
+    }
+
 }

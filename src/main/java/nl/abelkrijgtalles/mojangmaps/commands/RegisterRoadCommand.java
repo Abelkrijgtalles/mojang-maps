@@ -66,7 +66,6 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                         }
 
-                        p.sendMessage(coordinate);
                         coordinates.add(Integer.parseInt(coordinate));
 
                     }
