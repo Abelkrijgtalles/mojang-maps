@@ -20,7 +20,7 @@ public class RegisterRoadCommand implements CommandExecutor {
         if (commandSender instanceof Player) {
 
             Player p = (Player) commandSender;
-            boolean name = false;
+            boolean hasName = false;
             // TODO: rename this variable
             int howManyLocations;
             List<Integer> coordinates = new ArrayList<Integer>();
@@ -41,13 +41,60 @@ public class RegisterRoadCommand implements CommandExecutor {
 
             } catch (NumberFormatException e) {
 
-                name = true;
+                hasName = true;
 
             }
 
-            if ((name && (strings.length - 1) % 3 == 0) || (!name && strings.length % 3 == 0)) {
+            if ((hasName && (strings.length - 1) % 3 == 0) || (!hasName && strings.length % 3 == 0)) {
 
-                if (name) {
+                if (hasName) {
+
+                    String name = strings[0];
+
+                    for (int i = 0; i < strings.length; i++) {
+
+                        if (i != 0) {
+
+                            strings[i - 1] = strings[i];
+
+                        }
+
+                    }
+
+                    for (String coordinate : strings) {
+
+                        try {
+
+                            Integer.parseInt(coordinate);
+
+                        } catch (NumberFormatException e) {
+
+                            p.sendMessage(ChatColor.RED + "Invalid coordinates. Please run it again with the right coordinates.");
+                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <(optional) name of road> <coordinates of the locations as x y z with a space between arguments>.");
+
+                            return true;
+
+                        }
+
+                        coordinates.add(Integer.parseInt(coordinate));
+
+                    }
+
+                    for (int i = 0; i < strings.length; i += 1) {
+
+                        if ((i + 1) % 3 == 0) {
+
+                            int x = Integer.parseInt(strings[i - 2]);
+                            int y = Integer.parseInt(strings[i - 1]);
+                            int z = Integer.parseInt(strings[i]);
+
+                            locations.add(new Location(p.getWorld(), x, y, z));
+
+                        }
+
+                    }
+
+                    NodesConfigUtil.addRoad(new Road(name, locations));
 
                 } else {
 
