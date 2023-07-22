@@ -8,7 +8,7 @@ public class Road {
 
     private String name;
 
-    private List<Location> locations;
+    private final List<Location> locations;
 
     public Road(List<Location> locations) {
         this.locations = locations;
