@@ -66,19 +66,18 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                         }
 
+                        p.sendMessage(coordinate);
                         coordinates.add(Integer.parseInt(coordinate));
 
                     }
 
                     for (int i = 0; i < strings.length; i += 1) {
 
-                        if (i + 1 % 3 == 0) {
+                        if ((i + 1) % 3 == 0) {
 
-                            int x = Integer.parseInt(strings[i]);
-                            int y = Integer.parseInt(strings[i + 1]);
-                            int z = Integer.parseInt(strings[i + 2]);
-
-                            p.sendMessage(x + " " + y + " " + z);
+                            int x = Integer.parseInt(strings[i - 2]);
+                            int y = Integer.parseInt(strings[i - 1]);
+                            int z = Integer.parseInt(strings[i]);
 
                             locations.add(new Location(p.getWorld(), x, y, z));
 
