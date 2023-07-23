@@ -1,6 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
+import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,14 +18,12 @@ public class RegisterRoadCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        if (commandSender instanceof Player) {
+        if (commandSender instanceof Player p) {
 
-            Player p = (Player) commandSender;
             boolean hasName = false;
             // TODO: rename this variable
-            int howManyLocations;
-            List<Integer> coordinates = new ArrayList<Integer>();
-            List<Location> locations = new ArrayList<Location>();
+            List<Integer> coordinates = new ArrayList<>();
+            List<Location> locations = new ArrayList<>();
 
             if (strings.length < 3) {
 
@@ -94,6 +93,7 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                     }
 
+                    LocationUtil.addMoreLocations(p, locations);
                     NodesConfigUtil.addRoad(new Road(name, locations));
 
                 } else {
@@ -131,6 +131,7 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                     }
 
+                    LocationUtil.addMoreLocations(p, locations);
                     NodesConfigUtil.addRoad(new Road(locations));
 
                 }
