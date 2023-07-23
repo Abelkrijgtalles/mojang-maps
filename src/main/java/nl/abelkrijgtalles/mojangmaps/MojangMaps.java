@@ -1,6 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps;
 
-import nl.abelkrijgtalles.mojangmaps.commands.CalculateDistanceCommand;
+import nl.abelkrijgtalles.mojangmaps.commands.GoToCommand;
 import nl.abelkrijgtalles.mojangmaps.commands.RegisterLocationCommand;
 import nl.abelkrijgtalles.mojangmaps.commands.RegisterRoadCommand;
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
@@ -21,8 +21,8 @@ public final class MojangMaps extends JavaPlugin {
         NodesConfigUtil.setup();
 
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
-        getCommand("calculatedistance").setExecutor(new CalculateDistanceCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
+        getCommand("goto").setExecutor(new GoToCommand());
 
     }
 

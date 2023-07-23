@@ -1,8 +1,8 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
-import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -94,7 +94,7 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                     }
 
-                    LocationUtil.addMoreLocations(p, locations);
+                    RoadUtil.addMoreLocations(p, locations);
 
                     for (Location location : locations) {
 
@@ -141,7 +141,7 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                     }
 
-                    LocationUtil.addMoreLocations(p, locations);
+                    RoadUtil.addMoreLocations(p, locations);
 
                     for (Location location : locations) {
 

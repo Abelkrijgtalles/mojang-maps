@@ -1,5 +1,8 @@
 package nl.abelkrijgtalles.mojangmaps.objects;
 
+import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
+import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -82,11 +85,25 @@ public class Node implements Comparable<Node> {
     public static void printPaths(List<Node> nodes, Player p) {
         nodes.forEach(node -> {
             String path = node.getShortestPath().stream()
-                    .map(Node::getName)
+                    .map(Node::getLocationText)
                     .collect(Collectors.joining(" -> "));
             p.sendMessage((path.isBlank()
-                    ? "%s : %s".formatted(node.getName(), node.getDistance())
-                    : "%s -> %s : %s".formatted(path, node.getName(), node.getDistance())));
+                    ? "%s\nThis will take %s blocks\n----------".formatted(node.getLocationText(), node.getDistance())
+                    : "%s then go to\n%s\nThis will take %s blocks\n----------".formatted(path, node.getLocationText(), node.getDistance())));
         });
+    }
+
+    public String getLocationText() {
+
+        Location location = NodeUtil.getLocationFromNode(this);
+
+        if (RoadUtil.getRoadNameFromLocation(location) != null) {
+
+            return "X: " + location.getBlockX() + " Z: " + location.getBlockZ() + " (" + RoadUtil.getRoadNameFromLocation(location) + ")";
+
+        }
+
+        return "X: " + location.getBlockX() + " Z: " + location.getBlockZ();
+
     }
 }

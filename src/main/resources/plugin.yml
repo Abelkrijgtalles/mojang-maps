@@ -8,7 +8,7 @@ website: https://github.com/Abelkrijgtalles/mojang-maps
 commands:
   registerlocation:
     description: Register a location.
-  calculatedistance:
-    description: Calculates the distance to every point.
   registerroad:
     description: Register a road.
+  goto:
+    description: Go to a specific location

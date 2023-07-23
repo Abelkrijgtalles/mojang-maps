@@ -35,7 +35,7 @@ public class NodeUtil {
 
     public static Location getLocationFromNode(Node node) {
 
-        return NodesConfigUtil.getLocations().get(Integer.valueOf(node.getName()));
+        return NodesConfigUtil.getLocations().get(Integer.parseInt(node.getName()));
 
     }
 
