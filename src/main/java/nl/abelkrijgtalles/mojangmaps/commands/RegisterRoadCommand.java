@@ -24,6 +24,7 @@ public class RegisterRoadCommand implements CommandExecutor {
             // TODO: rename this variable
             List<Integer> coordinates = new ArrayList<>();
             List<Location> locations = new ArrayList<>();
+            List<Integer> locationsPointers = new ArrayList<>();
 
             if (strings.length < 3) {
 
@@ -94,7 +95,16 @@ public class RegisterRoadCommand implements CommandExecutor {
                     }
 
                     LocationUtil.addMoreLocations(p, locations);
-                    NodesConfigUtil.addRoad(new Road(name, locations));
+
+                    for (Location location : locations) {
+
+                        NodesConfigUtil.addLocation(location);
+                        locationsPointers.add(NodesConfigUtil.getLocations().size() - 1);
+
+                    }
+
+                    NodesConfigUtil.addRoad(new Road(name, locationsPointers));
+                    p.sendMessage(ChatColor.YELLOW + "Registered a new road");
 
                 } else {
 
@@ -132,7 +142,16 @@ public class RegisterRoadCommand implements CommandExecutor {
                     }
 
                     LocationUtil.addMoreLocations(p, locations);
-                    NodesConfigUtil.addRoad(new Road(locations));
+
+                    for (Location location : locations) {
+
+                        NodesConfigUtil.addLocation(location);
+                        locationsPointers.add(NodesConfigUtil.getLocations().size() - 1);
+
+                    }
+
+                    NodesConfigUtil.addRoad(new Road(locationsPointers));
+                    p.sendMessage(ChatColor.YELLOW + "Registered a new road");
 
                 }
 

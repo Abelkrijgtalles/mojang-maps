@@ -1,6 +1,5 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
-import org.bukkit.Axis;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -56,24 +55,6 @@ public class LocationUtil {
 
     }
 
-    public static int getOneAxisDistance(Axis axis, Location location1, Location location2) {
-
-        if (axis == Axis.X) {
-
-            return Math.abs(location1.getBlockX() - location2.getBlockX());
-
-        } else if (axis == Axis.Z) {
-
-            return Math.abs(location1.getBlockZ() - location2.getBlockZ());
-
-        } else {
-
-            return Math.abs(location1.getBlockY() - location2.getBlockY());
-
-        }
-
-    }
-
     public static void addMoreLocations(Player p, List<Location> locations) {
 
         int i = 0;
@@ -92,7 +73,7 @@ public class LocationUtil {
 
                     for (int j = 0; j < neededLocations - 1; j += 1) {
 
-                        locations.add(new Location(p.getWorld(), Math.round((float) ((getOneAxisDistance(Axis.X, location, location1) / neededLocations) * (j + 1)) + location1.getBlockX()), location1.getBlockY(), Math.round((float) ((getOneAxisDistance(Axis.Z, location, location1) / neededLocations) * (j + 1)) + location1.getBlockZ())));
+                        locations.add(new Location(p.getWorld(), Math.round((float) ((location.getBlockX() - location1.getBlockX()) / neededLocations) * (j + 1)) + location1.getBlockX(), location1.getBlockY(), Math.round((float) ((location.getBlockZ() - location1.getBlockZ()) / neededLocations) * (j + 1)) + location1.getBlockZ()));
 
                     }
 
