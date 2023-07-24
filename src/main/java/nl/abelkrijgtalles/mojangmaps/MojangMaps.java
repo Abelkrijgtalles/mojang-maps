@@ -3,6 +3,7 @@ package nl.abelkrijgtalles.mojangmaps;
 import nl.abelkrijgtalles.mojangmaps.commands.GoToCommand;
 import nl.abelkrijgtalles.mojangmaps.commands.RegisterLocationCommand;
 import nl.abelkrijgtalles.mojangmaps.commands.RegisterRoadCommand;
+import nl.abelkrijgtalles.mojangmaps.commands.WhereAmIStandingCommand;
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
 import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -23,6 +24,7 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
         getCommand("goto").setExecutor(new GoToCommand());
+        getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
 
     }
 

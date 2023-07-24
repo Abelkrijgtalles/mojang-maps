@@ -11,4 +11,6 @@ commands:
   registerroad:
     description: Register a road.
   goto:
-    description: Go to a specific location
+    description: Go to a specific location.
+  whereamistanding:
+    description: Shows where you're standing.
