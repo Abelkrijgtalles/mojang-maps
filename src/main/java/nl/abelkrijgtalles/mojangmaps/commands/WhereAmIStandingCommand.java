@@ -18,7 +18,11 @@ public class WhereAmIStandingCommand implements CommandExecutor {
 
             Player p = (Player) commandSender;
 
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation()))));
+            if (LocationUtil.isTheSameLocation(p.getLocation(), LocationUtil.getClosestLocation(p.getLocation()), 10)) {
+
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Currently on " + RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation()))));
+
+            }
 
         }
 
