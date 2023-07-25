@@ -13,7 +13,15 @@ public class WhereAmIStandingCommand implements CommandExecutor {
 
         if (commandSender instanceof Player p) {
 
-            p.sendMessage(RoadUtil.getLocationMessage(p));
+            if (!RoadUtil.getLocationMessage(p).equals("")) {
+
+                p.sendMessage(RoadUtil.getLocationMessage(p));
+
+            } else {
+
+                p.sendMessage("You are currently not on any street.");
+
+            }
 
         }
 

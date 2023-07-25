@@ -20,7 +20,6 @@ public final class MojangMaps extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         NodesConfigUtil.setup();
-
         // Commands Init
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
@@ -28,7 +27,7 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
 
         // Listeners/Events init
-        getServer().getPluginManager().registerEvents(new PlayerWalkEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerWalkEvent(this), this);
 
     }
 
