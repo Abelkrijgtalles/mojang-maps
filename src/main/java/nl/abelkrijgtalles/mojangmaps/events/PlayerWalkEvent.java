@@ -22,7 +22,7 @@ public class PlayerWalkEvent implements Listener {
 
         Player p = e.getPlayer();
 
-        if (plugin.getConfig().getBoolean("street-actionbar")) {
+        if (plugin.getConfig().getBoolean("street-actionbar") && p.hasPermission("mojangmaps.using.viewlocation")) {
 
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(RoadUtil.getLocationMessage(p)));
 
