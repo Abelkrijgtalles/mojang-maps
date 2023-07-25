@@ -2,6 +2,8 @@ package nl.abelkrijgtalles.mojangmaps.commands;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
+import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +18,7 @@ public class WhereAmIStandingCommand implements CommandExecutor {
 
             Player p = (Player) commandSender;
 
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Hello"));
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation()))));
 
         }
 
