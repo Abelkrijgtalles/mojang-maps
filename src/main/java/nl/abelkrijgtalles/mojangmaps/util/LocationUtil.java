@@ -51,4 +51,22 @@ public class LocationUtil {
 
     }
 
+    public static Location getClosestLocation(Location location) {
+
+        double minDistanceSquared = Double.MAX_VALUE;
+        Location closestLocation = null;
+
+        for (Location location1 : NodesConfigUtil.getLocations()) {
+            double distanceSquared = location.distanceSquared(location1);
+
+            if (distanceSquared < minDistanceSquared) {
+                minDistanceSquared = distanceSquared;
+                closestLocation = location1;
+            }
+        }
+
+        return closestLocation;
+
+    }
+
 }
