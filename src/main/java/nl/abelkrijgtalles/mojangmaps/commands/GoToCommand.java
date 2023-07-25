@@ -1,6 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
+import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import org.bukkit.ChatColor;
@@ -59,27 +60,8 @@ public class GoToCommand implements CommandExecutor {
             }
 
             Location location = new Location(p.getWorld(), Double.parseDouble(strings[0]), Double.parseDouble(strings[1]), Double.parseDouble(strings[2]));
-            double minDistanceSquared = Double.MAX_VALUE;
-            Location closestLocationToPlayer = null;
-            Location closestLocationToLocation = null;
-
-            for (Location location1 : NodesConfigUtil.getLocations()) {
-                double distanceSquared = p.getLocation().distanceSquared(location1);
-
-                if (distanceSquared < minDistanceSquared) {
-                    minDistanceSquared = distanceSquared;
-                    closestLocationToPlayer = location1;
-                }
-            }
-
-            for (Location location1 : NodesConfigUtil.getLocations()) {
-                double distanceSquared = location.distanceSquared(location1);
-
-                if (distanceSquared < minDistanceSquared) {
-                    minDistanceSquared = distanceSquared;
-                    closestLocationToLocation = location1;
-                }
-            }
+            Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());
+            Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
 
             List<Node> nodes = NodeUtil.addAdjacentNodes();
             Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));

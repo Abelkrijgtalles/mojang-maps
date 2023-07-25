@@ -88,8 +88,8 @@ public class Node implements Comparable<Node> {
                     .map(Node::getLocationText)
                     .collect(Collectors.joining(" -> "));
             p.sendMessage((path.isBlank()
-                    ? "%s\nThis will take %s blocks\n----------".formatted(node.getLocationText(), node.getDistance())
-                    : "%s then go to\n%s\nThis will take %s blocks\n----------".formatted(path, node.getLocationText(), node.getDistance())));
+                    ? "%s\nThis will take %s blocks".formatted(node.getLocationText(), node.getDistance())
+                    : "%s then go to\n%s\nThis will take %s blocks".formatted(path, node.getLocationText(), node.getDistance())));
         });
     }
 
