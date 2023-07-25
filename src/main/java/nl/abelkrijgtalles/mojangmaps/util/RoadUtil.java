@@ -59,4 +59,18 @@ public class RoadUtil {
         return null;
 
     }
+
+    public static String getLocationMessage(Player p) {
+
+        if (LocationUtil.isTheSameLocation(p.getLocation(), LocationUtil.getClosestLocation(p.getLocation()), 10)) {
+
+            return "Currently on: " + RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation()));
+
+        } else {
+
+            return "";
+
+        }
+
+    }
 }
