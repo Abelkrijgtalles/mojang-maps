@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.util;
+package nl.abelkrijgtalles.mojangmaps.util.config;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
 import org.bukkit.Bukkit;
