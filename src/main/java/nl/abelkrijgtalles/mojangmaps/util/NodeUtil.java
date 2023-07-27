@@ -1,6 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
+import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

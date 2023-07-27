@@ -3,7 +3,7 @@ package nl.abelkrijgtalles.mojangmaps.commands;
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
 import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
-import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
