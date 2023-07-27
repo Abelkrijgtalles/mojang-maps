@@ -34,3 +34,4 @@ A Google Maps like navigation system for Minecraft.
 - https://tinyurl.com/mmgithub, TinyUrl of the GitHub repository.
 - https://www.spigotmc.org/resources/mojang-maps.111455/, SpigotMC page.
 - https://modrinth.com/plugin/mojang-maps, Modrinth page.
+- https://crowdin.com/project/mojang-maps, Crowdin page (for translations).
