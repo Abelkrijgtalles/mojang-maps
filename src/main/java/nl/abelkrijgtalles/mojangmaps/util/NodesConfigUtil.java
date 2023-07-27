@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.util.config;
+package nl.abelkrijgtalles.mojangmaps.util;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
 import org.bukkit.Bukkit;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessagesConfigUtil {
+public class NodesConfigUtil {
 
     private static File file;
     private static FileConfiguration customFile;

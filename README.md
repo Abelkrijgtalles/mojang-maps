@@ -35,3 +35,4 @@ A Google Maps like navigation system for Minecraft.
 - https://www.spigotmc.org/resources/mojang-maps.111455/, SpigotMC page.
 - https://modrinth.com/plugin/mojang-maps, Modrinth page.
 - https://crowdin.com/project/mojang-maps, Crowdin page (for translations).
+- https://github.com/Abelkrijgtalles/mojang-maps-data, The GitHub page for data used by Mojang Maps.

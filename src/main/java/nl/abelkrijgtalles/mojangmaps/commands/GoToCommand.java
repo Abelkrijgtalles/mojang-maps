@@ -2,8 +2,9 @@ package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
 import nl.abelkrijgtalles.mojangmaps.util.LocationUtil;
+import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
-import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -26,8 +27,8 @@ public class GoToCommand implements CommandExecutor {
 
             if (strings.length < 3) {
 
-                p.sendMessage(ChatColor.RED + "You did not run the command with arguments. Please run it again with the 3 arguments.");
-                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/goto <x> <y> <z>.");
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noarguments").formatted(3));
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/goto <x> <y> <z>.");
 
                 return true;
 
@@ -35,7 +36,7 @@ public class GoToCommand implements CommandExecutor {
 
             if (strings.length > 3) {
 
-                p.sendMessage(ChatColor.RED + "You have run the command with too many arguments. Please run it again with the 3 arguments.");
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
                 p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/goto <x> <y> <z>.");
 
                 return true;
@@ -50,7 +51,7 @@ public class GoToCommand implements CommandExecutor {
 
                 } catch (NumberFormatException e) {
 
-                    p.sendMessage(ChatColor.RED + "Invalid coordinates. Please run it again with the right coordinates.");
+                    p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
                     p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/goto <x> <y> <z>.");
 
                     return true;
@@ -70,7 +71,7 @@ public class GoToCommand implements CommandExecutor {
             Node.calculateShortestPath(playerNode);
 
             Node.printPaths(Collections.singletonList(locationNode), p);
-            p.sendMessage("Then finally go to X: " + location.getBlockX() + " Z: " + location.getBlockZ());
+            p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
         }
         return true;
     }

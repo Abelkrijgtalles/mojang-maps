@@ -1,7 +1,7 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
-import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -63,15 +63,19 @@ public class RoadUtil {
 
     public static String getLocationMessage(Player p) {
 
-        if (LocationUtil.isTheSameLocation(p.getLocation(), LocationUtil.getClosestLocation(p.getLocation()), 5)) {
+        Location closestLocation = LocationUtil.getClosestLocation(p.getLocation());
 
-            return "Currently on: " + RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation())) + ".";
+        if (closestLocation != null) {
 
-        } else {
+            if (LocationUtil.isTheSameLocation(p.getLocation(), closestLocation, 5)) {
 
-            return "";
+                Bukkit.getLogger().info(MessageUtil.getMessage("currentlyon".formatted(RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation())))));
+                return MessageUtil.getMessage("currentlyon".formatted(RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation()))));
+
+            }
 
         }
+        return "";
 
     }
 }

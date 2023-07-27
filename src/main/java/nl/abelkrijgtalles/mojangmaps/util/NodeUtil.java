@@ -1,7 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps.util;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Node;
-import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -58,14 +57,14 @@ public class NodeUtil {
         List<Location> locations = (List<Location>) NodesConfigUtil.get().getList("locations");
         for (Location inLocation : locations) {
             if (LocationUtil.isTheSameLocation(location, inLocation, 0)) {
-                p.sendMessage(ChatColor.RED + "This location is already registered.");
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("locationalreadyregistered"));
                 return;
             }
         }
 
         NodesConfigUtil.addLocation(location);
 
-        p.sendMessage(ChatColor.YELLOW + "Registered a location at x: " + p.getLocation().getBlockX() + ", z: " + p.getLocation().getBlockZ() + ".");
+        p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registerlocation").formatted(location.getBlockX(), location.getBlockZ()));
 
     }
 

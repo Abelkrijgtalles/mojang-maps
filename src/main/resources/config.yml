@@ -1,2 +1,4 @@
 # If true, then the plugin shows the current street in the ActionBar.
 street-actionbar: true
+# If you change this to custom, you can change the messages in messages.yml. Codes that can be used as language: https://github.com/Abelkrijgtalles/mojang-maps-data/blob/main/README.md#the-following-codes-can-be-used-as-language
+language: en

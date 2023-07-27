@@ -1,8 +1,9 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
+import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
 import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
-import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -28,8 +29,8 @@ public class RegisterRoadCommand implements CommandExecutor {
 
             if (strings.length < 3) {
 
-                p.sendMessage(ChatColor.RED + "You did not run the command with arguments. Please run it again with the right arguments.");
-                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <(optional) name of road> <coordinates of the locations as x y z with a space between arguments>.");
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noargumentsother"));
+                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
                 return true;
 
@@ -69,8 +70,8 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                         } catch (NumberFormatException e) {
 
-                            p.sendMessage(ChatColor.RED + "Invalid coordinates. Please run it again with the right coordinates.");
-                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <(optional) name of road> <coordinates of the locations as x y z with a space between arguments>.");
+                            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
+                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
                             return true;
 
@@ -104,7 +105,7 @@ public class RegisterRoadCommand implements CommandExecutor {
                     }
 
                     NodesConfigUtil.addRoad(new Road(name, locationsPointers));
-                    p.sendMessage(ChatColor.YELLOW + "Registered a new road");
+                    p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registeredroad"));
 
                 } else {
 
@@ -116,8 +117,8 @@ public class RegisterRoadCommand implements CommandExecutor {
 
                         } catch (NumberFormatException e) {
 
-                            p.sendMessage(ChatColor.RED + "Invalid coordinates. Please run it again with the right coordinates.");
-                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <(optional) name of road> <coordinates of the locations as x y z with a space between arguments>.");
+                            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
+                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
                             return true;
 
@@ -151,14 +152,14 @@ public class RegisterRoadCommand implements CommandExecutor {
                     }
 
                     NodesConfigUtil.addRoad(new Road(locationsPointers));
-                    p.sendMessage(ChatColor.YELLOW + "Registered a new road");
+                    p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registeredroad"));
 
                 }
 
             } else {
 
-                p.sendMessage(ChatColor.RED + "Invalid coordinates. Please run it again with the right coordinates.");
-                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <(optional) name of road> <coordinates of the locations as x y z with a space between arguments>.");
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
+                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
             }
 

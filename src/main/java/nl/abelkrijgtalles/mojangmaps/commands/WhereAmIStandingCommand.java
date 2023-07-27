@@ -1,5 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
+import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
 import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,7 +20,7 @@ public class WhereAmIStandingCommand implements CommandExecutor {
 
             } else {
 
-                p.sendMessage("You are currently not on any street.");
+                p.sendMessage(MessageUtil.getMessage("notonaroad"));
 
             }
 

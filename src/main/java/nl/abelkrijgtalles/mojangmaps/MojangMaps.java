@@ -3,7 +3,8 @@ package nl.abelkrijgtalles.mojangmaps;
 import nl.abelkrijgtalles.mojangmaps.commands.*;
 import nl.abelkrijgtalles.mojangmaps.events.PlayerWalkEvent;
 import nl.abelkrijgtalles.mojangmaps.objects.Road;
-import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.TranslationUtil;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +18,8 @@ public final class MojangMaps extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         NodesConfigUtil.setup();
+        TranslationUtil translationUtil = new TranslationUtil(this);
+        translationUtil.updateTranslations();
         // Commands Init
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());

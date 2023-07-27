@@ -1,7 +1,8 @@
 package nl.abelkrijgtalles.mojangmaps.commands;
 
 import nl.abelkrijgtalles.mojangmaps.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.util.config.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
+import nl.abelkrijgtalles.mojangmaps.util.TranslationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,6 +31,9 @@ public class ReloadConfigsFromDiskCommand implements CommandExecutor {
         } catch (IOException | InvalidConfigurationException e) {
             Bukkit.getLogger().warning("Could not load config.");
         }
+
+        TranslationUtil translationUtil = new TranslationUtil(plugin);
+        translationUtil.updateTranslations();
 
         return true;
     }

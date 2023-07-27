@@ -1,5 +1,6 @@
 package nl.abelkrijgtalles.mojangmaps.objects;
 
+import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
 import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
 import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
 import org.bukkit.Location;
@@ -88,8 +89,8 @@ public class Node implements Comparable<Node> {
                     .map(Node::getLocationText)
                     .collect(Collectors.joining(" -> "));
             p.sendMessage((path.isBlank()
-                    ? "%s\nThis will take %s blocks".formatted(node.getLocationText(), node.getDistance())
-                    : "%s then go to\n%s\nThis will take %s blocks".formatted(path, node.getLocationText(), node.getDistance())));
+                    ? MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())
+                    : MessageUtil.getMessage("thengoto").formatted(path) + MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())));
         });
     }
 
