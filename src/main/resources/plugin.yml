@@ -31,8 +31,6 @@ commands:
     aliases:
       - reloadconfigs
       - reloadconfig
-  test:
-    description: Test.
 
 permissions:
   mojangmaps.register:
