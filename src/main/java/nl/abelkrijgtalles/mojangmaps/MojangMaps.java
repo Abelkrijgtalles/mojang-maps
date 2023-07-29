@@ -26,6 +26,7 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("goto").setExecutor(new GoToCommand());
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
+        getCommand("test").setExecutor(new TestCommand());
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkEvent(this), this);
