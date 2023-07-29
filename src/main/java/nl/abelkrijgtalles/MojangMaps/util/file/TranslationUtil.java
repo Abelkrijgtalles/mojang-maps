@@ -1,6 +1,7 @@
-package nl.abelkrijgtalles.mojangmaps.util;
+package nl.abelkrijgtalles.MojangMaps.util.file;
 
-import nl.abelkrijgtalles.mojangmaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bukkit.Bukkit;
 
 import javax.json.JsonArray;

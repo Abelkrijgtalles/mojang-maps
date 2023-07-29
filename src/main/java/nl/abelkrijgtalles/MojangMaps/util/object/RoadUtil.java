@@ -1,6 +1,8 @@
-package nl.abelkrijgtalles.mojangmaps.util;
+package nl.abelkrijgtalles.MojangMaps.util.object;
 
-import nl.abelkrijgtalles.mojangmaps.objects.Road;
+import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

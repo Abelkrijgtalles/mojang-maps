@@ -1,6 +1,6 @@
-package nl.abelkrijgtalles.mojangmaps.commands;
+package nl.abelkrijgtalles.MojangMaps.command.register;
 
-import nl.abelkrijgtalles.mojangmaps.util.NodeUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

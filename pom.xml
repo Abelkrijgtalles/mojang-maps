@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nl.abelkrijgtalles</groupId>
-    <artifactId>mojangmaps</artifactId>
+    <artifactId>MojangMaps</artifactId>
     <version>1.3</version>
     <packaging>jar</packaging>
 
@@ -37,7 +37,7 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>nl.abelkrijgtalles.mojangmaps</shadedPattern>
+                            <shadedPattern>nl.abelkrijgtalles.MojangMaps</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

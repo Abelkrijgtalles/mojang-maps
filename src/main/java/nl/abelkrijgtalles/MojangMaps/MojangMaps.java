@@ -1,10 +1,14 @@
-package nl.abelkrijgtalles.mojangmaps;
+package nl.abelkrijgtalles.MojangMaps;
 
-import nl.abelkrijgtalles.mojangmaps.commands.*;
-import nl.abelkrijgtalles.mojangmaps.events.PlayerWalkEvent;
-import nl.abelkrijgtalles.mojangmaps.objects.Road;
-import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
-import nl.abelkrijgtalles.mojangmaps.util.TranslationUtil;
+import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
+import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
+import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
+import nl.abelkrijgtalles.MojangMaps.event.PlayerWalkEvent;
+import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;

@@ -1,8 +1,8 @@
-package nl.abelkrijgtalles.mojangmaps.commands;
+package nl.abelkrijgtalles.MojangMaps.command.util;
 
-import nl.abelkrijgtalles.mojangmaps.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
-import nl.abelkrijgtalles.mojangmaps.util.TranslationUtil;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

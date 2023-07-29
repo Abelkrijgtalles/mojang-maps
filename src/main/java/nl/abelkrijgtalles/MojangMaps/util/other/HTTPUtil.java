@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.mojangmaps.util;
+package nl.abelkrijgtalles.MojangMaps.util.other;
 
 import org.bukkit.Bukkit;
 

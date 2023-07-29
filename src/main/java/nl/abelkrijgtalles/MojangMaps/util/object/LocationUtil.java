@@ -1,5 +1,6 @@
-package nl.abelkrijgtalles.mojangmaps.util;
+package nl.abelkrijgtalles.MojangMaps.util.object;
 
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import org.bukkit.Location;
 
 public class LocationUtil {

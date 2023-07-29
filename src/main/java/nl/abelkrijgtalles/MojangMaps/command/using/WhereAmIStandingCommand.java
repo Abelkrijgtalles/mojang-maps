@@ -1,7 +1,7 @@
-package nl.abelkrijgtalles.mojangmaps.commands;
+package nl.abelkrijgtalles.MojangMaps.command.using;
 
-import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
-import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

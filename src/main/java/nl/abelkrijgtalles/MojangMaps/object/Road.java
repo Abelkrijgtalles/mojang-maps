@@ -1,6 +1,6 @@
-package nl.abelkrijgtalles.mojangmaps.objects;
+package nl.abelkrijgtalles.MojangMaps.object;
 
-import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import java.util.HashMap;

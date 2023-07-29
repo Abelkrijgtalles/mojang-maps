@@ -1,9 +1,9 @@
-package nl.abelkrijgtalles.mojangmaps.commands;
+package nl.abelkrijgtalles.MojangMaps.command.register;
 
-import nl.abelkrijgtalles.mojangmaps.objects.Road;
-import nl.abelkrijgtalles.mojangmaps.util.MessageUtil;
-import nl.abelkrijgtalles.mojangmaps.util.NodesConfigUtil;
-import nl.abelkrijgtalles.mojangmaps.util.RoadUtil;
+import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
