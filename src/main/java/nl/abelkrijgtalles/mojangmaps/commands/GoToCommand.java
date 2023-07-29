@@ -37,7 +37,7 @@ public class GoToCommand implements CommandExecutor {
             if (strings.length > 3) {
 
                 p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
-                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/goto <x> <y> <z>.");
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/goto <x> <y> <z>.");
 
                 return true;
 
@@ -52,7 +52,7 @@ public class GoToCommand implements CommandExecutor {
                 } catch (NumberFormatException e) {
 
                     p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                    p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/goto <x> <y> <z>.");
+                    p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/goto <x> <y> <z>.");
 
                     return true;
 

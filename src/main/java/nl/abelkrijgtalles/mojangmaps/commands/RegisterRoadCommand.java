@@ -30,7 +30,7 @@ public class RegisterRoadCommand implements CommandExecutor {
             if (strings.length < 3) {
 
                 p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noargumentsother"));
-                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
                 return true;
 
@@ -71,7 +71,7 @@ public class RegisterRoadCommand implements CommandExecutor {
                         } catch (NumberFormatException e) {
 
                             p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
+                            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
                             return true;
 
@@ -118,7 +118,7 @@ public class RegisterRoadCommand implements CommandExecutor {
                         } catch (NumberFormatException e) {
 
                             p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                            p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
+                            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
                             return true;
 
@@ -159,7 +159,7 @@ public class RegisterRoadCommand implements CommandExecutor {
             } else {
 
                 p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                p.sendMessage(ChatColor.YELLOW + "Example: " + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example") + ChatColor.WHITE + "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.");
 
             }
 
