@@ -1,6 +1,6 @@
 name: MojangMaps
 version: '${project.version}'
-main: nl.abelkrijgtalles.mojangmaps.MojangMaps
+main: nl.abelkrijgtalles.MojangMaps.MojangMaps
 api-version: '1.20'
 authors: [ 0Abel ]
 description: A Google Maps like navigation system for Minecraft.
