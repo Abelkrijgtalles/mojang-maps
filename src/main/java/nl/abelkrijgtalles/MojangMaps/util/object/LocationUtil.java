@@ -11,15 +11,15 @@ public class LocationUtil {
         boolean y = false;
         boolean z = false;
 
-        if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) <= (gap + 1)) {
+        if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) < (gap + 1)) {
             x = true;
         }
 
-        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= (gap + 1)) {
+        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) < (gap + 1)) {
             y = true;
         }
 
-        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= (gap + 1)) {
+        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) < (gap + 1)) {
             z = true;
         }
 
