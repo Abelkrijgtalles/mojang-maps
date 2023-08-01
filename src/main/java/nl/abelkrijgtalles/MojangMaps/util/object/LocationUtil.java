@@ -7,23 +7,7 @@ public class LocationUtil {
 
     public static boolean isTheSameLocation(Location location, Location otherLocation, int gap) {
 
-        boolean x = false;
-        boolean y = false;
-        boolean z = false;
-
-        if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) < (gap + 1)) {
-            x = true;
-        }
-
-        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) < (gap + 1)) {
-            y = true;
-        }
-
-        if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) < (gap + 1)) {
-            z = true;
-        }
-
-        return x && y && z;
+        return getDistance(location, otherLocation) < gap + 1;
 
     }
 
