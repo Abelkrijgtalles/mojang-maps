@@ -1,7 +1,6 @@
 package nl.abelkrijgtalles.MojangMaps.util.object;
 
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class LocationUtil {
@@ -12,18 +11,15 @@ public class LocationUtil {
         boolean y = false;
         boolean z = false;
 
-        if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) <= gap + 1) {
-            Bukkit.getLogger().info("X");
+        if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) <= (gap + 1)) {
             x = true;
         }
 
         if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= gap + 1) {
-            Bukkit.getLogger().info("Y");
             y = true;
         }
 
         if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= gap + 1) {
-            Bukkit.getLogger().info("Z");
             z = true;
         }
 
