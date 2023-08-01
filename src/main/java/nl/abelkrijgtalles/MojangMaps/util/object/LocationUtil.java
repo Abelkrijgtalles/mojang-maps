@@ -12,19 +12,18 @@ public class LocationUtil {
         boolean y = false;
         boolean z = false;
 
-        Bukkit.getLogger().info(String.valueOf(Math.abs(location.getBlockX() - otherLocation.getBlockX())));
-        Bukkit.getLogger().info(String.valueOf(Math.abs(location.getBlockY() - otherLocation.getBlockY())));
-        Bukkit.getLogger().info(String.valueOf(Math.abs(location.getBlockZ() - otherLocation.getBlockZ())));
-
         if (Math.abs(location.getBlockX() - otherLocation.getBlockX()) <= gap + 1) {
+            Bukkit.getLogger().info("X");
             x = true;
         }
 
         if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= gap + 1) {
+            Bukkit.getLogger().info("Y");
             y = true;
         }
 
         if (Math.abs(location.getBlockY() - otherLocation.getBlockY()) <= gap + 1) {
+            Bukkit.getLogger().info("Z");
             z = true;
         }
 
