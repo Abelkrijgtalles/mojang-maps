@@ -1,5 +1,7 @@
 package nl.abelkrijgtalles.MojangMaps;
 
+import com.samjakob.spigui.SpiGUI;
+import nl.abelkrijgtalles.MojangMaps.command.NewGuiCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class MojangMaps extends JavaPlugin {
+
+    public static SpiGUI spiGUI;
 
     private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
 
@@ -93,10 +97,13 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("goto").setExecutor(new GoToCommand());
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
+        getCommand("newgui").setExecutor(new NewGuiCommand());
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkEvent(this), this);
 
+        // SpiGUI init
+        spiGUI = new SpiGUI(this);
     }
 
 }

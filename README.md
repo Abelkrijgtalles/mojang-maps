@@ -37,3 +37,8 @@ A Google Maps like navigation system for Minecraft.
 - https://crowdin.com/project/mojang-maps, Crowdin page (for translations).
 - https://github.com/Abelkrijgtalles/mojang-maps-data, The GitHub page for data used by Mojang Maps.
 - https://bstats.org/plugin/bukkit/Mojang%20Maps/19295, The bStats of Mojang Maps.
+
+# Credits
+
+- [SamJakob](https://github.com/SamJakob) and [all these people](https://github.com/SamJakob/SpiGUI/graphs/contributors)
+  for creating SpiGUI.

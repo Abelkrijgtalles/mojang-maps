@@ -31,6 +31,8 @@ commands:
     aliases:
       - reloadconfigs
       - reloadconfig
+  newgui:
+    description: test
 
 permissions:
   mojangmaps.register:
