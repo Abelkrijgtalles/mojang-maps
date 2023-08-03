@@ -23,11 +23,11 @@ public final class MojangMaps extends JavaPlugin {
 
     public static SpiGUI spiGUI;
 
-    private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
+    private void addLanguageChart(Metrics metrics) {
 
         metrics.addCustomChart(new DrilldownPie("language", () -> {
             Map<String, Map<String, Integer>> map = new HashMap<>();
-            String language = plugin.getConfig().getString("language");
+            String language = getConfig().getString("language");
             Map<String, Integer> entry = new HashMap<>();
             entry.put(language, 1);
 
@@ -78,12 +78,26 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        // Bstats init
+        configSetup();
+        registerCommands();
+        registerListeners();
+
+        // SpiGUI init
+        spiGUI = new SpiGUI(this);
+
+        bStatsInit();
+    }
+
+    private void bStatsInit() {
+
         int pluginId = 19295;
         Metrics metrics = new Metrics(this, pluginId);
-        addLanguageChart(metrics, this);
+        addLanguageChart(metrics);
 
-        // Config init
+    }
+
+    private void configSetup() {
+
         ConfigurationSerialization.registerClass(Road.class);
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -91,7 +105,10 @@ public final class MojangMaps extends JavaPlugin {
         TranslationUtil translationUtil = new TranslationUtil(this);
         translationUtil.updateTranslations();
 
-        // Commands Init
+    }
+
+    private void registerCommands() {
+
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
         getCommand("goto").setExecutor(new GoToCommand());
@@ -99,11 +116,12 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
         getCommand("newgui").setExecutor(new NewGuiCommand());
 
-        // Listeners/Events init
+    }
+
+    private void registerListeners() {
+
         getServer().getPluginManager().registerEvents(new PlayerWalkEvent(this), this);
 
-        // SpiGUI init
-        spiGUI = new SpiGUI(this);
     }
 
 }
