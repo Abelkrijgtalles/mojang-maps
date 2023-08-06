@@ -94,6 +94,17 @@ public class Node implements Comparable<Node> {
         });
     }
 
+    public static List<String> getLocationAndDistanceList(List<Node> nodes) {
+        List<String> locationAndDistanceList = new ArrayList<>();
+        for (Node node : nodes) {
+            String locationText = node.getLocationText();
+            int distance = node.getDistance();
+            String entry = locationText + " (Distance: " + distance + ")";
+            locationAndDistanceList.add(entry);
+        }
+        return locationAndDistanceList;
+    }
+
     public String getLocationText() {
 
         Location location = NodeUtil.getLocationFromNode(this);
