@@ -1,6 +1,7 @@
 package nl.abelkrijgtalles.MojangMaps.listener;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +20,7 @@ public class PlayerJoinListener implements Listener {
 
         if (plugin.isPluginOutdated && e.getPlayer().isOp()) {
 
-            e.getPlayer().sendMessage(ChatColor.RED + "Mojang Maps is outdated, please download the newest version at: " + ChatColor.UNDERLINE + "https://github.com/Abelkrijgtalles/mojang-maps/releases/latest");
+            e.getPlayer().sendMessage(ChatColor.RED + MessageUtil.getMessage("outdated").formatted(ChatColor.UNDERLINE + "https://github.com/Abelkrijgtalles/mojang-maps/releases/latest"));
 
         }
 
