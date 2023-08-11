@@ -5,19 +5,26 @@ import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
 import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
-import nl.abelkrijgtalles.MojangMaps.event.PlayerWalkEvent;
+import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
+import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
+import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.json.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class MojangMaps extends JavaPlugin {
+
+    public boolean isPluginOutdated = false;
 
     private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
 
@@ -69,6 +76,12 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onDisable() {
 
+        if (isPluginOutdated) {
+
+            getLogger().warning("Don't forget to update Mojang Maps.");
+
+        }
+
     }
 
     @Override
@@ -87,6 +100,14 @@ public final class MojangMaps extends JavaPlugin {
         TranslationUtil translationUtil = new TranslationUtil(this);
         translationUtil.updateTranslations();
 
+        // Update stuff
+        checkVersion();
+        if (isPluginOutdated) {
+
+            getLogger().warning("Mojang Maps is outdated, please download the newest version at: https://github.com/Abelkrijgtalles/mojang-maps/releases/latest");
+
+        }
+
         // Commands Init
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
@@ -95,7 +116,20 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
 
         // Listeners/Events init
-        getServer().getPluginManager().registerEvents(new PlayerWalkEvent(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+
+    }
+
+    private void checkVersion() {
+
+        JsonObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
+        if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {
+            Bukkit.getLogger().info(latestRelease.getString("name"));
+            Bukkit.getLogger().info(getDescription().getVersion());
+            isPluginOutdated = true;
+
+        }
 
     }
 
