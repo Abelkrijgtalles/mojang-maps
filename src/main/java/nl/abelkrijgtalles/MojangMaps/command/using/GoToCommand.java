@@ -1,10 +1,12 @@
 package nl.abelkrijgtalles.MojangMaps.command.using;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.object.Node;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -12,18 +14,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class GoToCommand implements CommandExecutor {
+
+    private final MojangMaps plugin;
+
+    public GoToCommand(MojangMaps plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player) {
 
             Player p = (Player) commandSender;
-            List<Integer> coordinates = new ArrayList<>();
 
             if (strings.length < 3) {
 
@@ -68,7 +74,8 @@ public class GoToCommand implements CommandExecutor {
             Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
             Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
-            Node.calculateShortestPath(playerNode);
+            p.sendMessage(ChatColor.YELLOW + "Loading, this could take some time.");
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> Node.calculateShortestPath(playerNode));
 
             Node.printPaths(Collections.singletonList(locationNode), p);
             p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
