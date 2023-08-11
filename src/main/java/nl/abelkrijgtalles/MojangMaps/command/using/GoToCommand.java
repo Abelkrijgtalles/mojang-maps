@@ -75,10 +75,15 @@ public class GoToCommand implements CommandExecutor {
             Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
             p.sendMessage(ChatColor.YELLOW + "Loading, this could take some time.");
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> Node.calculateShortestPath(playerNode));
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    Node.calculateShortestPath(playerNode);
+                    Node.printPaths(Collections.singletonList(locationNode), p);
+                    p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
+                }
+            });
 
-            Node.printPaths(Collections.singletonList(locationNode), p);
-            p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
         }
         return true;
     }
