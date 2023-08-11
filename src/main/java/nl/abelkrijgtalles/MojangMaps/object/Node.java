@@ -95,7 +95,7 @@ public class Node implements Comparable<Node> {
                         : MessageUtil.getMessage("thengoto").formatted(path) + MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())));
             } else {
 
-                p.sendMessage(ChatColor.RED + "Couldn't find a path.");
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("pathnotfound"));
 
             }
         });
