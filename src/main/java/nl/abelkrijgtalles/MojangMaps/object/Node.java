@@ -88,9 +88,15 @@ public class Node implements Comparable<Node> {
             String path = node.getShortestPath().stream()
                     .map(Node::getLocationText)
                     .collect(Collectors.joining(" -> "));
-            p.sendMessage((path.isBlank()
-                    ? MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())
-                    : MessageUtil.getMessage("thengoto").formatted(path) + MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())));
+            if (node.getDistance() == Integer.MAX_VALUE) {
+                p.sendMessage((path.isBlank()
+                        ? MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())
+                        : MessageUtil.getMessage("thengoto").formatted(path) + MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())));
+            } else {
+
+                p.sendMessage("Couldn't find a path.");
+
+            }
         });
     }
 
