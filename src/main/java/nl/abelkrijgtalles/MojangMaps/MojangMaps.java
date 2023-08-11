@@ -90,7 +90,7 @@ public final class MojangMaps extends JavaPlugin {
         // Commands Init
         getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
-        getCommand("goto").setExecutor(new GoToCommand());
+        getCommand("goto").setExecutor(new GoToCommand(this));
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
 
