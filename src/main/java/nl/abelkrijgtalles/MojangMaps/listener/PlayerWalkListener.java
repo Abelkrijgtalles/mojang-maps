@@ -1,4 +1,4 @@
-package nl.abelkrijgtalles.MojangMaps.event;
+package nl.abelkrijgtalles.MojangMaps.listener;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -9,11 +9,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class PlayerWalkEvent implements Listener {
+public class PlayerWalkListener implements Listener {
 
     private final MojangMaps plugin;
 
-    public PlayerWalkEvent(MojangMaps plugin) {
+    public PlayerWalkListener(MojangMaps plugin) {
         this.plugin = plugin;
     }
 

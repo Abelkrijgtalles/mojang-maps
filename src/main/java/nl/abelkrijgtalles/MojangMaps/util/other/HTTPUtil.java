@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonObject;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +33,32 @@ public class HTTPUtil {
 
             JsonArray dataContents;
             dataContents = Json.createReader(new StringReader(responseBody)).readArray();
+
+            return dataContents;
+
+        } catch (IOException | InterruptedException e) {
+
+            Bukkit.getLogger().warning("Couldn't make an API call.");
+            return null;
+
+        }
+    }
+
+    public static JsonObject HTTPRequestJSONObject(String URL) {
+
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(URL)).build();
+
+        try {
+
+            HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            String responseBody = response.body();
+
+            Bukkit.getLogger().info("API call to " + URL + " finished with code " + statusCode);
+
+            JsonObject dataContents;
+            dataContents = Json.createReader(new StringReader(responseBody)).readObject();
 
             return dataContents;
 

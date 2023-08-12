@@ -2,6 +2,9 @@
 
 A Google Maps like navigation system for Minecraft.
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=W79VLY89H4XRY)
+[![Crowdin](https://badges.crowdin.net/mojang-maps/localized.svg?style=for-the-badge&logo=paypal)](https://crowdin.com/project/mojang-maps)
+
 # Roadmap
 
 - [ ] Creating a UI

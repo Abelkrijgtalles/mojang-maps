@@ -3,6 +3,7 @@ package nl.abelkrijgtalles.MojangMaps.object;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -88,9 +89,15 @@ public class Node implements Comparable<Node> {
             String path = node.getShortestPath().stream()
                     .map(Node::getLocationText)
                     .collect(Collectors.joining(" -> "));
-            p.sendMessage((path.isBlank()
-                    ? MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())
-                    : MessageUtil.getMessage("thengoto").formatted(path) + MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())));
+            if (node.getDistance() == Integer.MAX_VALUE) {
+                p.sendMessage((path.isBlank()
+                        ? MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())
+                        : MessageUtil.getMessage("thengoto").formatted(path) + MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())));
+            } else {
+
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("pathnotfound"));
+
+            }
         });
     }
 
