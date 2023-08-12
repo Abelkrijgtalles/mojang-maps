@@ -1,5 +1,6 @@
 package nl.abelkrijgtalles.MojangMaps;
 
+import com.samjakob.spigui.SpiGUI;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
@@ -23,6 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class MojangMaps extends JavaPlugin {
+
+    public static SpiGUI spiGUI;
 
     public boolean isPluginOutdated = false;
 
@@ -118,6 +121,9 @@ public final class MojangMaps extends JavaPlugin {
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+
+        // SpiGUI init
+        spiGUI = new SpiGUI(this);
 
     }
 
