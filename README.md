@@ -44,4 +44,4 @@ A Google Maps like navigation system for Minecraft.
 # Credits
 
 - [SamJakob](https://github.com/SamJakob) and [all these people](https://github.com/SamJakob/SpiGUI/graphs/contributors)
-  for creating SpiGUI.test
+  for creating SpiGUI.
