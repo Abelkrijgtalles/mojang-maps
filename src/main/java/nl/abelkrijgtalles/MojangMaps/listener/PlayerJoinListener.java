@@ -2,6 +2,7 @@ package nl.abelkrijgtalles.MojangMaps.listener;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

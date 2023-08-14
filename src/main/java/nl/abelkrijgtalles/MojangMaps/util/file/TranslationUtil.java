@@ -2,14 +2,16 @@ package nl.abelkrijgtalles.MojangMaps.util.file;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
+
 import org.bukkit.Bukkit;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
 public class TranslationUtil {
 

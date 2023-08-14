@@ -1,6 +1,7 @@
 package nl.abelkrijgtalles.MojangMaps;
 
 import com.samjakob.spigui.SpiGUI;
+
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
@@ -12,16 +13,19 @@ import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
+
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.json.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.json.JsonObject;
 
 public final class MojangMaps extends JavaPlugin {
 
