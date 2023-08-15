@@ -89,7 +89,7 @@ public class Node implements Comparable<Node> {
         nodes.forEach(node -> {
             String path = node.getShortestPath().stream()
                     .map(Node::getLocationText)
-                    .collect(Collectors.joining(" -> "));
+                    .collect(Collectors.joining(MessageUtil.getMessage("thengoto")));
             if (node.getDistance() == Integer.MAX_VALUE) {
                 p.sendMessage((path.isBlank()
                         ? MessageUtil.getMessage("blocksprediction").formatted(node.getLocationText(), node.getDistance())
