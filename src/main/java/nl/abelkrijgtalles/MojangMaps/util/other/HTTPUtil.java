@@ -1,5 +1,7 @@
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+
 import org.bukkit.Bukkit;
 
 import java.io.FileOutputStream;
@@ -40,6 +42,7 @@ public class HTTPUtil {
         } catch (IOException | InterruptedException e) {
 
             Bukkit.getLogger().warning("Couldn't make an API call.");
+            MojangMaps.isOnline = false;
             return null;
 
         }
@@ -66,6 +69,7 @@ public class HTTPUtil {
         } catch (IOException | InterruptedException e) {
 
             Bukkit.getLogger().warning("Couldn't make an API call.");
+            MojangMaps.isOnline = false;
             return null;
 
         }
@@ -96,6 +100,7 @@ public class HTTPUtil {
         } catch (IOException e) {
 
             Bukkit.getLogger().warning("Could not download file from %s to %s.".formatted(fileUrl, path));
+            MojangMaps.isOnline = false;
 
         }
 

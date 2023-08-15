@@ -5,6 +5,7 @@ import com.samjakob.spigui.SpiGUI;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
 import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
@@ -28,6 +29,8 @@ import java.util.Objects;
 import javax.json.JsonObject;
 
 public final class MojangMaps extends JavaPlugin {
+
+    public static boolean isOnline = true;
 
     public static SpiGUI spiGUI;
 
@@ -121,6 +124,7 @@ public final class MojangMaps extends JavaPlugin {
         getCommand("goto").setExecutor(new GoToCommand(this));
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
+        getCommand("navigation").setExecutor(new NavigationCommand(this));
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
@@ -134,11 +138,13 @@ public final class MojangMaps extends JavaPlugin {
     private void checkVersion() {
 
         JsonObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
-        if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {
-            Bukkit.getLogger().info(latestRelease.getString("name"));
-            Bukkit.getLogger().info(getDescription().getVersion());
-            isPluginOutdated = true;
+        if (isOnline) {
+            if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {
+                Bukkit.getLogger().info(latestRelease.getString("name"));
+                Bukkit.getLogger().info(getDescription().getVersion());
+                isPluginOutdated = true;
 
+            }
         }
 
     }

@@ -29,34 +29,35 @@ public class TranslationUtil {
 
             JsonArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
 
-            List<String> languageCodes = new ArrayList<>();
-            String languageCode;
+            if (MojangMaps.isOnline) {
+                List<String> languageCodes = new ArrayList<>();
+                String languageCode;
 
-            dataContents.forEach(jsonValue -> {
+                dataContents.forEach(jsonValue -> {
 
-                JsonObject content = (JsonObject) jsonValue;
+                    JsonObject content = (JsonObject) jsonValue;
 
-                if (Objects.equals(content.getString("type"), "dir")) {
+                    if (Objects.equals(content.getString("type"), "dir")) {
 
-                    languageCodes.add(content.getString("name"));
+                        languageCodes.add(content.getString("name"));
+
+                    }
+
+                });
+
+                if (languageCodes.contains(plugin.getConfig().getString("language"))) {
+
+                    languageCode = plugin.getConfig().getString("language");
+
+                } else {
+
+                    Bukkit.getLogger().warning("Language code in messages.yml isn't in the translations, reverting to English.");
+                    languageCode = "en";
 
                 }
 
-            });
-
-            if (languageCodes.contains(plugin.getConfig().getString("language"))) {
-
-                languageCode = plugin.getConfig().getString("language");
-
-            } else {
-
-                Bukkit.getLogger().warning("Language code in messages.yml isn't in the translations, reverting to English.");
-                languageCode = "en";
-
+                HTTPUtil.DownloadFile("https://raw.githubusercontent.com/Abelkrijgtalles/mojang-maps-data/main/%s/%s.json".formatted(languageCode, languageCode), String.valueOf(Paths.get(String.valueOf(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder()), "messages.json")));
             }
-
-            HTTPUtil.DownloadFile("https://raw.githubusercontent.com/Abelkrijgtalles/mojang-maps-data/main/%s/%s.json".formatted(languageCode, languageCode), String.valueOf(Paths.get(String.valueOf(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder()), "messages.json")));
-
 
         }
 
