@@ -32,7 +32,8 @@ commands:
       - reloadconfigs
       - reloadconfig
   navigation:
-    description: test bro
+    description: Go to a specific location and view the navigation in GUI form.
+    permission: mojangmaps.using.navigation
 
 permissions:
   mojangmaps.register:
@@ -54,7 +55,10 @@ permissions:
         default: true
       mojangmaps.using.viewlocation:
         description: Lets you view your location.
-        default: op
+        default: true
+      mojangmaps.using.navigation:
+        description: Lets you go to a location and view the navigation in GUI form.
+        default: true
   mojangmaps.util:
     description: Some useful tools for an admin.
     default: op
