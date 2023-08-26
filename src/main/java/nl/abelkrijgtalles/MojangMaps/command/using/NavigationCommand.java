@@ -19,6 +19,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -89,14 +90,24 @@ public class NavigationCommand implements CommandExecutor {
 
         p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+
+            // starting timer
+            final int[] ticksWhileCalculating = {0};
+            int taskID = new BukkitRunnable() {
+                @Override
+                public void run() {
+
+                    ticksWhileCalculating[0] += 1;
+
+                }
+            }.runTaskTimer(plugin, 0, 1).getTaskId();
+
             Node.calculateShortestPath(playerNode);
 
+            Bukkit.getScheduler().cancelTask(taskID);
+            p.sendMessage("Calculated in " + ticksWhileCalculating[0] * .05 + " seconds");
+
             List<Node> shortestPath = locationNode.getShortestPath();
-            for (Node node : shortestPath) {
-
-                p.sendMessage(node.getLocationText());
-
-            }
 
             SGMenu menu = MojangMaps.spiGUI.create("Navigation", (int) Math.ceil(shortestPath.size() / 9.0));
 
