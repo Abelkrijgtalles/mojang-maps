@@ -6,11 +6,13 @@ import com.samjakob.spigui.menu.SGMenu;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.object.Node;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -34,6 +36,41 @@ public class NavigationCommand implements CommandExecutor {
 
         if (commandSender instanceof Player p) {
 
+            if (strings.length < 3) {
+
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noarguments").formatted(3));
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
+
+                return true;
+
+            }
+
+            if (strings.length > 3) {
+
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
+
+                return true;
+
+            }
+
+            for (String coordinate : strings) {
+
+                try {
+
+                    Integer.parseInt(coordinate);
+
+                } catch (NumberFormatException e) {
+
+                    p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
+                    p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
+
+                    return true;
+
+                }
+
+            }
+
             openGUI(p, strings);
 
         }
@@ -51,6 +88,7 @@ public class NavigationCommand implements CommandExecutor {
         Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
         Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
+        p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             Node.calculateShortestPath(playerNode);
 
