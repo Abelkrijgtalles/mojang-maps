@@ -17,7 +17,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.List;
 
@@ -70,11 +69,7 @@ public class NavigationCommand implements CommandExecutor {
 
                         new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).name(node.getLocationText()).build()
 
-                ).withListener((InventoryClickEvent e) -> {
-
-                    e.getWhoClicked().sendMessage("HELLOOO BRO");
-
-                });
+                );
 
                 menu.addButton(button);
 
