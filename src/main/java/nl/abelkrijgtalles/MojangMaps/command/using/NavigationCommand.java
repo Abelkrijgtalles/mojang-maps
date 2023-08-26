@@ -25,7 +25,6 @@ import java.util.List;
 public class NavigationCommand implements CommandExecutor {
 
     private final MojangMaps plugin;
-    private SGMenu menu;
 
     public NavigationCommand(MojangMaps plugin) {
         this.plugin = plugin;
@@ -99,7 +98,7 @@ public class NavigationCommand implements CommandExecutor {
 
             }
 
-            menu = MojangMaps.spiGUI.create("Navigation", (int) Math.ceil(shortestPath.size() / 9.0));
+            SGMenu menu = MojangMaps.spiGUI.create("Navigation", (int) Math.ceil(shortestPath.size() / 9.0));
 
             for (Node node : shortestPath) {
 
