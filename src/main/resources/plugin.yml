@@ -31,8 +31,6 @@ commands:
     aliases:
       - reloadconfigs
       - reloadconfig
-  newgui:
-    description: test
   navigation:
     description: test bro
 
