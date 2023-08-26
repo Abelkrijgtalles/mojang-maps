@@ -18,7 +18,6 @@ import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -140,8 +139,6 @@ public final class MojangMaps extends JavaPlugin {
         JsonObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
         if (isOnline) {
             if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {
-                Bukkit.getLogger().info(latestRelease.getString("name"));
-                Bukkit.getLogger().info(getDescription().getVersion());
                 isPluginOutdated = true;
 
             }
