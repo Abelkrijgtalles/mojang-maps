@@ -132,6 +132,7 @@ public class NavigationCommand implements CommandExecutor {
             menu.addButton(button);
 
             Bukkit.getScheduler().runTask(plugin, () -> p.openInventory(menu.getInventory()));
+            p.sendMessage(MessageUtil.getMessage("blocksprediction").replace("%s\n", "").formatted(locationNode.getDistance()));
 
         });
 
