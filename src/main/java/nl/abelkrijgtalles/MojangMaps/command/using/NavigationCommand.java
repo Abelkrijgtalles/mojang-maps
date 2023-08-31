@@ -109,7 +109,7 @@ public class NavigationCommand implements CommandExecutor {
 
             List<Node> shortestPath = locationNode.getShortestPath();
 
-            SGMenu menu = MojangMaps.spiGUI.create("Navigation", (int) Math.ceil(shortestPath.size() / 9.0));
+            SGMenu menu = MojangMaps.spiGUI.create("Navigation", (int) Math.ceil((shortestPath.size() + 1) / 9.0));
 
             for (Node node : shortestPath) {
 
@@ -122,6 +122,14 @@ public class NavigationCommand implements CommandExecutor {
                 menu.addButton(button);
 
             }
+
+            SGButton button = new SGButton(
+
+                    new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).name(MessageUtil.getMessage("finallygoto").formatted(strings[0], strings[2])).build()
+
+            );
+
+            menu.addButton(button);
 
             Bukkit.getScheduler().runTask(plugin, () -> p.openInventory(menu.getInventory()));
 
