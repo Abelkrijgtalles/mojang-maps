@@ -109,7 +109,7 @@ public class NavigationCommand implements CommandExecutor {
 
             List<Node> shortestPath = locationNode.getShortestPath();
 
-            SGMenu menu = MojangMaps.spiGUI.create("Navigation", (int) Math.ceil((shortestPath.size() + 1) / 9.0));
+            SGMenu menu = MojangMaps.spiGUI.create(MessageUtil.getMessage("navigation"), (int) Math.ceil((shortestPath.size() + 1) / 9.0));
 
             for (Node node : shortestPath) {
 
