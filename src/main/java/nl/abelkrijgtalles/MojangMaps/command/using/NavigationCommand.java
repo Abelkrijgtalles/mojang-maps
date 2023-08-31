@@ -105,7 +105,7 @@ public class NavigationCommand implements CommandExecutor {
             Node.calculateShortestPath(playerNode);
 
             Bukkit.getScheduler().cancelTask(taskID);
-            p.sendMessage("Calculated in " + ticksWhileCalculating[0] * .05 + " seconds");
+            p.sendMessage(MessageUtil.getMessage("calcins").formatted(ticksWhileCalculating[0] * .05));
 
             List<Node> shortestPath = locationNode.getShortestPath();
 
