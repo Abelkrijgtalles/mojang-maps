@@ -7,10 +7,7 @@ A Google Maps like navigation system for Minecraft.
 
 # Roadmap
 
-- [X] Creating a UI
-- [ ] Implementing a web app
-- [X] Saving Roads to disk/config files
-- [X] Using Dijkstra's Algorithm
+Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)
 
 # Commands
 
