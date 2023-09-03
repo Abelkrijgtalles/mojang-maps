@@ -18,6 +18,7 @@ Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)
 - /goto - Go to a specific location.
 - /whereamistanding /whichroad /where - Shows where you're standing.
 - /reloadconfigsfromdisk /reloadconfigs /reloadconfig - Reloads all the configs from disk.
+- /navigation /gotogui - Go to a specific location and view the navigation in GUI form.
 
 # Permissions
 
