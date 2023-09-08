@@ -6,7 +6,7 @@
 
     <groupId>nl.abelkrijgtalles</groupId>
     <artifactId>MojangMaps</artifactId>
-    <version>1.5</version>
+    <version>1.5-AUTOUPDATER-TEST</version>
     <packaging>jar</packaging>
 
     <name>MojangMaps</name>
@@ -99,6 +99,14 @@
             <groupId>com.samjakob</groupId>
             <artifactId>SpiGUI</artifactId>
             <version>v1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>nl.abelkrijgtalles</groupId>
+            <artifactId>AutoUpdater</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/AutoUpdater-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

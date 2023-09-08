@@ -11,6 +11,7 @@ import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.MojangMapsRegister;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
@@ -21,11 +22,14 @@ import org.bstats.charts.DrilldownPie;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.json.JsonObject;
+
+import nl.abelkrijgtalles.autoupdater.AutoUpdater;
 
 public final class MojangMaps extends JavaPlugin {
 
@@ -95,6 +99,11 @@ public final class MojangMaps extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        try {
+            AutoUpdater.registerPlugin(new MojangMapsRegister(this));
+        } catch (IOException ignore) {
+        }
 
         // Bstats init
         int pluginId = 19295;
