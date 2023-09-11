@@ -1,14 +1,14 @@
 package nl.abelkrijgtalles.MojangMaps.util;
 
+import nl.abelkrijgtalles.autoupdater.manager.PluginRegister;
+import nl.abelkrijgtalles.autoupdater.object.PluginRegisterResponse;
+
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 
 import java.util.Objects;
 
 import javax.json.JsonObject;
-
-import nl.abelkrijgtalles.autoupdater.manager.PluginRegister;
-import nl.abelkrijgtalles.autoupdater.object.PluginRegisterResponse;
 
 public class MojangMapsRegister implements PluginRegister {
 

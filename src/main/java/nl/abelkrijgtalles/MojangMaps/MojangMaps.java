@@ -2,6 +2,8 @@ package nl.abelkrijgtalles.MojangMaps;
 
 import com.samjakob.spigui.SpiGUI;
 
+import nl.abelkrijgtalles.autoupdater.AutoUpdater;
+
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
@@ -28,8 +30,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.json.JsonObject;
-
-import nl.abelkrijgtalles.autoupdater.AutoUpdater;
 
 public final class MojangMaps extends JavaPlugin {
 
