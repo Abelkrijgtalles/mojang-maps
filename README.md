@@ -2,8 +2,6 @@
 
 A Google Maps like navigation system for Minecraft.
 
-_What they had in common was mainly love of excellence and programming. They wanted to make their programs that they used be as good as they could. They also wanted to make them do neat things. They wanted to be able to do something in a more exciting way than anyone believed possible and show "Look how wonderful this is. I bet you didn't believe this could be done."_ - Richard Stallman 1985
-
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=W79VLY89H4XRY)
 [![Crowdin](https://badges.crowdin.net/mojang-maps/localized.svg?style=for-the-badge&logo=paypal)](https://crowdin.com/project/mojang-maps)
 
