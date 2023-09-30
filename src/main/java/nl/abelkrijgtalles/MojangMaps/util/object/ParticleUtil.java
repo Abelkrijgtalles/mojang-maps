@@ -38,7 +38,7 @@ public class ParticleUtil {
             Location location = new Location(p.getWorld(), x, y, z);
 
             Particle.DustOptions dustOptions = new Particle.DustOptions(Color.BLUE, 1.0f);
-            p.spawnParticle(Particle.REDSTONE, location, 50, dustOptions);
+            p.spawnParticle(Particle.REDSTONE, location, 1, dustOptions);
         }
 
     }
