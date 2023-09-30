@@ -29,14 +29,16 @@ public class ParticleUtil {
         int distance = LocationUtil.getDistance(location1, location2);
 
         for (int i = 0; i < distance; i++) {
+            double ratio = (double) i / distance;
 
-            // mechanism based on: Math.round((float) ((location.getBlockX() - location1.getBlockX()) / neededLocations) * (j + 1)) + location1.getBlockX()
+            int x = Math.round((float) (location1.getBlockX() + (location2.getBlockX() - location1.getBlockX()) * ratio));
+            int y = Math.round((float) (location1.getBlockY() + (location2.getBlockY() - location1.getBlockY()) * ratio));
+            int z = Math.round((float) (location1.getBlockZ() + (location2.getBlockZ() - location1.getBlockZ()) * ratio));
 
-            Location location = new Location(p.getWorld(), Math.round((float) ((location1.getBlockX() - location2.getBlockX()) / distance) * (i + 1)) + location2.getBlockX(), location1.getBlockY(), Math.round((float) ((location1.getBlockZ() - location2.getBlockZ()) / distance) * (i + 1)) + location2.getBlockZ());
+            Location location = new Location(p.getWorld(), x, y, z);
 
             Particle.DustOptions dustOptions = new Particle.DustOptions(Color.BLUE, 1.0f);
             p.spawnParticle(Particle.REDSTONE, location, 50, dustOptions);
-
         }
 
     }
