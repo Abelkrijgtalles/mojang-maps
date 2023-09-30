@@ -23,6 +23,7 @@ import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,6 +47,8 @@ public class PlayerWalkListener implements Listener {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(RoadUtil.getLocationMessage(p)));
 
         }
+
+        p.spawnParticle(Particle.FIREWORKS_SPARK, p.getLocation(), 1);
 
     }
 
