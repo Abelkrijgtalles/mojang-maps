@@ -20,7 +20,6 @@ package nl.abelkrijgtalles.MojangMaps;
 import com.samjakob.spigui.SpiGUI;
 
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
-import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
@@ -142,7 +141,6 @@ public final class MojangMaps extends JavaPlugin {
 
         // Commands Init
         CommandAPI.onEnable();
-        getCommand("registerroad").setExecutor(new RegisterRoadCommand());
         getCommand("goto").setExecutor(new GoToCommand(this));
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
         getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
@@ -179,6 +177,9 @@ public final class MojangMaps extends JavaPlugin {
 
                 })
                 .register();
+
+        new CommandAPICommand("registerroad")
+                .withArguments()
 
     }
 
