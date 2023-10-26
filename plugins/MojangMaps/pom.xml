@@ -63,6 +63,10 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>nl.abelkrijgtalles.MojangMaps</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>dev.jorel.commandapi</pattern>
+                            <shadedPattern>nl.abelkrijgtalles.MojangMaps</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -146,6 +150,10 @@
         <dependency>
             <groupId>nl.abelkrijgtalles</groupId>
             <artifactId>ParticLib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-shade</artifactId>
         </dependency>
     </dependencies>
 </project>
