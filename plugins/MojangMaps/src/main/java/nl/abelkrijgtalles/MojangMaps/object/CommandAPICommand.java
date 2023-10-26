@@ -15,18 +15,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.MojangMaps.command.register;
-
-import nl.abelkrijgtalles.MojangMaps.object.CommandAPICommand;
-import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
+package nl.abelkrijgtalles.MojangMaps.object;
 
 import org.bukkit.entity.Player;
 
 import dev.jorel.commandapi.executors.CommandArguments;
 
-public class RegisterLocationCommand implements CommandAPICommand {
-    @Override
-    public void onRun(Player p, CommandArguments args) {
-        NodeUtil.registerLocation(p, p.getLocation());
-    }
+public interface CommandAPICommand {
+
+    void onRun(Player p, CommandArguments args);
+
 }

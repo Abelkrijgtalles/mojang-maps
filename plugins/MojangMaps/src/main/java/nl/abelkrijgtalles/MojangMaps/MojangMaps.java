@@ -44,6 +44,10 @@ import java.util.Objects;
 
 import javax.json.JsonObject;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.CommandAPICommand;
+
 public final class MojangMaps extends JavaPlugin {
 
     public static boolean isOnline = true;
@@ -108,6 +112,8 @@ public final class MojangMaps extends JavaPlugin {
 
         }
 
+        CommandAPI.onDisable();
+
     }
 
     @Override
@@ -135,7 +141,7 @@ public final class MojangMaps extends JavaPlugin {
         }
 
         // Commands Init
-        getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
+        CommandAPI.onEnable();
         getCommand("registerroad").setExecutor(new RegisterRoadCommand());
         getCommand("goto").setExecutor(new GoToCommand(this));
         getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
@@ -163,4 +169,25 @@ public final class MojangMaps extends JavaPlugin {
 
     }
 
+    private void registerCommands() {
+
+        new CommandAPICommand("registerlocation")
+                .withAliases("createlocation")
+                .executesPlayer((sender, args) -> {
+
+                    new RegisterLocationCommand().onRun(sender, args);
+
+                })
+                .register();
+
+    }
+
+    @Override
+    public void onLoad() {
+
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true));
+
+        registerCommands();
+
+    }
 }
