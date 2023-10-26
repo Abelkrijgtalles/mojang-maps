@@ -162,9 +162,5 @@
             <groupId>dev.jorel</groupId>
             <artifactId>commandapi-bukkit-shade</artifactId>
         </dependency>
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-annotations</artifactId>
-        </dependency>
     </dependencies>
 </project>
