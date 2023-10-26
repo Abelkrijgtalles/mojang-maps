@@ -1,0 +1,7 @@
+name: ParticLib
+version: '${project.version}'
+main: nl.abelkrijgtalles.particlib.ParticLib
+api-version: '1.20'
+authors: [ Abelpro678 ]
+description: A small and simple particle lib for Spigot
+website: https://github.com/Abelkrijgtalles/APlug
