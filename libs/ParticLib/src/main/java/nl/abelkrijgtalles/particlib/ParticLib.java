@@ -7,15 +7,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import nl.abelkrijgtalles.particlib.object.ParticleLine;
 import nl.abelkrijgtalles.particlib.util.LocationUtil;
 
 public final class ParticLib extends JavaPlugin {
 
-    public static void spawnParticleLine(ParticleLine particleLine, ArrayList<Player> players) {
+    public static void spawnParticleLine(ParticleLine particleLine, List<Player> players) {
 
-        ArrayList<Location> locations = particleLine.getLocations();
+        List<Location> locations = particleLine.getLocations();
 
         for (int i = 0; i < particleLine.getLocations().size() - 1; i++) {
 
@@ -47,7 +48,7 @@ public final class ParticLib extends JavaPlugin {
 
     public static void spawnParticleLine(ParticleLine particleLine, Player p) {
 
-        ArrayList<Player> players = new ArrayList<Player>();
+        List<Player> players = new ArrayList<Player>();
         players.add(p);
 
         spawnParticleLine(particleLine, players);

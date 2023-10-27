@@ -22,16 +22,17 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import nl.abelkrijgtalles.particlib.util.LocationUtil;
 
 public class ParticleLine {
 
-    private final ArrayList<Location> locations;
+    private final List<Location> locations;
     private final Color color;
     private double density = 1;
 
-    public ParticleLine(ArrayList<Location> locations, Color color) {
+    public ParticleLine(List<Location> locations, Color color) {
 
         if (!LocationUtil.areInSameWorld(locations)) {
 
@@ -44,7 +45,7 @@ public class ParticleLine {
 
     }
 
-    public ParticleLine(ArrayList<Location> locations, double density, Color color) {
+    public ParticleLine(List<Location> locations, double density, Color color) {
 
         if (!LocationUtil.areInSameWorld(locations)) {
 
@@ -60,7 +61,7 @@ public class ParticleLine {
 
     public ParticleLine(Location location1, Location location2, Color color) {
 
-        ArrayList<Location> locations = new ArrayList<Location>();
+        List<Location> locations = new ArrayList<Location>();
         locations.add(location1);
         locations.add(location2);
 
@@ -77,7 +78,7 @@ public class ParticleLine {
 
     public ParticleLine(Location location1, Location location2, double density, Color color) {
 
-        ArrayList<Location> locations = new ArrayList<Location>();
+        List<Location> locations = new ArrayList<Location>();
         locations.add(location1);
         locations.add(location2);
 
@@ -99,7 +100,7 @@ public class ParticleLine {
 
     }
 
-    public ArrayList<Location> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 

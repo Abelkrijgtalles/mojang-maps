@@ -128,8 +128,6 @@ public final class MojangMaps extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         NodesConfigUtil.setup();
-        TranslationUtil translationUtil = new TranslationUtil(this);
-        translationUtil.updateTranslations();
 
         // Update stuff
         checkVersion();
@@ -171,6 +169,8 @@ public final class MojangMaps extends JavaPlugin {
 
         new CommandAPICommand("registerlocation")
                 .withAliases("createlocation")
+                .withHelp("Register a location.", "Register a location at your position.")
+                .withUsage("/registerlocation")
                 .executesPlayer((sender, args) -> {
 
                     new RegisterLocationCommand().onRun(sender, args);
@@ -178,13 +178,20 @@ public final class MojangMaps extends JavaPlugin {
                 })
                 .register();
 
-        new CommandAPICommand("registerroad")
-                .withArguments()
+//        new CommandAPICommand("registerroad")
+//                .withAliases("createroad")
+//                .withHelp("Register a road.", "Register a road by using waypoints.")
+//                .withUsage("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
+//                .withArguments(new ListArgumentBuilder
 
     }
 
     @Override
     public void onLoad() {
+
+        // Translation init
+        TranslationUtil translationUtil = new TranslationUtil(this);
+        translationUtil.updateTranslations();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true));
 

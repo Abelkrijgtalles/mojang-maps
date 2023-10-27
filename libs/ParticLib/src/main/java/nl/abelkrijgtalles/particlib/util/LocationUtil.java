@@ -20,11 +20,11 @@ package nl.abelkrijgtalles.particlib.util;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class LocationUtil {
 
-    public static boolean areInSameWorld(ArrayList<Location> locations) {
+    public static boolean areInSameWorld(List<Location> locations) {
 
         World world = locations.get(0).getWorld();
 
