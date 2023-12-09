@@ -28,6 +28,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.Objects;
+
 public class PlayerWalkListener implements Listener {
 
     private final MojangMaps plugin;
@@ -41,11 +43,14 @@ public class PlayerWalkListener implements Listener {
 
         Player p = e.getPlayer();
 
-        if (plugin.getConfig().getBoolean("street-actionbar") && p.hasPermission("mojangmaps.using.viewlocation")) {
+        // current fix is made by @ajh123, see more in issue #6
+        String roadMsg = RoadUtil.getLocationMessage(p); // ask the RoadUtil for the location message
+        if (plugin.getConfig().getBoolean("street-actionbar") && p.hasPermission("mojangmaps.using.viewlocation") && !Objects.equals(roadMsg, "")) {
 
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(RoadUtil.getLocationMessage(p)));
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(roadMsg));
 
         }
+        // the fix by @ajh123 made in issue #6 ends here
 
     }
 
