@@ -45,12 +45,15 @@ public class PlayerWalkListener implements Listener {
 
         // current fix is made by @ajh123, see more in issue #6
         String roadMsg = RoadUtil.getLocationMessage(p); // ask the RoadUtil for the location message
-        if (plugin.getConfig().getBoolean("street-actionbar") && p.hasPermission("mojangmaps.using.viewlocation") && !Objects.equals(roadMsg, "")) {
+        System.out.println(roadMsg);
+        if (plugin.getConfig().getBoolean("street-actionbar") && p.hasPermission("mojangmaps.using.viewlocation") && roadMsg != "") {
 
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(roadMsg));
 
         }
         // the fix by @ajh123 made in issue #6 ends here
+
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Hello"));
 
     }
 
