@@ -1,5 +1,7 @@
 # Mojang Maps
 
+Project status: I've lost interest, so there probably won't be any new updates.
+
 A Google Maps like navigation system for Minecraft.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=W79VLY89H4XRY)
