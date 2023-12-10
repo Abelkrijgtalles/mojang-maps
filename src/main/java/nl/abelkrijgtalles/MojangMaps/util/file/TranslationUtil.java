@@ -42,7 +42,7 @@ public class TranslationUtil {
 
         if (!Objects.equals(plugin.getConfig().getString("language"), "custom")) {
 
-            Bukkit.getLogger().info("Getting latest translations.");
+            MojangMaps.getMMLogger().info("Getting latest translations.");
 
             JsonArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
 
@@ -69,7 +69,7 @@ public class TranslationUtil {
 
                 } else {
 
-                    Bukkit.getLogger().warning("Language code in messages.yml isn't in the translations, reverting to English.");
+                    MojangMaps.getMMLogger().warning("Language code in messages.yml isn't in the translations, reverting to English.");
                     languageCode = "en";
 
                 }

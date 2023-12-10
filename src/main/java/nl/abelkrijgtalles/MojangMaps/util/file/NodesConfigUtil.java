@@ -17,6 +17,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
 
 import org.bukkit.Bukkit;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NodesConfigUtil {
 
@@ -36,7 +38,7 @@ public class NodesConfigUtil {
 
     // Idk weird setup I guess
     public static void setup() {
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder(), "nodes.yml");
+        file = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder(), "nodes.yml");
 
         if (!file.exists()) {
             try {
@@ -49,7 +51,7 @@ public class NodesConfigUtil {
                 get().options().copyDefaults(true);
                 save();
             } catch (IOException e) {
-                Bukkit.getLogger().warning("Could not create the configuration file nodes.yml.");
+                MojangMaps.getMMLogger().warning("Could not create the configuration file nodes.yml.");
             }
         }
         customFile = YamlConfiguration.loadConfiguration(file);
@@ -63,7 +65,7 @@ public class NodesConfigUtil {
         try {
             customFile.save(file);
         } catch (IOException e) {
-            Bukkit.getLogger().warning("Could not save the configuration file nodes.yml.");
+            MojangMaps.getMMLogger().warning("Could not save the configuration file nodes.yml.");
         }
         reload();
     }

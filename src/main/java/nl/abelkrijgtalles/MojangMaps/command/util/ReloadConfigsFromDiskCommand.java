@@ -29,6 +29,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ReloadConfigsFromDiskCommand implements CommandExecutor {
 
@@ -41,13 +42,13 @@ public class ReloadConfigsFromDiskCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        File config = new File(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder(), "config.yml");
+        File config = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder(), "config.yml");
 
         NodesConfigUtil.reload();
         try {
             plugin.getConfig().load(config);
         } catch (IOException | InvalidConfigurationException e) {
-            Bukkit.getLogger().warning("Could not load config.");
+            MojangMaps.getMMLogger().warning("Could not load config.");
         }
 
         TranslationUtil translationUtil = new TranslationUtil(plugin);

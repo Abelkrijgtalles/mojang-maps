@@ -19,8 +19,6 @@ package nl.abelkrijgtalles.MojangMaps.util.other;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 
-import org.bukkit.Bukkit;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +47,7 @@ public class HTTPUtil {
             int statusCode = response.statusCode();
             String responseBody = response.body();
 
-            Bukkit.getLogger().info("API call to " + URL + " finished with code " + statusCode);
+            MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
             JsonArray dataContents;
             dataContents = Json.createReader(new StringReader(responseBody)).readArray();
@@ -58,7 +56,7 @@ public class HTTPUtil {
 
         } catch (IOException | InterruptedException e) {
 
-            Bukkit.getLogger().warning("Couldn't make an API call.");
+            MojangMaps.getMMLogger().warning("Couldn't make an API call.");
             MojangMaps.isOnline = false;
             return null;
 
@@ -76,7 +74,7 @@ public class HTTPUtil {
             int statusCode = response.statusCode();
             String responseBody = response.body();
 
-            Bukkit.getLogger().info("API call to " + URL + " finished with code " + statusCode);
+            MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
             JsonObject dataContents;
             dataContents = Json.createReader(new StringReader(responseBody)).readObject();
@@ -85,7 +83,7 @@ public class HTTPUtil {
 
         } catch (IOException | InterruptedException e) {
 
-            Bukkit.getLogger().warning("Couldn't make an API call.");
+            MojangMaps.getMMLogger().warning("Couldn't make an API call.");
             MojangMaps.isOnline = false;
             return null;
 
@@ -112,11 +110,11 @@ public class HTTPUtil {
             outputStream.close();
             inputStream.close();
 
-            Bukkit.getLogger().info("Successfully downloaded file from %s to %s.".formatted(fileUrl, path));
+            MojangMaps.getMMLogger().info("Successfully downloaded file from %s to %s.".formatted(fileUrl, path));
 
         } catch (IOException e) {
 
-            Bukkit.getLogger().warning("Could not download file from %s to %s.".formatted(fileUrl, path));
+            MojangMaps.getMMLogger().warning("Could not download file from %s to %s.".formatted(fileUrl, path));
             MojangMaps.isOnline = false;
 
         }

@@ -17,12 +17,15 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -42,14 +45,14 @@ public class MessageUtil {
 
         try {
 
-            Path file = Paths.get(String.valueOf(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder()), "messages.json");
+            Path file = Paths.get(String.valueOf(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder()), "messages.json");
             JsonReader reader = Json.createReader(Files.newBufferedReader(file));
 
             return reader.readObject();
 
         } catch (IOException e) {
 
-            Bukkit.getLogger().warning("Could not load messages.json.");
+            MojangMaps.getMMLogger().warning("Could not load messages.json.");
             return null;
 
         }

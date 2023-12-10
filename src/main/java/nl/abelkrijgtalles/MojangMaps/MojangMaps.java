@@ -41,6 +41,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
@@ -60,7 +61,7 @@ public final class MojangMaps extends JavaPlugin {
             Map<String, Integer> entry = new HashMap<>();
             entry.put(language, 1);
 
-            switch (language) {
+            switch (Objects.requireNonNull(language)) {
                 case "af" -> map.put("Afrikaans", entry);
                 case "ar" -> map.put("Arabic", entry);
                 case "ca" -> map.put("Catalan", entry);
@@ -135,12 +136,12 @@ public final class MojangMaps extends JavaPlugin {
         }
 
         // Commands Init
-        getCommand("registerlocation").setExecutor(new RegisterLocationCommand());
-        getCommand("registerroad").setExecutor(new RegisterRoadCommand());
-        getCommand("goto").setExecutor(new GoToCommand(this));
-        getCommand("whereamistanding").setExecutor(new WhereAmIStandingCommand());
-        getCommand("reloadconfigsfromdisk").setExecutor(new ReloadConfigsFromDiskCommand(this));
-        getCommand("navigation").setExecutor(new NavigationCommand(this));
+        Objects.requireNonNull(getCommand("registerlocation")).setExecutor(new RegisterLocationCommand());
+        Objects.requireNonNull(getCommand("registerroad")).setExecutor(new RegisterRoadCommand());
+        Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand(this));
+        Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
+        Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand(this));
+        Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand(this));
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
@@ -155,11 +156,18 @@ public final class MojangMaps extends JavaPlugin {
 
         JsonObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
         if (isOnline) {
+            assert latestRelease != null;
             if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {
                 isPluginOutdated = true;
 
             }
         }
+
+    }
+
+    public static Logger getMMLogger() {
+
+        return MojangMaps.getPlugin(MojangMaps.class).getLogger();
 
     }
 
