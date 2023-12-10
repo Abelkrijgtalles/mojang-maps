@@ -40,7 +40,7 @@ public class TranslationUtil {
 
     public void updateTranslations() {
 
-        if (plugin.getConfig().getString("language") != "custom") {
+        if (!Objects.equals(plugin.getConfig().getString("language"), "custom")) {
 
             Bukkit.getLogger().info("Getting latest translations.");
 
@@ -50,6 +50,7 @@ public class TranslationUtil {
                 List<String> languageCodes = new ArrayList<>();
                 String languageCode;
 
+                assert dataContents != null;
                 dataContents.forEach(jsonValue -> {
 
                     JsonObject content = (JsonObject) jsonValue;
@@ -73,7 +74,8 @@ public class TranslationUtil {
 
                 }
 
-                HTTPUtil.DownloadFile("https://raw.githubusercontent.com/Abelkrijgtalles/mojang-maps-data/main/%s/%s.json".formatted(languageCode, languageCode), String.valueOf(Paths.get(String.valueOf(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps").getDataFolder()), "messages.json")));
+                assert languageCode != null;
+                HTTPUtil.DownloadFile("https://raw.githubusercontent.com/Abelkrijgtalles/mojang-maps-data/main/%s/%s.json".formatted(languageCode, languageCode.split("-")[0]), String.valueOf(Paths.get(String.valueOf(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder()), "messages.json")));
             }
 
         }
