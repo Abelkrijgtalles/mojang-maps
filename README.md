@@ -1,6 +1,6 @@
 # Mojang Maps
 
-Project status: I've lost interest, so there probably won't be any new updates.
+Project status: I've regained interest because of the popularity of Mojang Maps, so there will hopefully be new updates.
 
 A Google Maps like navigation system for Minecraft.
 
