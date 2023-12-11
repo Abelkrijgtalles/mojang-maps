@@ -106,7 +106,7 @@ public class NavigationCommand implements CommandExecutor {
         Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
         if (playerNode == null || locationNode == null) {
-            p.sendMessage(ChatColor.RED + "No node founds. Try creating a road first.");
+            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("nonodesfound"));
             return;
         }
 
