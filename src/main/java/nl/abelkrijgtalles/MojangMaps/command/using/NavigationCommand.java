@@ -105,6 +105,11 @@ public class NavigationCommand implements CommandExecutor {
         Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
         Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
+        if (playerNode == null || locationNode == null) {
+            p.sendMessage(ChatColor.RED + "No node founds. Try creating a road first.");
+            return;
+        }
+
         p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
 
