@@ -2,6 +2,7 @@ package nl.abelkrijgtalles.MojangMaps.command;
 
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,6 +32,7 @@ public class GiveRegisterItemCommand implements CommandExecutor {
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
+            p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
 
         }
 
