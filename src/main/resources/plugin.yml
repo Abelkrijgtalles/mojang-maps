@@ -36,6 +36,8 @@ commands:
     permission: mojangmaps.using.navigation
     aliases:
       - gotogui
+  giveregisteritem:
+    description: Hello, this is a test
 
 permissions:
   mojangmaps.register:
