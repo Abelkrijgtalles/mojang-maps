@@ -49,3 +49,5 @@ Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)
 
 - [SamJakob](https://github.com/SamJakob) and [all these people](https://github.com/SamJakob/SpiGUI/graphs/contributors)
   for creating SpiGUI.
+- [filoghost](https://gist.github.com/filoghost)
+  for creating [a way to store hidden data in lore](https://gist.github.com/filoghost/f53ecb7b014c40b66bdc)

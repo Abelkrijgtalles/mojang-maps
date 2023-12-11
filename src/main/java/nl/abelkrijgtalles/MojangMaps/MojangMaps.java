@@ -19,6 +19,7 @@ package nl.abelkrijgtalles.MojangMaps;
 
 import com.samjakob.spigui.SpiGUI;
 
+import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
@@ -142,6 +143,7 @@ public final class MojangMaps extends JavaPlugin {
         Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
         Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand(this));
         Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand(this));
+        Objects.requireNonNull(getCommand("giveregisteritem")).setExecutor(new GiveRegisterItemCommand());
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
