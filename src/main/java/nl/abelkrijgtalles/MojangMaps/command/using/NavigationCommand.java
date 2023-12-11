@@ -110,7 +110,7 @@ public class NavigationCommand implements CommandExecutor {
             return;
         }
 
-		p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
+        p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
 
             // starting timer
