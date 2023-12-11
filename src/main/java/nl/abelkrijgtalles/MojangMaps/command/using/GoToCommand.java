@@ -99,20 +99,7 @@ public class GoToCommand implements CommandExecutor {
             p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
             Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                 // start timer
-                final int[] ticksWhileCalculating = {0};
-                int taskID = new BukkitRunnable() {
-                    @Override
-                    public void run() {
-
-                        ticksWhileCalculating[0] += 1;
-
-                    }
-                }.runTaskTimer(plugin, 0, 1).getTaskId();
-
-                Node.calculateShortestPath(playerNode);
-
-                Bukkit.getScheduler().cancelTask(taskID);
-                p.sendMessage(MessageUtil.getMessage("calcins").formatted(ticksWhileCalculating[0] * .05));
+                calculateAndTime(p, playerNode, plugin);
 
                 Node.printPaths(Collections.singletonList(locationNode), p);
                 p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
@@ -120,6 +107,23 @@ public class GoToCommand implements CommandExecutor {
 
         }
         return true;
+    }
+
+    public static void calculateAndTime(Player p, Node playerNode, MojangMaps plugin) {
+        final int[] ticksWhileCalculating = {0};
+        int taskID = new BukkitRunnable() {
+            @Override
+            public void run() {
+
+                ticksWhileCalculating[0] += 1;
+
+            }
+        }.runTaskTimer(plugin, 0, 1).getTaskId();
+
+        Node.calculateShortestPath(playerNode);
+
+        Bukkit.getScheduler().cancelTask(taskID);
+        p.sendMessage(MessageUtil.getMessage("calcins").formatted(ticksWhileCalculating[0] * .05));
     }
 
     private Node findNodeByName(List<Node> nodes, String name) {
