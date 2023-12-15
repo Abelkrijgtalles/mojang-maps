@@ -1,13 +1,18 @@
 package nl.abelkrijgtalles.MojangMaps.listener;
 
+import nl.abelkrijgtalles.MojangMaps.util.other.BlockSelectUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.Objects;
 
@@ -51,6 +56,21 @@ public class RegisterItemListener implements Listener {
 
         }
 
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) {
+            return;
+        }
+
+        if (event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
+
+        BlockSelectUtil.getSelectedBlock(Objects.requireNonNull(event.getClickedBlock()).getLocation(), event.getPlayer());
+
+        event.setUseItemInHand(Event.Result.DENY);
     }
 
 }

@@ -37,12 +37,11 @@ import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.json.JsonObject;
@@ -50,10 +49,10 @@ import javax.json.JsonObject;
 public final class MojangMaps extends JavaPlugin {
 
     public static boolean isOnline = true;
-
     public static SpiGUI spiGUI;
-
     public boolean isPluginOutdated = false;
+    public static boolean isCreatingARoad = false;
+    public static List<Location> creatingRoadLocations = new ArrayList<>();
 
     private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
 

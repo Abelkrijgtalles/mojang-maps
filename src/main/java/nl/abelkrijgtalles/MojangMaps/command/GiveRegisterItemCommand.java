@@ -1,5 +1,6 @@
 package nl.abelkrijgtalles.MojangMaps.command;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 
 import org.bukkit.ChatColor;
@@ -22,6 +23,7 @@ public class GiveRegisterItemCommand implements CommandExecutor {
 
         if (commandSender instanceof Player p) {
 
+            MojangMaps.isCreatingARoad = true;
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             List<String> lore = new ArrayList<>();
             lore.add(HiddenStringUtil.encodeString("RegisterItem"));
