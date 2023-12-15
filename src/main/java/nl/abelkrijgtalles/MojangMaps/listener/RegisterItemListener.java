@@ -60,12 +60,18 @@ public class RegisterItemListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
 
         if (event.getHand() != EquipmentSlot.HAND) {
             return;
+        }
+
+        if (!Objects.equals(HiddenStringUtil.extractHiddenString(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(event.getPlayer().getItemInUse()).getItemMeta()).getLore()).get(0)), "RegisterItem")) {
+
+            return;
+
         }
 
         BlockSelectUtil.getSelectedBlock(Objects.requireNonNull(event.getClickedBlock()).getLocation(), event.getPlayer());
