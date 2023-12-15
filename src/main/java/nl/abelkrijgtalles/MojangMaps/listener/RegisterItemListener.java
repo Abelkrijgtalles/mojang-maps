@@ -68,7 +68,7 @@ public class RegisterItemListener implements Listener {
             return;
         }
 
-        if (!Objects.equals(HiddenStringUtil.extractHiddenString(event.getPlayer().getItemInUse().getItemMeta().getLore().get(0)), "RegisterItem")) {
+        if (!Objects.equals(HiddenStringUtil.extractHiddenString(event.getItem().getItemMeta().getLore().get(0)), "RegisterItem")) {
 
             return;
 
