@@ -21,7 +21,7 @@ public class RegisterItemListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
-        if (Objects.equals(HiddenStringUtil.extractHiddenString(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(event.getPlayer().getItemInUse()).getItemMeta()).getLore()).get(0)), "RegisterItem")) {
+        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getItemInUse().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
             event.getPlayer().sendMessage("Don't break stuff when using the register item (still need a better name)");
             event.setCancelled(true);
@@ -35,7 +35,7 @@ public class RegisterItemListener implements Listener {
 
         if (event.getDamager() instanceof Player p) {
 
-            if (Objects.equals(HiddenStringUtil.extractHiddenString(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(p.getItemInUse()).getItemMeta()).getLore()).get(0)), "RegisterItem")) {
+            if (HiddenStringUtil.extractHiddenString(p.getItemInUse().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
                 p.sendMessage("Don't damage entity when using the register item (still need a better name)");
                 event.setCancelled(true);
@@ -49,7 +49,7 @@ public class RegisterItemListener implements Listener {
     @EventHandler
     public void onPlayerItemDamage(PlayerItemDamageEvent event) {
 
-        if (Objects.equals(HiddenStringUtil.extractHiddenString(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(event.getPlayer().getItemInUse()).getItemMeta()).getLore()).get(0)), "RegisterItem")) {
+        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getItemInUse().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
             event.getPlayer().sendMessage("Don't damage this item when using the register item (still need a better name)");
             event.setCancelled(true);
@@ -74,7 +74,7 @@ public class RegisterItemListener implements Listener {
 
         }
 
-        BlockSelectUtil.getSelectedBlock(Objects.requireNonNull(event.getClickedBlock()).getLocation(), event.getPlayer());
+        BlockSelectUtil.getSelectedBlock(event.getClickedBlock().getLocation(), event.getPlayer());
 
         event.setUseItemInHand(Event.Result.DENY);
     }
