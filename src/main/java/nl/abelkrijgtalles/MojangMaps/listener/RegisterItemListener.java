@@ -12,7 +12,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.inventory.EquipmentSlot;
 
 public class RegisterItemListener implements Listener {
 
@@ -60,20 +59,15 @@ public class RegisterItemListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
 
-        p.sendMessage("Hopefully not 1, 2 or 3:");
+        p.sendMessage("Hopefully not 1 or 2");
 
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             p.sendMessage("1");
             return;
         }
 
-        if (event.getHand() != EquipmentSlot.HAND) {
-            p.sendMessage("2");
-            return;
-        }
-
         if (HiddenStringUtil.extractHiddenString(event.getItem().getItemMeta().getLore().get(0)) != "RegisterItem") {
-            p.sendMessage("3");
+            p.sendMessage("2");
             return;
 
         }
