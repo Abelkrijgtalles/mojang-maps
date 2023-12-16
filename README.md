@@ -1,11 +1,11 @@
 # Mojang Maps
 
-Project status: I've regained interest because of the popularity of Mojang Maps, so there will hopefully be new updates.
-
 A Google Maps like navigation system for Minecraft.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=W79VLY89H4XRY)
 [![Crowdin](https://badges.crowdin.net/mojang-maps/localized.svg?style=for-the-badge&logo=paypal)](https://crowdin.com/project/mojang-maps)
+
+Project status: I've regained interest because of the popularity of Mojang Maps, so there will hopefully be new updates.
 
 View more information on [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)!
 

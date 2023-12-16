@@ -18,10 +18,11 @@
 
 package nl.abelkrijgtalles.MojangMaps.listener;
 
-import nl.abelkrijgtalles.MojangMaps.util.other.BlockSelectUtil;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -54,7 +55,7 @@ public class RegisterItemListener implements Listener {
 
         if (isntItem(event.getPlayer())) return;
 
-        event.getPlayer().sendMessage(ChatColor.RED + "Don't break stuff when using the register item (still need a better name)");
+        event.getPlayer().sendMessage(ChatColor.RED + "Don't break stuff when using the register item (still need a better name).");
         event.setCancelled(true);
 
 
@@ -67,7 +68,7 @@ public class RegisterItemListener implements Listener {
 
             if (isntItem(p)) return;
 
-            p.sendMessage(ChatColor.RED + "Don't damage entity when using the register item (still need a better name)");
+            p.sendMessage(ChatColor.RED + "Don't damage entity when using the register item (still need a better name).");
             event.setCancelled(true);
 
 
@@ -82,7 +83,7 @@ public class RegisterItemListener implements Listener {
 
         if (isntItem(p)) return;
 
-        event.getPlayer().sendMessage(ChatColor.RED + "Don't damage this item when using the register item (still need a better name)");
+        event.getPlayer().sendMessage(ChatColor.RED + "Don't damage this item when using the register item (still need a better name).");
         event.setCancelled(true);
 
     }
@@ -97,7 +98,24 @@ public class RegisterItemListener implements Listener {
 
         if (isntItem(p)) return;
 
-        BlockSelectUtil.getSelectedBlock(event.getClickedBlock().getLocation(), event.getPlayer());
+        Location selectedLocation = event.getClickedBlock().getLocation();
+
+        switch (event.getBlockFace()) {
+
+            case UP -> selectedLocation.add(0, 1, 0);
+            case DOWN -> selectedLocation.add(0, -1, 0);
+            case EAST -> selectedLocation.add(1, 0, 0);
+            case WEST -> selectedLocation.add(-1, 0, 0);
+            case NORTH -> selectedLocation.add(0, 0, -1);
+            case SOUTH -> selectedLocation.add(0, 0, 1);
+            default -> {
+                return;
+            }
+
+        }
+
+        MojangMaps.creatingRoadLocations.add(selectedLocation);
+        p.sendMessage(ChatColor.RED + "Added point.");
 
         event.setUseItemInHand(Event.Result.DENY);
     }
