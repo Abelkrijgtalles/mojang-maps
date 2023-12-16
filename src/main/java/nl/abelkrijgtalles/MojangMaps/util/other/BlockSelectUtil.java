@@ -18,43 +18,13 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
-import org.bukkit.Axis;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 public class BlockSelectUtil {
 
     public static void getSelectedBlock(Location selectedLocation, Player p) {
 
-        // btw, I don't even know what a rad is yet, because I haven't had/discussed it in school yet 👍
-
-        double xAngle = calculateAngleOnAxis(selectedLocation, p.getLocation(), Axis.X);
-        double zAngle = calculateAngleOnAxis(selectedLocation, p.getLocation(), Axis.Z);
-
-        p.sendMessage("X " + xAngle);
-        p.sendMessage("Z " + zAngle);
-
-    }
-
-    public static double calculateAngleOnAxis(Location location1, Location location2, Axis axis) {
-        Vector vector1 = location1.toVector();
-        Vector vector2 = location2.toVector();
-
-        double dotProduct = vector1.dot(vector2);
-        double magnitude1 = vector1.length();
-        double magnitude2 = vector2.length();
-
-        double cosTheta = dotProduct / (magnitude1 * magnitude2);
-
-        double angle = Math.acos(cosTheta);
-
-        angle = Math.toDegrees(angle);
-
-        return switch (axis) {
-            case X, Y -> angle;
-            case Z -> 180 - angle;
-        };
     }
 
 
