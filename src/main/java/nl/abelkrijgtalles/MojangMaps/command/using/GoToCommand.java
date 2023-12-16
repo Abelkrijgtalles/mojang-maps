@@ -45,6 +45,23 @@ public class GoToCommand implements CommandExecutor {
         this.plugin = plugin;
     }
 
+    public static void calculateAndTime(Player p, Node playerNode, MojangMaps plugin) {
+        final int[] ticksWhileCalculating = {0};
+        int taskID = new BukkitRunnable() {
+            @Override
+            public void run() {
+
+                ticksWhileCalculating[0] += 1;
+
+            }
+        }.runTaskTimer(plugin, 0, 1).getTaskId();
+
+        Node.calculateShortestPath(playerNode);
+
+        Bukkit.getScheduler().cancelTask(taskID);
+        p.sendMessage(MessageUtil.getMessage("calcins").formatted(ticksWhileCalculating[0] * .05));
+    }
+
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player p) {
@@ -108,23 +125,6 @@ public class GoToCommand implements CommandExecutor {
 
         }
         return true;
-    }
-
-    public static void calculateAndTime(Player p, Node playerNode, MojangMaps plugin) {
-        final int[] ticksWhileCalculating = {0};
-        int taskID = new BukkitRunnable() {
-            @Override
-            public void run() {
-
-                ticksWhileCalculating[0] += 1;
-
-            }
-        }.runTaskTimer(plugin, 0, 1).getTaskId();
-
-        Node.calculateShortestPath(playerNode);
-
-        Bukkit.getScheduler().cancelTask(taskID);
-        p.sendMessage(MessageUtil.getMessage("calcins").formatted(ticksWhileCalculating[0] * .05));
     }
 
     private Node findNodeByName(List<Node> nodes, String name) {

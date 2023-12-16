@@ -37,15 +37,26 @@ import java.util.List;
 
 public class RegisterItemListener implements Listener {
 
+    public static boolean isntItem(Player p) {
+        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return true;
+
+        if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) return true;
+
+        List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().getLore();
+
+        if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0)))
+            return HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem";
+        return false;
+    }
+
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
-        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        if (isntItem(event.getPlayer())) return;
 
-            event.getPlayer().sendMessage(ChatColor.RED + "Don't break stuff when using the register item (still need a better name)");
-            event.setCancelled(true);
+        event.getPlayer().sendMessage(ChatColor.RED + "Don't break stuff when using the register item (still need a better name)");
+        event.setCancelled(true);
 
-        }
 
     }
 
@@ -54,12 +65,11 @@ public class RegisterItemListener implements Listener {
 
         if (event.getDamager() instanceof Player p) {
 
-            if (HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
+            if (isntItem(p)) return;
 
-                p.sendMessage(ChatColor.RED + "Don't damage entity when using the register item (still need a better name)");
-                event.setCancelled(true);
+            p.sendMessage(ChatColor.RED + "Don't damage entity when using the register item (still need a better name)");
+            event.setCancelled(true);
 
-            }
 
         }
 
@@ -68,12 +78,12 @@ public class RegisterItemListener implements Listener {
     @EventHandler
     public void onPlayerItemDamage(PlayerItemDamageEvent event) {
 
-        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        Player p = event.getPlayer();
 
-            event.getPlayer().sendMessage(ChatColor.RED + "Don't damage this item when using the register item (still need a better name)");
-            event.setCancelled(true);
+        if (isntItem(p)) return;
 
-        }
+        event.getPlayer().sendMessage(ChatColor.RED + "Don't damage this item when using the register item (still need a better name)");
+        event.setCancelled(true);
 
     }
 
@@ -85,14 +95,7 @@ public class RegisterItemListener implements Listener {
 
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return;
-
-        if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) return;
-
-        List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().getLore();
-
-        if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0)))
-            if (HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem") return;
+        if (isntItem(p)) return;
 
         BlockSelectUtil.getSelectedBlock(event.getClickedBlock().getLocation(), event.getPlayer());
 

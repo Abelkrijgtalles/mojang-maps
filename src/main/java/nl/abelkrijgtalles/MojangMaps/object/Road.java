@@ -29,9 +29,8 @@ import java.util.Objects;
 
 public class Road implements ConfigurationSerializable {
 
-    private String name;
-
     private final List<Integer> locations;
+    private String name;
 
     public Road(List<Integer> locations) {
         this.locations = locations;

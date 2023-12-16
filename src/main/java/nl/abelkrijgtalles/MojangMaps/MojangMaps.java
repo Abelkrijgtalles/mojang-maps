@@ -51,9 +51,9 @@ public final class MojangMaps extends JavaPlugin {
 
     public static boolean isOnline = true;
     public static SpiGUI spiGUI;
-    public boolean isPluginOutdated = false;
     public static boolean isCreatingARoad = false;
     public static List<Location> creatingRoadLocations = new ArrayList<>();
+    public boolean isPluginOutdated = false;
 
     private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
 
@@ -99,6 +99,12 @@ public final class MojangMaps extends JavaPlugin {
 
             return map;
         }));
+
+    }
+
+    public static Logger getMMLogger() {
+
+        return MojangMaps.getPlugin(MojangMaps.class).getLogger();
 
     }
 
@@ -166,12 +172,6 @@ public final class MojangMaps extends JavaPlugin {
 
             }
         }
-
-    }
-
-    public static Logger getMMLogger() {
-
-        return MojangMaps.getPlugin(MojangMaps.class).getLogger();
 
     }
 

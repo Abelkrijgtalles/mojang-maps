@@ -43,39 +43,6 @@ public class Node implements Comparable<Node> {
         this.name = name;
     }
 
-    public void addAdjacentNode(Node node, int weight) {
-        adjacentNodes.put(node, weight);
-    }
-
-    public Integer getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Integer distance) {
-        this.distance = distance;
-    }
-
-    public Map<Node, Integer> getAdjacentNodes() {
-        return adjacentNodes;
-    }
-
-    public List<Node> getShortestPath() {
-        return shortestPath;
-    }
-
-    public void setShortestPath(List<Node> shortestPath) {
-        this.shortestPath = shortestPath;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int compareTo(Node node) {
-        return Integer.compare(this.distance, node.getDistance());
-    }
-
     public static void calculateShortestPath(Node source) {
         source.setDistance(0);
         Set<Node> settledNodes = new HashSet<>();
@@ -129,6 +96,39 @@ public class Node implements Comparable<Node> {
             locationAndDistanceList.add(entry);
         }
         return locationAndDistanceList;
+    }
+
+    public void addAdjacentNode(Node node, int weight) {
+        adjacentNodes.put(node, weight);
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+
+    public Map<Node, Integer> getAdjacentNodes() {
+        return adjacentNodes;
+    }
+
+    public List<Node> getShortestPath() {
+        return shortestPath;
+    }
+
+    public void setShortestPath(List<Node> shortestPath) {
+        this.shortestPath = shortestPath;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int compareTo(Node node) {
+        return Integer.compare(this.distance, node.getDistance());
     }
 
     public String getLocationText() {
