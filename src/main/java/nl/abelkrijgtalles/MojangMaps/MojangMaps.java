@@ -150,7 +150,7 @@ public final class MojangMaps extends JavaPlugin {
         Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
         Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand(this));
         Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand(this));
-        Objects.requireNonNull(getCommand("giveregisteritem")).setExecutor(new GiveRegisterItemCommand());
+        Objects.requireNonNull(getCommand("giveregisteritem")).setExecutor(new GiveRegisterItemCommand(this));
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
