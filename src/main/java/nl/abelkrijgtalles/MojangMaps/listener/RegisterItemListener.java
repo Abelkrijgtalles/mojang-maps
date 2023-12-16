@@ -61,17 +61,14 @@ public class RegisterItemListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
 
-        p.sendMessage("Hopefully not 1, 2 or 3");
-
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
 
-            p.sendMessage("1");
             return;
 
         }
 
         if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-            p.sendMessage("2");
+
             return;
 
         }
@@ -81,7 +78,6 @@ public class RegisterItemListener implements Listener {
         if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0))) {
             if (HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem") {
 
-                p.sendMessage("3");
                 return;
 
             }
