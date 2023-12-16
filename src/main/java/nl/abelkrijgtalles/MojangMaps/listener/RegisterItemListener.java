@@ -13,6 +13,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 
@@ -62,33 +63,18 @@ public class RegisterItemListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
 
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+        if (event.getHand() != EquipmentSlot.HAND) return;
 
-            return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-        }
+        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return;
 
-        if (!p.getInventory().getItemInMainHand().hasItemMeta()) {
-
-            return;
-
-        }
-
-        if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-
-            return;
-
-        }
+        if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) return;
 
         List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().getLore();
 
-        if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0))) {
-            if (HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem") {
-
-                return;
-
-            }
-        }
+        if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0)))
+            if (HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem") return;
 
         BlockSelectUtil.getSelectedBlock(event.getClickedBlock().getLocation(), event.getPlayer());
 
