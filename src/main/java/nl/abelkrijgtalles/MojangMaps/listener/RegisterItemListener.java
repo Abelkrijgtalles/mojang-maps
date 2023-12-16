@@ -67,6 +67,12 @@ public class RegisterItemListener implements Listener {
 
         }
 
+        if (!p.getInventory().getItemInMainHand().hasItemMeta()) {
+
+            return;
+
+        }
+
         if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
 
             return;
