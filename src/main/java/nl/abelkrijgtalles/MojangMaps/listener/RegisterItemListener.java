@@ -18,7 +18,7 @@ public class RegisterItemListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
-        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getItemInUse().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
             event.getPlayer().sendMessage("Don't break stuff when using the register item (still need a better name)");
             event.setCancelled(true);
@@ -32,7 +32,7 @@ public class RegisterItemListener implements Listener {
 
         if (event.getDamager() instanceof Player p) {
 
-            if (HiddenStringUtil.extractHiddenString(p.getItemInUse().getItemMeta().getLore().get(0)) != "RegisterItem") {
+            if (HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
                 p.sendMessage("Don't damage entity when using the register item (still need a better name)");
                 event.setCancelled(true);
@@ -46,7 +46,7 @@ public class RegisterItemListener implements Listener {
     @EventHandler
     public void onPlayerItemDamage(PlayerItemDamageEvent event) {
 
-        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getItemInUse().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
             event.getPlayer().sendMessage("Don't damage this item when using the register item (still need a better name)");
             event.setCancelled(true);
@@ -66,7 +66,7 @@ public class RegisterItemListener implements Listener {
             return;
         }
 
-        if (HiddenStringUtil.extractHiddenString(event.getItem().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
             p.sendMessage("2");
             return;
 
