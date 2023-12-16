@@ -68,13 +68,14 @@ public class RegisterItemListener implements Listener {
 
         }
 
-        if (!event.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
+        if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
             p.sendMessage("2");
             return;
 
         }
 
-        if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        p.sendMessage(HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)));
+        if (HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
             p.sendMessage("3");
             return;
