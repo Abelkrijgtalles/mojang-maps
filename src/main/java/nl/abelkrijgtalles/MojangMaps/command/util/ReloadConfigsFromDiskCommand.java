@@ -1,4 +1,5 @@
 /*
+ * MojangMaps
  * Copyright (C) 2023 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -12,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package nl.abelkrijgtalles.MojangMaps.command.util;
