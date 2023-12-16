@@ -13,6 +13,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 
+import java.util.List;
+
 public class RegisterItemListener implements Listener {
 
     @EventHandler
@@ -74,12 +76,15 @@ public class RegisterItemListener implements Listener {
 
         }
 
-        p.sendMessage(HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)));
-        if (HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
+        List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().getLore();
 
-            p.sendMessage("3");
-            return;
+        if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0))) {
+            if (HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem") {
 
+                p.sendMessage("3");
+                return;
+
+            }
         }
 
         BlockSelectUtil.getSelectedBlock(event.getClickedBlock().getLocation(), event.getPlayer());
