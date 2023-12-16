@@ -3,6 +3,7 @@ package nl.abelkrijgtalles.MojangMaps.listener;
 import nl.abelkrijgtalles.MojangMaps.util.other.BlockSelectUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -22,7 +23,7 @@ public class RegisterItemListener implements Listener {
 
         if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
-            event.getPlayer().sendMessage("Don't break stuff when using the register item (still need a better name)");
+            event.getPlayer().sendMessage(ChatColor.RED + "Don't break stuff when using the register item (still need a better name)");
             event.setCancelled(true);
 
         }
@@ -36,7 +37,7 @@ public class RegisterItemListener implements Listener {
 
             if (HiddenStringUtil.extractHiddenString(p.getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
-                p.sendMessage("Don't damage entity when using the register item (still need a better name)");
+                p.sendMessage(ChatColor.RED + "Don't damage entity when using the register item (still need a better name)");
                 event.setCancelled(true);
 
             }
@@ -50,7 +51,7 @@ public class RegisterItemListener implements Listener {
 
         if (HiddenStringUtil.extractHiddenString(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getLore().get(0)) != "RegisterItem") {
 
-            event.getPlayer().sendMessage("Don't damage this item when using the register item (still need a better name)");
+            event.getPlayer().sendMessage(ChatColor.RED + "Don't damage this item when using the register item (still need a better name)");
             event.setCancelled(true);
 
         }
