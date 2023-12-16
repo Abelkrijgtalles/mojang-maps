@@ -29,6 +29,11 @@ public class BlockSelectUtil {
 
         // btw, I don't even know what a rad is yet, because I haven't had/discussed it in school yet 👍
 
+        double xAngle = calculateAngleOnAxis(selectedLocation, p.getLocation(), Axis.X);
+        double zAngle = calculateAngleOnAxis(selectedLocation, p.getLocation(), Axis.Z);
+
+        p.sendMessage("X " + xAngle);
+        p.sendMessage("Z " + zAngle);
 
     }
 
