@@ -58,7 +58,7 @@ public class GiveRegisterItemCommand implements CommandExecutor {
                 @Override
                 public void run() {
 
-                    if (!MojangMaps.creatingRoadLocations.isEmpty()) {
+                    if (MojangMaps.creatingRoadLocations.size() > 1) {
 
                         ParticLib.spawnParticleLine(new ParticleLine(MojangMaps.creatingRoadLocations, 5, Color.YELLOW), p);
 
