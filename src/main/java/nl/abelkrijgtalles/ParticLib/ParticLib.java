@@ -18,6 +18,8 @@
 
 package nl.abelkrijgtalles.ParticLib;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -58,6 +60,9 @@ public final class ParticLib extends JavaPlugin {
                 for (Player p : players) {
                     p.spawnParticle(Particle.REDSTONE, location, 1, dustOptions);
                 }
+
+                MojangMaps.getMMLogger().info(String.valueOf(j));
+
             }
 
         }
