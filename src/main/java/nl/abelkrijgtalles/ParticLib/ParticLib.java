@@ -80,7 +80,7 @@ public final class ParticLib extends JavaPlugin {
 
     public static void broadcastParticleLine(ParticleLine particleLine) {
 
-        spawnParticleLine(particleLine, (ArrayList<Player>) Bukkit.getOnlinePlayers());
+        spawnParticleLine(particleLine, new ArrayList<Player>(Bukkit.getOnlinePlayers()));
 
     }
 
