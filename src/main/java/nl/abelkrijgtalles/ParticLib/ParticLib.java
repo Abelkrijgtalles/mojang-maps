@@ -61,7 +61,7 @@ public final class ParticLib extends JavaPlugin {
                     p.spawnParticle(Particle.REDSTONE, location, 1, dustOptions);
                 }
 
-                MojangMaps.getMMLogger().info(String.valueOf(j));
+                MojangMaps.getMMLogger().info(i + "," + j);
 
             }
 
