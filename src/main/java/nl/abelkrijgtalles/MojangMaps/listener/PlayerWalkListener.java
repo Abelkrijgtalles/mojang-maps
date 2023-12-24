@@ -31,14 +31,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerWalkListener implements Listener {
 
-    private final MojangMaps plugin;
-
-    public PlayerWalkListener(MojangMaps plugin) {
-        this.plugin = plugin;
-    }
-
     @EventHandler
     public void onPlayerWalk(PlayerMoveEvent e) {
+
+        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         Player p = e.getPlayer();
 

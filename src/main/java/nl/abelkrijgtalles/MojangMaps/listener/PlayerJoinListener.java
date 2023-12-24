@@ -28,14 +28,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    private final MojangMaps plugin;
-
-    public PlayerJoinListener(MojangMaps plugin) {
-        this.plugin = plugin;
-    }
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+
+        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         if (plugin.isPluginOutdated && e.getPlayer().isOp()) {
 

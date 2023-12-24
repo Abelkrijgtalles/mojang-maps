@@ -40,14 +40,6 @@ import nl.abelkrijgtalles.ParticLib.object.ParticleLine;
 
 public class GiveRegisterItemCommand implements CommandExecutor {
 
-    private final MojangMaps plugin;
-
-    public GiveRegisterItemCommand(MojangMaps plugin) {
-
-        this.plugin = plugin;
-
-    }
-
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
@@ -65,7 +57,7 @@ public class GiveRegisterItemCommand implements CommandExecutor {
                     }
 
                 }
-            }.runTaskTimer(plugin, 0, 20L);
+            }.runTaskTimer(MojangMaps.getPlugin(MojangMaps.class), 0, 20L);
 
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             List<String> lore = new ArrayList<>();

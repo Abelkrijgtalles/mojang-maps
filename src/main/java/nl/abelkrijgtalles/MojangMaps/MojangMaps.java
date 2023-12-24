@@ -132,7 +132,7 @@ public final class MojangMaps extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         NodesConfigUtil.setup();
-        TranslationUtil translationUtil = new TranslationUtil(this);
+        TranslationUtil translationUtil = new TranslationUtil();
         translationUtil.updateTranslations();
 
         // Update stuff
@@ -146,15 +146,15 @@ public final class MojangMaps extends JavaPlugin {
         // Commands Init
         Objects.requireNonNull(getCommand("registerlocation")).setExecutor(new RegisterLocationCommand());
         Objects.requireNonNull(getCommand("registerroad")).setExecutor(new RegisterRoadCommand());
-        Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand(this));
+        Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
         Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
-        Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand(this));
-        Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand(this));
-        Objects.requireNonNull(getCommand("giveregisteritem")).setExecutor(new GiveRegisterItemCommand(this));
+        Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand());
+        Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand());
+        Objects.requireNonNull(getCommand("giveregisteritem")).setExecutor(new GiveRegisterItemCommand());
 
         // Listeners/Events init
-        getServer().getPluginManager().registerEvents(new PlayerWalkListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerWalkListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new RegisterItemListener(), this);
 
         // SpiGUI init

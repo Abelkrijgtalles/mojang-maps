@@ -42,10 +42,43 @@ import java.util.List;
 
 public class NavigationCommand implements CommandExecutor {
 
-    private final MojangMaps plugin;
+    public static boolean goToCheck(String[] strings, Player p) {
 
-    public NavigationCommand(MojangMaps plugin) {
-        this.plugin = plugin;
+        if (strings.length < 3) {
+
+            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noarguments").formatted(3));
+            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
+
+            return true;
+
+        }
+
+        if (strings.length > 3) {
+
+            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
+            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
+
+            return true;
+
+        }
+
+        for (String coordinate : strings) {
+
+            try {
+
+                Integer.parseInt(coordinate);
+
+            } catch (NumberFormatException e) {
+
+                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
+                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
+
+                return true;
+
+            }
+
+        }
+        return false;
     }
 
     @Override
@@ -53,40 +86,7 @@ public class NavigationCommand implements CommandExecutor {
 
         if (commandSender instanceof Player p) {
 
-            if (strings.length < 3) {
-
-                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noarguments").formatted(3));
-                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                return true;
-
-            }
-
-            if (strings.length > 3) {
-
-                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
-                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                return true;
-
-            }
-
-            for (String coordinate : strings) {
-
-                try {
-
-                    Integer.parseInt(coordinate);
-
-                } catch (NumberFormatException e) {
-
-                    p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                    p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                    return true;
-
-                }
-
-            }
+            if (goToCheck(strings, p)) return true;
 
             openGUI(p, strings);
 
@@ -96,6 +96,8 @@ public class NavigationCommand implements CommandExecutor {
     }
 
     private void openGUI(Player p, String[] strings) {
+
+        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         Location location = new Location(p.getWorld(), Double.parseDouble(strings[0]), Double.parseDouble(strings[1]), Double.parseDouble(strings[2]));
         Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());

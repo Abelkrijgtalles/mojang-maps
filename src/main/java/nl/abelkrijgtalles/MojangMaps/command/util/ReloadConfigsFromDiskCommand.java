@@ -34,14 +34,10 @@ import java.util.Objects;
 
 public class ReloadConfigsFromDiskCommand implements CommandExecutor {
 
-    private final MojangMaps plugin;
-
-    public ReloadConfigsFromDiskCommand(MojangMaps plugin) {
-        this.plugin = plugin;
-    }
-
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+
+        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         File config = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder(), "config.yml");
 
@@ -52,7 +48,7 @@ public class ReloadConfigsFromDiskCommand implements CommandExecutor {
             MojangMaps.getMMLogger().warning("Could not load config.");
         }
 
-        TranslationUtil translationUtil = new TranslationUtil(plugin);
+        TranslationUtil translationUtil = new TranslationUtil();
         translationUtil.updateTranslations();
 
         return true;

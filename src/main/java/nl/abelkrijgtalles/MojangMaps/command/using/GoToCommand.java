@@ -39,12 +39,6 @@ import java.util.List;
 
 public class GoToCommand implements CommandExecutor {
 
-    private final MojangMaps plugin;
-
-    public GoToCommand(MojangMaps plugin) {
-        this.plugin = plugin;
-    }
-
     public static void calculateAndTime(Player p, Node playerNode, MojangMaps plugin) {
         final int[] ticksWhileCalculating = {0};
         int taskID = new BukkitRunnable() {
@@ -66,40 +60,9 @@ public class GoToCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player p) {
 
-            if (strings.length < 3) {
+            MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
-                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noarguments").formatted(3));
-                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                return true;
-
-            }
-
-            if (strings.length > 3) {
-
-                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
-                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                return true;
-
-            }
-
-            for (String coordinate : strings) {
-
-                try {
-
-                    Integer.parseInt(coordinate);
-
-                } catch (NumberFormatException e) {
-
-                    p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                    p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                    return true;
-
-                }
-
-            }
+            if (NavigationCommand.goToCheck(strings, p)) return true;
 
             Location location = new Location(p.getWorld(), Double.parseDouble(strings[0]), Double.parseDouble(strings[1]), Double.parseDouble(strings[2]));
             Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());

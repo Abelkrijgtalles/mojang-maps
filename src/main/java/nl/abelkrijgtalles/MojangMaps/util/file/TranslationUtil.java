@@ -33,13 +33,9 @@ import javax.json.JsonObject;
 
 public class TranslationUtil {
 
-    private final MojangMaps plugin;
-
-    public TranslationUtil(MojangMaps plugin) {
-        this.plugin = plugin;
-    }
-
     public void updateTranslations() {
+
+        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         if (!Objects.equals(plugin.getConfig().getString("language"), "custom")) {
 
