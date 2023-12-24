@@ -22,7 +22,6 @@ import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,9 +33,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import nl.abelkrijgtalles.ParticLib.ParticLib;
-import nl.abelkrijgtalles.ParticLib.object.ParticleLine;
 
 public class GiveRegisterItemCommand implements CommandExecutor {
 
@@ -52,7 +48,6 @@ public class GiveRegisterItemCommand implements CommandExecutor {
 
                     if (MojangMaps.creatingRoadLocations.size() > 1) {
 
-                        ParticLib.broadcastParticleLine(new ParticleLine(MojangMaps.creatingRoadLocations, 5, Color.YELLOW));
 
                     }
 
