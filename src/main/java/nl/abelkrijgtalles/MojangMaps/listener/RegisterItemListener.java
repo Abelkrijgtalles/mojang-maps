@@ -20,7 +20,9 @@ package nl.abelkrijgtalles.MojangMaps.listener;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
+import nl.abelkrijgtalles.MojangMaps.util.other.ParticleUtil;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -102,6 +104,13 @@ public class RegisterItemListener implements Listener {
 
         MojangMaps.creatingRoadLocations.add(selectedLocation);
         p.sendMessage(ChatColor.RED + "Added point.");
+
+        if (MojangMaps.creatingRoadLocations.size() > 1) {
+            if (MojangMaps.creatingRoadLocations.size() > 2) {
+                Bukkit.getScheduler().cancelTask(MojangMaps.creatingRoadParticleTaskId);
+            }
+            MojangMaps.creatingRoadParticleTaskId = ParticleUtil.spawnLine(MojangMaps.creatingRoadLocations, 1, 0.25);
+        }
 
         event.setUseItemInHand(Event.Result.DENY);
     }

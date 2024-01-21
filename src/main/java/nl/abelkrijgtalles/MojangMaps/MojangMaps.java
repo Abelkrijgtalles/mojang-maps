@@ -53,6 +53,7 @@ public final class MojangMaps extends JavaPlugin {
     public static SpiGUI spiGUI;
     public static boolean isCreatingARoad = false;
     public static List<Location> creatingRoadLocations = new ArrayList<>();
+    public static int creatingRoadParticleTaskId = -1;
     public boolean isPluginOutdated = false;
 
     private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
