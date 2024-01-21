@@ -25,15 +25,16 @@ import org.bukkit.Particle;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParticleUtil {
 
     // spawnLine() and getParticleLocations() are derived from this YouTube video: https://youtu.be/dJaVKIzs1x4 by PenguinHi5.
 
-    public static int spawnLine(ArrayList<Location> locations, int speed, double distanceBetweenParticles) {
+    public static int spawnLine(List<Location> locations, int speed, double distanceBetweenParticles) {
 
         int taskId = -1;
-        ArrayList<Location> particleLocations = getParticleLocations(locations, distanceBetweenParticles);
+        List<Location> particleLocations = getParticleLocations(locations, distanceBetweenParticles);
 
         return new BukkitRunnable() {
 
@@ -60,8 +61,8 @@ public class ParticleUtil {
 
     }
 
-    private static ArrayList<Location> getParticleLocations(ArrayList<Location> locations, double distanceBetweenParticles) {
-        ArrayList<Location> particleLocations = new ArrayList<>();
+    private static List<Location> getParticleLocations(List<Location> locations, double distanceBetweenParticles) {
+        List<Location> particleLocations = new ArrayList<>();
         double[] distances = new double[locations.size() - 1];
 
         for (int i = 0; i < distances.length; i++) {
