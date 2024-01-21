@@ -102,7 +102,7 @@ public class RegisterItemListener implements Listener {
 
         Location selectedLocation = event.getClickedBlock().getLocation();
 
-        selectedLocation.add(0, 1, 0);
+        selectedLocation.add(0.5, 1, 0.5);
 
         MojangMaps.creatingRoadLocations.add(selectedLocation);
         p.sendMessage(ChatColor.RED + "Added point.");
