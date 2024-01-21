@@ -52,9 +52,14 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
+                    <minimizeJar>true</minimizeJar>
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
+                            <shadedPattern>nl.abelkrijgtalles.MojangMaps</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>dev.jorel.commandapi</pattern>
                             <shadedPattern>nl.abelkrijgtalles.MojangMaps</shadedPattern>
                         </relocation>
                     </relocations>
@@ -121,6 +126,11 @@
             <groupId>com.samjakob</groupId>
             <artifactId>SpiGUI</artifactId>
             <version>v1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-shade</artifactId>
+            <version>9.3.0</version>
         </dependency>
     </dependencies>
 </project>
