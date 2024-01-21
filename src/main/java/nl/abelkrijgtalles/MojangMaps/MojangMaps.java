@@ -78,6 +78,7 @@ public final class MojangMaps extends JavaPlugin {
                 case "it" -> map.put("Italian", entry);
                 case "ja" -> map.put("Japanese", entry);
                 case "ko" -> map.put("Korean", entry);
+                case "la-LA" -> map.put("Latin", entry);
                 case "nl" -> map.put("Dutch", entry);
                 case "no" -> map.put("Norwegian", entry);
                 case "pl" -> map.put("Polish", entry);
