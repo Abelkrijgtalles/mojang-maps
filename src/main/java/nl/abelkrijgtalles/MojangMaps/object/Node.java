@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// All this is from the following YouTube video: https://youtu.be/BuvKtCh0SKk
+// This code is derived from the following YouTube video: https://youtu.be/BuvKtCh0SKk
 
 public class Node implements Comparable<Node> {
 
@@ -119,16 +119,17 @@ public class Node implements Comparable<Node> {
         });
     }
 
-    public static List<String> getLocationAndDistanceList(List<Node> nodes) {
-        List<String> locationAndDistanceList = new ArrayList<>();
-        for (Node node : nodes) {
-            String locationText = node.getLocationText();
-            int distance = node.getDistance();
-            String entry = locationText + " (Distance: " + distance + ")";
-            locationAndDistanceList.add(entry);
-        }
-        return locationAndDistanceList;
-    }
+    // idk if this is safe to delete, so I'll just comment it out
+//    public static List<String> getLocationAndDistanceList(List<Node> nodes) {
+//        List<String> locationAndDistanceList = new ArrayList<>();
+//        for (Node node : nodes) {
+//            String locationText = node.getLocationText();
+//            int distance = node.getDistance();
+//            String entry = locationText + " (Distance: " + distance + ")";
+//            locationAndDistanceList.add(entry);
+//        }
+//        return locationAndDistanceList;
+//    }
 
     public String getLocationText() {
 
