@@ -100,20 +100,6 @@ public class RegisterItemListener implements Listener {
 
         Location selectedLocation = event.getClickedBlock().getLocation();
 
-        switch (event.getBlockFace()) {
-
-            case UP -> selectedLocation.add(0, 1, 0);
-            case DOWN -> selectedLocation.add(0, -1, 0);
-            case EAST -> selectedLocation.add(1, 0, 0);
-            case WEST -> selectedLocation.add(-1, 0, 0);
-            case NORTH -> selectedLocation.add(0, 0, -1);
-            case SOUTH -> selectedLocation.add(0, 0, 1);
-            default -> {
-                return;
-            }
-
-        }
-
         MojangMaps.creatingRoadLocations.add(selectedLocation);
         p.sendMessage(ChatColor.RED + "Added point.");
 
