@@ -20,10 +20,12 @@ package nl.abelkrijgtalles.MojangMaps.util.other;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
@@ -31,13 +33,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-
 public class HTTPUtil {
 
-    public static JsonArray HTTPRequestJSONArray(String URL) {
+    public static JSONArray HTTPRequestJSONArray(String URL) {
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(URL)).build();
@@ -50,10 +48,7 @@ public class HTTPUtil {
 
             MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
-            JsonArray dataContents;
-            dataContents = Json.createReader(new StringReader(responseBody)).readArray();
-
-            return dataContents;
+            return new JSONArray(responseBody);
 
         } catch (IOException | InterruptedException e) {
 
@@ -64,7 +59,7 @@ public class HTTPUtil {
         }
     }
 
-    public static JsonObject HTTPRequestJSONObject(String URL) {
+    public static JSONObject HTTPRequestJSONObject(String URL) {
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(URL)).build();
@@ -77,10 +72,7 @@ public class HTTPUtil {
 
             MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
-            JsonObject dataContents;
-            dataContents = Json.createReader(new StringReader(responseBody)).readObject();
-
-            return dataContents;
+            return new JSONObject(responseBody);
 
         } catch (IOException | InterruptedException e) {
 

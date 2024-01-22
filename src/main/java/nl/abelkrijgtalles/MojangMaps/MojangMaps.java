@@ -42,10 +42,13 @@ import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import org.json.JSONObject;
+
 import java.util.*;
 import java.util.logging.Logger;
 
-import javax.json.JsonObject;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
 
 public final class MojangMaps extends JavaPlugin {
 
@@ -113,12 +116,19 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onDisable() {
 
+        CommandAPI.onDisable();
+
         if (isPluginOutdated) {
 
             getLogger().warning("Don't forget to update Mojang Maps.");
 
         }
 
+    }
+
+    @Override
+    public void onLoad() {
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
     }
 
     @Override
@@ -146,6 +156,7 @@ public final class MojangMaps extends JavaPlugin {
         }
 
         // Commands Init
+        CommandAPI.onEnable();
         Objects.requireNonNull(getCommand("registerlocation")).setExecutor(new RegisterLocationCommand());
         Objects.requireNonNull(getCommand("registerroad")).setExecutor(new RegisterRoadCommand());
         Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
@@ -166,7 +177,7 @@ public final class MojangMaps extends JavaPlugin {
 
     private void checkVersion() {
 
-        JsonObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
+        JSONObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
         if (isOnline) {
             assert latestRelease != null;
             if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {

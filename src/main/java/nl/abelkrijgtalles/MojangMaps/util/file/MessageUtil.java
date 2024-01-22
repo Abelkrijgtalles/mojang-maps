@@ -22,34 +22,33 @@ import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 
 import org.bukkit.Bukkit;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-
 public class MessageUtil {
 
     public static String getMessage(String key) {
 
-        JsonObject messages = getMessages();
+        JSONObject messages = getMessages();
         assert messages != null;
         return messages.getString(key);
 
     }
 
-    public static JsonObject getMessages() {
+    public static JSONObject getMessages() {
 
         try {
 
             Path file = Paths.get(String.valueOf(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder()), "messages.json");
-            JsonReader reader = Json.createReader(Files.newBufferedReader(file));
+            JSONTokener tokener = new JSONTokener(Files.newBufferedReader(file));
 
-            return reader.readObject();
+            return new JSONObject(tokener);
 
         } catch (IOException e) {
 

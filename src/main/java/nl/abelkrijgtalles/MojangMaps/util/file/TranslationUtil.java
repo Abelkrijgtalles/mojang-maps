@@ -23,13 +23,13 @@ import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 
 import org.bukkit.Bukkit;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 
 public class TranslationUtil {
 
@@ -41,7 +41,7 @@ public class TranslationUtil {
 
             MojangMaps.getMMLogger().info("Getting latest translations.");
 
-            JsonArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
+            JSONArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
 
             if (MojangMaps.isOnline) {
                 List<String> languageCodes = new ArrayList<>();
@@ -50,7 +50,7 @@ public class TranslationUtil {
                 assert dataContents != null;
                 dataContents.forEach(jsonValue -> {
 
-                    JsonObject content = (JsonObject) jsonValue;
+                    JSONObject content = (JSONObject) jsonValue;
 
                     if (Objects.equals(content.getString("type"), "dir")) {
 
