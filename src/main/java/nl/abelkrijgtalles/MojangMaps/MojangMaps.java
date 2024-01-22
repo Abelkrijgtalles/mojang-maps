@@ -47,8 +47,8 @@ import org.json.JSONObject;
 import java.util.*;
 import java.util.logging.Logger;
 
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import net.byteflux.libby.BukkitLibraryManager;
+import net.byteflux.libby.Library;
 
 public final class MojangMaps extends JavaPlugin {
 
@@ -116,7 +116,7 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        CommandAPI.onDisable();
+//        CommandAPI.onDisable();
 
         if (isPluginOutdated) {
 
@@ -128,7 +128,35 @@ public final class MojangMaps extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+
+        // Creating library objects
+        BukkitLibraryManager libraryManager = new BukkitLibraryManager(this);
+        Library jsonLib = Library.builder()
+                .groupId("org{}json")
+                .artifactId("json")
+                .version("20231013")
+                .build();
+        Library spiguiLib = Library.builder()
+                .groupId("com{}samjakob")
+                .artifactId("SpiGUI")
+                .version("v1.3.1")
+                .build();
+        Library commandAPILib = Library.builder()
+                .groupId("dev{}jorel")
+                .artifactId("commandapi-bukkit-core")
+                .version("9.3.0")
+                .build();
+
+        // Adding repos
+        libraryManager.addMavenCentral();
+        libraryManager.addJitPack();
+
+        // Loading libraries
+        libraryManager.loadLibrary(jsonLib);
+        libraryManager.loadLibrary(spiguiLib);
+        libraryManager.loadLibrary(commandAPILib);
+
+//        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
     }
 
     @Override
@@ -156,7 +184,7 @@ public final class MojangMaps extends JavaPlugin {
         }
 
         // Commands Init
-        CommandAPI.onEnable();
+//        CommandAPI.onEnable();
         Objects.requireNonNull(getCommand("registerlocation")).setExecutor(new RegisterLocationCommand());
         Objects.requireNonNull(getCommand("registerroad")).setExecutor(new RegisterRoadCommand());
         Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
