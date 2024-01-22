@@ -40,6 +40,7 @@ import org.bstats.charts.DrilldownPie;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.json.JSONObject;
@@ -47,6 +48,7 @@ import org.json.JSONObject;
 import java.util.*;
 import java.util.logging.Logger;
 
+import dev.jorel.commandapi.CommandAPICommand;
 import net.byteflux.libby.BukkitLibraryManager;
 import net.byteflux.libby.Library;
 
@@ -185,6 +187,13 @@ public final class MojangMaps extends JavaPlugin {
 
         // Commands Init
 //        CommandAPI.onEnable();
+        new CommandAPICommand("idkjustatest")
+                .executes((sender, args) -> {
+                    if (sender instanceof Player p) {
+                        p.sendMessage("Yeah!!! It works!!!!!");
+                    }
+                })
+                .register();
         Objects.requireNonNull(getCommand("registerlocation")).setExecutor(new RegisterLocationCommand());
         Objects.requireNonNull(getCommand("registerroad")).setExecutor(new RegisterRoadCommand());
         Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
