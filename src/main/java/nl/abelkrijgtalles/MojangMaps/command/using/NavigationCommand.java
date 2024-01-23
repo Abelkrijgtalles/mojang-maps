@@ -21,14 +21,13 @@ package nl.abelkrijgtalles.MojangMaps.command.using;
 import com.samjakob.spigui.buttons.SGButton;
 import com.samjakob.spigui.item.ItemBuilder;
 import com.samjakob.spigui.menu.SGMenu;
-
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.object.Node;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -37,8 +36,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class NavigationCommand implements CommandExecutor {
 
@@ -151,6 +148,7 @@ public class NavigationCommand implements CommandExecutor {
     }
 
     private Node findNodeByName(List<Node> nodes, String name) {
+
         return nodes.stream()
                 .filter(node -> node.getName().equals(name))
                 .findFirst()

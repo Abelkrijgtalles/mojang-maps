@@ -18,18 +18,15 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-
-import org.bukkit.Bukkit;
-
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import org.bukkit.Bukkit;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class MessageUtil {
 

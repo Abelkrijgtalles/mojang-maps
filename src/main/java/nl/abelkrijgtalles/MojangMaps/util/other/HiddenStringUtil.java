@@ -18,9 +18,8 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
-import org.bukkit.ChatColor;
-
 import java.nio.charset.StandardCharsets;
+import org.bukkit.ChatColor;
 
 public class HiddenStringUtil {
 
@@ -31,21 +30,25 @@ public class HiddenStringUtil {
 
 
     public static String encodeString(String hiddenString) {
+
         return quote(stringToColors(hiddenString));
     }
 
     public static boolean hasHiddenString(String input) {
+
         if (input == null) return false;
 
         return input.contains(SEQUENCE_HEADER) && input.contains(SEQUENCE_FOOTER);
     }
 
     public static String extractHiddenString(String input) {
+
         return colorsToString(extract(input));
     }
 
 
     public static String replaceHiddenString(String input, String hiddenString) {
+
         if (input == null) return null;
 
         int start = input.indexOf(SEQUENCE_HEADER);
@@ -62,11 +65,13 @@ public class HiddenStringUtil {
      * Internal stuff.
      */
     private static String quote(String input) {
+
         if (input == null) return null;
         return SEQUENCE_HEADER + input + SEQUENCE_FOOTER;
     }
 
     private static String extract(String input) {
+
         if (input == null) return null;
 
         int start = input.indexOf(SEQUENCE_HEADER);
@@ -80,6 +85,7 @@ public class HiddenStringUtil {
     }
 
     private static String stringToColors(String normal) {
+
         if (normal == null) return null;
 
         byte[] bytes = normal.getBytes(StandardCharsets.UTF_8);
@@ -97,6 +103,7 @@ public class HiddenStringUtil {
     }
 
     private static String colorsToString(String colors) {
+
         if (colors == null) return null;
 
         colors = colors.toLowerCase().replace("" + ChatColor.COLOR_CHAR, "");
@@ -116,6 +123,7 @@ public class HiddenStringUtil {
     }
 
     private static int hexToUnsignedInt(char c) {
+
         if (c >= '0' && c <= '9') {
             return c - 48;
         } else if (c >= 'a' && c <= 'f') {
@@ -126,6 +134,7 @@ public class HiddenStringUtil {
     }
 
     private static char unsignedIntToHex(int i) {
+
         if (i >= 0 && i <= 9) {
             return (char) (i + 48);
         } else if (i >= 10 && i <= 15) {
@@ -136,10 +145,12 @@ public class HiddenStringUtil {
     }
 
     private static byte hexToByte(char hex1, char hex0) {
+
         return (byte) (((hexToUnsignedInt(hex1) << 4) | hexToUnsignedInt(hex0)) + Byte.MIN_VALUE);
     }
 
     private static char[] byteToHex(byte b) {
+
         int unsignedByte = (int) b - Byte.MIN_VALUE;
         return new char[]{unsignedIntToHex((unsignedByte >> 4) & 0xf), unsignedIntToHex(unsignedByte & 0xf)};
     }

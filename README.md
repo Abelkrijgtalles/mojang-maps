@@ -30,7 +30,7 @@ Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)
 - mojangmaps.using - Lets you use Mojang Maps.
     - mojangmaps.using.goto - Lets you go to a location.
     - mojangmaps.using.viewlocation - Lets you view your location
-  - mojangmaps.using.navigation - Lets you go to a location and view the navigation in GUI form.
+    - mojangmaps.using.navigation - Lets you go to a location and view the navigation in GUI form.
 - mojangmaps.util - Some useful tools fo an admin.
     - mojangmaps.util.reloadconfigs - Lets you reload your configs from disk.
 

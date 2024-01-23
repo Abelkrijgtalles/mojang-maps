@@ -19,7 +19,13 @@
 package nl.abelkrijgtalles.MojangMaps;
 
 import com.samjakob.spigui.SpiGUI;
-
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.CommandAPICommand;
+import java.util.*;
+import java.util.logging.Logger;
+import net.byteflux.libby.BukkitLibraryManager;
+import net.byteflux.libby.Library;
 import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
@@ -34,23 +40,13 @@ import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
-
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
-
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import org.json.JSONObject;
-
-import java.util.*;
-import java.util.logging.Logger;
-
-import dev.jorel.commandapi.CommandAPICommand;
-import net.byteflux.libby.BukkitLibraryManager;
-import net.byteflux.libby.Library;
 
 public final class MojangMaps extends JavaPlugin {
 
@@ -128,10 +124,8 @@ public final class MojangMaps extends JavaPlugin {
 
     }
 
-    @Override
-    public void onLoad() {
+    public void loadLibs() {
 
-        // Creating library objects
         BukkitLibraryManager libraryManager = new BukkitLibraryManager(this);
         Library jsonLib = Library.builder()
                 .groupId("org{}json")
@@ -145,20 +139,26 @@ public final class MojangMaps extends JavaPlugin {
                 .build();
         Library commandAPILib = Library.builder()
                 .groupId("dev{}jorel")
-                .artifactId("commandapi-bukkit-core")
+                .artifactId("commandapi-bukkit-shade")
                 .version("9.3.0")
+                .relocate("dev{}jorel{}commandapi", "nl{}abelkrijgtalles{}MojangMaps{}lib{}commandapi")
                 .build();
 
-        // Adding repos
         libraryManager.addMavenCentral();
         libraryManager.addJitPack();
 
-        // Loading libraries
         libraryManager.loadLibrary(jsonLib);
         libraryManager.loadLibrary(spiguiLib);
         libraryManager.loadLibrary(commandAPILib);
 
-//        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+    }
+
+    @Override
+    public void onLoad() {
+
+        loadLibs();
+
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
     }
 
     @Override
@@ -186,7 +186,7 @@ public final class MojangMaps extends JavaPlugin {
         }
 
         // Commands Init
-//        CommandAPI.onEnable();
+        CommandAPI.onEnable();
         new CommandAPICommand("idkjustatest")
                 .executes((sender, args) -> {
                     if (sender instanceof Player p) {

@@ -18,14 +18,12 @@
 
 package nl.abelkrijgtalles.MojangMaps.object;
 
-import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
-
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class Road implements ConfigurationSerializable {
 
@@ -33,10 +31,12 @@ public class Road implements ConfigurationSerializable {
     private String name;
 
     public Road(List<Integer> locations) {
+
         this.locations = locations;
     }
 
     public Road(String name, List<Integer> locations) {
+
         this.name = name;
         this.locations = locations;
     }
@@ -59,10 +59,12 @@ public class Road implements ConfigurationSerializable {
     }
 
     public String getName() {
+
         return Objects.requireNonNullElse(name, MessageUtil.getMessage("unnamedroad"));
     }
 
     public List<Integer> getLocations() {
+
         return locations;
     }
 

@@ -18,17 +18,16 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.object;
 
+import java.util.ArrayList;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RoadUtil {
+
     public static void addMoreLocations(Player p, List<Location> locations) {
 
         int i = 0;
@@ -97,4 +96,5 @@ public class RoadUtil {
         return "";
 
     }
+
 }

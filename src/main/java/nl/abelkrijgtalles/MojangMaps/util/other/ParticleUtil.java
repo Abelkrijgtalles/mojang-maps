@@ -18,14 +18,12 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
+import java.util.ArrayList;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ParticleUtil {
 
@@ -62,6 +60,7 @@ public class ParticleUtil {
     }
 
     private static List<Location> getParticleLocations(List<Location> locations, double distanceBetweenParticles) {
+
         List<Location> particleLocations = new ArrayList<>();
         double[] distances = new double[locations.size() - 1];
 

@@ -18,19 +18,17 @@
 
 package nl.abelkrijgtalles.MojangMaps.command.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
 
 public class ReloadConfigsFromDiskCommand implements CommandExecutor {
 
@@ -53,4 +51,5 @@ public class ReloadConfigsFromDiskCommand implements CommandExecutor {
 
         return true;
     }
+
 }

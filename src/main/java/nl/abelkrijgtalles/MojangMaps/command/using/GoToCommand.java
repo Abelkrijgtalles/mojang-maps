@@ -18,13 +18,14 @@
 
 package nl.abelkrijgtalles.MojangMaps.command.using;
 
+import java.util.Collections;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.object.Node;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -34,14 +35,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collections;
-import java.util.List;
-
 public class GoToCommand implements CommandExecutor {
 
     public static void calculateAndTime(Player p, Node playerNode, MojangMaps plugin) {
+
         final int[] ticksWhileCalculating = {0};
         int taskID = new BukkitRunnable() {
+
             @Override
             public void run() {
 
@@ -58,6 +58,7 @@ public class GoToCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+
         if (commandSender instanceof Player p) {
 
             MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
@@ -91,6 +92,7 @@ public class GoToCommand implements CommandExecutor {
     }
 
     private Node findNodeByName(List<Node> nodes, String name) {
+
         return nodes.stream()
                 .filter(node -> node.getName().equals(name))
                 .findFirst()

@@ -18,17 +18,15 @@
 
 package nl.abelkrijgtalles.MojangMaps.object;
 
-import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
-import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
-import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 // This code is derived from the following YouTube video: https://youtu.be/BuvKtCh0SKk
 
@@ -40,10 +38,12 @@ public class Node implements Comparable<Node> {
     private List<Node> shortestPath = new LinkedList<>();
 
     public Node(String name) {
+
         this.name = name;
     }
 
     public static void calculateShortestPath(Node source) {
+
         source.setDistance(0);
         Set<Node> settledNodes = new HashSet<>();
         Queue<Node> unsettledNodes = new PriorityQueue<>(Collections.singleton(source));
@@ -61,6 +61,7 @@ public class Node implements Comparable<Node> {
     }
 
     private static void evaluteDistanceAndPath(Node adjacentNode, Integer edgeWeight, Node sourceNode) {
+
         Integer newDistance = sourceNode.getDistance() + edgeWeight;
         if (newDistance < adjacentNode.getDistance()) {
             adjacentNode.setDistance(newDistance);
@@ -71,6 +72,7 @@ public class Node implements Comparable<Node> {
     }
 
     public static void printPaths(List<Node> nodes, Player p) {
+
         nodes.forEach(node -> {
             String path = node.getShortestPath().stream()
                     .map(Node::getLocationText)
@@ -100,35 +102,43 @@ public class Node implements Comparable<Node> {
 //    }
 
     public void addAdjacentNode(Node node, int weight) {
+
         adjacentNodes.put(node, weight);
     }
 
     public Integer getDistance() {
+
         return distance;
     }
 
     public void setDistance(Integer distance) {
+
         this.distance = distance;
     }
 
     public Map<Node, Integer> getAdjacentNodes() {
+
         return adjacentNodes;
     }
 
     public List<Node> getShortestPath() {
+
         return shortestPath;
     }
 
     public void setShortestPath(List<Node> shortestPath) {
+
         this.shortestPath = shortestPath;
     }
 
     public String getName() {
+
         return name;
     }
 
     @Override
     public int compareTo(Node node) {
+
         return Integer.compare(this.distance, node.getDistance());
     }
 
@@ -145,4 +155,5 @@ public class Node implements Comparable<Node> {
         return "X: " + location.getBlockX() + " Z: " + location.getBlockZ();
 
     }
+
 }

@@ -18,18 +18,15 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
-
-import org.bukkit.Bukkit;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
+import org.bukkit.Bukkit;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class TranslationUtil {
 

@@ -18,19 +18,17 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import nl.abelkrijgtalles.MojangMaps.object.Road;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.object.Road;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class NodesConfigUtil {
 
@@ -39,6 +37,7 @@ public class NodesConfigUtil {
 
     // Idk weird setup I guess
     public static void setup() {
+
         file = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder(), "nodes.yml");
 
         if (!file.exists()) {
@@ -59,10 +58,12 @@ public class NodesConfigUtil {
     }
 
     public static FileConfiguration get() {
+
         return customFile;
     }
 
     public static void save() {
+
         try {
             customFile.save(file);
         } catch (IOException e) {
@@ -72,6 +73,7 @@ public class NodesConfigUtil {
     }
 
     public static void reload() {
+
         customFile = YamlConfiguration.loadConfiguration(file);
     }
 

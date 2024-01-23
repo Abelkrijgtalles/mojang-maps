@@ -18,10 +18,10 @@
 
 package nl.abelkrijgtalles.MojangMaps.listener;
 
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.ParticleUtil;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -36,11 +36,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import java.util.List;
-
 public class RegisterItemListener implements Listener {
 
     public static boolean isntItem(Player p) {
+
         if (!p.getInventory().getItemInMainHand().hasItemMeta()) return true;
 
         if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) return true;
@@ -92,6 +91,7 @@ public class RegisterItemListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+
         Player p = event.getPlayer();
 
         if (event.getHand() != EquipmentSlot.HAND) return;

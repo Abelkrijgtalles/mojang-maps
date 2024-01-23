@@ -18,9 +18,10 @@
 
 package nl.abelkrijgtalles.MojangMaps.command;
 
+import java.util.ArrayList;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -31,9 +32,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GiveRegisterItemCommand implements CommandExecutor {
 
     @Override
@@ -43,6 +41,7 @@ public class GiveRegisterItemCommand implements CommandExecutor {
 
             MojangMaps.isCreatingARoad = true;
             new BukkitRunnable() {
+
                 @Override
                 public void run() {
 

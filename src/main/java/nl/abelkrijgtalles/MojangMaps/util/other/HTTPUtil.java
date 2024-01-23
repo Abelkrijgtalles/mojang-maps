@@ -18,11 +18,6 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +27,9 @@ import java.net.URLConnection;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class HTTPUtil {
 

@@ -18,20 +18,18 @@
 
 package nl.abelkrijgtalles.MojangMaps.command.register;
 
+import java.util.ArrayList;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RegisterRoadCommand implements CommandExecutor {
 
@@ -186,4 +184,5 @@ public class RegisterRoadCommand implements CommandExecutor {
 
         return true;
     }
+
 }
