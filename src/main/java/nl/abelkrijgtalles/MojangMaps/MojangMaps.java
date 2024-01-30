@@ -141,7 +141,7 @@ public final class MojangMaps extends JavaPlugin {
                 .groupId("dev{}jorel")
                 .artifactId("commandapi-bukkit-shade")
                 .version("9.3.0")
-                .relocate("dev{}jorel{}commandapi", "nl{}abelkrijgtalles{}MojangMaps{}lib{}commandapi")
+                .relocate("dev{}jorel{}commandapi", "nl{}abelkrijgtalles{}MojangMaps{}lib{}dev{}jorel{}commandapi")
                 .build();
 
         libraryManager.addMavenCentral();
@@ -157,7 +157,7 @@ public final class MojangMaps extends JavaPlugin {
     public void onLoad() {
 
         loadLibs();
-        CommandUtil.loadCommandAPI();
+        new CommandUtil(this).loadCommandAPI();
 
     }
 

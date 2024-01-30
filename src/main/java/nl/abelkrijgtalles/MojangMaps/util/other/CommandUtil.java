@@ -24,10 +24,17 @@ import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 
 public class CommandUtil {
 
-    // Fixed by @frengor: https://github.com/AlessioDP/libby/issues/39#issuecomment-1915524475
-    public static void loadCommandAPI() {
+    private final MojangMaps plugin;
 
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(MojangMaps.getPlugin(MojangMaps.class)));
+    public CommandUtil(MojangMaps plugin) {
+
+        this.plugin = plugin;
+    }
+
+    // Fixed by @frengor: https://github.com/AlessioDP/libby/issues/39#issuecomment-1915524475
+    public void loadCommandAPI() {
+
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(plugin));
 
     }
 
