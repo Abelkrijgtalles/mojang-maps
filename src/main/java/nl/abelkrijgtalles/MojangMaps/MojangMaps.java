@@ -20,7 +20,6 @@ package nl.abelkrijgtalles.MojangMaps;
 
 import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
 import java.util.*;
 import java.util.logging.Logger;
@@ -39,6 +38,7 @@ import nl.abelkrijgtalles.MojangMaps.listener.RegisterItemListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
+import nl.abelkrijgtalles.MojangMaps.util.other.CommandUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
@@ -157,8 +157,8 @@ public final class MojangMaps extends JavaPlugin {
     public void onLoad() {
 
         loadLibs();
+        CommandUtil.loadCommandAPI();
 
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
     }
 
     @Override
