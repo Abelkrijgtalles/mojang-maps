@@ -132,11 +132,11 @@ public final class MojangMaps extends JavaPlugin {
                 .artifactId("json")
                 .version("20231013")
                 .build();
-        Library spiguiLib = Library.builder()
-                .groupId("com{}samjakob")
-                .artifactId("SpiGUI")
-                .version("v1.3.1")
-                .build();
+//        Library spiguiLib = Library.builder()
+//                .groupId("com{}samjakob")
+//                .artifactId("SpiGUI")
+//                .version("v1.3.1")
+//                .build();
 //        Library commandAPILib = Library.builder()
 //                .groupId("dev{}jorel")
 //                .artifactId("commandapi-bukkit-shade")
@@ -148,7 +148,7 @@ public final class MojangMaps extends JavaPlugin {
         libraryManager.addJitPack();
 
         libraryManager.loadLibrary(jsonLib);
-        libraryManager.loadLibrary(spiguiLib);
+//        libraryManager.loadLibrary(spiguiLib);
 //        libraryManager.loadLibrary(commandAPILib);
 
     }
