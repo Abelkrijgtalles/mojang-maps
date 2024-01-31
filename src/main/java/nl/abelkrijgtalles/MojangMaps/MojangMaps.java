@@ -137,19 +137,19 @@ public final class MojangMaps extends JavaPlugin {
                 .artifactId("SpiGUI")
                 .version("v1.3.1")
                 .build();
-        Library commandAPILib = Library.builder()
-                .groupId("dev{}jorel")
-                .artifactId("commandapi-bukkit-shade")
-                .version("9.3.0")
-                .relocate("dev{}jorel{}commandapi", "nl{}abelkrijgtalles{}MojangMaps{}lib{}dev{}jorel{}commandapi")
-                .build();
+//        Library commandAPILib = Library.builder()
+//                .groupId("dev{}jorel")
+//                .artifactId("commandapi-bukkit-shade")
+//                .version("9.3.0")
+//                .relocate("dev{}jorel{}commandapi", "nl{}abelkrijgtalles{}MojangMaps{}lib{}dev{}jorel{}commandapi")
+//                .build();
 
         libraryManager.addMavenCentral();
         libraryManager.addJitPack();
 
         libraryManager.loadLibrary(jsonLib);
         libraryManager.loadLibrary(spiguiLib);
-        libraryManager.loadLibrary(commandAPILib);
+//        libraryManager.loadLibrary(commandAPILib);
 
     }
 
