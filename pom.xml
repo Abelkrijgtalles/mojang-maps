@@ -62,10 +62,6 @@
                             <pattern>net.byteflux.libby</pattern>
                             <shadedPattern>nl.abelkrijgtalles.MojangMaps.lib.net.byteflux.libby</shadedPattern>
                         </relocation>
-                        <relocation>
-                            <pattern>dev.jorel.commandapi</pattern>
-                            <shadedPattern>nl.abelkrijgtalles.MojangMaps.lib.dev.jorel.commandapi</shadedPattern>
-                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
