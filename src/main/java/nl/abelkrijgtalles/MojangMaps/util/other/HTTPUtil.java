@@ -18,6 +18,9 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,12 +31,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class HTTPUtil {
 
-    public static JSONArray HTTPRequestJSONArray(String URL) {
+    public static JsonArray HTTPRequestJSONArray(String URL) {
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(URL)).build();
@@ -46,7 +47,7 @@ public class HTTPUtil {
 
             MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
-            return new JSONArray(responseBody);
+            return JsonParser.parseString(responseBody).getAsJsonArray();
 
         } catch (IOException | InterruptedException e) {
 
@@ -57,7 +58,7 @@ public class HTTPUtil {
         }
     }
 
-    public static JSONObject HTTPRequestJSONObject(String URL) {
+    public static JsonObject HTTPRequestJSONObject(String URL) {
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(URL)).build();
@@ -70,7 +71,7 @@ public class HTTPUtil {
 
             MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
-            return new JSONObject(responseBody);
+            return JsonParser.parseString(responseBody).getAsJsonObject();
 
         } catch (IOException | InterruptedException e) {
 

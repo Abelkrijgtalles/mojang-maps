@@ -18,6 +18,8 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +27,6 @@ import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bukkit.Bukkit;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class TranslationUtil {
 
@@ -38,7 +38,7 @@ public class TranslationUtil {
 
             MojangMaps.getMMLogger().info("Getting latest translations.");
 
-            JSONArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
+            JsonArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
 
             if (MojangMaps.isOnline) {
                 List<String> languageCodes = new ArrayList<>();
@@ -47,11 +47,11 @@ public class TranslationUtil {
                 assert dataContents != null;
                 dataContents.forEach(jsonValue -> {
 
-                    JSONObject content = (JSONObject) jsonValue;
+                    JsonObject content = jsonValue.getAsJsonObject();
 
-                    if (Objects.equals(content.getString("type"), "dir")) {
+                    if (Objects.equals(content.get("type").getAsString(), "dir")) {
 
-                        languageCodes.add(content.getString("name"));
+                        languageCodes.add(content.get("name").getAsString());
 
                     }
 

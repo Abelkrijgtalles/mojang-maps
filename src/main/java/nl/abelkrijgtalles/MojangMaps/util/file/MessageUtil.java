@@ -18,6 +18,8 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,27 +27,25 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import org.bukkit.Bukkit;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 public class MessageUtil {
 
     public static String getMessage(String key) {
 
-        JSONObject messages = getMessages();
+        JsonObject messages = getMessages();
         assert messages != null;
-        return messages.getString(key);
+        return messages.get(key).getAsString();
 
     }
 
-    public static JSONObject getMessages() {
+    public static JsonObject getMessages() {
 
         try {
 
             Path file = Paths.get(String.valueOf(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder()), "messages.json");
-            JSONTokener tokener = new JSONTokener(Files.newBufferedReader(file));
+            String tokener = new String(Files.readAllBytes(file));
 
-            return new JSONObject(tokener);
+            return JsonParser.parseString(tokener).getAsJsonObject();
 
         } catch (IOException e) {
 

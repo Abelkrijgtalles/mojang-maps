@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps;
 
+import com.google.gson.JsonObject;
 import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -44,7 +45,6 @@ import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.json.JSONObject;
 
 public final class MojangMaps extends JavaPlugin {
 
@@ -182,10 +182,10 @@ public final class MojangMaps extends JavaPlugin {
 
     private void checkVersion() {
 
-        JSONObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
+        JsonObject latestRelease = HTTPUtil.HTTPRequestJSONObject("https://api.github.com/repos/Abelkrijgtalles/mojang-maps/releases/latest");
         if (isOnline) {
             assert latestRelease != null;
-            if (!Objects.equals(latestRelease.getString("name"), getDescription().getVersion())) {
+            if (Objects.equals(latestRelease.getAsJsonPrimitive("name").toString(), getDescription().getVersion())) {
                 isPluginOutdated = true;
 
             }
