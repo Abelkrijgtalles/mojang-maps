@@ -23,8 +23,6 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import java.util.*;
 import java.util.logging.Logger;
-import net.byteflux.libby.BukkitLibraryManager;
-import net.byteflux.libby.Library;
 import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
@@ -124,39 +122,9 @@ public final class MojangMaps extends JavaPlugin {
 
     }
 
-    public void loadLibs() {
-
-        BukkitLibraryManager libraryManager = new BukkitLibraryManager(this);
-        Library jsonLib = Library.builder()
-                .groupId("org{}json")
-                .artifactId("json")
-                .version("20231013")
-                .build();
-//        Library spiguiLib = Library.builder()
-//                .groupId("com{}samjakob")
-//                .artifactId("SpiGUI")
-//                .version("v1.3.1")
-//                .build();
-//        Library commandAPILib = Library.builder()
-//                .groupId("dev{}jorel")
-//                .artifactId("commandapi-bukkit-shade")
-//                .version("9.3.0")
-//                .relocate("dev{}jorel{}commandapi", "nl{}abelkrijgtalles{}MojangMaps{}lib{}dev{}jorel{}commandapi")
-//                .build();
-
-        libraryManager.addMavenCentral();
-        libraryManager.addJitPack();
-
-        libraryManager.loadLibrary(jsonLib);
-//        libraryManager.loadLibrary(spiguiLib);
-//        libraryManager.loadLibrary(commandAPILib);
-
-    }
-
     @Override
     public void onLoad() {
 
-        loadLibs();
         new CommandUtil(this).loadCommandAPI();
 
     }
