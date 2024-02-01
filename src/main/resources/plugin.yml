@@ -10,16 +10,6 @@ libraries:
   - com.samjakob:SpiGUI:1.3.1
 
 commands:
-  registerlocation:
-    description: Register a location.
-    permission: mojangmaps.register.location
-    aliases:
-      - createlocation
-  registerroad:
-    description: Register a road.
-    permission: mojangmaps.register.road
-    aliases:
-      - createroad
   goto:
     description: Go to a specific location.
     permission: mojangmaps.using.goto

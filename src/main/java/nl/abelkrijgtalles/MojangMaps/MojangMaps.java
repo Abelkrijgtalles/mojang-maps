@@ -21,7 +21,11 @@ package nl.abelkrijgtalles.MojangMaps;
 import com.google.gson.JsonObject;
 import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.CommandPermission;
+import dev.jorel.commandapi.arguments.GreedyStringArgument;
+import dev.jorel.commandapi.arguments.StringArgument;
 import java.util.*;
 import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
@@ -35,15 +39,14 @@ import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.listener.RegisterItemListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
-import nl.abelkrijgtalles.MojangMaps.util.other.CommandUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MojangMaps extends JavaPlugin {
@@ -125,7 +128,7 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onLoad() {
 
-        new CommandUtil(this).loadCommandAPI();
+        CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).useLatestNMSVersion(true));
 
     }
 
@@ -155,15 +158,23 @@ public final class MojangMaps extends JavaPlugin {
 
         // Commands Init
         CommandAPI.onEnable();
-        new CommandAPICommand("idkjustatest")
-                .executes((sender, args) -> {
-                    if (sender instanceof Player p) {
-                        p.sendMessage("Yeah!!! It works!!!!!");
-                    }
-                })
+        new CommandAPICommand("registerlocation")
+                .withShortDescription("Register a location.")
+                .withPermission(CommandPermission.fromString("mojangmaps.register.location"))
+                .withAliases("createlocation")
+                .executesPlayer(((player, commandArguments) -> {
+                    new RegisterLocationCommand(player);
+                }))
                 .register();
-        Objects.requireNonNull(getCommand("registerlocation")).setExecutor(new RegisterLocationCommand());
-        Objects.requireNonNull(getCommand("registerroad")).setExecutor(new RegisterRoadCommand());
+        new CommandAPICommand("registerroadnew")
+                .withShortDescription("Register a road.")
+                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
+                .withArguments(new StringArgument("name"))
+                .withArguments(new GreedyStringArgument("locations"))
+                .withHelp("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
+                .withAliases("createroad")
+                .executesPlayer((RegisterRoadCommand::new))
+                .register();
         Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
         Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
         Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand());
