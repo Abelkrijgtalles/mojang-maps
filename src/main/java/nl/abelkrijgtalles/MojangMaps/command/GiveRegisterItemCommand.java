@@ -37,16 +37,7 @@ public class GiveRegisterItemCommand {
 
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             ItemMeta registerItemMeta = registerItem.getItemMeta();
-            StringBuilder roadRegisterName = new StringBuilder();
-            for (int i = 0; i < "Road Register".length(); i++) {
-                if (i % 2 == 0) {
-                    roadRegisterName.append(ChatColor.RED);
-                } else {
-                    roadRegisterName.append(ChatColor.GOLD);
-                }
-                roadRegisterName.append("Road Register".charAt(i));
-            }
-            registerItemMeta.setDisplayName(roadRegisterName.toString());
+            registerItemMeta.setDisplayName(ChatColor.GOLD + "Road Register");
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
