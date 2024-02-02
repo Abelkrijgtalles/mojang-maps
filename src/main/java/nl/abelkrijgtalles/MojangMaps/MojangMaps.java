@@ -25,6 +25,8 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
+import dev.jorel.commandapi.arguments.LocationArgument;
+import dev.jorel.commandapi.arguments.LocationType;
 import dev.jorel.commandapi.arguments.StringArgument;
 import java.util.*;
 import java.util.logging.Logger;
@@ -175,8 +177,14 @@ public final class MojangMaps extends JavaPlugin {
                 .withAliases("createroad")
                 .executesPlayer((RegisterRoadCommand::new))
                 .register();
-
-        Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
+        new CommandAPICommand("goto")
+                .withShortDescription("Go to a specific location.")
+                .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
+                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                .executesPlayer(((player, commandArguments) -> {
+                    new GoToCommand(this, player, commandArguments);
+                }))
+                .register();
         Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
         Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand());
         Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand());

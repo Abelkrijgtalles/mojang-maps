@@ -18,6 +18,9 @@
 
 package nl.abelkrijgtalles.MojangMaps.command.using;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
+import dev.jorel.commandapi.executors.CommandArguments;
 import java.util.Collections;
 import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
@@ -29,13 +32,35 @@ import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class GoToCommand implements CommandExecutor {
+public class GoToCommand {
+
+    public GoToCommand(MojangMaps plugin, Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
+
+        Location location = (Location) commandArguments.get("location");
+        Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());
+        Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
+
+        List<Node> nodes = NodeUtil.addAdjacentNodes();
+        Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
+        Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
+
+        if (playerNode == null || locationNode == null) {
+            throw CommandAPI.failWithString(MessageUtil.getMessage("nonodesfound"));
+        }
+
+        p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            // start timer
+            calculateAndTime(p, playerNode, plugin);
+
+            Node.printPaths(Collections.singletonList(locationNode), p);
+            p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
+        });
+
+    }
 
     public static void calculateAndTime(Player p, Node playerNode, MojangMaps plugin) {
 
@@ -54,41 +79,6 @@ public class GoToCommand implements CommandExecutor {
 
         Bukkit.getScheduler().cancelTask(taskID);
         p.sendMessage(MessageUtil.getMessage("calcins").formatted(ticksWhileCalculating[0] * .05));
-    }
-
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-
-        if (commandSender instanceof Player p) {
-
-            MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
-
-            if (NavigationCommand.goToCheck(strings, p)) return true;
-
-            Location location = new Location(p.getWorld(), Double.parseDouble(strings[0]), Double.parseDouble(strings[1]), Double.parseDouble(strings[2]));
-            Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());
-            Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
-
-            List<Node> nodes = NodeUtil.addAdjacentNodes();
-            Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
-            Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
-
-            if (playerNode == null || locationNode == null) {
-                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("nonodesfound"));
-                return true;
-            }
-
-            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-                // start timer
-                calculateAndTime(p, playerNode, plugin);
-
-                Node.printPaths(Collections.singletonList(locationNode), p);
-                p.sendMessage(MessageUtil.getMessage("finallygoto").formatted(location.getBlockX(), location.getBlockZ()));
-            });
-
-        }
-        return true;
     }
 
     private Node findNodeByName(List<Node> nodes, String name) {
