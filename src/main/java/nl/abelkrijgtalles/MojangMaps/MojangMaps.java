@@ -117,7 +117,7 @@ public final class MojangMaps extends JavaPlugin {
     @Override
     public void onDisable() {
 
-//        CommandAPI.onDisable();
+        CommandAPI.onDisable();
 
         if (isPluginOutdated) {
 
