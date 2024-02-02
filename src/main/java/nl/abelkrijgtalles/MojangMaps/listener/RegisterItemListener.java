@@ -39,7 +39,7 @@ public class RegisterItemListener implements Listener {
 
     public static boolean isRegisterItem(Player p) {
 
-        return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName() == GiveRegisterItemCommand.getRegisterItemName();
+        return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(GiveRegisterItemCommand.getRegisterItemName());
     }
 
     @EventHandler
