@@ -20,10 +20,7 @@ package nl.abelkrijgtalles.MojangMaps.command;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,12 +36,8 @@ public class GiveRegisterItemCommand {
             MojangMaps.isCreatingARoad = true;
 
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
-            List<String> lore = new ArrayList<>();
-            lore.add(HiddenStringUtil.encodeString("RegisterItem"));
-
             ItemMeta registerItemMeta = registerItem.getItemMeta();
-            registerItemMeta.setLore(lore);
-            registerItem.setItemMeta(registerItemMeta);
+            registerItemMeta.setDisplayName(ChatColor.RED + "Road " + ChatColor.YELLOW + "Register");
 
             p.getInventory().addItem(registerItem);
             p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
