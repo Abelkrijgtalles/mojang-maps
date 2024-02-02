@@ -38,6 +38,7 @@ public class GiveRegisterItemCommand {
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             ItemMeta registerItemMeta = registerItem.getItemMeta();
             registerItemMeta.setDisplayName(ChatColor.RED + "Road " + ChatColor.YELLOW + "Register");
+            registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
             p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
