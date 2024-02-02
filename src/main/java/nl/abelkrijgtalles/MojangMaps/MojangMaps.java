@@ -24,15 +24,12 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
-import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.LocationArgument;
 import dev.jorel.commandapi.arguments.LocationType;
-import dev.jorel.commandapi.arguments.StringArgument;
 import java.util.*;
 import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
-import nl.abelkrijgtalles.MojangMaps.command.register.RegisterRoadCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
@@ -41,7 +38,6 @@ import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.listener.RegisterItemListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
-import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
@@ -168,15 +164,15 @@ public final class MojangMaps extends JavaPlugin {
                     new RegisterLocationCommand(player);
                 }))
                 .register();
-        new CommandAPICommand("registerroad")
-                .withShortDescription("Register a road.")
-                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
-                .withArguments(new StringArgument("name").setOptional(true))
-                .withArguments(new GreedyStringArgument("locations"))
-                .withUsage("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
-                .withAliases("createroad")
-                .executesPlayer((RegisterRoadCommand::new))
-                .register();
+//        new CommandAPICommand("registerroad")
+//                .withShortDescription("Register a road.")
+//                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
+//                .withArguments(new StringArgument("name").setOptional(true))
+//                .withArguments(new GreedyStringArgument("locations"))
+//                .withUsage("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
+//                .withAliases("createroad")
+//                .executesPlayer((RegisterRoadCommand::new))
+//                .register();
         new CommandAPICommand("goto")
                 .withShortDescription("Go to a specific location.")
                 .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
