@@ -40,6 +40,8 @@ public class GiveRegisterItemCommand {
             registerItemMeta.setDisplayName(getRegisterItemName());
             registerItem.setItemMeta(registerItemMeta);
 
+            MojangMaps.getMMLogger().info(getRegisterItemName() + " == " + registerItemMeta.getDisplayName());
+
             p.getInventory().addItem(registerItem);
             p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
 
