@@ -18,9 +18,8 @@
 
 package nl.abelkrijgtalles.MojangMaps.listener;
 
-import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
+import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
 import nl.abelkrijgtalles.MojangMaps.util.other.ParticleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,28 +37,19 @@ import org.bukkit.inventory.EquipmentSlot;
 
 public class RegisterItemListener implements Listener {
 
-    public static boolean isntItem(Player p) {
+    public static boolean isRegisterItem(Player p) {
 
-        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return true;
-
-        if (!p.getInventory().getItemInMainHand().getItemMeta().hasLore()) return true;
-
-        List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().getLore();
-
-        if (lore != null && lore.size() > 0 && HiddenStringUtil.hasHiddenString(lore.get(0)))
-            return HiddenStringUtil.extractHiddenString(lore.get(0)) != "RegisterItem";
-        return false;
+        return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName() == GiveRegisterItemCommand.getRegisterItemName();
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
 
-        if (isntItem(event.getPlayer())) return;
+        if (!isRegisterItem(event.getPlayer())) return;
 
-        event.getPlayer().sendMessage(ChatColor.RED + "Don't break stuff when using the register item (still need a better name).");
+        addPointLogic(event.getPlayer(), event.getBlock().getLocation());
+
         event.setCancelled(true);
-
-
     }
 
     @EventHandler
@@ -67,12 +57,9 @@ public class RegisterItemListener implements Listener {
 
         if (event.getDamager() instanceof Player p) {
 
-            if (isntItem(p)) return;
+            if (!isRegisterItem(p)) return;
 
-            p.sendMessage(ChatColor.RED + "Don't damage entity when using the register item (still need a better name).");
             event.setCancelled(true);
-
-
         }
 
     }
@@ -82,9 +69,8 @@ public class RegisterItemListener implements Listener {
 
         Player p = event.getPlayer();
 
-        if (isntItem(p)) return;
+        if (!isRegisterItem(p)) return;
 
-        event.getPlayer().sendMessage(ChatColor.RED + "Don't damage this item when using the register item (still need a better name).");
         event.setCancelled(true);
 
     }
@@ -95,16 +81,19 @@ public class RegisterItemListener implements Listener {
         Player p = event.getPlayer();
 
         if (event.getHand() != EquipmentSlot.HAND) return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        if (!isRegisterItem(p)) return;
 
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        addPointLogic(p, event.getClickedBlock().getLocation());
 
-        if (isntItem(p)) return;
+        event.setUseItemInHand(Event.Result.DENY);
+    }
 
-        Location selectedLocation = event.getClickedBlock().getLocation();
+    private void addPointLogic(Player p, Location clickedBlockLocation) {
 
-        selectedLocation.add(0.5, 1, 0.5);
+        clickedBlockLocation.add(0.5, 1, 0.5);
 
-        MojangMaps.creatingRoadLocations.add(selectedLocation);
+        MojangMaps.creatingRoadLocations.add(clickedBlockLocation);
         p.sendMessage(ChatColor.RED + "Added point.");
 
         if (MojangMaps.creatingRoadLocations.size() > 1) {
@@ -114,7 +103,6 @@ public class RegisterItemListener implements Listener {
             MojangMaps.creatingRoadParticleTaskId = ParticleUtil.spawnLine(MojangMaps.creatingRoadLocations, 1, 0.25);
         }
 
-        event.setUseItemInHand(Event.Result.DENY);
     }
 
 }

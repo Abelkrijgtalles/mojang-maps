@@ -37,7 +37,7 @@ public class GiveRegisterItemCommand {
 
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             ItemMeta registerItemMeta = registerItem.getItemMeta();
-            registerItemMeta.setDisplayName(ChatColor.GOLD + "Road Register");
+            registerItemMeta.setDisplayName(getRegisterItemName());
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
@@ -48,6 +48,12 @@ public class GiveRegisterItemCommand {
             throw CommandAPI.failWithString("Someone is already creating a road. Try again later.");
 
         }
+
+    }
+
+    public static String getRegisterItemName() {
+
+        return ChatColor.GOLD + "Road Register";
 
     }
 
