@@ -42,7 +42,7 @@ public class GiveRegisterItemCommand {
                 if (i % 2 == 0) {
                     roadRegisterName.append(ChatColor.RED);
                 } else {
-                    roadRegisterName.append(ChatColor.YELLOW);
+                    roadRegisterName.append(ChatColor.GOLD);
                 }
                 roadRegisterName.append("Road Register".charAt(i));
             }
