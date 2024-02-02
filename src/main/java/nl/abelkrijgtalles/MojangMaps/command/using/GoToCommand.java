@@ -37,7 +37,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class GoToCommand {
 
-    public GoToCommand(MojangMaps plugin, Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
+    public GoToCommand(Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
+
+        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         Location location = (Location) commandArguments.get("location");
         Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());

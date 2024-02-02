@@ -18,6 +18,8 @@
 
 package nl.abelkrijgtalles.MojangMaps.command.util;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -25,16 +27,11 @@ import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 
-public class ReloadConfigsFromDiskCommand implements CommandExecutor {
+public class ReloadConfigsFromDiskCommand {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-
+    public ReloadConfigsFromDiskCommand() throws WrapperCommandSyntaxException {
         MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         File config = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder(), "config.yml");
@@ -43,13 +40,11 @@ public class ReloadConfigsFromDiskCommand implements CommandExecutor {
         try {
             plugin.getConfig().load(config);
         } catch (IOException | InvalidConfigurationException e) {
-            MojangMaps.getMMLogger().warning("Could not load config.");
+            throw CommandAPI.failWithString("Could not load config.");
         }
 
         TranslationUtil translationUtil = new TranslationUtil();
         translationUtil.updateTranslations();
-
-        return true;
     }
 
 }

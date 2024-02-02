@@ -18,26 +18,24 @@
 
 package nl.abelkrijgtalles.MojangMaps.command;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HiddenStringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class GiveRegisterItemCommand implements CommandExecutor {
+public class GiveRegisterItemCommand {
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public GiveRegisterItemCommand(Player p) throws WrapperCommandSyntaxException {
 
-        if (commandSender instanceof Player p && !MojangMaps.isCreatingARoad) {
+        if (!MojangMaps.isCreatingARoad) {
 
             MojangMaps.isCreatingARoad = true;
             new BukkitRunnable() {
@@ -58,20 +56,18 @@ public class GiveRegisterItemCommand implements CommandExecutor {
             lore.add(HiddenStringUtil.encodeString("RegisterItem"));
 
             ItemMeta registerItemMeta = registerItem.getItemMeta();
-            assert registerItemMeta != null;
             registerItemMeta.setLore(lore);
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
             p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
 
-        } else if (commandSender instanceof Player p) {
+        } else {
 
-            p.sendMessage(ChatColor.RED + "Someone is already creating a road. Try again later.");
+            throw CommandAPI.failWithString("Someone is already creating a road. Try again later.");
 
         }
 
-        return true;
     }
 
 }

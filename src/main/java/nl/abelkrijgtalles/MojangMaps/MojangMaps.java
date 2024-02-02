@@ -181,14 +181,39 @@ public final class MojangMaps extends JavaPlugin {
                 .withShortDescription("Go to a specific location.")
                 .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
                 .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                .withHelp("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
+                .executesPlayer((GoToCommand::new))
+                .register();
+        new CommandAPICommand("whereamistanding")
+                .withShortDescription("Shows where you're standing.")
+                .withPermission(CommandPermission.fromString("mojangmaps.using.viewlocation"))
+                .withAliases("whichroad", "where")
                 .executesPlayer(((player, commandArguments) -> {
-                    new GoToCommand(this, player, commandArguments);
+                    new WhereAmIStandingCommand(player);
                 }))
                 .register();
-        Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
-        Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand());
-        Objects.requireNonNull(getCommand("navigation")).setExecutor(new NavigationCommand());
-        Objects.requireNonNull(getCommand("giveregisteritem")).setExecutor(new GiveRegisterItemCommand());
+        new CommandAPICommand("reloadconfigsfromdisk")
+                .withShortDescription("Reloads all the configs from disk.")
+                .withPermission(CommandPermission.fromString("mojangmaps.util.reloadconfigs"))
+                .withAliases("reloadconfigs", "reloadconfig")
+                .executes(((commandSender, commandArguments) -> {
+                    new ReloadConfigsFromDiskCommand();
+                }))
+                .register();
+        new CommandAPICommand("navigation")
+                .withShortDescription("Go to a specific location and view the navigation in GUI form.")
+                .withPermission(CommandPermission.fromString("mojangmaps.using.navigation"))
+                .withAliases("gotogui")
+                .withHelp("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
+                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                .executesPlayer((NavigationCommand::new))
+                .register();
+        new CommandAPICommand("giveregisteritem")
+                .withShortDescription("Hello, this is a test")
+                .executesPlayer(((player, commandArguments) -> {
+                    new GiveRegisterItemCommand(player);
+                }))
+                .register();
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(), this);

@@ -21,6 +21,9 @@ package nl.abelkrijgtalles.MojangMaps.command.using;
 import com.samjakob.spigui.buttons.SGButton;
 import com.samjakob.spigui.item.ItemBuilder;
 import com.samjakob.spigui.menu.SGMenu;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
+import dev.jorel.commandapi.executors.CommandArguments;
 import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.object.Node;
@@ -32,71 +35,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class NavigationCommand implements CommandExecutor {
+public class NavigationCommand {
 
-    public static boolean goToCheck(String[] strings, Player p) {
+    public NavigationCommand(Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
 
-        if (strings.length < 3) {
+        openGUI(p, commandArguments);
 
-            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("noarguments").formatted(3));
-            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-            return true;
-
-        }
-
-        if (strings.length > 3) {
-
-            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("toomanyarguments").formatted(3));
-            p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-            return true;
-
-        }
-
-        for (String coordinate : strings) {
-
-            try {
-
-                Integer.parseInt(coordinate);
-
-            } catch (NumberFormatException e) {
-
-                p.sendMessage(ChatColor.RED + MessageUtil.getMessage("invalidcoordinates"));
-                p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("example").formatted(ChatColor.WHITE + "/goto <x> <y> <z>."));
-
-                return true;
-
-            }
-
-        }
-        return false;
     }
 
-    @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-
-        if (commandSender instanceof Player p) {
-
-            if (goToCheck(strings, p)) return true;
-
-            openGUI(p, strings);
-
-        }
-
-        return true;
-    }
-
-    private void openGUI(Player p, String[] strings) {
+    private void openGUI(Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
 
         MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
-        Location location = new Location(p.getWorld(), Double.parseDouble(strings[0]), Double.parseDouble(strings[1]), Double.parseDouble(strings[2]));
+        Location location = (Location) commandArguments.get("location");
         Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());
         Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
 
@@ -105,8 +58,7 @@ public class NavigationCommand implements CommandExecutor {
         Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
         if (playerNode == null || locationNode == null) {
-            p.sendMessage(ChatColor.RED + MessageUtil.getMessage("nonodesfound"));
-            return;
+            throw CommandAPI.failWithString(MessageUtil.getMessage("nonodesfound"));
         }
 
         p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("load"));
@@ -133,7 +85,7 @@ public class NavigationCommand implements CommandExecutor {
 
             SGButton button = new SGButton(
 
-                    new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).name(MessageUtil.getMessage("finallygoto").formatted(strings[0], strings[2])).build()
+                    new ItemBuilder(Material.GREEN_STAINED_GLASS_PANE).name(MessageUtil.getMessage("finallygoto").formatted(location.getX(), location.getZ())).build()
 
             );
 
