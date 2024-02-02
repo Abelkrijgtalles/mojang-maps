@@ -173,7 +173,7 @@ public final class MojangMaps extends JavaPlugin {
                 .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
                 .withOptionalArguments(new StringArgument("name"))
                 .withArguments(new GreedyStringArgument("locations"))
-                .withHelp("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
+                .withUsage("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
                 .withAliases("createroad")
                 .executesPlayer((RegisterRoadCommand::new))
                 .register();
@@ -181,7 +181,7 @@ public final class MojangMaps extends JavaPlugin {
                 .withShortDescription("Go to a specific location.")
                 .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
                 .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-                .withHelp("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
+                .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
                 .executesPlayer((GoToCommand::new))
                 .register();
         new CommandAPICommand("whereamistanding")
@@ -204,7 +204,7 @@ public final class MojangMaps extends JavaPlugin {
                 .withShortDescription("Go to a specific location and view the navigation in GUI form.")
                 .withPermission(CommandPermission.fromString("mojangmaps.using.navigation"))
                 .withAliases("gotogui")
-                .withHelp("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
+                .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
                 .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
                 .executesPlayer((NavigationCommand::new))
                 .register();
