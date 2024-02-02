@@ -20,6 +20,7 @@ package nl.abelkrijgtalles.MojangMaps.command;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
+import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,7 +41,14 @@ public class GiveRegisterItemCommand {
             registerItemMeta.setDisplayName(getRegisterItemName());
             registerItem.setItemMeta(registerItemMeta);
 
-            MojangMaps.getMMLogger().info(getRegisterItemName() + " == " + registerItemMeta.getDisplayName() + (getRegisterItemName() == registerItemMeta.getDisplayName()));
+            Logger logger = MojangMaps.getMMLogger();
+
+            logger.info(getRegisterItemName());
+            p.sendMessage(getRegisterItemName());
+            logger.info(registerItemMeta.getDisplayName());
+            p.sendMessage(registerItemMeta.getDisplayName());
+            logger.info(String.valueOf(getRegisterItemName().trim() == registerItemMeta.getDisplayName().trim()));
+            p.sendMessage(String.valueOf(getRegisterItemName().trim() == registerItemMeta.getDisplayName().trim()));
 
             p.getInventory().addItem(registerItem);
             p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
