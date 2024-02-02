@@ -166,7 +166,7 @@ public final class MojangMaps extends JavaPlugin {
                     new RegisterLocationCommand(player);
                 }))
                 .register();
-        new CommandAPICommand("registerroadnew")
+        new CommandAPICommand("registerroad")
                 .withShortDescription("Register a road.")
                 .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
                 .withArguments(new StringArgument("name"))
@@ -175,6 +175,7 @@ public final class MojangMaps extends JavaPlugin {
                 .withAliases("createroad")
                 .executesPlayer((RegisterRoadCommand::new))
                 .register();
+
         Objects.requireNonNull(getCommand("goto")).setExecutor(new GoToCommand());
         Objects.requireNonNull(getCommand("whereamistanding")).setExecutor(new WhereAmIStandingCommand());
         Objects.requireNonNull(getCommand("reloadconfigsfromdisk")).setExecutor(new ReloadConfigsFromDiskCommand());
