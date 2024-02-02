@@ -29,7 +29,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class GiveRegisterItemCommand {
 
@@ -38,18 +37,6 @@ public class GiveRegisterItemCommand {
         if (!MojangMaps.isCreatingARoad) {
 
             MojangMaps.isCreatingARoad = true;
-            new BukkitRunnable() {
-
-                @Override
-                public void run() {
-
-                    if (MojangMaps.creatingRoadLocations.size() > 1) {
-
-
-                    }
-
-                }
-            }.runTaskTimer(MojangMaps.getPlugin(MojangMaps.class), 0, 20L);
 
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             List<String> lore = new ArrayList<>();
