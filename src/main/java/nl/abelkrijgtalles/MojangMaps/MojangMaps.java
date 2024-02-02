@@ -171,7 +171,7 @@ public final class MojangMaps extends JavaPlugin {
         new CommandAPICommand("registerroad")
                 .withShortDescription("Register a road.")
                 .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
-                .withOptionalArguments(new StringArgument("name"))
+                .withArguments(new StringArgument("name").setOptional(true))
                 .withArguments(new GreedyStringArgument("locations"))
                 .withUsage("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
                 .withAliases("createroad")
