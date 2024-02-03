@@ -1,6 +1,6 @@
 /*
  * MojangMaps
- * Copyright (C) 2023 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.MojangMaps.command;
+package nl.abelkrijgtalles.MojangMaps.command.register;
 
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -27,9 +26,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class GiveRegisterItemCommand {
+// rip to /giveregisteritem                                                        , and welcome to /createroad (but 2.0). It's /giveregisteritem, but better!!!!!!!!!!1!!!!!!!!1!1 (this totally isn't an ad)
 
-    public GiveRegisterItemCommand(Player p) throws WrapperCommandSyntaxException {
+public class RoadCreationCommand {
+
+    public RoadCreationCommand(Player p) {
 
         if (!MojangMaps.isCreatingARoad) {
 
@@ -46,7 +47,7 @@ public class GiveRegisterItemCommand {
 
         } else {
 
-            throw CommandAPI.failWithString("Someone is already creating a road. Try again later.");
+            CommandAPI.failWithString("Someone is already creating a road. Try again later.");
 
         }
 

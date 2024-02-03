@@ -28,8 +28,8 @@ import dev.jorel.commandapi.arguments.LocationArgument;
 import dev.jorel.commandapi.arguments.LocationType;
 import java.util.*;
 import java.util.logging.Logger;
-import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
+import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
@@ -204,11 +204,12 @@ public final class MojangMaps extends JavaPlugin {
                 .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
                 .executesPlayer((NavigationCommand::new))
                 .register();
-        new CommandAPICommand("giveregisteritem")
-                .withShortDescription("Hello, this is a test")
-                .executesPlayer(((player, commandArguments) -> {
-                    new GiveRegisterItemCommand(player);
-                }))
+        new CommandAPICommand("createroad")
+                .withShortDescription("Create a road.")
+                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
+                .executesPlayer((player, commandArguments) -> {
+                    new RoadCreationCommand(player);
+                })
                 .register();
 
         // Listeners/Events init
