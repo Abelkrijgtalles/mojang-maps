@@ -140,7 +140,9 @@ public class RegisterItemListener implements Listener {
         Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
         RoadCreationCommand.particleTaskId = -1;
         RoadCreationCommand.isCreatingARoad = false;
+        RoadCreationCommand.locations.clear();
 
+        p.getWorld().getEntities().remove(event.getItemDrop().getEntityId());
     }
 
 }
