@@ -55,7 +55,7 @@ public class RoadCreationCommand {
 
             p.getInventory().addItem(registerItem);
             // idk if this should also give the color (the color of the Register Item display name)-. As of now, it kinda looks cool
-            p.sendMessage(ChatColor.YELLOW + "Creating road called " + roadName + ". Drop the " + getRegisterItemName() + " or run /saveroad <name> to save the road.");
+            p.sendMessage(ChatColor.YELLOW + "Creating road called " + roadName + ". Drop the " + getRegisterItemName() + ChatColor.YELLOW + " or run /saveroad <name> to save the road.");
 
         } else {
 

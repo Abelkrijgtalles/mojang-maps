@@ -116,7 +116,8 @@ public class RegisterItemListener implements Listener {
 
         Player p = event.getPlayer();
 
-        if (!isRegisterItem(p)) return;
+        if (!event.getItemDrop().getItemStack().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim()))
+            return;
 
         p.sendMessage("Saving " + RoadCreationCommand.roadName + ".");
 
