@@ -41,6 +41,7 @@ public class GiveRegisterItemCommand {
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
+            // idk if this should also give the color. As of now, it kinda looks cool
             p.sendMessage(ChatColor.YELLOW + "Gave the " + getRegisterItemName());
 
         } else {
