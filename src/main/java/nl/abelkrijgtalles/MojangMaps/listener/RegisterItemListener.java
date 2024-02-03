@@ -18,8 +18,13 @@
 
 package nl.abelkrijgtalles.MojangMaps.listener;
 
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import nl.abelkrijgtalles.MojangMaps.command.GiveRegisterItemCommand;
+import java.util.ArrayList;
+import java.util.List;
+import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
+import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.ParticleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +36,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -39,7 +45,7 @@ public class RegisterItemListener implements Listener {
 
     public static boolean isRegisterItem(Player p) {
 
-        return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().trim().equals(GiveRegisterItemCommand.getRegisterItemName().trim());
+        return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim());
     }
 
     @EventHandler
@@ -93,15 +99,42 @@ public class RegisterItemListener implements Listener {
 
         clickedBlockLocation.add(0.5, 1, 0.5);
 
-        MojangMaps.creatingRoadLocations.add(clickedBlockLocation);
+        RoadCreationCommand.locations.add(clickedBlockLocation);
         p.sendMessage(ChatColor.RED + "Added point.");
 
-        if (MojangMaps.creatingRoadLocations.size() > 1) {
-            if (MojangMaps.creatingRoadLocations.size() > 2) {
-                Bukkit.getScheduler().cancelTask(MojangMaps.creatingRoadParticleTaskId);
+        if (RoadCreationCommand.locations.size() > 1) {
+            if (RoadCreationCommand.locations.size() > 2) {
+                Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
             }
-            MojangMaps.creatingRoadParticleTaskId = ParticleUtil.spawnLine(MojangMaps.creatingRoadLocations, 1, 0.25);
+            RoadCreationCommand.particleTaskId = ParticleUtil.spawnLine(RoadCreationCommand.locations, 1, 0.25);
         }
+
+    }
+
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent event) {
+
+        Player p = event.getPlayer();
+
+        if (!isRegisterItem(p)) return;
+
+        p.sendMessage("Saving " + RoadCreationCommand.roadName + ".");
+
+        // I had to look at registerroad to know how the saving system worked again
+
+        List<Integer> locationsPointers = new ArrayList<>();
+
+        RoadUtil.addMoreLocations(p, RoadCreationCommand.locations);
+
+        for (Location location : RoadCreationCommand.locations) {
+
+            NodesConfigUtil.addLocation(location);
+            locationsPointers.add(NodesConfigUtil.getLocations().size() - 1);
+
+        }
+
+        NodesConfigUtil.addRoad(new Road(locationsPointers));
+        p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registeredroad"));
 
     }
 

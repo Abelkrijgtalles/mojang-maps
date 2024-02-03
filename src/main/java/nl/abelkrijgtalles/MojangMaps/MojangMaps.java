@@ -26,7 +26,10 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.LocationArgument;
 import dev.jorel.commandapi.arguments.LocationType;
-import java.util.*;
+import dev.jorel.commandapi.arguments.StringArgument;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
@@ -43,7 +46,6 @@ import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
-import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -51,9 +53,6 @@ public final class MojangMaps extends JavaPlugin {
 
     public static boolean isOnline = true;
     public static SpiGUI spiGUI;
-    public static boolean isCreatingARoad = false;
-    public static List<Location> creatingRoadLocations = new ArrayList<>();
-    public static int creatingRoadParticleTaskId = -1;
     public boolean isPluginOutdated = false;
 
     private static void addLanguageChart(Metrics metrics, MojangMaps plugin) {
@@ -207,9 +206,8 @@ public final class MojangMaps extends JavaPlugin {
         new CommandAPICommand("createroad")
                 .withShortDescription("Create a road.")
                 .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
-                .executesPlayer((player, commandArguments) -> {
-                    new RoadCreationCommand(player);
-                })
+                .withOptionalArguments(new StringArgument("name"))
+                .executesPlayer(RoadCreationCommand::new)
                 .register();
 
         // Listeners/Events init

@@ -19,8 +19,12 @@
 package nl.abelkrijgtalles.MojangMaps.command.register;
 
 import dev.jorel.commandapi.CommandAPI;
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
+import dev.jorel.commandapi.executors.CommandArguments;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,11 +34,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class RoadCreationCommand {
 
-    public RoadCreationCommand(Player p) {
+    public static boolean isCreatingARoad = false;
+    public static List<Location> locations = new ArrayList<>();
+    public static int particleTaskId = -1;
+    public static String roadName = "Unnamed Road";
 
-        if (!MojangMaps.isCreatingARoad) {
+    public RoadCreationCommand(Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
 
-            MojangMaps.isCreatingARoad = true;
+        if (!isCreatingARoad) {
+
+            isCreatingARoad = true;
+            if (commandArguments.get("name") != null) {
+                roadName = (String) commandArguments.get("name");
+            }
 
             ItemStack registerItem = new ItemStack(Material.GOLDEN_AXE);
             ItemMeta registerItemMeta = registerItem.getItemMeta();
@@ -42,12 +54,12 @@ public class RoadCreationCommand {
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
-            // idk if this should also give the color. As of now, it kinda looks cool
-            p.sendMessage(ChatColor.YELLOW + "Gave the " + getRegisterItemName());
+            // idk if this should also give the color (the color of the Register Item display name)-. As of now, it kinda looks cool
+            p.sendMessage(ChatColor.YELLOW + "Creating road called " + roadName + ". Drop the " + getRegisterItemName() + " or run /saveroad <name> to save the road.");
 
         } else {
 
-            CommandAPI.failWithString("Someone is already creating a road. Try again later.");
+            throw CommandAPI.failWithString("Someone is already creating a road. Try again later.");
 
         }
 
