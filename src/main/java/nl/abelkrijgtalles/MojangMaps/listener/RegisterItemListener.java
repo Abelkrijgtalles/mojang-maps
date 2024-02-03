@@ -142,8 +142,8 @@ public class RegisterItemListener implements Listener {
         RoadCreationCommand.isCreatingARoad = false;
         RoadCreationCommand.locations.clear();
 
-        event.setCancelled(true);
         p.getInventory().remove(event.getItemDrop().getItemStack());
+        event.setCancelled(true);
     }
 
 }
