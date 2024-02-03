@@ -137,6 +137,10 @@ public class RegisterItemListener implements Listener {
         NodesConfigUtil.addRoad(new Road(locationsPointers));
         p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registeredroad"));
 
+        Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
+        RoadCreationCommand.particleTaskId = -1;
+        RoadCreationCommand.isCreatingARoad = false;
+
     }
 
 }
