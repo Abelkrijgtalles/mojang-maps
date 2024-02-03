@@ -41,7 +41,7 @@ public class GiveRegisterItemCommand {
             registerItem.setItemMeta(registerItemMeta);
 
             p.getInventory().addItem(registerItem);
-            p.sendMessage(ChatColor.YELLOW + "Gave the register item (this needs a better name).");
+            p.sendMessage(ChatColor.YELLOW + "Gave the " + getRegisterItemName());
 
         } else {
 
@@ -53,7 +53,7 @@ public class GiveRegisterItemCommand {
 
     public static String getRegisterItemName() {
 
-        return ChatColor.GOLD + "Road Register";
+        return ChatColor.GOLD + "Road Creation Tool";
 
     }
 

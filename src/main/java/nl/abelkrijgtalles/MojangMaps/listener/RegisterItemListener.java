@@ -81,7 +81,7 @@ public class RegisterItemListener implements Listener {
         Player p = event.getPlayer();
 
         if (event.getHand() != EquipmentSlot.HAND) return;
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (!isRegisterItem(p)) return;
 
         addPointLogic(p, event.getClickedBlock().getLocation());
