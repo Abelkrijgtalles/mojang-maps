@@ -122,7 +122,7 @@ public class RoadCreationToolListener implements Listener {
 
         if (RoadCreationCommand.locations.size() < 2) {
 
-            p.sendMessage(ChatColor.RED + "You have to have at least 2 locations selected to create a road. Cancelling");
+            p.sendMessage(ChatColor.RED + "You have to have at least 2 locations selected to create a road. Cancelling...");
             resetRoadCreation(event);
             return;
 
