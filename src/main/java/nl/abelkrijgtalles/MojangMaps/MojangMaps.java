@@ -39,7 +39,7 @@ import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
 import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
-import nl.abelkrijgtalles.MojangMaps.listener.RegisterItemListener;
+import nl.abelkrijgtalles.MojangMaps.listener.RoadCreationToolListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
@@ -213,7 +213,7 @@ public final class MojangMaps extends JavaPlugin {
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new RegisterItemListener(), this);
+        getServer().getPluginManager().registerEvents(new RoadCreationToolListener(), this);
 
         // SpiGUI init
         spiGUI = new SpiGUI(this);

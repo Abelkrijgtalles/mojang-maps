@@ -41,7 +41,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class RegisterItemListener implements Listener {
+public class RoadCreationToolListener implements Listener {
 
     public static boolean isRegisterItem(Player p) {
 
