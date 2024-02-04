@@ -37,7 +37,7 @@ public class RoadCreationCommand {
     public static boolean isCreatingARoad = false;
     public static List<Location> locations = new ArrayList<>();
     public static int particleTaskId = -1;
-    public static String roadName = "Unnamed Road";
+    public static String roadName = null;
 
     public RoadCreationCommand(Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
 

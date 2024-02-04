@@ -115,11 +115,12 @@ public class RegisterItemListener implements Listener {
     public void onDrop(PlayerDropItemEvent event) {
 
         Player p = event.getPlayer();
+        String name = RoadCreationCommand.roadName;
 
         if (!event.getItemDrop().getItemStack().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim()))
             return;
 
-        p.sendMessage("Saving " + RoadCreationCommand.roadName + ".");
+        p.sendMessage("Saving " + name + ".");
 
         // I had to look at registerroad to know how the saving system worked again
 
@@ -134,7 +135,12 @@ public class RegisterItemListener implements Listener {
 
         }
 
-        NodesConfigUtil.addRoad(new Road(locationsPointers));
+        if (name != null) {
+            NodesConfigUtil.addRoad(new Road(name, locationsPointers));
+        } else {
+            NodesConfigUtil.addRoad(new Road(locationsPointers));
+        }
+
         p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registeredroad"));
 
         Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
