@@ -128,7 +128,11 @@ public class RoadCreationToolListener implements Listener {
 
         }
 
-        p.sendMessage("Saving " + name + ".");
+        if (name == null) {
+            p.sendMessage("Saving " + MessageUtil.getMessage("unnamedroad") + ".");
+        } else {
+            p.sendMessage("Saving " + name + ".");
+        }
 
         // I had to look at registerroad to know how the saving system worked again
 
