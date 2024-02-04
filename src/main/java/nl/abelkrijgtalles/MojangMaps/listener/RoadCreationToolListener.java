@@ -128,7 +128,7 @@ public class RoadCreationToolListener implements Listener {
 
         }
 
-        if (name == null || name.equals("null")) {
+        if (name == null) {
             p.sendMessage("Saving " + MessageUtil.getMessage("unnamedroad") + ".");
         } else {
             p.sendMessage("Saving " + name + ".");
