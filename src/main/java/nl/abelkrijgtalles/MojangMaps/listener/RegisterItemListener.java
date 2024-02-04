@@ -120,6 +120,14 @@ public class RegisterItemListener implements Listener {
         if (!event.getItemDrop().getItemStack().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim()))
             return;
 
+        if (RoadCreationCommand.locations.size() < 2) {
+
+            p.sendMessage(ChatColor.RED + "You have to have at least 2 locations selected to create a road. Cancelling");
+            resetRoadCreation(event);
+            return;
+
+        }
+
         p.sendMessage("Saving " + name + ".");
 
         // I had to look at registerroad to know how the saving system worked again
@@ -143,12 +151,18 @@ public class RegisterItemListener implements Listener {
 
         p.sendMessage(ChatColor.YELLOW + MessageUtil.getMessage("registeredroad"));
 
+        resetRoadCreation(event);
+
+    }
+
+    private void resetRoadCreation(PlayerDropItemEvent event) {
+
         Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
         RoadCreationCommand.particleTaskId = -1;
         RoadCreationCommand.isCreatingARoad = false;
         RoadCreationCommand.locations.clear();
-
         event.getItemDrop().remove();
+
     }
 
 }
