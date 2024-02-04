@@ -100,7 +100,7 @@ public class RegisterItemListener implements Listener {
         clickedBlockLocation.add(0.5, 1, 0.5);
 
         RoadCreationCommand.locations.add(clickedBlockLocation);
-        p.sendMessage(ChatColor.RED + "Added point.");
+        p.sendMessage(ChatColor.GOLD + "Added point.");
 
         if (RoadCreationCommand.locations.size() > 1) {
             if (RoadCreationCommand.locations.size() > 2) {
@@ -161,6 +161,7 @@ public class RegisterItemListener implements Listener {
         RoadCreationCommand.particleTaskId = -1;
         RoadCreationCommand.isCreatingARoad = false;
         RoadCreationCommand.locations.clear();
+        RoadCreationCommand.roadName = null;
         event.getItemDrop().remove();
 
     }
