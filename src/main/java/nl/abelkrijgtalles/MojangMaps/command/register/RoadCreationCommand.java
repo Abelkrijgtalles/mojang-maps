@@ -23,6 +23,7 @@ import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import dev.jorel.commandapi.executors.CommandArguments;
 import java.util.ArrayList;
 import java.util.List;
+import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,7 +56,11 @@ public class RoadCreationCommand {
 
             p.getInventory().addItem(registerItem);
             // idk if this should also give the color (the color of the Register Item display name)-. As of now, it kinda looks cool
-            p.sendMessage(ChatColor.YELLOW + "Creating road called " + roadName + ". Drop the " + getRegisterItemName() + ChatColor.YELLOW + " or run /saveroad <name> to save the road.");
+            if (roadName != null) {
+                p.sendMessage(ChatColor.YELLOW + "Creating road called " + roadName + ". Drop the " + getRegisterItemName() + ChatColor.YELLOW + " or run /saveroad <name> to save the road.");
+            } else {
+                p.sendMessage(ChatColor.YELLOW + "Creating road called " + MessageUtil.getMessage("unnamedroad") + ". Drop the " + getRegisterItemName() + ChatColor.YELLOW + " or run /saveroad <name> to save the road.");
+            }
 
         } else {
 
