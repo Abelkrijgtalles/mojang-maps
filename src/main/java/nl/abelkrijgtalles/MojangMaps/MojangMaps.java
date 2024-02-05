@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-import nl.abelkrijgtalles.MojangMaps.command.register.RegisterLocationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
@@ -155,23 +154,14 @@ public final class MojangMaps extends JavaPlugin {
 
         // Commands Init
         CommandAPI.onEnable();
-        new CommandAPICommand("registerlocation")
-                .withShortDescription("Register a location.")
-                .withPermission(CommandPermission.fromString("mojangmaps.register.location"))
-                .withAliases("createlocation")
-                .executesPlayer(((player, commandArguments) -> {
-                    new RegisterLocationCommand(player);
-                }))
-                .register();
-//        new CommandAPICommand("registerroad")
-//                .withShortDescription("Register a road.")
-//                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
-//                .withArguments(new StringArgument("name").setOptional(true))
-//                .withArguments(new GreedyStringArgument("locations"))
-//                .withUsage("/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.", "/registerroad <" + MessageUtil.getMessage("registerroadarguments") + ">.")
-//                .withAliases("createroad")
-//                .executesPlayer((RegisterRoadCommand::new))
-//                .register();
+
+        // |-------------------------------------------------------------------------------------------------------------------|
+        // |                                                                                                                   |
+        // |                     07-07-2024---05-02-2024 && 21-07-2023---05-02-2024 (dd-mm-yyyy)                               |
+        // | Here lie /registerlocation and /registerroad. Without them Mojang Maps wouldn't be what it is now. Rest In Peace. |
+        // |                                                                                                                   |
+        // |-------------------------------------------------------------------------------------------------------------------|
+
         new CommandAPICommand("goto")
                 .withShortDescription("Go to a specific location.")
                 .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
