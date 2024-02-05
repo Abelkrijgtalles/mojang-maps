@@ -45,6 +45,8 @@ public class RoadCreationToolListener implements Listener {
 
     public static boolean isRegisterItem(Player p) {
 
+        if (!p.getInventory().getItemInMainHand().hasItemMeta()) return false;
+
         return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim());
     }
 
@@ -116,6 +118,8 @@ public class RoadCreationToolListener implements Listener {
 
         Player p = event.getPlayer();
         String name = RoadCreationCommand.roadName;
+
+        if (!event.getItemDrop().getItemStack().hasItemMeta()) return;
 
         if (!event.getItemDrop().getItemStack().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim()))
             return;
