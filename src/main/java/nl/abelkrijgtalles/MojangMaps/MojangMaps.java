@@ -187,12 +187,11 @@ public final class MojangMaps extends JavaPlugin {
         // goto group
 
         // this will probably be removed, as a better system will be made to go to places
-        CommandAPICommand navigationCommand = new CommandAPICommand("navigation")
+        CommandAPICommand navigationCommand = new CommandAPICommand("gui")
                 .withShortDescription("Go to a specific location and view the navigation in GUI form.")
                 // old version mojangmaps.using.navigation
                 .withPermission(CommandPermission.fromString("mojangmaps.goto.gui"))
                 .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
-                .withArguments(new LocationArgument("guilocation", LocationType.BLOCK_POSITION, false))
                 .executesPlayer((NavigationCommand::new));
 
         CommandAPICommand gotoGroupCommand = new CommandAPICommand("goto")
