@@ -23,10 +23,13 @@ import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.CommandPermission;
+import dev.jorel.commandapi.arguments.StringArgument;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.listener.RoadCreationToolListener;
@@ -191,8 +194,18 @@ public final class MojangMaps extends JavaPlugin {
 //                .executesPlayer(RoadCreationCommand::new)
 //                .register();
 
+        CommandAPICommand createRoad = new CommandAPICommand("create")
+                .withShortDescription("Create a road.")
+                .withPermission(CommandPermission.fromString("mojang.register.road"))
+                .withOptionalArguments(new StringArgument("name"))
+                .executesPlayer(RoadCreationCommand::new);
+
+        CommandAPICommand roadGroup = new CommandAPICommand("road")
+                .withSubcommand(createRoad);
+
         new CommandAPICommand("mm")
                 .withAliases("mojangmaps")
+                .withSubcommand(roadGroup)
                 .register();
 
         // Listeners/Events init
