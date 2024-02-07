@@ -162,44 +162,6 @@ public final class MojangMaps extends JavaPlugin {
         // |                                                                                                                   |
         // |-------------------------------------------------------------------------------------------------------------------|
 
-//        new CommandAPICommand("goto")
-//                .withShortDescription("Go to a specific location.")
-//                .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
-//                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-//                .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
-//                .executesPlayer((GoToCommand::new))
-//                .register();
-//        new CommandAPICommand("whereamistanding")
-//                .withShortDescription("Shows where you're standing.")
-//                .withPermission(CommandPermission.fromString("mojangmaps.using.viewlocation"))
-//                .withAliases("whichroad", "where")
-//                .executesPlayer(((player, commandArguments) -> {
-//                    new WhereAmIStandingCommand(player);
-//                }))
-//                .register();
-//        new CommandAPICommand("reloadconfigsfromdisk")
-//                .withShortDescription("Reloads all the configs from disk.")
-//                .withPermission(CommandPermission.fromString("mojangmaps.util.reloadconfigs"))
-//                .withAliases("reloadconfigs", "reloadconfig")
-//                .executes(((commandSender, commandArguments) -> {
-//                    new ReloadConfigsFromDiskCommand();
-//                }))
-//                .register();
-//        new CommandAPICommand("navigation")
-//                .withShortDescription("Go to a specific location and view the navigation in GUI form.")
-//                .withPermission(CommandPermission.fromString("mojangmaps.using.navigation"))
-//                .withAliases("gotogui")
-//                .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
-//                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-//                .executesPlayer((NavigationCommand::new))
-//                .register();
-//        new CommandAPICommand("createroad")
-//                .withShortDescription("Create a road.")
-//                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
-//                .withOptionalArguments(new StringArgument("name"))
-//                .executesPlayer(RoadCreationCommand::new)
-//                .register();
-
         // road group
 
         CommandAPICommand createRoadCommand = new CommandAPICommand("create")
