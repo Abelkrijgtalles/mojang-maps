@@ -23,6 +23,7 @@ import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import dev.jorel.commandapi.executors.CommandArguments;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -35,16 +36,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class RoadCreationCommand {
 
-    public static boolean isCreatingARoad = false;
+    public static UUID creatingRoadPlayer = null;
     public static List<Location> locations = new ArrayList<>();
     public static int particleTaskId = -1;
     public static String roadName = null;
 
     public RoadCreationCommand(Player p, CommandArguments commandArguments) throws WrapperCommandSyntaxException {
 
-        if (!isCreatingARoad) {
+        if (creatingRoadPlayer != null) {
 
-            isCreatingARoad = true;
+            creatingRoadPlayer = p.getUniqueId();
             if (commandArguments.get("name") != null) {
                 roadName = (String) commandArguments.get("name");
             }

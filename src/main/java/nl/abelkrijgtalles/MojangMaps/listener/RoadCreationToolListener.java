@@ -39,14 +39,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 public class RoadCreationToolListener implements Listener {
 
     public static boolean isRegisterItem(Player p) {
 
         if (!p.getInventory().getItemInMainHand().hasItemMeta()) return false;
-
+        if (!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return false;
         return p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim());
     }
 
@@ -120,7 +122,7 @@ public class RoadCreationToolListener implements Listener {
         String name = RoadCreationCommand.roadName;
 
         if (!event.getItemDrop().getItemStack().hasItemMeta()) return;
-
+        if (!event.getItemDrop().getItemStack().getItemMeta().hasDisplayName()) return;
         if (!event.getItemDrop().getItemStack().getItemMeta().getDisplayName().trim().equals(RoadCreationCommand.getRegisterItemName().trim()))
             return;
 
@@ -163,11 +165,33 @@ public class RoadCreationToolListener implements Listener {
 
     }
 
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event) {
+
+        if (event.getPlayer().getUniqueId() == RoadCreationCommand.creatingRoadPlayer) {
+            Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
+            RoadCreationCommand.particleTaskId = -1;
+            RoadCreationCommand.creatingRoadPlayer = null;
+            RoadCreationCommand.locations.clear();
+            RoadCreationCommand.roadName = null;
+
+            for (ItemStack item : event.getPlayer().getInventory().getContents()) {
+                if (!item.hasItemMeta()) return;
+                if (!item.getItemMeta().hasDisplayName()) return;
+                if (item.getItemMeta().getDisplayName().equals(RoadCreationCommand.getRegisterItemName())) {
+                    event.getPlayer().getInventory().remove(item);
+                }
+            }
+
+        }
+
+    }
+
     private void resetRoadCreation(PlayerDropItemEvent event) {
 
         Bukkit.getScheduler().cancelTask(RoadCreationCommand.particleTaskId);
         RoadCreationCommand.particleTaskId = -1;
-        RoadCreationCommand.isCreatingARoad = false;
+        RoadCreationCommand.creatingRoadPlayer = null;
         RoadCreationCommand.locations.clear();
         RoadCreationCommand.roadName = null;
         event.getItemDrop().remove();
