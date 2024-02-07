@@ -24,12 +24,18 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
+import dev.jorel.commandapi.arguments.LocationArgument;
+import dev.jorel.commandapi.arguments.LocationType;
 import dev.jorel.commandapi.arguments.StringArgument;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
+import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.listener.RoadCreationToolListener;
@@ -194,18 +200,60 @@ public final class MojangMaps extends JavaPlugin {
 //                .executesPlayer(RoadCreationCommand::new)
 //                .register();
 
-        CommandAPICommand createRoad = new CommandAPICommand("create")
+        // road group
+
+        CommandAPICommand createRoadCommand = new CommandAPICommand("create")
                 .withShortDescription("Create a road.")
-                .withPermission(CommandPermission.fromString("mojang.register.road"))
+                // old version mojangmaps.register.road
+                .withPermission(CommandPermission.fromString("mojangmaps.road.create"))
                 .withOptionalArguments(new StringArgument("name"))
                 .executesPlayer(RoadCreationCommand::new);
 
-        CommandAPICommand roadGroup = new CommandAPICommand("road")
-                .withSubcommand(createRoad);
+        CommandAPICommand whichOne = new CommandAPICommand("whichone")
+                .withShortDescription("Shows where you're standing.")
+                // old version mojangmaps.using.viewlocation
+                .withPermission(CommandPermission.fromString("mojangmaps.road.whichone"))
+                .executesPlayer(((player, commandArguments) -> {
+                    new WhereAmIStandingCommand(player);
+                }));
+
+        CommandAPICommand roadGroupCommand = new CommandAPICommand("road")
+                .withShortDescription("All the commands used for modifying roads.")
+                .withPermission(CommandPermission.fromString("mojangmaps.road"))
+                .withSubcommands(createRoadCommand, whichOne);
+
+        // goto group
+
+        // this will probably be removed, as a better system will be made to go to places
+        CommandAPICommand navigationCommand = new CommandAPICommand("navigation")
+                .withShortDescription("Go to a specific location and view the navigation in GUI form.")
+                // old version mojangmaps.using.navigation
+                .withPermission(CommandPermission.fromString("mojangmaps.goto.gui"))
+                .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
+                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                .executesPlayer((NavigationCommand::new));
+
+        CommandAPICommand gotoGroupCommand = new CommandAPICommand("goto")
+                .withShortDescription("Go to a specific location.")
+                .withPermission(CommandPermission.fromString("mojangmaps.goto"))
+                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
+                .executesPlayer((GoToCommand::new))
+                .withSubcommand(navigationCommand);
+
+        CommandAPICommand reloadCommand = new CommandAPICommand("reload")
+                .withShortDescription("Reloads all the configs from disk.")
+                // old version mojangmaps.util.reloadconfigs
+                .withPermission(CommandPermission.fromString("mojangmaps.util.reload"))
+                .withAliases("reloadconfig")
+                .executes(((commandSender, commandArguments) -> {
+                    new ReloadConfigsFromDiskCommand();
+                }));
+
 
         new CommandAPICommand("mm")
                 .withAliases("mojangmaps")
-                .withSubcommand(roadGroup)
+                .withSubcommands(roadGroupCommand, gotoGroupCommand, reloadCommand)
                 .register();
 
         // Listeners/Events init
