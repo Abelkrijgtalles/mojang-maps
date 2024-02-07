@@ -49,7 +49,7 @@ public class NavigationCommand {
 
         MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
-        Location location = (Location) commandArguments.get("location");
+        Location location = (Location) commandArguments.get("guilocation");
         Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());
         Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
 

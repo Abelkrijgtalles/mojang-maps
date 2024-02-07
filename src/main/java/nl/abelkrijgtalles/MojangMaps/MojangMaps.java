@@ -192,7 +192,7 @@ public final class MojangMaps extends JavaPlugin {
                 // old version mojangmaps.using.navigation
                 .withPermission(CommandPermission.fromString("mojangmaps.goto.gui"))
                 .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
-                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                .withArguments(new LocationArgument("guilocation", LocationType.BLOCK_POSITION, false))
                 .executesPlayer((NavigationCommand::new));
 
         CommandAPICommand gotoGroupCommand = new CommandAPICommand("goto")
