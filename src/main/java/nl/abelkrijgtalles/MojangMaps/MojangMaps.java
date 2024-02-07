@@ -23,19 +23,10 @@ import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.CommandPermission;
-import dev.jorel.commandapi.arguments.LocationArgument;
-import dev.jorel.commandapi.arguments.LocationType;
-import dev.jorel.commandapi.arguments.StringArgument;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
-import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
-import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
-import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
-import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.listener.RoadCreationToolListener;
@@ -162,42 +153,46 @@ public final class MojangMaps extends JavaPlugin {
         // |                                                                                                                   |
         // |-------------------------------------------------------------------------------------------------------------------|
 
-        new CommandAPICommand("goto")
-                .withShortDescription("Go to a specific location.")
-                .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
-                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-                .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
-                .executesPlayer((GoToCommand::new))
-                .register();
-        new CommandAPICommand("whereamistanding")
-                .withShortDescription("Shows where you're standing.")
-                .withPermission(CommandPermission.fromString("mojangmaps.using.viewlocation"))
-                .withAliases("whichroad", "where")
-                .executesPlayer(((player, commandArguments) -> {
-                    new WhereAmIStandingCommand(player);
-                }))
-                .register();
-        new CommandAPICommand("reloadconfigsfromdisk")
-                .withShortDescription("Reloads all the configs from disk.")
-                .withPermission(CommandPermission.fromString("mojangmaps.util.reloadconfigs"))
-                .withAliases("reloadconfigs", "reloadconfig")
-                .executes(((commandSender, commandArguments) -> {
-                    new ReloadConfigsFromDiskCommand();
-                }))
-                .register();
-        new CommandAPICommand("navigation")
-                .withShortDescription("Go to a specific location and view the navigation in GUI form.")
-                .withPermission(CommandPermission.fromString("mojangmaps.using.navigation"))
-                .withAliases("gotogui")
-                .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
-                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-                .executesPlayer((NavigationCommand::new))
-                .register();
-        new CommandAPICommand("createroad")
-                .withShortDescription("Create a road.")
-                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
-                .withOptionalArguments(new StringArgument("name"))
-                .executesPlayer(RoadCreationCommand::new)
+//        new CommandAPICommand("goto")
+//                .withShortDescription("Go to a specific location.")
+//                .withPermission(CommandPermission.fromString("mojangmaps.using.goto"))
+//                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+//                .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
+//                .executesPlayer((GoToCommand::new))
+//                .register();
+//        new CommandAPICommand("whereamistanding")
+//                .withShortDescription("Shows where you're standing.")
+//                .withPermission(CommandPermission.fromString("mojangmaps.using.viewlocation"))
+//                .withAliases("whichroad", "where")
+//                .executesPlayer(((player, commandArguments) -> {
+//                    new WhereAmIStandingCommand(player);
+//                }))
+//                .register();
+//        new CommandAPICommand("reloadconfigsfromdisk")
+//                .withShortDescription("Reloads all the configs from disk.")
+//                .withPermission(CommandPermission.fromString("mojangmaps.util.reloadconfigs"))
+//                .withAliases("reloadconfigs", "reloadconfig")
+//                .executes(((commandSender, commandArguments) -> {
+//                    new ReloadConfigsFromDiskCommand();
+//                }))
+//                .register();
+//        new CommandAPICommand("navigation")
+//                .withShortDescription("Go to a specific location and view the navigation in GUI form.")
+//                .withPermission(CommandPermission.fromString("mojangmaps.using.navigation"))
+//                .withAliases("gotogui")
+//                .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
+//                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+//                .executesPlayer((NavigationCommand::new))
+//                .register();
+//        new CommandAPICommand("createroad")
+//                .withShortDescription("Create a road.")
+//                .withPermission(CommandPermission.fromString("mojangmaps.register.road"))
+//                .withOptionalArguments(new StringArgument("name"))
+//                .executesPlayer(RoadCreationCommand::new)
+//                .register();
+
+        new CommandAPICommand("mm")
+                .withAliases("mojangmaps")
                 .register();
 
         // Listeners/Events init
