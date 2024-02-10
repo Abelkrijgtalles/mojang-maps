@@ -141,7 +141,7 @@ public final class MojangMaps extends JavaPlugin {
         ConfigurationSerialization.registerClass(Road.class);
         getConfig().options().copyDefaults();
         saveDefaultConfig();
-        getLogger().info(ConfigMigrationUtil.getConfigVersion());
+        getLogger().info(String.valueOf(ConfigMigrationUtil.getConfigVersion()));
         NodesConfigUtil.setup();
         TranslationUtil translationUtil = new TranslationUtil();
         translationUtil.updateTranslations();

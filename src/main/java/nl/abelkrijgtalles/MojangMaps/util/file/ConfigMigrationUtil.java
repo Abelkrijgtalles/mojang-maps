@@ -20,11 +20,24 @@ package nl.abelkrijgtalles.MojangMaps.util.file;
 
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 
+/*
+    Table of Config Versions:
+    <pre>
+    | Version | Indicator/Changes                                                    | Added in |
+    |---------|----------------------------------------------------------------------|----------|
+    | 3       | Added config-version                                                 | 2.0      |
+    | 2       | Added language                                                       | 1.3      |
+    | 1       | Added street-actionbar                                               | 1.2      |
+    | 0       | Added a comment that said that there was nothing it that config file | 1.0      |
+    </pre>
+
+ */
+
 public class ConfigMigrationUtil {
 
-    public static String getConfigVersion() {
+    public static Integer getConfigVersion() {
 
-        return MojangMaps.getPlugin(MojangMaps.class).getConfig().saveToString();
+        return MojangMaps.getPlugin(MojangMaps.class).getConfig().getInt("config-version");
 
     }
 
