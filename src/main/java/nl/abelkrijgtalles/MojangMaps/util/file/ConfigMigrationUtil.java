@@ -37,7 +37,7 @@ public class ConfigMigrationUtil {
 
     public static Boolean getConfigVersion(FileConfiguration config) {
 
-        return config.contains("config-version", false);
+        return config.contains("config-version", true);
 
     }
 
