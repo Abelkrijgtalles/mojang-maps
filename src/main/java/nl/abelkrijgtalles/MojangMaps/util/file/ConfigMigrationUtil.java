@@ -35,9 +35,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigMigrationUtil {
 
-    public static Integer getConfigVersion(FileConfiguration config) {
+    public static Boolean getConfigVersion(FileConfiguration config) {
 
-        return config.getInt("config-version");
+        return config.contains("config-version", false);
 
     }
 
