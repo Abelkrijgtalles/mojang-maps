@@ -23,21 +23,38 @@ import org.bukkit.configuration.file.FileConfiguration;
 /*
     Table of Config Versions:
     <pre>
-    | Version | Indicator/Changes                                                    | Added in |
-    |---------|----------------------------------------------------------------------|----------|
-    | 3       | Added config-version                                                 | 2.0      |
-    | 2       | Added language                                                       | 1.3      |
-    | 1       | Added street-actionbar                                               | 1.2      |
-    | 0       | Added a comment that said that there was nothing it that config file | 1.0      |
+    | Version | Indicator/Changes                                                    | Contains config-version | Added in |
+    |---------|----------------------------------------------------------------------|-------------------------|----------|
+    | 3       | Added config-version                                                 | Yes                     | 2.0      |
+    | 2       | Added language                                                       | No                      | 1.3      |
+    | 1       | Added street-actionbar                                               | No                      | 1.2      |
+    | 0       | Added a comment that said that there was nothing it that config file | No                      | 1.0      |
     </pre>
 
  */
 
 public class ConfigMigrationUtil {
 
-    public static Boolean getConfigVersion(FileConfiguration config) {
+    public static int getConfigVersion(FileConfiguration config) {
 
-        return config.contains("config-version", true);
+        if (config.contains("config-version", true)) {
+            return config.getInt("config-version");
+        } else {
+            return determineVersion(config);
+        }
+
+    }
+
+    private static int determineVersion(FileConfiguration config) {
+
+        if (config.contains("language")) {
+            return 2;
+        }
+        if (config.contains("street-actionbar")) {
+            return 1;
+        }
+
+        return 0;
 
     }
 
