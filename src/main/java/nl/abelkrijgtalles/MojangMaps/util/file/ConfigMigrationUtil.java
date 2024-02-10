@@ -18,7 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
-import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import org.bukkit.configuration.file.FileConfiguration;
 
 /*
     Table of Config Versions:
@@ -35,9 +35,9 @@ import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 
 public class ConfigMigrationUtil {
 
-    public static Integer getConfigVersion() {
+    public static Integer getConfigVersion(FileConfiguration config) {
 
-        return MojangMaps.getPlugin(MojangMaps.class).getConfig().getInt("config-version");
+        return config.getInt("config-version");
 
     }
 
