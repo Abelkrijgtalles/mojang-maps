@@ -40,6 +40,7 @@ import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerWalkListener;
 import nl.abelkrijgtalles.MojangMaps.listener.RoadCreationToolListener;
 import nl.abelkrijgtalles.MojangMaps.object.Road;
+import nl.abelkrijgtalles.MojangMaps.util.file.ConfigMigrationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
@@ -140,6 +141,7 @@ public final class MojangMaps extends JavaPlugin {
         ConfigurationSerialization.registerClass(Road.class);
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+        getLogger().info(ConfigMigrationUtil.getConfigVersion());
         NodesConfigUtil.setup();
         TranslationUtil translationUtil = new TranslationUtil();
         translationUtil.updateTranslations();
