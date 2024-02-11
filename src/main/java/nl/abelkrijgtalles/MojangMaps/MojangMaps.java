@@ -146,6 +146,7 @@ public final class MojangMaps extends JavaPlugin {
             ConfigMigrationUtil.migrateConfig(getConfig());
         } catch (IOException e) {
             getLogger().warning("Could not migrate config.yml from config version " + ConfigMigrationUtil.getConfigVersion(getConfig()) + " to " + getConfig().getDefaults().getInt("config-version") + ".");
+            throw new RuntimeException(e);
         }
         NodesConfigUtil.setup();
         TranslationUtil translationUtil = new TranslationUtil();
