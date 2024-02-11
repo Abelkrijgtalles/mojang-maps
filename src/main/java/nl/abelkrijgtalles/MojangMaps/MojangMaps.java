@@ -143,7 +143,7 @@ public final class MojangMaps extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         try {
-            ConfigMigrationUtil.migrateConfig(getConfig());
+            ConfigMigrationUtil.migrateConfig(this);
         } catch (IOException e) {
             getLogger().warning("Could not migrate config.yml from config version " + ConfigMigrationUtil.getConfigVersion(getConfig()) + " to " + getConfig().getDefaults().getInt("config-version") + ".");
         }

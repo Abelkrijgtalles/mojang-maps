@@ -63,8 +63,9 @@ public class ConfigMigrationUtil {
 
     }
 
-    public static void migrateConfig(FileConfiguration config) throws IOException {
+    public static void migrateConfig(MojangMaps plugin) throws IOException {
 
+        FileConfiguration config = plugin.getConfig();
         int oldVersion = getConfigVersion(config);
         Logger logger = MojangMaps.getMMLogger();
 
@@ -75,15 +76,16 @@ public class ConfigMigrationUtil {
         }
 
         switch (oldVersion) {
-            case 2 -> migrateFrom2(config, logger);
-            case 1 -> migrateFrom1(config, logger);
-            case 0 -> migrateFrom0(config, logger);
+            case 2 -> migrateFrom2(plugin, logger);
+            case 1 -> migrateFrom1(plugin, logger);
+            case 0 -> migrateFrom0(plugin, logger);
         }
 
     }
 
-    private static void migrateFrom2(FileConfiguration config, Logger logger) throws IOException {
+    private static void migrateFrom2(MojangMaps plugin, Logger logger) throws IOException {
 
+        FileConfiguration config = plugin.getConfig();
         boolean streetActionbar = config.getBoolean("street-actionbar");
         String language = config.getString("language");
 
@@ -104,11 +106,11 @@ public class ConfigMigrationUtil {
 
     }
 
-    private static void migrateFrom1(FileConfiguration config, Logger logger) {
+    private static void migrateFrom1(MojangMaps plugin, Logger logger) {
 
     }
 
-    private static void migrateFrom0(FileConfiguration config, Logger logger) {
+    private static void migrateFrom0(MojangMaps plugin, Logger logger) {
 
     }
 
