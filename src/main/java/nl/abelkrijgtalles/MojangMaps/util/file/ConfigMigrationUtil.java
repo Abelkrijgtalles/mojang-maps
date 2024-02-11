@@ -18,6 +18,8 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
@@ -95,7 +97,10 @@ public class ConfigMigrationUtil {
                 "language: " +
                 language;
 
-        MojangMaps.getPlugin(MojangMaps.class).saveConfig();
+        String configPath = new File(MojangMaps.getPlugin(MojangMaps.class).getDataFolder(), "config.yml").getPath();
+        FileWriter configWriter = new FileWriter(configPath);
+        configWriter.write(newConfig);
+        configWriter.close();
 
     }
 
