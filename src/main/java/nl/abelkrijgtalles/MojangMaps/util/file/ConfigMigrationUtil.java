@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
+import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /*
@@ -35,7 +36,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigMigrationUtil {
 
-    public static int getConfigVersion(FileConfiguration config) {
+    private static int getConfigVersion(FileConfiguration config) {
 
         if (config.contains("config-version", true)) {
             return config.getInt("config-version");
@@ -55,6 +56,33 @@ public class ConfigMigrationUtil {
         }
 
         return 0;
+
+    }
+
+    public static void migrateConfig(FileConfiguration config) {
+
+        int oldVersion = getConfigVersion(config);
+
+        MojangMaps.getMMLogger().info(config.saveToString());
+
+        switch (oldVersion) {
+            case 2 -> migrateFrom2(config);
+            case 1 -> migrateFrom1(config);
+            case 0 -> migrateFrom0(config);
+        }
+
+    }
+
+    private static void migrateFrom2(FileConfiguration config) {
+
+
+    }
+
+    private static void migrateFrom1(FileConfiguration config) {
+
+    }
+
+    private static void migrateFrom0(FileConfiguration config) {
 
     }
 
