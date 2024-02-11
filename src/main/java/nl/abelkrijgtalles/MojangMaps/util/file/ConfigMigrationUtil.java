@@ -96,6 +96,7 @@ public class ConfigMigrationUtil {
                 language;
 
         config.save(newConfig);
+        MojangMaps.getPlugin(MojangMaps.class).saveConfig();
 
     }
 
