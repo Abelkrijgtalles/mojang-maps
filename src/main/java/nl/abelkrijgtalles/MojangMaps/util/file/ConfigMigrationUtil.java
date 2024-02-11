@@ -52,10 +52,10 @@ public class ConfigMigrationUtil {
 
     private static int determineVersion(FileConfiguration config) {
 
-        if (config.contains("language")) {
+        if (config.contains("language", true)) {
             return 2;
         }
-        if (config.contains("street-actionbar")) {
+        if (config.contains("street-actionbar", true)) {
             return 1;
         }
 
