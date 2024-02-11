@@ -27,6 +27,7 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.LocationArgument;
 import dev.jorel.commandapi.arguments.LocationType;
 import dev.jorel.commandapi.arguments.StringArgument;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -141,7 +142,11 @@ public final class MojangMaps extends JavaPlugin {
         ConfigurationSerialization.registerClass(Road.class);
         getConfig().options().copyDefaults();
         saveDefaultConfig();
-        ConfigMigrationUtil.migrateConfig(getConfig());
+        try {
+            ConfigMigrationUtil.migrateConfig(getConfig());
+        } catch (IOException e) {
+            getLogger().warning("Could not migrate config.yml from config version " + ConfigMigrationUtil.getConfigVersion(getConfig()) + " to " + getConfig().getDefaults().getInt("config-version") + ".");
+        }
         NodesConfigUtil.setup();
         TranslationUtil translationUtil = new TranslationUtil();
         translationUtil.updateTranslations();
