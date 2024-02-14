@@ -50,7 +50,7 @@ import org.bstats.charts.DrilldownPie;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MojangMaps extends JavaPlugin {
+public class MojangMaps extends JavaPlugin {
 
     public static boolean isOnline = true;
     public static SpiGUI spiGUI;
