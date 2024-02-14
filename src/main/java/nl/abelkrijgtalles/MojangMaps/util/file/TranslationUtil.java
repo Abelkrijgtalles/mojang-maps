@@ -49,7 +49,7 @@ public class TranslationUtil {
 
                     JsonObject content = jsonValue.getAsJsonObject();
 
-                    if (Objects.equals(content.get("type").getAsString(), "dir")) {
+                    if (Objects.equals(content.get("type").getAsString(), "dir") && Objects.equals(content.get("name").getAsString(), ".github")) {
 
                         languageCodes.add(content.get("name").getAsString());
 
