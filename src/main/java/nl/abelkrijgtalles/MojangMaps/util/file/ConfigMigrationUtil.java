@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.util.other.TestUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /*
@@ -69,7 +70,7 @@ public class ConfigMigrationUtil {
         int oldVersion = getConfigVersion(config);
         Logger logger = plugin.getLogger();
 
-        if (!config.contains("config-version", true) || config.getInt("config-version") != config.getDefaults().getInt("config-version")) {
+        if ((!config.contains("config-version", true) || config.getInt("config-version") != config.getDefaults().getInt("config-version")) && !TestUtil.detectTest()) {
             logger.info("Migrating config.yml from config version " + oldVersion + " to " + config.getDefaults().getInt("config-version") + ".");
         } else {
             return;
@@ -99,10 +100,11 @@ public class ConfigMigrationUtil {
                 "language: " +
                 language;
 
-        String configPath = new File(MojangMaps.getPlugin(MojangMaps.class).getDataFolder(), "config.yml").getPath();
-        FileWriter configWriter = new FileWriter(configPath);
+        String configPath = new File(plugin.getDataFolder(), "config.yml").getPath();
+        FileWriter configWriter = new FileWriter(configPath, false);
         configWriter.write(newConfig);
         configWriter.close();
+        plugin.reloadConfig();
 
     }
 
@@ -118,7 +120,7 @@ public class ConfigMigrationUtil {
                 "# If you change this to custom, you can change the messages in messages.yml. Codes that can be used as language: https://github.com/Abelkrijgtalles/mojang-maps-data/blob/main/README.md#the-following-codes-can-be-used-as-language" +
                 "language: en";
 
-        String configPath = new File(MojangMaps.getPlugin(MojangMaps.class).getDataFolder(), "config.yml").getPath();
+        String configPath = new File(plugin.getDataFolder(), "config.yml").getPath();
         FileWriter configWriter = new FileWriter(configPath);
         configWriter.write(newConfig);
         configWriter.close();
@@ -131,7 +133,7 @@ public class ConfigMigrationUtil {
         String newConfig = "# If true, then the plugin shows the current street in the ActionBar.\n" +
                 "street-actionbar: true";
 
-        String configPath = new File(MojangMaps.getPlugin(MojangMaps.class).getDataFolder(), "config.yml").getPath();
+        String configPath = new File(plugin.getDataFolder(), "config.yml").getPath();
         FileWriter configWriter = new FileWriter(configPath);
         configWriter.write(newConfig);
         configWriter.close();

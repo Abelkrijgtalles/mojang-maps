@@ -31,9 +31,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 
 public class ReloadConfigsFromDiskCommand {
 
-    public ReloadConfigsFromDiskCommand() throws WrapperCommandSyntaxException {
-        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
-
+    public ReloadConfigsFromDiskCommand(MojangMaps plugin) throws WrapperCommandSyntaxException {
         File config = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("MojangMaps")).getDataFolder(), "config.yml");
 
         NodesConfigUtil.reload();
@@ -44,7 +42,7 @@ public class ReloadConfigsFromDiskCommand {
         }
 
         TranslationUtil translationUtil = new TranslationUtil();
-        translationUtil.updateTranslations();
+        translationUtil.updateTranslations(plugin);
     }
 
 }

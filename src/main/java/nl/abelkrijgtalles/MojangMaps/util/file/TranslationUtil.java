@@ -26,17 +26,16 @@ import java.util.List;
 import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
+import nl.abelkrijgtalles.MojangMaps.util.other.TestUtil;
 import org.bukkit.Bukkit;
 
 public class TranslationUtil {
 
-    public void updateTranslations() {
-
-        MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
+    public void updateTranslations(MojangMaps plugin) {
 
         if (!Objects.equals(plugin.getConfig().getString("language"), "custom")) {
 
-            MojangMaps.getMMLogger().info("Getting latest translations.");
+            if (!TestUtil.detectTest()) plugin.getLogger().info("Getting latest translations.");
 
             JsonArray dataContents = HTTPUtil.HTTPRequestJSONArray("https://api.github.com/repos/Abelkrijgtalles/mojang-maps-data/contents");
 

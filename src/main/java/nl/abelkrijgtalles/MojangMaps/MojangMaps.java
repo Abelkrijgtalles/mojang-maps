@@ -45,6 +45,7 @@ import nl.abelkrijgtalles.MojangMaps.util.file.ConfigMigrationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.file.TranslationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.other.HTTPUtil;
+import nl.abelkrijgtalles.MojangMaps.util.other.TestUtil;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -113,7 +114,7 @@ public class MojangMaps extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        CommandAPI.onDisable();
+        if (!TestUtil.detectTest()) CommandAPI.onDisable();
 
         if (isPluginOutdated) {
 
@@ -126,103 +127,117 @@ public class MojangMaps extends JavaPlugin {
     @Override
     public void onLoad() {
 
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).useLatestNMSVersion(true));
+        if (!TestUtil.detectTest())
+            CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true).useLatestNMSVersion(true));
 
     }
 
     @Override
     public void onEnable() {
 
-        // Bstats init
-        int pluginId = 19295;
-        Metrics metrics = new Metrics(this, pluginId);
-        addLanguageChart(metrics, this);
+        if (!TestUtil.detectTest()) {
+
+            // Bstats init
+            int pluginId = 19295;
+            Metrics metrics = new Metrics(this, pluginId);
+            addLanguageChart(metrics, this);
+
+        }
 
         // Config init
         ConfigurationSerialization.registerClass(Road.class);
         getConfig().options().copyDefaults();
         saveDefaultConfig();
-        try {
-            ConfigMigrationUtil.migrateConfig(this);
-        } catch (IOException e) {
-            getLogger().warning("Could not migrate config.yml from config version " + ConfigMigrationUtil.getConfigVersion(getConfig()) + " to " + getConfig().getDefaults().getInt("config-version") + ".");
+        if (!TestUtil.detectTest()) {
+            try {
+                ConfigMigrationUtil.migrateConfig(this);
+            } catch (IOException e) {
+                getLogger().warning("Could not migrate config.yml from config version " + ConfigMigrationUtil.getConfigVersion(getConfig()) + " to " + getConfig().getDefaults().getInt("config-version") + ".");
+            }
         }
         NodesConfigUtil.setup();
-        TranslationUtil translationUtil = new TranslationUtil();
-        translationUtil.updateTranslations();
+        // we don't want to get rate limited. This happend 15-02-2024 (dd-mm-yyyy) at about 21:07 GMT+1:00 (we still will with other stuff, so just use a vpn)
+        if (!TestUtil.detectTest()) {
+            TranslationUtil translationUtil = new TranslationUtil();
+            translationUtil.updateTranslations(this);
+        }
 
         // Update stuff
-        checkVersion();
+        if (!TestUtil.detectTest()) checkVersion();
         if (isPluginOutdated) {
 
             getLogger().warning("Mojang Maps is outdated, please download the newest version at: https://github.com/Abelkrijgtalles/mojang-maps/releases/latest");
 
         }
 
-        // Commands Init
-        CommandAPI.onEnable();
+        if (!TestUtil.detectTest()) {
 
-        // |-------------------------------------------------------------------------------------------------------------------|
-        // |                                                                                                                   |
-        // |                     07-07-2024---05-02-2024 && 21-07-2023---05-02-2024 (dd-mm-yyyy)                               |
-        // | Here lie /registerlocation and /registerroad. Without them Mojang Maps wouldn't be what it is now. Rest In Peace. |
-        // |                                                                                                                   |
-        // |-------------------------------------------------------------------------------------------------------------------|
+            // Commands Init
+            CommandAPI.onEnable();
 
-        // road group
+            // |-------------------------------------------------------------------------------------------------------------------|
+            // |                                                                                                                   |
+            // |                     07-07-2024---05-02-2024 && 21-07-2023---05-02-2024 (dd-mm-yyyy)                               |
+            // | Here lie /registerlocation and /registerroad. Without them Mojang Maps wouldn't be what it is now. Rest In Peace. |
+            // |                                                                                                                   |
+            // |-------------------------------------------------------------------------------------------------------------------|
 
-        CommandAPICommand createRoadCommand = new CommandAPICommand("create")
-                .withShortDescription("Create a road.")
-                // old version mojangmaps.register.road
-                .withPermission(CommandPermission.fromString("mojangmaps.road.create"))
-                .withOptionalArguments(new StringArgument("name"))
-                .executesPlayer(RoadCreationCommand::new);
+            // road group
 
-        CommandAPICommand whichOne = new CommandAPICommand("whichone")
-                .withShortDescription("Shows where you're standing.")
-                // old version mojangmaps.using.viewlocation
-                .withPermission(CommandPermission.fromString("mojangmaps.road.whichone"))
-                .executesPlayer(((player, commandArguments) -> {
-                    new WhereAmIStandingCommand(player);
-                }));
+            CommandAPICommand createRoadCommand = new CommandAPICommand("create")
+                    .withShortDescription("Create a road.")
+                    // old version mojangmaps.register.road
+                    .withPermission(CommandPermission.fromString("mojangmaps.road.create"))
+                    .withOptionalArguments(new StringArgument("name"))
+                    .executesPlayer(RoadCreationCommand::new);
 
-        CommandAPICommand roadGroupCommand = new CommandAPICommand("road")
-                .withShortDescription("All the commands used for modifying roads.")
-                .withPermission(CommandPermission.fromString("mojangmaps.road"))
-                .withSubcommands(createRoadCommand, whichOne);
+            CommandAPICommand whichOne = new CommandAPICommand("whichone")
+                    .withShortDescription("Shows where you're standing.")
+                    // old version mojangmaps.using.viewlocation
+                    .withPermission(CommandPermission.fromString("mojangmaps.road.whichone"))
+                    .executesPlayer(((player, commandArguments) -> {
+                        new WhereAmIStandingCommand(player);
+                    }));
 
-        // goto group
+            CommandAPICommand roadGroupCommand = new CommandAPICommand("road")
+                    .withShortDescription("All the commands used for modifying roads.")
+                    .withPermission(CommandPermission.fromString("mojangmaps.road"))
+                    .withSubcommands(createRoadCommand, whichOne);
 
-        // this will probably be removed, as a better system will be made to go to places
-        CommandAPICommand navigationCommand = new CommandAPICommand("gui")
-                .withShortDescription("Go to a specific location and view the navigation in GUI form.")
-                // old version mojangmaps.using.navigation
-                .withPermission(CommandPermission.fromString("mojangmaps.goto.gui"))
-                .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
-                .executesPlayer((NavigationCommand::new));
+            // goto group
 
-        CommandAPICommand gotoGroupCommand = new CommandAPICommand("goto")
-                .withShortDescription("Go to a specific location.")
-                .withPermission(CommandPermission.fromString("mojangmaps.goto"))
-                .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-                .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
-                .executesPlayer((GoToCommand::new))
-                .withSubcommand(navigationCommand);
+            // this will probably be removed, as a better system will be made to go to places
+            CommandAPICommand navigationCommand = new CommandAPICommand("gui")
+                    .withShortDescription("Go to a specific location and view the navigation in GUI form.")
+                    // old version mojangmaps.using.navigation
+                    .withPermission(CommandPermission.fromString("mojangmaps.goto.gui"))
+                    .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
+                    .executesPlayer((NavigationCommand::new));
 
-        CommandAPICommand reloadCommand = new CommandAPICommand("reload")
-                .withShortDescription("Reloads all the configs from disk.")
-                // old version mojangmaps.util.reloadconfigs
-                .withPermission(CommandPermission.fromString("mojangmaps.util.reload"))
-                .withAliases("reloadconfig")
-                .executes(((commandSender, commandArguments) -> {
-                    new ReloadConfigsFromDiskCommand();
-                }));
+            CommandAPICommand gotoGroupCommand = new CommandAPICommand("goto")
+                    .withShortDescription("Go to a specific location.")
+                    .withPermission(CommandPermission.fromString("mojangmaps.goto"))
+                    .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                    .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
+                    .executesPlayer((GoToCommand::new))
+                    .withSubcommand(navigationCommand);
+
+            CommandAPICommand reloadCommand = new CommandAPICommand("reload")
+                    .withShortDescription("Reloads all the configs from disk.")
+                    // old version mojangmaps.util.reloadconfigs
+                    .withPermission(CommandPermission.fromString("mojangmaps.util.reload"))
+                    .withAliases("reloadconfig")
+                    .executes(((commandSender, commandArguments) -> {
+                        new ReloadConfigsFromDiskCommand(this);
+                    }));
 
 
-        new CommandAPICommand("mm")
-                .withAliases("mojangmaps")
-                .withSubcommands(roadGroupCommand, gotoGroupCommand, reloadCommand)
-                .register();
+            new CommandAPICommand("mm")
+                    .withAliases("mojangmaps")
+                    .withSubcommands(roadGroupCommand, gotoGroupCommand, reloadCommand)
+                    .register();
+
+        }
 
         // Listeners/Events init
         getServer().getPluginManager().registerEvents(new PlayerWalkListener(), this);

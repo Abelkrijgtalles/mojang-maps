@@ -45,13 +45,14 @@ public class HTTPUtil {
             int statusCode = response.statusCode();
             String responseBody = response.body();
 
-            MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
+            if (!TestUtil.detectTest())
+                MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
             return JsonParser.parseString(responseBody).getAsJsonArray();
 
         } catch (IOException | InterruptedException e) {
 
-            MojangMaps.getMMLogger().warning("Couldn't make an API call.");
+            if (!TestUtil.detectTest()) MojangMaps.getMMLogger().warning("Couldn't make an API call.");
             MojangMaps.isOnline = false;
             return null;
 
@@ -69,13 +70,14 @@ public class HTTPUtil {
             int statusCode = response.statusCode();
             String responseBody = response.body();
 
-            MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
+            if (!TestUtil.detectTest())
+                MojangMaps.getMMLogger().info("API call to " + URL + " finished with code " + statusCode);
 
             return JsonParser.parseString(responseBody).getAsJsonObject();
 
         } catch (IOException | InterruptedException e) {
 
-            MojangMaps.getMMLogger().warning("Couldn't make an API call.");
+            if (!TestUtil.detectTest()) MojangMaps.getMMLogger().warning("Couldn't make an API call.");
             MojangMaps.isOnline = false;
             return null;
 
@@ -102,11 +104,13 @@ public class HTTPUtil {
             outputStream.close();
             inputStream.close();
 
-            MojangMaps.getMMLogger().info("Successfully downloaded file from %s to %s.".formatted(fileUrl, path));
+            if (!TestUtil.detectTest())
+                MojangMaps.getMMLogger().info("Successfully downloaded file from %s to %s.".formatted(fileUrl, path));
 
         } catch (IOException e) {
 
-            MojangMaps.getMMLogger().warning("Could not download file from %s to %s.".formatted(fileUrl, path));
+            if (!TestUtil.detectTest())
+                MojangMaps.getMMLogger().warning("Could not download file from %s to %s.".formatted(fileUrl, path));
             MojangMaps.isOnline = false;
 
         }
