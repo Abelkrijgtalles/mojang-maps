@@ -21,7 +21,6 @@ package nl.abelkrijgtalles.MojangMaps.object;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.util.file.MessageUtil;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
@@ -60,7 +59,11 @@ public class Road implements ConfigurationSerializable {
 
     public String getName() {
 
-        return Objects.requireNonNullElse(name, MessageUtil.getMessage("unnamedroad"));
+        if (name != null) {
+            return name;
+        } else {
+            return MessageUtil.getMessage("unnamedroad");
+        }
     }
 
     public List<Integer> getLocations() {
