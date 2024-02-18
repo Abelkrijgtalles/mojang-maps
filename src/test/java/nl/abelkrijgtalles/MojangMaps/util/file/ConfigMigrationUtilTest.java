@@ -233,19 +233,14 @@ class ConfigMigrationUtilTest {
             FileWriter configWriter = new FileWriter(configPath, false);
             configWriter.write(config);
             configWriter.close();
-            plugin.getLogger().info("---");
-            plugin.getLogger().info("Geschreven");
         } catch (IOException e) {
 
             Assertions.assertNotNull(e);
 
         }
 
-        plugin.getLogger().info("");
         plugin.getLogger().info(plugin.getConfig().saveToString());
-        plugin.getLogger().info("");
         plugin.getLogger().info(String.valueOf(ConfigMigrationUtil.getConfigVersion(plugin.getConfig())));
-        plugin.getLogger().info("---");
 
         try {
             ConfigMigrationUtil.migrateConfig(plugin);
