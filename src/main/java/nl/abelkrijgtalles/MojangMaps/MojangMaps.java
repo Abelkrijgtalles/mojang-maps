@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
+import nl.abelkrijgtalles.MojangMaps.command.using.StartNavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
 import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
 import nl.abelkrijgtalles.MojangMaps.listener.PlayerJoinListener;
@@ -231,10 +232,22 @@ public class MojangMaps extends JavaPlugin {
                         new ReloadConfigsFromDiskCommand(this);
                     }));
 
+            // testing group (has to be removed after testing)
+
+            CommandAPICommand startNavigationCommand = new CommandAPICommand("startnav")
+                    .withShortDescription("/goto 2.0")
+                    .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
+                    .executesPlayer((StartNavigationCommand::new));
+
+            CommandAPICommand testingGroupCommand = new CommandAPICommand("testing")
+                    .withShortDescription("testing time baby")
+                    .withSubcommand(startNavigationCommand);
+
+
 
             new CommandAPICommand("mm")
                     .withAliases("mojangmaps")
-                    .withSubcommands(roadGroupCommand, gotoGroupCommand, reloadCommand)
+                    .withSubcommands(roadGroupCommand, gotoGroupCommand, testingGroupCommand, reloadCommand)
                     .register();
 
         }
