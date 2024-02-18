@@ -40,7 +40,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 class ConfigMigrationUtilTest {
 
-    private ServerMock server;
     private MojangMaps plugin;
 
     private static Stream<Arguments> possibleConfigYMLValuesFor2() {
@@ -226,7 +225,7 @@ class ConfigMigrationUtilTest {
     @BeforeEach
     public void setUp() {
 
-        server = MockBukkit.mock();
+        ServerMock server = MockBukkit.mock();
         plugin = MockBukkit.load(MojangMaps.class);
 
     }
