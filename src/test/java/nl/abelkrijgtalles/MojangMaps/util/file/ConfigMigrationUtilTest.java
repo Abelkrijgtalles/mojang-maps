@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -285,6 +284,8 @@ class ConfigMigrationUtilTest {
         }
         plugin.reloadConfig();
 
+        Assertions.assertEquals(2, ConfigMigrationUtil.getConfigVersion(plugin.getConfig()));
+
         try {
             ConfigMigrationUtil.migrateConfig(plugin);
         } catch (IOException e) {
@@ -294,12 +295,11 @@ class ConfigMigrationUtilTest {
         }
 
         plugin.reloadConfig();
-        // idk if this is needed, but just i'll leave it here just in case
-        FileConfiguration newConfig = plugin.getConfig();
-        String configString = newConfig.saveToString();
+        String configString = plugin.getConfig().saveToString();
         String expectedConfigString = getExpectedConfig(streetActionBar, languageCode);
 
         Assertions.assertEquals(expectedConfigString.trim(), configString.trim());
+        Assertions.assertEquals(3, ConfigMigrationUtil.getConfigVersion(plugin.getConfig()));
 
     }
 
@@ -322,6 +322,8 @@ class ConfigMigrationUtilTest {
         }
         plugin.reloadConfig();
 
+        Assertions.assertEquals(1, ConfigMigrationUtil.getConfigVersion(plugin.getConfig()));
+
         try {
             ConfigMigrationUtil.migrateConfig(plugin);
         } catch (IOException e) {
@@ -331,12 +333,11 @@ class ConfigMigrationUtilTest {
         }
 
         plugin.reloadConfig();
-        // idk if this is needed, but just i'll leave it here just in case
-        FileConfiguration newConfig = plugin.getConfig();
-        String configString = newConfig.saveToString();
+        String configString = plugin.getConfig().saveToString();
         String expectedConfigString = getExpectedConfig(streetActionBar, "en");
 
         Assertions.assertEquals(expectedConfigString.trim(), configString.trim());
+        Assertions.assertEquals(3, ConfigMigrationUtil.getConfigVersion(plugin.getConfig()));
 
     }
 
