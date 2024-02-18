@@ -24,7 +24,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,13 +230,9 @@ class ConfigMigrationUtilTest {
 
         String configPath = new File(plugin.getDataFolder(), "config.yml").getPath();
         try {
-//            FileWriter configWriter = new FileWriter(configPath, false);
-//            configWriter.write(config);
-//            configWriter.close();
-
-            FileOutputStream configOutputStream = new FileOutputStream(configPath);
-            configOutputStream.write(config.getBytes());
-            configOutputStream.close();
+            FileWriter configWriter = new FileWriter(configPath, false);
+            configWriter.write(config);
+            configWriter.close();
 
         } catch (IOException e) {
 
@@ -244,6 +240,7 @@ class ConfigMigrationUtilTest {
 
         }
 
+        plugin.reloadConfig();
         plugin.getLogger().info(plugin.getConfig().saveToString());
         plugin.getLogger().info(String.valueOf(ConfigMigrationUtil.getConfigVersion(plugin.getConfig())));
 
