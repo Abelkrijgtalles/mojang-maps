@@ -23,9 +23,20 @@ import java.util.UUID;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class ActiveNavigation {
+
+    /* Explanation of every variable:
+        player: Just the UUID of the player, which makes it store less data on the ram.
+        beginning: The exact location of the beginning of the navigation. This isn't tied to any node.
+        beginningNode: The node object of beginningLocation.
+        beginningLocation: The closest node to the beginning.
+        destination, destinationNode and destinationLocation: It's beginning, beginningNode and beginningLocation but instead of the beginning, it's the destination.
+        nodes: The nodes that the player has to take to reach destinationLocation/destinationNode from beginningLocation/beginningNode.
+        activeNodes: The nodes that are in a 5 block radius of the player, and will actually display to the player as a line of particles between the activeNodes.
+     */
 
     // beginningLocation and destinationLocation are the closest location/node to the beginning/destination
     private UUID player;
@@ -91,12 +102,23 @@ public class ActiveNavigation {
         return nodes;
     }
 
-    public List<Node> setActiveNodes(int indexOfStartingNode) {
+    public List<Node> setAndGetActiveNodes(int indexOfStartingNode) {
 
+        activeNodes.clear();
         List<Node> availableNodes = nodes.subList(indexOfStartingNode, nodes.size() - 1);
         for (Node node : availableNodes) {
 
+            if (LocationUtil.isTheSameLocation(Bukkit.getPlayer(player).getLocation(), NodeUtil.getLocationFromNode(node), 5)) {
+
+                activeNodes.add(node);
+
+            } else {
+                break;
+            }
+
         }
+
+        return activeNodes;
 
     }
 
