@@ -54,8 +54,8 @@ public class NavigationCommand {
         Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
 
         List<Node> nodes = NodeUtil.addAdjacentNodes();
-        Node playerNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
-        Node locationNode = findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
+        Node playerNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));
+        Node locationNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToLocation)));
 
         if (playerNode == null || locationNode == null) {
             throw CommandAPI.failWithString(MessageUtil.getMessage("nonodesfound"));
@@ -97,14 +97,6 @@ public class NavigationCommand {
         });
 
 
-    }
-
-    private Node findNodeByName(List<Node> nodes, String name) {
-
-        return nodes.stream()
-                .filter(node -> node.getName().equals(name))
-                .findFirst()
-                .orElse(null);
     }
 
 }

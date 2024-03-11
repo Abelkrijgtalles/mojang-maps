@@ -87,4 +87,12 @@ public class NodeUtil {
 
     }
 
+    public static Node findNodeByName(List<Node> nodes, String name) {
+
+        return nodes.stream()
+                .filter(node -> node.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
