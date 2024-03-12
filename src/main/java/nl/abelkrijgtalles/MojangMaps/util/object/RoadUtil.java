@@ -82,13 +82,13 @@ public class RoadUtil {
 
     public static String getLocationMessage(Player p) {
 
-        Location closestLocation = LocationUtil.getClosestLocation(p.getLocation());
+        Location closestLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), p.getLocation());
 
         if (closestLocation != null) {
 
             if (LocationUtil.isTheSameLocation(p.getLocation(), closestLocation, 5)) {
 
-                return MessageUtil.getMessage("currentlyon").formatted(RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(p.getLocation())));
+                return MessageUtil.getMessage("currentlyon").formatted(RoadUtil.getRoadNameFromLocation(LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), p.getLocation())));
 
             }
 

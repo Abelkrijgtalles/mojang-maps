@@ -50,8 +50,8 @@ public class NavigationCommand {
         MojangMaps plugin = MojangMaps.getPlugin(MojangMaps.class);
 
         Location location = (Location) commandArguments.get("location");
-        Location closestLocationToPlayer = LocationUtil.getClosestLocation(p.getLocation());
-        Location closestLocationToLocation = LocationUtil.getClosestLocation(location);
+        Location closestLocationToPlayer = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), p.getLocation());
+        Location closestLocationToLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), location);
 
         List<Node> nodes = NodeUtil.addAdjacentNodes();
         Node playerNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)));

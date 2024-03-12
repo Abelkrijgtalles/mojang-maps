@@ -18,10 +18,18 @@
 
 package nl.abelkrijgtalles.MojangMaps.listener;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
+import nl.abelkrijgtalles.MojangMaps.command.using.StartNavigationCommand;
+import nl.abelkrijgtalles.MojangMaps.object.ActiveNavigation;
+import nl.abelkrijgtalles.MojangMaps.object.Node;
+import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.RoadUtil;
+import nl.abelkrijgtalles.MojangMaps.util.other.ParticleUtil;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +44,8 @@ public class PlayerWalkListener implements Listener {
 
         Player p = e.getPlayer();
 
+        // Actionbar stuff
+
         // current fix is made by @ajh123, see more in issue #6
         String roadMsg = RoadUtil.getLocationMessage(p); // ask the RoadUtil for the location message
         if (plugin.getConfig().getBoolean("street-actionbar") && p.hasPermission("mojangmaps.using.viewlocation") && !roadMsg.trim().isEmpty()) {
@@ -44,6 +54,24 @@ public class PlayerWalkListener implements Listener {
 
         }
         // the fix by @ajh123 made in issue #6 ends here
+
+        // Active navigation stuff
+
+        if (StartNavigationCommand.playerIsNavigating(p.getUniqueId())) {
+
+            ActiveNavigation navigation = StartNavigationCommand.playerIsNavigatingWithActiveNavigation(p.getUniqueId());
+            // debyg stuff
+            List<Node> activeNodes = navigation.getActiveNodesFromPlayerPosition();
+            List<Location> locations = new ArrayList<>();
+            for (Node activeNode : activeNodes) {
+
+                locations.add(NodeUtil.getLocationFromNode(activeNode));
+
+            }
+
+            ParticleUtil.spawnLine(locations, 1, 0.25);
+
+        }
 
     }
 

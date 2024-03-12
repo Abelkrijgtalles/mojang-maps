@@ -21,6 +21,7 @@ package nl.abelkrijgtalles.MojangMaps.util.object;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import org.bukkit.Location;
@@ -61,11 +62,13 @@ class LocationUtilTest {
         NodesConfigUtil.addLocation(location1);
         NodesConfigUtil.addLocation(location2);
 
-        Assertions.assertEquals(location1, LocationUtil.getClosestLocation(baseLocation));
-        Assertions.assertNotEquals(location2, LocationUtil.getClosestLocation(baseLocation));
+        List<Location> locations = NodesConfigUtil.getLocations();
 
-        Assertions.assertEquals(location2, LocationUtil.getClosestLocation(baseLocation2));
-        Assertions.assertNotEquals(location1, LocationUtil.getClosestLocation(baseLocation2));
+        Assertions.assertEquals(location1, LocationUtil.getClosestLocation(locations, baseLocation));
+        Assertions.assertNotEquals(location2, LocationUtil.getClosestLocation(locations, baseLocation));
+
+        Assertions.assertEquals(location2, LocationUtil.getClosestLocation(locations, baseLocation2));
+        Assertions.assertNotEquals(location1, LocationUtil.getClosestLocation(locations, baseLocation2));
 
     }
 

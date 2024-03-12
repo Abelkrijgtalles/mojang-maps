@@ -18,7 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.object;
 
-import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
+import java.util.List;
 import org.bukkit.Location;
 
 public class LocationUtil {
@@ -54,12 +54,12 @@ public class LocationUtil {
 
     }
 
-    public static Location getClosestLocation(Location location) {
+    public static Location getClosestLocation(List<Location> locations, Location location) {
 
         double minDistanceSquared = Double.MAX_VALUE;
         Location closestLocation = null;
 
-        for (Location location1 : NodesConfigUtil.getLocations()) {
+        for (Location location1 : locations) {
             double distanceSquared = location.distanceSquared(location1);
 
             if (distanceSquared < minDistanceSquared) {

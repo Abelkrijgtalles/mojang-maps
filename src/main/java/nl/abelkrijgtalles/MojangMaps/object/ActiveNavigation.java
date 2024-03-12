@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.object;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
@@ -65,7 +66,7 @@ public class ActiveNavigation {
     public void setDestination(Location destination) {
 
         this.destination = destination;
-        this.destinationLocation = LocationUtil.getClosestLocation(destination);
+        this.destinationLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), destination);
 
         List<Node> nodes = NodeUtil.addAdjacentNodes();
         this.destinationNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(destinationLocation)));
@@ -83,7 +84,7 @@ public class ActiveNavigation {
     public void setBeginning(Location beginning) {
 
         this.beginning = beginning;
-        this.beginningLocation = LocationUtil.getClosestLocation(beginning);
+        this.beginningLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), beginning);
 
         List<Node> nodes = NodeUtil.addAdjacentNodes();
         this.beginningNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(beginningLocation)));
@@ -119,6 +120,21 @@ public class ActiveNavigation {
         }
 
         return activeNodes;
+
+    }
+
+    public List<Node> getActiveNodesFromPlayerPosition() {
+
+        List<Location> locationsOfNodes = new ArrayList<>();
+
+        for (Node node : nodes) {
+
+            locationsOfNodes.add(NodeUtil.getLocationFromNode(node));
+
+        }
+
+        Location closestLocationToPlayer = LocationUtil.getClosestLocation(locationsOfNodes, Bukkit.getPlayer(player).getLocation());
+        return setAndGetActiveNodes(nodes.indexOf(NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)))));
 
     }
 
