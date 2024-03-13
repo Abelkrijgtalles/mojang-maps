@@ -47,8 +47,8 @@ public class ActiveNavigation {
     private Location destination;
     private Node destinationNode;
     private Location destinationLocation;
-    private List<Node> nodes;
-    private List<Node> activeNodes;
+    private List<Node> nodes = new ArrayList<>();
+    private List<Node> activeNodes = new ArrayList<>();
 
     public ActiveNavigation(UUID player, Location beginning, Location destination) {
 
