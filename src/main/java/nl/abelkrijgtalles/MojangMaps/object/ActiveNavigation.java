@@ -53,7 +53,7 @@ public class ActiveNavigation {
     public ActiveNavigation(UUID player, Location beginning, Location destination) {
 
         this.player = player;
-        setBeginning(beginning);
+        setBeginning(beginning, false);
         setDestination(destination);
 
     }
@@ -81,7 +81,7 @@ public class ActiveNavigation {
         return beginning;
     }
 
-    public void setBeginning(Location beginning) {
+    public void setBeginning(Location beginning, Boolean destinationExists) {
 
         this.beginning = beginning;
         this.beginningLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), beginning);
@@ -90,7 +90,9 @@ public class ActiveNavigation {
         this.beginningNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(beginningLocation)));
 
         Node.calculateShortestPath(beginningNode);
-        this.nodes = destinationNode.getShortestPath();
+        if (destinationExists) {
+            this.nodes = destinationNode.getShortestPath();
+        }
     }
 
     public UUID getPlayer() {
