@@ -108,7 +108,7 @@ public class ActiveNavigation {
     public List<Node> setAndGetActiveNodes(int indexOfStartingNode) {
 
         activeNodes.clear();
-        List<Node> availableNodes = nodes.subList(indexOfStartingNode, nodes.size() - 1);
+        List<Node> availableNodes = nodes.subList(indexOfStartingNode, nodes.size());
         for (Node node : availableNodes) {
 
             if (LocationUtil.isTheSameLocation(Bukkit.getPlayer(player).getLocation(), NodeUtil.getLocationFromNode(node), 5)) {
@@ -136,6 +136,9 @@ public class ActiveNavigation {
         }
 
         Location closestLocationToPlayer = LocationUtil.getClosestLocation(locationsOfNodes, Bukkit.getPlayer(player).getLocation());
+        Bukkit.getLogger().info("Loc index (1): " + NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer) + '\n' +
+                "Find Node By Name (2): " + NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer))).getName() + '\n' +
+                "Nodes Index (3): " + nodes.indexOf(NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)))));
         return setAndGetActiveNodes(nodes.indexOf(NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)))));
 
     }
