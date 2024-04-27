@@ -18,7 +18,9 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 import nl.abelkrijgtalles.MojangMaps.object.NewNode;
 import org.bukkit.Location;
 
@@ -26,9 +28,18 @@ public class AStarUtil {
 
     public static List<Location> findPath(NewNode start, NewNode end) {
 
-        // TODO: Implement
+        PriorityQueue<NewNode> openQueue = createQueue();
 
         return null;
+
+    }
+
+    private static PriorityQueue<NewNode> createQueue() {
+
+        Comparator<NewNode> openQueueComparator = Comparator.comparingInt((NewNode o) -> o.fCost).thenComparingInt(o -> o.hCost);
+
+        return new PriorityQueue<>(openQueueComparator);
+
     }
 
 }
