@@ -18,10 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 import nl.abelkrijgtalles.MojangMaps.object.NewNode;
 import org.bukkit.Location;
 
@@ -46,7 +43,8 @@ public class AStarUtil {
                 break;
             }
 
-            for (NewNode neighBour : getNeighbours()) {
+            for (NewNode neighBour : getNeighbours(currentNode, start, end)) {
+
 
 
             }
@@ -74,17 +72,43 @@ public class AStarUtil {
 
     }
 
-    private static List<NewNode> getNeighbours(NewNode parent) {
+    private static List<NewNode> getNeighbours(NewNode parent, NewNode start, NewNode end) {
 
         List<NewNode> neighbours = new ArrayList<>();
         Location parentLocation = parent.getLocation();
+        int gridSize = getGridSize();
 
+        for (int i = -1 * gridSize; i < 2 * gridSize; i += gridSize) {
+
+            for (int j = -1 * gridSize; j < 2 * gridSize; j += gridSize) {
+
+                if (i != 0 && j != 0) {
+
+                    neighbours.add(getNodeWithOffsetFromLocation(parent.getUuid(), parentLocation, i, j, start, end));
+
+                }
+
+            }
+
+        }
+
+        return neighbours;
 
     }
 
     private static boolean isRoad() {
 
         return true;
+
+    }
+
+    private static NewNode getNodeWithOffsetFromLocation(UUID parent, Location location, int offsetX, int offsetZ, NewNode start, NewNode end) {
+        // TODO: find some way to implement this in a 3d system, as it's partially 3d
+
+        Location newLocation = new Location(location.getWorld(), location.getBlockX() + offsetX, location.getBlockY(), location.getBlockZ() + offsetZ);
+
+        return new NewNode(newLocation, parent, start, end);
+
 
     }
 
