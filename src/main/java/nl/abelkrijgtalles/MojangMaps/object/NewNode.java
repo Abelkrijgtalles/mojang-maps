@@ -18,15 +18,112 @@
 
 package nl.abelkrijgtalles.MojangMaps.object;
 
+import java.util.UUID;
+import nl.abelkrijgtalles.MojangMaps.util.other.MathUtil;
 import org.bukkit.Location;
 
 public class NewNode {
 
-    public int id;
-    public Location location;
-    public int parent;
-    public int gCost;
-    public int hCost;
-    public int fCost;
+    private UUID uuid;
+    private Location location;
+    private UUID parent;
+    private int gCost;
+    private int hCost;
+    private int fCost;
+
+    public NewNode(Location location, UUID parent, int gCost, int hCost, int fCost) {
+
+        this.setUuid(UUID.randomUUID());
+        this.setLocation(location);
+        this.setParent(parent);
+        this.setgCost(gCost);
+        this.sethCost(hCost);
+        this.setfCost(fCost);
+    }
+
+    public NewNode(Location location, UUID parent, NewNode start, NewNode end) {
+
+        this.setUuid(UUID.randomUUID());
+        this.setLocation(location);
+        this.setParent(parent);
+
+        Location startLocation = start.getLocation();
+        Location endLocation = end.getLocation();
+
+        int gCostX = Math.abs(startLocation.getBlockX() - location.getBlockX());
+        int gCostY = Math.abs(startLocation.getBlockY() - location.getBlockY());
+        int gCostZ = Math.abs(startLocation.getBlockZ() - location.getBlockZ());
+
+        int hCostX = Math.abs(endLocation.getBlockX() - location.getBlockX());
+        int hCostY = Math.abs(endLocation.getBlockY() - location.getBlockY());
+        int hCostZ = Math.abs(endLocation.getBlockZ() - location.getBlockZ());
+
+        double rawGCost = MathUtil.pythagoreanTheorem(MathUtil.pythagoreanTheorem(gCostX, gCostY), gCostZ);
+        double rawHCost = MathUtil.pythagoreanTheorem(MathUtil.pythagoreanTheorem(hCostX, hCostY), hCostZ);
+
+        this.setgCost((int) Math.round(rawGCost * 100));
+        this.sethCost((int) Math.round(rawHCost * 100));
+        this.setfCost(this.getgCost() + this.gethCost());
+    }
+
+    public UUID getUuid() {
+
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+
+        this.uuid = uuid;
+    }
+
+    public Location getLocation() {
+
+        return location;
+    }
+
+    public void setLocation(Location location) {
+
+        this.location = location;
+    }
+
+    public UUID getParent() {
+
+        return parent;
+    }
+
+    public void setParent(UUID parent) {
+
+        this.parent = parent;
+    }
+
+    public int getgCost() {
+
+        return gCost;
+    }
+
+    public void setgCost(int gCost) {
+
+        this.gCost = gCost;
+    }
+
+    public int gethCost() {
+
+        return hCost;
+    }
+
+    public void sethCost(int hCost) {
+
+        this.hCost = hCost;
+    }
+
+    public int getfCost() {
+
+        return fCost;
+    }
+
+    public void setfCost(int fCost) {
+
+        this.fCost = fCost;
+    }
 
 }

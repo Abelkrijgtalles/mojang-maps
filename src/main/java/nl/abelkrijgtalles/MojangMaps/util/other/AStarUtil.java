@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -29,6 +30,31 @@ public class AStarUtil {
     public static List<Location> findPath(NewNode start, NewNode end) {
 
         PriorityQueue<NewNode> openQueue = createQueue();
+        List<NewNode> closedList = new ArrayList<>();
+        boolean endFound = false;
+
+        openQueue.add(start);
+
+        while (true) {
+
+            NewNode currentNode = openQueue.poll();
+            if (currentNode == null) break;
+            closedList.add(currentNode);
+
+            if (currentNode.getUuid() == end.getUuid()) {
+                endFound = true;
+                break;
+            }
+
+            for (NewNode neighBour : getNeighbours()) {
+
+
+            }
+
+        }
+
+        if (!endFound) return null;
+
 
         return null;
 
@@ -36,9 +62,29 @@ public class AStarUtil {
 
     private static PriorityQueue<NewNode> createQueue() {
 
-        Comparator<NewNode> openQueueComparator = Comparator.comparingInt((NewNode o) -> o.fCost).thenComparingInt(o -> o.hCost);
+        Comparator<NewNode> openQueueComparator = Comparator.comparingInt(NewNode::getfCost).thenComparingInt(NewNode::gethCost);
 
         return new PriorityQueue<>(openQueueComparator);
+
+    }
+
+    private static int getGridSize() {
+
+        return 5;
+
+    }
+
+    private static List<NewNode> getNeighbours(NewNode parent) {
+
+        List<NewNode> neighbours = new ArrayList<>();
+        Location parentLocation = parent.getLocation();
+
+
+    }
+
+    private static boolean isRoad() {
+
+        return true;
 
     }
 
