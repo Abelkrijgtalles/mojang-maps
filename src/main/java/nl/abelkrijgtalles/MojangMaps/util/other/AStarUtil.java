@@ -26,7 +26,7 @@ public class AStarUtil {
 
     public static List<Location> findPath(NewNode start, NewNode end) {
 
-        PriorityQueue<NewNode> openQueue = createQueue();
+        PriorityQueue<NewNode> openQueue = new PriorityQueue<>(getfAndhCostComparator());
         List<NewNode> closedList = new ArrayList<>();
         boolean endFound = false;
 
@@ -43,9 +43,26 @@ public class AStarUtil {
                 break;
             }
 
-            for (NewNode neighBour : getNeighbours(currentNode, start, end)) {
+            for (NewNode neighbour : getNeighbours(currentNode, start, end)) {
+
+                boolean isInClosedList = false;
+                for (NewNode checkedNode : closedList) {
+
+                    if (checkedNode.getLocation() == neighbour.getLocation()) {
+
+                        isInClosedList = true;
+                        break;
+
+                    }
+
+                }
+
+                if (!isInClosedList) {
+
+                    NewNode openNeighbour = null;
 
 
+                }
 
             }
 
@@ -58,11 +75,9 @@ public class AStarUtil {
 
     }
 
-    private static PriorityQueue<NewNode> createQueue() {
+    private static Comparator<NewNode> getfAndhCostComparator() {
 
-        Comparator<NewNode> openQueueComparator = Comparator.comparingInt(NewNode::getfCost).thenComparingInt(NewNode::gethCost);
-
-        return new PriorityQueue<>(openQueueComparator);
+        return Comparator.comparingInt(NewNode::getfCost).thenComparingInt(NewNode::gethCost);
 
     }
 
