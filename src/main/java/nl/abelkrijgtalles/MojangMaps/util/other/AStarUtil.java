@@ -82,7 +82,7 @@ public class AStarUtil {
 
             for (int j = -1 * gridSize; j < 2 * gridSize; j += gridSize) {
 
-                if (i != 0 && j != 0) {
+                if (i != 0 && j != 0 && isRoad()) {
 
                     neighbours.add(getNodeWithOffsetFromLocation(parent.getUuid(), parentLocation, i, j, start, end));
 
