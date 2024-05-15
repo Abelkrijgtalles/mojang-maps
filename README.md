@@ -5,7 +5,7 @@ A Google Maps like navigation system for Minecraft.
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=W79VLY89H4XRY)
 [![Crowdin](https://badges.crowdin.net/mojang-maps/localized.svg?style=for-the-badge&logo=paypal)](https://crowdin.com/project/mojang-maps)
 
-Mojang Maps 2.0 will be released on the 23rd of July! See [this discussion](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14) for more information.
+Mojang Maps 2.0 will be released on the 23rd of July! See [this discussion](https://github.com/Abelkrijgtalles/mojang-maps/discussions/18) for more information.
 
 View more information on [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)!
 
