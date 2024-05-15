@@ -11,7 +11,7 @@ View more information on [the Mojang Maps wiki](https://mojangmaps.abelkrijgtall
 
 # Roadmap
 
-Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)
+Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl) and [#14](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14)
 
 # Commands
 
