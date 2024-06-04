@@ -24,7 +24,7 @@ import org.bukkit.Location;
 
 public class AStarUtil {
 
-    public static List<Location> findPath(NewNode start, NewNode end) {
+    public static List<NewNode> findPath(NewNode start, NewNode end) {
 
         PriorityQueue<NewNode> openQueue = new PriorityQueue<>(getfAndhCostComparator());
         List<NewNode> closedList = new ArrayList<>();
@@ -59,8 +59,24 @@ public class AStarUtil {
 
                 if (!isInClosedList) {
 
-                    NewNode openNeighbour = null;
+                    NewNode openNeighbour = getNodeByUUIDInQueue(neighbour.getUuid(), openQueue);
 
+                    if (openNeighbour != null) {
+
+                        int result = getfAndhCostComparator().compare(openNeighbour, neighbour);
+
+                        if (result < 0) {
+
+                            openNeighbour.setfCost(neighbour.getfCost());
+                            openNeighbour.setParent(neighbour.getParent());
+
+                        }
+
+                    } else {
+
+                        openQueue.add(neighbour);
+
+                    }
 
                 }
 
@@ -70,8 +86,7 @@ public class AStarUtil {
 
         if (!endFound) return null;
 
-
-        return null;
+        return closedList;
 
     }
 
@@ -124,6 +139,14 @@ public class AStarUtil {
 
         return new NewNode(newLocation, parent, start, end);
 
+
+    }
+
+    private static NewNode getNodeByUUIDInQueue(UUID uuid, PriorityQueue<NewNode> queue) {
+
+        for (NewNode node : queue) if (node.getUuid().equals(uuid)) return node;
+
+        return null;
 
     }
 
