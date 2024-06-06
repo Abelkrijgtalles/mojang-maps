@@ -46,6 +46,7 @@ public class AStarUtil {
             for (NewNode neighbour : getNeighbours(currentNode, start, end)) {
 
                 boolean isInClosedList = false;
+                System.out.println("1");
                 for (NewNode checkedNode : closedList) {
 
                     if (checkedNode.getLocation() == neighbour.getLocation()) {
@@ -56,6 +57,7 @@ public class AStarUtil {
                     }
 
                 }
+                System.out.println("2");
 
                 if (!isInClosedList) {
 
