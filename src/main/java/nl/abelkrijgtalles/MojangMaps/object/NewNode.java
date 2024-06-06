@@ -27,9 +27,9 @@ public class NewNode {
     private UUID uuid;
     private Location location;
     private UUID parent;
-    private int gCost;
-    private int hCost;
-    private int fCost;
+    private int gCost = 0;
+    private int hCost = 0;
+    private int fCost = 0;
 
     public NewNode(Location location, UUID parent, int gCost, int hCost, int fCost) {
 
@@ -38,7 +38,7 @@ public class NewNode {
         this.setParent(parent);
         this.setgCost(gCost);
         this.sethCost(hCost);
-        this.setfCost(fCost);
+
     }
 
     public NewNode(Location location, UUID parent, NewNode start, NewNode end) {
@@ -47,23 +47,32 @@ public class NewNode {
         this.setLocation(location);
         this.setParent(parent);
 
-        Location startLocation = start.getLocation();
-        Location endLocation = end.getLocation();
+    }
 
-        int gCostX = Math.abs(startLocation.getBlockX() - location.getBlockX());
-        int gCostY = Math.abs(startLocation.getBlockY() - location.getBlockY());
-        int gCostZ = Math.abs(startLocation.getBlockZ() - location.getBlockZ());
+    public void setStart(NewNode start) {
 
-        int hCostX = Math.abs(endLocation.getBlockX() - location.getBlockX());
-        int hCostY = Math.abs(endLocation.getBlockY() - location.getBlockY());
-        int hCostZ = Math.abs(endLocation.getBlockZ() - location.getBlockZ());
+        double rawGCost = calculateCostToNode(start);
+        setgCost((int) Math.round(rawGCost * 100));
 
-        double rawGCost = MathUtil.pythagoreanTheorem(MathUtil.pythagoreanTheorem(gCostX, gCostY), gCostZ);
-        double rawHCost = MathUtil.pythagoreanTheorem(MathUtil.pythagoreanTheorem(hCostX, hCostY), hCostZ);
+    }
 
-        this.setgCost((int) Math.round(rawGCost * 100));
-        this.sethCost((int) Math.round(rawHCost * 100));
-        this.setfCost(this.getgCost() + this.gethCost());
+    public double calculateCostToNode(NewNode node) {
+
+        Location nodeLocation = node.getLocation();
+
+        int costX = Math.abs(nodeLocation.getBlockX() - location.getBlockX());
+        int costY = Math.abs(nodeLocation.getBlockY() - location.getBlockY());
+        int costZ = Math.abs(nodeLocation.getBlockZ() - location.getBlockZ());
+
+        return MathUtil.pythagoreanTheorem(MathUtil.pythagoreanTheorem(costX, costY), costZ);
+
+    }
+
+    public void setEnd(NewNode end) {
+
+        double rawHCost = calculateCostToNode(end);
+        sethCost((int) Math.round(rawHCost * 100));
+
     }
 
     public UUID getUuid() {
@@ -104,6 +113,8 @@ public class NewNode {
     public void setgCost(int gCost) {
 
         this.gCost = gCost;
+        setfCost(gCost + gethCost());
+
     }
 
     public int gethCost() {
@@ -114,6 +125,8 @@ public class NewNode {
     public void sethCost(int hCost) {
 
         this.hCost = hCost;
+        setfCost(getgCost() + gethCost());
+
     }
 
     public int getfCost() {
