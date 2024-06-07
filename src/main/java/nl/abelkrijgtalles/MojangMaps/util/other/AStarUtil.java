@@ -45,7 +45,7 @@ public class AStarUtil {
 
             Location nodeLocation = currentNode.getLocation();
 
-            System.out.println("%s %s %s".formatted(nodeLocation.getBlockX(), nodeLocation.getBlockY(), nodeLocation.getBlockZ()));
+            System.out.println(openQueue.size());
 
             for (NewNode neighbour : getNeighbours(currentNode, start, end)) {
 
