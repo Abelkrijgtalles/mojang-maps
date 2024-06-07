@@ -43,7 +43,9 @@ public class AStarUtil {
                 break;
             }
 
-            System.out.println(currentNode.getUuid());
+            Location nodeLocation = currentNode.getLocation();
+
+            System.out.println("%s %s %s".formatted(nodeLocation.getBlockX(), nodeLocation.getBlockY(), nodeLocation.getBlockZ()));
 
             for (NewNode neighbour : getNeighbours(currentNode, start, end)) {
 
