@@ -18,22 +18,20 @@
 
 package nl.abelkrijgtalles.MojangMaps.object;
 
-import java.util.UUID;
+import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.util.other.MathUtil;
 import org.bukkit.Location;
 
 public class NewNode {
 
-    private UUID uuid;
     private Location location;
-    private UUID parent;
+    private Integer parent;
     private int gCost = 0;
     private int hCost = 0;
     private int fCost = 0;
 
-    public NewNode(Location location, UUID parent, int gCost, int hCost, int fCost) {
+    public NewNode(Location location, Integer parent, int gCost, int hCost, int fCost) {
 
-        this.setUuid(UUID.randomUUID());
         this.setLocation(location);
         this.setParent(parent);
         this.setgCost(gCost);
@@ -41,9 +39,8 @@ public class NewNode {
 
     }
 
-    public NewNode(Location location, UUID parent, NewNode start, NewNode end) {
+    public NewNode(Location location, Integer parent, NewNode start, NewNode end) {
 
-        this.setUuid(UUID.randomUUID());
         this.setLocation(location);
         this.setParent(parent);
 
@@ -75,14 +72,10 @@ public class NewNode {
 
     }
 
-    public UUID getUuid() {
+    public Integer getId() {
 
-        return uuid;
-    }
+        return Objects.hash(location);
 
-    public void setUuid(UUID uuid) {
-
-        this.uuid = uuid;
     }
 
     public Location getLocation() {
@@ -95,12 +88,12 @@ public class NewNode {
         this.location = location;
     }
 
-    public UUID getParent() {
+    public Integer getParent() {
 
         return parent;
     }
 
-    public void setParent(UUID parent) {
+    public void setParent(Integer parent) {
 
         this.parent = parent;
     }

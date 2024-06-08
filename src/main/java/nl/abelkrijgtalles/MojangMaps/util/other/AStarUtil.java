@@ -18,7 +18,10 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.other;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
 import nl.abelkrijgtalles.MojangMaps.object.NewNode;
 import org.bukkit.Location;
 
@@ -38,21 +41,17 @@ public class AStarUtil {
             if (currentNode == null) break;
             closedList.add(currentNode);
 
-            if (currentNode.getUuid() == end.getUuid()) {
+            if (currentNode.getId().equals(end.getId())) {
                 endFound = true;
                 break;
             }
-
-            Location nodeLocation = currentNode.getLocation();
-
-            System.out.println(openQueue.size());
 
             for (NewNode neighbour : getNeighbours(currentNode, start, end)) {
 
                 boolean isInClosedList = false;
                 for (NewNode checkedNode : closedList) {
 
-                    if (checkedNode.getLocation() == neighbour.getLocation()) {
+                    if (checkedNode.getId().equals(neighbour.getId())) {
 
                         isInClosedList = true;
                         break;
@@ -63,7 +62,7 @@ public class AStarUtil {
 
                 if (!isInClosedList) {
 
-                    NewNode openNeighbour = getNodeByUUIDInQueue(neighbour.getUuid(), openQueue);
+                    NewNode openNeighbour = getNodeByUUIDInQueue(neighbour.getId(), openQueue);
 
                     if (openNeighbour != null) {
 
@@ -118,7 +117,7 @@ public class AStarUtil {
 
                 if (i != 0 && j != 0 && isRoad()) {
 
-                    neighbours.add(getNodeWithOffsetFromLocation(parent.getUuid(), parentLocation, i, j, start, end));
+                    neighbours.add(getNodeWithOffsetFromLocation(parent.getId(), parentLocation, i, j, start, end));
 
                 }
 
@@ -136,7 +135,7 @@ public class AStarUtil {
 
     }
 
-    private static NewNode getNodeWithOffsetFromLocation(UUID parent, Location location, int offsetX, int offsetZ, NewNode start, NewNode end) {
+    private static NewNode getNodeWithOffsetFromLocation(Integer parent, Location location, int offsetX, int offsetZ, NewNode start, NewNode end) {
         // TODO: find some way to implement this in a 3d system, as it's partially 3d
 
         Location newLocation = new Location(location.getWorld(), location.getBlockX() + offsetX, location.getBlockY(), location.getBlockZ() + offsetZ);
@@ -146,9 +145,9 @@ public class AStarUtil {
 
     }
 
-    private static NewNode getNodeByUUIDInQueue(UUID uuid, PriorityQueue<NewNode> queue) {
+    private static NewNode getNodeByUUIDInQueue(Integer uuid, PriorityQueue<NewNode> queue) {
 
-        for (NewNode node : queue) if (node.getUuid().equals(uuid)) return node;
+        for (NewNode node : queue) if (node.getId().equals(uuid)) return node;
 
         return null;
 

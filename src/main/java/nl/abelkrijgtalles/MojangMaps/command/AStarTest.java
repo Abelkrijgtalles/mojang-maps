@@ -21,9 +21,10 @@ package nl.abelkrijgtalles.MojangMaps.command;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import java.util.List;
-import java.util.UUID;
+import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.object.NewNode;
 import nl.abelkrijgtalles.MojangMaps.util.other.AStarUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -31,8 +32,8 @@ public class AStarTest {
 
     public AStarTest(Player p) throws WrapperCommandSyntaxException {
 
-        NewNode start = new NewNode(new Location(null, 0, -61, 0), UUID.randomUUID(), null, null);
-        NewNode end = new NewNode(new Location(null, 25, -61, 25), UUID.randomUUID(), start, null);
+        NewNode start = new NewNode(new Location(null, 0, -61, 0), 0, null, null);
+        NewNode end = new NewNode(new Location(null, 25, -61, 25), 0, start, null);
 
         start.setStart(start);
         start.setEnd(end);
@@ -59,9 +60,16 @@ public class AStarTest {
                     Parent: %s
                     UUID: %s
                     000
-                    """.formatted(node.getgCost(), node.gethCost(), node.getfCost(), nodeLocation.getBlockX(), nodeLocation.getBlockY(), nodeLocation.getBlockZ(), node.getParent(), node.getUuid()));
+                    """.formatted(node.getgCost(), node.gethCost(), node.getfCost(), nodeLocation.getBlockX(), nodeLocation.getBlockY(), nodeLocation.getBlockZ(), node.getParent(), node.getId()));
 
         }
+
+    }
+
+    public static void hashLoc(Player p) {
+
+        System.out.println(Objects.hash(p.getLocation()));
+        p.chat(ChatColor.YELLOW + String.valueOf(Objects.hash(p.getLocation())));
 
     }
 

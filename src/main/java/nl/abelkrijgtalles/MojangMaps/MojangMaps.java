@@ -242,7 +242,7 @@ public class MojangMaps extends JavaPlugin {
 
             CommandAPICommand aStarTest = new CommandAPICommand("astar")
                     .executesPlayer(((player, commandArguments) -> {
-                        new AStarTest(player);
+                        AStarTest.hashLoc(player);
                     }));
 
             CommandAPICommand testingGroupCommand = new CommandAPICommand("testing")
