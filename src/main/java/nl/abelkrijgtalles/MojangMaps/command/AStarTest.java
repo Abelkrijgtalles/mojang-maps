@@ -21,10 +21,8 @@ package nl.abelkrijgtalles.MojangMaps.command;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
 import java.util.List;
-import java.util.Objects;
 import nl.abelkrijgtalles.MojangMaps.object.NewNode;
 import nl.abelkrijgtalles.MojangMaps.util.other.AStarUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -63,13 +61,6 @@ public class AStarTest {
                     """.formatted(node.getgCost(), node.gethCost(), node.getfCost(), nodeLocation.getBlockX(), nodeLocation.getBlockY(), nodeLocation.getBlockZ(), node.getParent(), node.getId()));
 
         }
-
-    }
-
-    public static void hashLoc(Player p) {
-
-        System.out.println(Objects.hash(p.getLocation()));
-        p.chat(ChatColor.YELLOW + String.valueOf(Objects.hash(p.getLocation())));
 
     }
 
