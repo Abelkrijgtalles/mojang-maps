@@ -31,7 +31,7 @@
 
     <description>A Google Maps like navigation system for Minecraft.</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://github.com/Abelkrijgtalles/mojang-maps</url>
