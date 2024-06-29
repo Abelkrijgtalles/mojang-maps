@@ -45,7 +45,8 @@ Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl) and [#14]
 - https://bstats.org/plugin/bukkit/Mojang%20Maps/19295, The bStats of Mojang Maps.
 - https://mojangmaps.abelkrijgtalles.nl, The wiki of Mojang Maps.
 
-# Credits
+# Special thanks to
 
 - [SamJakob](https://github.com/SamJakob) and [all these people](https://github.com/SamJakob/SpiGUI/graphs/contributors)
   for creating SpiGUI.
+- [Ruben Amendoeira/psikoi](https://github.com/psikoi) for implementing an A* algorithm correctly
