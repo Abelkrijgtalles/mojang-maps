@@ -148,7 +148,7 @@
         </dependency>
         <dependency>
             <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-bukkit-shade</artifactId>
+            <artifactId>commandapi-bukkit-shade-mojang-mapped</artifactId>
             <version>9.5.1</version>
             <scope>provided</scope>
         </dependency>
