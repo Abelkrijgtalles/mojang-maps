@@ -18,48 +18,64 @@
 
 package nl.abelkrijgtalles.MojangMaps.command;
 
-import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.exceptions.WrapperCommandSyntaxException;
-import java.util.List;
-import nl.abelkrijgtalles.MojangMaps.object.NewNode;
-import nl.abelkrijgtalles.MojangMaps.util.other.AStarUtil;
-import org.bukkit.Location;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.AStar;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Grid;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Node;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Tile;
 import org.bukkit.entity.Player;
 
-public class AStarTest {
+public class AStarTest implements Observer {
 
     public AStarTest(Player p) throws WrapperCommandSyntaxException {
 
-        NewNode start = new NewNode(new Location(null, 0, -61, 0), 0, null, null);
-        NewNode end = new NewNode(new Location(null, 25, -61, 25), 0, start, null);
+        // start 0,-61,0
+        // end 25,-61,25
 
-        start.setStart(start);
-        start.setEnd(end);
-        end.setEnd(end);
-
-        List<NewNode> nodes = AStarUtil.findPath(start, end);
-
-        if (nodes == null) {
-
-            throw CommandAPI.failWithString("Nodes is empty");
-
+        Grid grid = generateGrid(25, 25);
+        for (Tile t : grid.getTiles()) {
+            t.calculateNeighbours(grid);
         }
 
-        for (NewNode node : nodes) {
+        AStar aStar = new AStar(grid);
+        aStar.setStart(grid.find(0, 0));
+        aStar.setEnd(grid.find(25, 25));
+        grid.find(12, 12).setValid(false);
 
-            Location nodeLocation = node.getLocation();
+    }
 
-            p.chat("""
-                    000
-                    G: %s
-                    H: %s
-                    F: %s
-                    Location: %s %s %s
-                    Parent: %s
-                    UUID: %s
-                    000
-                    """.formatted(node.getgCost(), node.gethCost(), node.getfCost(), nodeLocation.getBlockX(), nodeLocation.getBlockY(), nodeLocation.getBlockZ(), node.getParent(), node.getId()));
+    private static Grid generateGrid(int width, int height) {
 
+        ArrayList<Tile> tiles = new ArrayList<>();
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Tile t = new Tile(i, j);
+                tiles.add(t);
+            }
+        }
+
+        return new Grid(width, height, tiles);
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        AStar aStar = (AStar) o;
+        ArrayList<Node> path = aStar.getPath();
+
+        if (path != null) {
+            for (Node node : path) {
+                if (node instanceof Tile tile) {
+                    System.out.println(tile.getX() + " " + tile.getY());
+                }
+            }
+        } else {
+            System.out.println("Womp womp no path found");
         }
 
     }
