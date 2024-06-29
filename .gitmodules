@@ -1,3 +1,0 @@
-[submodule "libs/a-star"]
-	path = libs/a-star
-	url = https://github.com/psikoi/AStar-Pathfinding.git
