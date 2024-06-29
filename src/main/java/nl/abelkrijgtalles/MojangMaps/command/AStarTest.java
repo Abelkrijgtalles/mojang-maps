@@ -30,6 +30,9 @@ import org.bukkit.entity.Player;
 
 public class AStarTest implements Observer {
 
+    public static int WIDTH = 25;
+    public static int HEIGHT = 25;
+
     public AStarTest(Player p) throws WrapperCommandSyntaxException {
 
         // start 0,-61,0
@@ -42,8 +45,11 @@ public class AStarTest implements Observer {
 
         AStar aStar = new AStar(grid);
         aStar.setStart(grid.find(0, 0));
-        aStar.setEnd(grid.find(25, 25));
+        aStar.setEnd(grid.find(24, 24));
         grid.find(12, 12).setValid(false);
+        aStar.addObserver(this);
+        aStar.updateUI();
+        aStar.solve();
 
     }
 

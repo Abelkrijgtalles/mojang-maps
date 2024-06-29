@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class Tile extends Node {
 
-    public static int TILE_SIZE = 20;
     private int x, y;
 
     public Tile(int x, int y) {
