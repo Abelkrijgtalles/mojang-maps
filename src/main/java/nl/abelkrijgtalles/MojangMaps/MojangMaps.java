@@ -134,15 +134,6 @@ public class MojangMaps extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        if (!TestUtil.detectTest()) {
-
-            // Bstats init
-            int pluginId = 19295;
-            Metrics metrics = new Metrics(this, pluginId);
-            addLanguageChart(metrics, this);
-
-        }
-
         // Config init
         ConfigurationSerialization.registerClass(Road.class);
         getConfig().options().copyDefaults();
@@ -159,6 +150,15 @@ public class MojangMaps extends JavaPlugin {
         if (!TestUtil.detectTest()) {
             TranslationUtil translationUtil = new TranslationUtil();
             translationUtil.updateTranslations(this);
+        }
+
+        if (!TestUtil.detectTest() || !getConfig().getBoolean("b-stats")) {
+
+            // Bstats init
+            int pluginId = 19295;
+            Metrics metrics = new Metrics(this, pluginId);
+            addLanguageChart(metrics, this);
+
         }
 
         // Update stuff
