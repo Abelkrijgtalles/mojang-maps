@@ -152,7 +152,7 @@ public class MojangMaps extends JavaPlugin {
             translationUtil.updateTranslations(this);
         }
 
-        if (!TestUtil.detectTest() || !getConfig().getBoolean("b-stats")) {
+        if (!TestUtil.detectTest() || getConfig().getBoolean("b-stats")) {
 
             // Bstats init
             int pluginId = 19295;
