@@ -52,7 +52,7 @@ public class StartNavigationCommand {
 
         for (ActiveNavigation activeNavigation : activeNavigations) {
 
-            players.add(activeNavigation.getPlayer());
+            players.add(activeNavigation.getPlayerID());
 
         }
 
@@ -80,7 +80,7 @@ public class StartNavigationCommand {
 
         for (ActiveNavigation activeNavigation : activeNavigations) {
 
-            if (p == activeNavigation.getPlayer()) {
+            if (p == activeNavigation.getPlayerID()) {
 
                 return activeNavigation;
 

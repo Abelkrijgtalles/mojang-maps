@@ -65,6 +65,11 @@ public class ActiveNavigation implements Observer {
 
     }
 
+    public UUID getPlayerID() {
+
+        return playerID;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
 
