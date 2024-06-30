@@ -19,12 +19,15 @@
 package nl.abelkrijgtalles.MojangMaps.util.pathfinding;
 
 import java.util.ArrayList;
+import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Grid;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Tile;
+import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
+import org.bukkit.Location;
 
 public class GridUtil {
 
-    public static Grid generateGrid(int width, int height) {
+    public static Grid generateGrid(int width, int height, int xOffset, int zOffset) {
 
         ArrayList<Tile> tiles = new ArrayList<>();
 
@@ -36,6 +39,21 @@ public class GridUtil {
         }
 
         return new Grid(width, height, tiles);
+
+    }
+
+    public static Grid generateGridWithLowestAndHighestLocations(List<Location> locations) {
+
+        Location lowestLocation = LocationUtil.getLowestLocation(locations);
+        Location highestLocation = LocationUtil.getHighestLocation(locations);
+
+        int width = highestLocation.getBlockX() - lowestLocation.getBlockX();
+        int height = highestLocation.getBlockZ() - lowestLocation.getBlockZ();
+
+        int xOffset = -lowestLocation.getBlockX();
+        int zOffset = -lowestLocation.getBlockZ();
+
+        return generateGrid(width, height, xOffset, zOffset);
 
     }
 

@@ -23,12 +23,12 @@ import java.util.ArrayList;
 
 public class Tile extends Node {
 
-    private int x, y;
+    private int x, z;
 
-    public Tile(int x, int y) {
+    public Tile(int x, int z) {
 
         this.x = x;
-        this.y = y;
+        this.z = z;
         setValid(true);
     }
 
@@ -37,9 +37,9 @@ public class Tile extends Node {
         return x;
     }
 
-    public int getY() {
+    public int getZ() {
 
-        return y;
+        return z;
     }
 
     @Override
@@ -50,40 +50,40 @@ public class Tile extends Node {
         ArrayList<Node> nodes = new ArrayList<>();
 
         int minX = 0;
-        int minY = 0;
+        int minZ = 0;
         int maxX = grid.getWidth() - 1;
-        int maxY = grid.getHeight() - 1;
+        int maxZ = grid.getHeight() - 1;
 
         if (x > minX) {
-            nodes.add(grid.find(x - 1, y)); //west
+            nodes.add(grid.find(x - 1, z)); //west
         }
 
         if (x < maxX) {
-            nodes.add(grid.find(x + 1, y)); //east
+            nodes.add(grid.find(x + 1, z)); //east
         }
 
-        if (y > minY) {
-            nodes.add(grid.find(x, y - 1)); //north
+        if (z > minZ) {
+            nodes.add(grid.find(x, z - 1)); //north
         }
 
-        if (y < maxY) {
-            nodes.add(grid.find(x, y + 1)); //south
+        if (z < maxZ) {
+            nodes.add(grid.find(x, z + 1)); //south
         }
 
-        if (x > minX && y > minY) {
-            nodes.add(grid.find(x - 1, y - 1)); //northwest
+        if (x > minX && z > minZ) {
+            nodes.add(grid.find(x - 1, z - 1)); //northwest
         }
 
-        if (x < maxX && y < maxY) {
-            nodes.add(grid.find(x + 1, y + 1)); //southeast
+        if (x < maxX && z < maxZ) {
+            nodes.add(grid.find(x + 1, z + 1)); //southeast
         }
 
-        if (x < maxX && y > minY) {
-            nodes.add(grid.find(x + 1, y - 1)); //northeast
+        if (x < maxX && z > minZ) {
+            nodes.add(grid.find(x + 1, z - 1)); //northeast
         }
 
-        if (x > minY && y < maxY) {
-            nodes.add(grid.find(x - 1, y + 1)); //southwest
+        if (x > minZ && z < maxZ) {
+            nodes.add(grid.find(x - 1, z + 1)); //southwest
         }
 
         setNeighbours(nodes);
@@ -100,7 +100,7 @@ public class Tile extends Node {
     public double distanceTo(Node dest) {
 
         Tile d = (Tile) dest;
-        return new Point(x, y).distance(new Point(d.x, d.y));
+        return new Point(x, z).distance(new Point(d.x, d.z));
     }
 
 }

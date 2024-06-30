@@ -18,131 +18,69 @@
 
 package nl.abelkrijgtalles.MojangMaps.object;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.AStar;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Grid;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Node;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Tile;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
-import nl.abelkrijgtalles.MojangMaps.util.object.NodeUtil;
+import nl.abelkrijgtalles.MojangMaps.util.pathfinding.GridUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
-public class ActiveNavigation {
+public class ActiveNavigation implements Observer {
 
-    /* Explanation of every variable:
-        player: Just the UUID of the player, which makes it store less data on the ram.
-        beginning: The exact location of the beginning of the navigation. This isn't tied to any node.
-        beginningNode: The node object of beginningLocation.
-        beginningLocation: The closest node to the beginning.
-        destination, destinationNode and destinationLocation: It's beginning, beginningNode and beginningLocation but instead of the beginning, it's the destination.
-        nodes: The nodes that the player has to take to reach destinationLocation/destinationNode from beginningLocation/beginningNode.
-        activeNodes: The nodes that are in a 5 block radius of the player, and will actually display to the player as a line of particles between the activeNodes.
-     */
+    private final UUID playerID;
+    private final Location beginning;
+    private final Location destination;
+    private final Location closestBeginning;
+    private final Location closestDestination;
 
-    // beginningLocation and destinationLocation are the closest location/node to the beginning/destination
-    private UUID player;
-    private Location beginning;
-    private Node beginningNode;
-    private Location beginningLocation;
-    private Location destination;
-    private Node destinationNode;
-    private Location destinationLocation;
-    private List<Node> nodes = new ArrayList<>();
-    private List<Node> activeNodes = new ArrayList<>();
+    public ActiveNavigation(UUID playerID, Location beginning, Location destination) {
 
-    public ActiveNavigation(UUID player, Location beginning, Location destination) {
-
-        this.player = player;
-        setBeginning(beginning, false);
-        setDestination(destination);
-
-    }
-
-    public Location getDestination() {
-
-        return destination;
-    }
-
-    public void setDestination(Location destination) {
-
-        this.destination = destination;
-        this.destinationLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), destination);
-
-        List<Node> nodes = NodeUtil.addAdjacentNodes();
-        this.destinationNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(destinationLocation)));
-
-        Node.calculateShortestPath(beginningNode);
-        this.nodes = destinationNode.getShortestPath();
-
-    }
-
-    public Location getBeginning() {
-
-        return beginning;
-    }
-
-    public void setBeginning(Location beginning, Boolean destinationExists) {
-
+        this.playerID = playerID;
         this.beginning = beginning;
-        this.beginningLocation = LocationUtil.getClosestLocation(NodesConfigUtil.getLocations(), beginning);
+        this.destination = destination;
 
-        List<Node> nodes = NodeUtil.addAdjacentNodes();
-        this.beginningNode = NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(beginningLocation)));
+        List<Location> locations = NodesConfigUtil.getLocations();
 
-        Node.calculateShortestPath(beginningNode);
-        if (destinationExists) {
-            this.nodes = destinationNode.getShortestPath();
+        closestBeginning = LocationUtil.getClosestLocation(locations, beginning);
+        closestDestination = LocationUtil.getClosestLocation(locations, destination);
+
+        Grid grid = GridUtil.generateGridWithLowestAndHighestLocations(locations);
+        for (Tile tile : grid.getTiles()) {
+
+            tile.calculateNeighbours(grid);
+
         }
+
+        AStar aStar = new AStar(grid);
+        aStar.setStart(grid.find(closestBeginning.getBlockX(), closestBeginning.getBlockZ()));
+        aStar.setEnd(grid.find(closestDestination.getBlockX(), closestDestination.getBlockZ()));
+
+        aStar.addObserver(this);
+        aStar.solve();
+
     }
 
-    public UUID getPlayer() {
+    @Override
+    public void update(Observable o, Object arg) {
 
-        return player;
-    }
+        AStar aStar = (AStar) o;
+        ArrayList<Node> path = aStar.getPath();
+        Player p = Bukkit.getPlayer(playerID);
 
-    public List<Node> getNodes() {
-
-        return nodes;
-    }
-
-    public List<Node> setAndGetActiveNodes(int indexOfStartingNode) {
-
-        activeNodes.clear();
-        List<Node> availableNodes = nodes.subList(indexOfStartingNode, nodes.size());
-        for (Node node : availableNodes) {
-
-            if (LocationUtil.isTheSameLocation(Bukkit.getPlayer(player).getLocation(), NodeUtil.getLocationFromNode(node), 5)) {
-
-                activeNodes.add(node);
-
-            } else {
-                break;
+        if (path != null) {
+            for (Node node : path) {
+                if (node instanceof Tile tile) {
+                    p.chat(tile.getX() + " " + tile.getZ());
+                }
             }
-
+        } else {
+            p.chat("Womp womp where is the path");
         }
-
-        return activeNodes;
-
-    }
-
-    public List<Node> getActiveNodesFromPlayerPosition() {
-
-        List<Location> locationsOfNodes = new ArrayList<>();
-
-        for (Node node : nodes) {
-
-            locationsOfNodes.add(NodeUtil.getLocationFromNode(node));
-
-        }
-
-        Location closestLocationToPlayer = LocationUtil.getClosestLocation(locationsOfNodes, Bukkit.getPlayer(player).getLocation());
-        Bukkit.getLogger().info("LocOfNodes Size (1): " + locationsOfNodes.size());
-        Bukkit.getLogger().info("ClosestLoc to player (2): " + closestLocationToPlayer.getBlockX() + closestLocationToPlayer.getBlockY() + closestLocationToPlayer.getBlockY());
-        Bukkit.getLogger().info("---");
-        Bukkit.getLogger().info("Loc index (1): " + NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer));
-        Bukkit.getLogger().info("Find Node By Name (2): " + NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer))).getName());
-        Bukkit.getLogger().info("Nodes Index (3): " + nodes.indexOf(NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)))));
-        return setAndGetActiveNodes(nodes.indexOf(NodeUtil.findNodeByName(nodes, String.valueOf(NodesConfigUtil.getLocations().indexOf(closestLocationToPlayer)))));
 
     }
 

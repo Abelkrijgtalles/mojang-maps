@@ -32,10 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-import nl.abelkrijgtalles.MojangMaps.command.AStarTest;
 import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
-import nl.abelkrijgtalles.MojangMaps.command.using.GoToCommand;
-import nl.abelkrijgtalles.MojangMaps.command.using.NavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.StartNavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
 import nl.abelkrijgtalles.MojangMaps.command.util.ReloadConfigsFromDiskCommand;
@@ -206,23 +203,6 @@ public class MojangMaps extends JavaPlugin {
                     .withPermission(CommandPermission.fromString("mojangmaps.road"))
                     .withSubcommands(createRoadCommand, whichOne);
 
-            // goto group
-
-            // this will probably be removed, as a better system will be made to go to places
-            CommandAPICommand navigationCommand = new CommandAPICommand("gui")
-                    .withShortDescription("Go to a specific location and view the navigation in GUI form.")
-                    // old version mojangmaps.using.navigation
-                    .withPermission(CommandPermission.fromString("mojangmaps.goto.gui"))
-                    .withUsage("/navigation <x> <y> <z>.", "/navigation <x> <y> <z>.")
-                    .executesPlayer((NavigationCommand::new));
-
-            CommandAPICommand gotoGroupCommand = new CommandAPICommand("goto")
-                    .withShortDescription("Go to a specific location.")
-                    .withPermission(CommandPermission.fromString("mojangmaps.goto"))
-                    .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
-                    .withUsage("/goto <x> <y> <z>.", "/goto <x> <y> <z>.")
-                    .executesPlayer((GoToCommand::new))
-                    .withSubcommand(navigationCommand);
 
             CommandAPICommand reloadCommand = new CommandAPICommand("reload")
                     .withShortDescription("Reloads all the configs from disk.")
@@ -240,20 +220,15 @@ public class MojangMaps extends JavaPlugin {
                     .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
                     .executesPlayer((StartNavigationCommand::new));
 
-            CommandAPICommand aStarTest = new CommandAPICommand("astar")
-                    .executesPlayer(((player, commandArguments) -> {
-                        new AStarTest(player);
-                    }));
-
             CommandAPICommand testingGroupCommand = new CommandAPICommand("testing")
                     .withShortDescription("testing time baby")
-                    .withSubcommands(startNavigationCommand, aStarTest);
+                    .withSubcommands(startNavigationCommand);
 
 
 
             new CommandAPICommand("mm")
                     .withAliases("mojangmaps")
-                    .withSubcommands(roadGroupCommand, gotoGroupCommand, testingGroupCommand, reloadCommand)
+                    .withSubcommands(roadGroupCommand, testingGroupCommand, reloadCommand)
                     .register();
 
         }

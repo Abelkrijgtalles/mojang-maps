@@ -24,6 +24,8 @@ public class Grid extends Network {
 
     private int width, height;
     private ArrayList<Tile> tiles;
+    private int xOffset = 0;
+    private int zOffset = 0;
 
     public Grid(int width, int height, ArrayList<Tile> tiles) {
 
@@ -47,13 +49,26 @@ public class Grid extends Network {
         return tiles;
     }
 
-    public Tile find(int x, int y) {
+    public Tile find(int x, int z) {
+
+        int gridX = x + xOffset;
+        int gridZ = z + zOffset;
 
         for (Tile t : tiles) {
-            if (t.getX() == x && t.getY() == y)
+            if (t.getX() == gridX && t.getZ() == gridZ)
                 return t;
         }
         return null;
+    }
+
+    public void setzOffset(int zOffset) {
+
+        this.zOffset = zOffset;
+    }
+
+    public void setxOffset(int xOffset) {
+
+        this.xOffset = xOffset;
     }
 
     @Override

@@ -72,4 +72,36 @@ public class LocationUtil {
 
     }
 
+    public static Location getLowestLocation(List<Location> locations) {
+
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double minZ = Double.MAX_VALUE;
+
+        for (Location loc : locations) {
+            if (loc.getX() < minX) minX = loc.getX();
+            if (loc.getY() < minY) minY = loc.getY();
+            if (loc.getZ() < minZ) minZ = loc.getZ();
+        }
+
+        return new Location(locations.get(0).getWorld(), minX, minY, minZ);
+
+    }
+
+    public static Location getHighestLocation(List<Location> locations) {
+
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+        double maxZ = Double.MIN_VALUE;
+
+        for (Location loc : locations) {
+            if (loc.getX() > maxX) maxX = loc.getX();
+            if (loc.getY() > maxY) maxY = loc.getY();
+            if (loc.getZ() > maxZ) maxZ = loc.getZ();
+        }
+
+        return new Location(locations.get(0).getWorld(), maxX, maxY, maxZ);
+
+    }
+
 }
