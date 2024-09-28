@@ -22,4 +22,4 @@ Your JAR will be in the `target`-folder, named `MojangMaps-[version].jar`.
 ## Some other stuff
 
 If you want, you can make a discussion to just show off what you've been working on, asking for help, or something else.
-Note: Issues have to be reported in issues and do not belong in issues.
+Note: Issues have to be reported in issues and do not belong in discussions.
