@@ -34,6 +34,8 @@ public class StartNavigationCommand {
 
     public StartNavigationCommand(Player p, CommandArguments args) throws WrapperCommandSyntaxException {
 
+        System.out.println("ball");
+
         if (playerIsNavigating(p.getUniqueId())) {
 
             throw CommandAPI.failWithString("You are already navigating to another place.");

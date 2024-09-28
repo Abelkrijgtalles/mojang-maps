@@ -19,6 +19,7 @@
 package nl.abelkrijgtalles.MojangMaps.object;
 
 import java.util.*;
+import nl.abelkrijgtalles.MojangMaps.command.using.StartNavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.AStar;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Grid;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.object.Node;
@@ -53,14 +54,30 @@ public class ActiveNavigation implements Observer {
         for (Tile tile : grid.getTiles()) {
 
             tile.calculateNeighbours(grid);
+            System.out.println(tile.getX() + " " + tile.getZ() + " " + tile.isValid());
 
         }
 
         AStar aStar = new AStar(grid);
         aStar.setStart(grid.find(closestBeginning.getBlockX(), closestBeginning.getBlockZ()));
         aStar.setEnd(grid.find(closestDestination.getBlockX(), closestDestination.getBlockZ()));
+        System.out.println("Balls");
+        System.out.println(grid.find(closestBeginning.getBlockX(), closestBeginning.getBlockZ()));
+        System.out.println(grid.find(closestDestination.getBlockX(), closestDestination.getBlockZ()));
+        System.out.println("andere shit");
+
+        int beginx = closestBeginning.getBlockX() + grid.getxOffset();
+        int beginz = closestBeginning.getBlockZ() + grid.getzOffset();
+        int endx = closestDestination.getBlockX() + grid.getxOffset();
+        int endz = closestDestination.getBlockZ() + grid.getzOffset();
+
+        System.out.println(closestBeginning.getBlockX() + " " + closestBeginning.getBlockZ());
+        System.out.println(beginx + " " + beginz);
+        System.out.println(closestDestination.getBlockX() + " " + closestDestination.getBlockZ());
+        System.out.println(endx + " " + endz);
 
         aStar.addObserver(this);
+        aStar.updateUI();
         aStar.solve();
 
     }
@@ -73,6 +90,9 @@ public class ActiveNavigation implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
+        System.out.println("upadte");
+
+
         AStar aStar = (AStar) o;
         ArrayList<Node> path = aStar.getPath();
         Player p = Bukkit.getPlayer(playerID);
@@ -81,11 +101,15 @@ public class ActiveNavigation implements Observer {
             for (Node node : path) {
                 if (node instanceof Tile tile) {
                     p.chat(tile.getX() + " " + tile.getZ());
+                    System.out.println("testing");
                 }
             }
         } else {
             p.chat("Womp womp where is the path");
+            System.out.println("testing2");
         }
+
+        StartNavigationCommand.activeNavigations.remove(this);
 
     }
 

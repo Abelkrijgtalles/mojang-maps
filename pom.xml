@@ -31,7 +31,7 @@
 
     <description>A Google Maps like navigation system for Minecraft.</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://github.com/Abelkrijgtalles/mojang-maps</url>
@@ -131,7 +131,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.6-R0.1-SNAPSHOT</version>
+            <version>1.21-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -166,8 +166,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.seeseemelk</groupId>
-            <artifactId>MockBukkit-v1.20</artifactId>
-            <version>3.89.0</version>
+            <artifactId>MockBukkit-v1.21</artifactId>
+            <version>3.129.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

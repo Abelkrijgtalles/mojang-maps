@@ -71,6 +71,16 @@ public class Grid extends Network {
         this.xOffset = xOffset;
     }
 
+    public int getxOffset() {
+
+        return xOffset;
+    }
+
+    public int getzOffset() {
+
+        return zOffset;
+    }
+
     @Override
     public Iterable<Node> getNodes() {
 

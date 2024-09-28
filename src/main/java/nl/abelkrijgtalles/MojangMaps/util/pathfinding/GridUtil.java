@@ -38,7 +38,10 @@ public class GridUtil {
             }
         }
 
-        return new Grid(width, height, tiles);
+        Grid grid = new Grid(width, height, tiles);
+        grid.setxOffset(xOffset);
+        grid.setzOffset(zOffset);
+        return grid;
 
     }
 
@@ -47,8 +50,11 @@ public class GridUtil {
         Location lowestLocation = LocationUtil.getLowestLocation(locations);
         Location highestLocation = LocationUtil.getHighestLocation(locations);
 
-        int width = highestLocation.getBlockX() - lowestLocation.getBlockX();
-        int height = highestLocation.getBlockZ() - lowestLocation.getBlockZ();
+        System.out.println("min: " + lowestLocation);
+        System.out.println("max: " + highestLocation);
+
+        int width = highestLocation.getBlockX() - lowestLocation.getBlockX() + 1;
+        int height = highestLocation.getBlockZ() - lowestLocation.getBlockZ() + 1;
 
         int xOffset = -lowestLocation.getBlockX();
         int zOffset = -lowestLocation.getBlockZ();
