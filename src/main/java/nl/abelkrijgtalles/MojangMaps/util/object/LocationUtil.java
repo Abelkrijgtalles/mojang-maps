@@ -74,33 +74,33 @@ public class LocationUtil {
 
     public static Location getLowestLocation(List<Location> locations) {
 
-        double minX = Double.MAX_VALUE;
-        double minY = Double.MAX_VALUE;
-        double minZ = Double.MAX_VALUE;
+        double minX = Integer.MAX_VALUE;
+        double minY = Integer.MAX_VALUE;
+        double minZ = Integer.MAX_VALUE;
 
         for (Location loc : locations) {
-            if (loc.getX() < minX) minX = loc.getX();
-            if (loc.getY() < minY) minY = loc.getY();
-            if (loc.getZ() < minZ) minZ = loc.getZ();
+            if (loc.getBlockX() < minX) minX = loc.getBlockX();
+            if (loc.getBlockY() < minY) minY = loc.getBlockY();
+            if (loc.getBlockZ() < minZ) minZ = loc.getBlockZ();
         }
 
-        return new Location(locations.get(0).getWorld(), minX, minY, minZ);
+        return new Location(locations.getFirst().getWorld(), minX, minY, minZ);
 
     }
 
     public static Location getHighestLocation(List<Location> locations) {
 
-        double maxX = Double.MIN_VALUE;
-        double maxY = Double.MIN_VALUE;
-        double maxZ = Double.MIN_VALUE;
+        double maxX = Integer.MIN_VALUE;
+        double maxY = Integer.MIN_VALUE;
+        double maxZ = Integer.MIN_VALUE;
 
         for (Location loc : locations) {
-            if (loc.getX() > maxX) maxX = loc.getX();
-            if (loc.getY() > maxY) maxY = loc.getY();
-            if (loc.getZ() > maxZ) maxZ = loc.getZ();
+            if (loc.getBlockX() > maxX) maxX = loc.getBlockX();
+            if (loc.getBlockY() > maxY) maxY = loc.getBlockY();
+            if (loc.getBlockZ() > maxZ) maxZ = loc.getBlockZ();
         }
 
-        return new Location(locations.get(0).getWorld(), maxX, maxY, maxZ);
+        return new Location(locations.getFirst().getWorld(), maxX, maxY, maxZ);
 
     }
 
