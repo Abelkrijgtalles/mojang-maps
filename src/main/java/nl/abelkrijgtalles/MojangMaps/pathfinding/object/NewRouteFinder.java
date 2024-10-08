@@ -26,6 +26,13 @@ public class NewRouteFinder<T extends NewGraphNode> {
     private final NewScorer<T> nextNodeScorer;
     private final NewScorer<T> targetScorer;
 
+    public NewRouteFinder(NewGraph<T> graph, NewScorer<T> nextNodeScorer, NewScorer<T> targetScorer) {
+
+        this.graph = graph;
+        this.nextNodeScorer = nextNodeScorer;
+        this.targetScorer = targetScorer;
+    }
+
     public List<T> findRoute(T from, T to) {
 
         Queue<NewRouteNode> openSet = new PriorityQueue<>();

@@ -26,7 +26,13 @@ import org.bukkit.Location;
 public class NewGraph<T extends NewGraphNode> {
 
     private final Set<T> nodes;
-    private final Map<String, Set<String>> connections;
+    private final Map<Location, Set<Location>> connections;
+
+    public NewGraph(Set<T> nodes, Map<Location, Set<Location>> connections) {
+
+        this.nodes = nodes;
+        this.connections = connections;
+    }
 
     public T getNode(Location location) {
 
@@ -37,7 +43,6 @@ public class NewGraph<T extends NewGraphNode> {
     }
 
     public Set<T> getConnections(T node) {
-
         return connections.get(node.getLocation()).stream()
                 .map(this::getNode)
                 .collect(Collectors.toSet());
