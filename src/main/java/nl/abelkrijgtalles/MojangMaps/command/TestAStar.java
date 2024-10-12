@@ -16,23 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.MojangMaps.pathfinding.object;
+package nl.abelkrijgtalles.MojangMaps.command;
 
-import org.bukkit.Location;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.NewAstar;
+import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
+import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 
-public class NewLocationNode implements NewGraphNode {
+public class TestAStar {
 
-    private final Location location;
+    public TestAStar() {
 
-    public NewLocationNode(Location location) {
+        NewAstar astar = new NewAstar();
+        astar.findRoute(LocationUtil.getLowestLocation(NodesConfigUtil.getLocations()), LocationUtil.getHighestLocation(NodesConfigUtil.getLocations()));
 
-        this.location = location;
-    }
-
-    @Override
-    public Location getLocation() {
-
-        return location;
     }
 
 }

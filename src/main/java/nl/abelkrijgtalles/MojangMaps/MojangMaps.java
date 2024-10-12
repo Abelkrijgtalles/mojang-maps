@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+import nl.abelkrijgtalles.MojangMaps.command.TestAStar;
 import nl.abelkrijgtalles.MojangMaps.command.register.RoadCreationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.StartNavigationCommand;
 import nl.abelkrijgtalles.MojangMaps.command.using.WhereAmIStandingCommand;
@@ -220,9 +221,14 @@ public class MojangMaps extends JavaPlugin {
                     .withArguments(new LocationArgument("location", LocationType.BLOCK_POSITION, false))
                     .executesPlayer((StartNavigationCommand::new));
 
+            CommandAPICommand testAStarCommand = new CommandAPICommand("testastar")
+                    .executesPlayer(((player, commandArguments) -> {
+                        new TestAStar();
+                    }));
+
             CommandAPICommand testingGroupCommand = new CommandAPICommand("testing")
                     .withShortDescription("testing time baby")
-                    .withSubcommands(startNavigationCommand);
+                    .withSubcommands(startNavigationCommand, testAStarCommand);
 
 
 
