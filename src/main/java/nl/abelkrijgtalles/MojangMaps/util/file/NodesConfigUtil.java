@@ -103,4 +103,10 @@ public class NodesConfigUtil {
 
     }
 
+    public static boolean isInLocations(Location location) {
+
+        return getLocations().contains(location);
+
+    }
+
 }

@@ -18,32 +18,81 @@
 
 package nl.abelkrijgtalles.MojangMaps.pathfinding;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewGraph;
-import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewGraphNode;
-import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewLocationNode;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewGraphLocation;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewGraphLocationScorer;
 import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewRouteFinder;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import org.bukkit.Location;
 
 public class NewAstar {
 
-    private NewGraph<NewGraphNode> graph;
-    private NewRouteFinder<NewGraphNode> routeFinder;
+    private NewGraph<NewGraphLocation> graph;
+    private NewRouteFinder<NewGraphLocation> routeFinder;
 
-    public void setup() {
+    public NewAstar() {
 
-        Set<NewGraphNode> locations = new HashSet<>();
+        Set<NewGraphLocation> locations = new HashSet<>();
         Map<Location, Set<Location>> connections = new HashMap<>();
 
         for (Location location : NodesConfigUtil.getLocations()) {
 
-            locations.add(new NewLocationNode(location));
+            locations.add(new NewGraphLocation(location));
+            connections.put(location, calculateNeighbours(location).stream().collect(Collectors.toSet()));
 
         }
+
+        graph = new NewGraph<>(locations, connections);
+        routeFinder = new NewRouteFinder<>(graph, new NewGraphLocationScorer(), new NewGraphLocationScorer());
+
+    }
+
+    // expects location is in locations
+    public void findRoute(Location start, Location end) {
+
+        List<NewGraphLocation> route = routeFinder.findRoute(graph.getNode(start), graph.getNode(end));
+
+        if (route.isEmpty()) {
+            System.out.println("womp path gone");
+        }
+
+        route.stream().map(NewGraphLocation::getLocation).collect(Collectors.toList()).forEach(location -> System.out.println(location.toString()));
+
+    }
+
+    private ArrayList<Location> calculateNeighbours(Location location) {
+
+        ArrayList<Location> neighbours = new ArrayList<>();
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(-1f, 0f, 0f)); // west
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(1f, 0f, 0f)); //east
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(0f, 0f, -1f)); //north
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(0f, 0f, 1f)); //south
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(-1f, 0f, -1f)); //northwest
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(1f, 0f, 1f)); //southeast
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(1f, 0f, -1f)); //northeast
+
+        neighbours = addToLocationsIfInLocations(neighbours, location.add(-1f, 0f, 1f)); //southwest
+
+        return neighbours;
+
+    }
+
+    private ArrayList<Location> addToLocationsIfInLocations(ArrayList<Location> locations, Location location) {
+
+        if (NodesConfigUtil.isInLocations(location)) {
+            locations.add(location);
+        }
+
+        return locations;
 
     }
 
