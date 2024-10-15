@@ -27,12 +27,12 @@ import nl.abelkrijgtalles.MojangMaps.pathfinding.object.NewRouteFinder;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import org.bukkit.Location;
 
-public class NewAstar {
+public class NewAStar {
 
     private NewGraph<NewGraphLocation> graph;
     private NewRouteFinder<NewGraphLocation> routeFinder;
 
-    public NewAstar() {
+    public NewAStar() {
 
         Set<NewGraphLocation> locations = new HashSet<>();
         Map<Location, Set<Location>> connections = new HashMap<>();

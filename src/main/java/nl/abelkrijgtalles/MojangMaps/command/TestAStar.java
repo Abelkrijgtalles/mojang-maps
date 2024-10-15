@@ -18,7 +18,7 @@
 
 package nl.abelkrijgtalles.MojangMaps.command;
 
-import nl.abelkrijgtalles.MojangMaps.pathfinding.NewAstar;
+import nl.abelkrijgtalles.MojangMaps.pathfinding.NewAStar;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
 import nl.abelkrijgtalles.MojangMaps.util.object.LocationUtil;
 
@@ -26,7 +26,7 @@ public class TestAStar {
 
     public TestAStar() {
 
-        NewAstar astar = new NewAstar();
+        NewAStar astar = new NewAStar();
         astar.findRoute(LocationUtil.getLowestLocation(NodesConfigUtil.getLocations()), LocationUtil.getHighestLocation(NodesConfigUtil.getLocations()));
 
     }
