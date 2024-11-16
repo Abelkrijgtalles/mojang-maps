@@ -1,5 +1,5 @@
 /*
- * MojangMaps
+ * MojangMaps.test
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,6 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.file;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,6 +36,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+
 class ConfigMigrationUtilTest {
 
     private MojangMaps plugin;
@@ -216,20 +217,6 @@ class ConfigMigrationUtilTest {
                 ]""");
     }
 
-    @AfterEach
-    public void tearDown() {
-
-        MockBukkit.unmock();
-    }
-
-    @BeforeEach
-    public void setUp() {
-
-        ServerMock server = MockBukkit.mock();
-        plugin = MockBukkit.load(MojangMaps.class);
-
-    }
-
     @NotNull
     private static String getExpectedConfig(boolean streetActionBar, String languageCode) {
 
@@ -257,6 +244,20 @@ class ConfigMigrationUtilTest {
                     "'";
         }
         return expectedConfigString;
+    }
+
+    @AfterEach
+    public void tearDown() {
+
+        MockBukkit.unmock();
+    }
+
+    @BeforeEach
+    public void setUp() {
+
+        ServerMock server = MockBukkit.mock();
+        plugin = MockBukkit.load(MojangMaps.class);
+
     }
 
     @ParameterizedTest

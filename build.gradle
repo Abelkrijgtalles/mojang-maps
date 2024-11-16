@@ -50,10 +50,10 @@ repositories {
 
 dependencies {
     api libs.org.bstats.bstats.bukkit
-    testImplementation libs.org.junit.jupiter.junit.jupiter
-    testImplementation libs.org.junit.jupiter.junit.jupiter.params
+    testImplementation platform("org.junit:junit-bom:5.11.3")
+    testImplementation "org.junit.jupiter:junit-jupiter-params"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
-    testImplementation libs.com.github.seeseemelk.mockbukkit.v1.v21
+    testImplementation "org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.0.0"
     compileOnly libs.io.papermc.paper.paper.api
     compileOnly libs.com.samjakob.spigui
     compileOnly libs.dev.jorel.commandapi.bukkit.shade.mojang.mapped

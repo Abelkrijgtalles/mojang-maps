@@ -1,5 +1,5 @@
 /*
- * MojangMaps
+ * MojangMaps.test
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,6 @@
 
 package nl.abelkrijgtalles.MojangMaps.util.object;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.WorldMock;
 import java.util.List;
 import nl.abelkrijgtalles.MojangMaps.MojangMaps;
 import nl.abelkrijgtalles.MojangMaps.util.file.NodesConfigUtil;
@@ -29,6 +26,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.world.WorldMock;
 
 class LocationUtilTest {
 
