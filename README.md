@@ -1,5 +1,7 @@
 # Mojang Maps
 
+## Status: I really don't know what I'm going to do. It's been dead since February. Maybe I'll make a cross-platform & cross-version rewrite, or maybe I'll leave it to die.
+
 A Google Maps like navigation system for Minecraft.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue?style=for-the-badge&logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=W79VLY89H4XRY)
