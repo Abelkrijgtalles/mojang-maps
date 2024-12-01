@@ -30,9 +30,6 @@ plugins {
 
     // Architectury is used here only as a replacement for forge's own loom
     id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
-
-    // Modpublisher: publish to Github, Modrinth and Curseforge in one go
-    id "com.hypherionmc.modutils.modpublisher" version "2.1.4"
 }
 
 
@@ -212,7 +209,6 @@ subprojects { p ->
     apply plugin: "com.github.johnrengelman.shadow"
     if (isMinecraftSubProject) {
         apply plugin: "systems.manifold.manifold-gradle-plugin"
-        apply plugin: "com.hypherionmc.modutils.modpublisher"
     }
 
     // Apply forge's loom
@@ -317,17 +313,20 @@ subprojects { p ->
         configurations = [project.configurations.shadowMe]
         if (isMinecraftSubProject && p != project(":common")) {
             configurations.push(project.configurations.shadowCommon) // Shadow the common subproject
-            //FIXME relocate "de.the_build_craft.example_mod.common", "loaderCommon.${p.name}.de.the_build_craft.example_mod.common" // Move the loader files to a different location
+            //FIXME relocate "de.the_build_craft.mojang_maps.common", "loaderCommon.${p.name}.de.the_build_craft.mojang_maps.common" // Move the loader files to a different location
 
             if (findProject(":fabricLike") && p != project(":fabricLike")) {
                 configurations.push(project.configurations.shadowFabricLike) // Shadow the fabricLike subproject
-                //FIXME relocate "de.the_build_craft.example_mod.fabriclike", "loaderCommon.${p.name}.de.the_build_craft.example_mod.fabriclike" // Move the loader files to a different location
+                //FIXME relocate "de.the_build_craft.mojang_maps.fabriclike", "loaderCommon.${p.name}.de.the_build_craft.mojang_maps.fabriclike" // Move the loader files to a different location
             }
         }
         def librariesLocation = rootProject.mod_id + ".libraries"
 
         // Example Library to relocate
         //relocate "org.lwjgl.system.jawt", "${librariesLocation}.lwjgl.system.jawt"
+
+        exclude "assets/${mod_id}/icon.svg"
+        exclude "assets/${mod_id}/favicon.ico"
 
         mergeServiceFiles()
     }
@@ -424,8 +423,8 @@ subprojects { p ->
         // ==================== Delete un-needed files ====================
         exclude rootProject.mod_id + ".fabricLike.mixins.json" // This isnt required atm, but we will be using it later
 
-//        exclude "*.example_mod.accesswidener"
-////        include "${accessWidenerVersion}.example_mod.accesswidener"
+//        exclude "*.mojang_maps.accesswidener"
+////        include "${accessWidenerVersion}.mojang_maps.accesswidener"
 
         // Jank solution to remove all unused accesswideners
         // The line above would work..., except that (neo)forge (well, mainly architectury) requires the original accesswidener file, meaning we require this jank solution to keep it

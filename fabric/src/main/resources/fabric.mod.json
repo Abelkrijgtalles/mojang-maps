@@ -7,7 +7,6 @@
   "authors": ${
   authors
 },
-
 "contact": {
 "homepage": "${homepage}",
 "sources": "${source}",
