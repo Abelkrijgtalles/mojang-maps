@@ -1,5 +1,5 @@
 /*
- * MojangMaps
+ * MojangMaps.main
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,13 +39,26 @@ public class NewGraph<T extends NewGraphNode> {
         return nodes.stream()
                 .filter(node -> node.getLocation().equals(location))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Couldn't find node with location: " + location.serialize()));
+                .orElseThrow(() -> debugStuff(location));
     }
 
     public Set<T> getConnections(T node) {
+
         return connections.get(node.getLocation()).stream()
                 .map(this::getNode)
                 .collect(Collectors.toSet());
+    }
+
+    public IllegalArgumentException debugStuff(Location location) {
+
+        for (T node : nodes) {
+            if (node == null) continue;
+            System.out.println(node.getLocation().serialize());
+            System.out.println(node.getLocation().equals(location));
+
+        }
+        System.out.println("---");
+        return new IllegalArgumentException("Couldn't find node with location: " + location.serialize());
     }
 
 }
