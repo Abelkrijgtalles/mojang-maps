@@ -1,0 +1,47 @@
+/*
+ * MojangMaps
+ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id "org.spongepowered.gradle.vanilla" version "0.2.1-SNAPSHOT"
+}
+
+minecraft {
+    accessWideners(project(":common").file("src/main/resources/${accessWidenerVersion}.${rootProject.mod_id}.accesswidener"))
+    version(rootProject.minecraft_version)
+}
+
+dependencies {
+    // So mixins can be written in common
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+}
+
+
+publishing {
+    publications {
+        mavenCommon(MavenPublication) {
+            artifactId = rootProject.mod_id
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+    }
+}
+
