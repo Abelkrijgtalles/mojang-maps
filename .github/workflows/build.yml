@@ -13,7 +13,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Test with Maven
-        run: mvn test
-      - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots package
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build Mojang Maps for all versions
+        run: ./buildAll
