@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
+import net.minecraft.DetectedVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,37 +26,10 @@ public class MojangMaps {
 
     public static final String MOD_ID = "mojang_maps";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-    public static String MINECRAFT_VERSION = getMinecraftVersion();
 
     public static void init() {
 
-        LOGGER.info("Running Mojang Maps on Minecraft version {}.", MINECRAFT_VERSION);
-
-    }
-
-    private static String getMinecraftVersion() {
-
-        #if MC_VER == MC_1_16_5
-        return "1.16.4-1.16.5";
-        #elif MC_VER == MC_1_17_1
-        return "1.17-1.17.1";
-        #elif MC_VER == MC_1_18_2
-        return "1.18.2";
-        #elif MC_VER == MC_1_19_2
-        return "1.19.2";
-        #elif MC_VER == MC_1_19_4
-        return "1.19.4";
-        #elif MC_VER == MC_1_20_1
-        return "1.20-1.20.1";
-        #elif MC_VER == MC_1_20_2
-        return "1.20.2";
-        #elif MC_VER == MC_1_20_4
-        return "1.20.3-1.20.4";
-        #elif MC_VER == MC_1_20_6
-        return "1.20.5-1.20.6";
-        #elif MC_VER == MC_1_21_0
-        return "1.21-1.21.1";
-        #endif
+        LOGGER.info("Running Mojang Maps on Minecraft version {}.", DetectedVersion.tryDetectVersion().getName());
 
     }
 
