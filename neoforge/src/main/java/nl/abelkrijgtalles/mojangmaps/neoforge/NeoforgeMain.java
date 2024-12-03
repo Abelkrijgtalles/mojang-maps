@@ -27,7 +27,7 @@ public class NeoforgeMain {
 
     public NeoforgeMain() {
 
-        MojangMaps.init();
+        MojangMaps.init(new LoaderInfoNeoforge());
     }
 
 }

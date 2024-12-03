@@ -279,6 +279,8 @@ subprojects { p ->
         // Manifold
         if (isMinecraftSubProject) {
             annotationProcessor("systems.manifold:manifold-preprocessor:${rootProject.manifold_version}")
+            testAnnotationProcessor("systems.manifold:manifold-preprocessor:${rootProject.manifold_version}")
+            testImplementation project(":common")
         }
 
         /////// ...left here as examples
@@ -306,6 +308,10 @@ subprojects { p ->
                 shadowFabricLike(project(path: ":fabricLike")) { transitive false }
             }
         }
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
 

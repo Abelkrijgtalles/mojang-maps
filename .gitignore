@@ -42,3 +42,5 @@ build.properties
 accesstransformer.cfg
 desktop.ini
 cache
+fabric/logs
+fabric/config

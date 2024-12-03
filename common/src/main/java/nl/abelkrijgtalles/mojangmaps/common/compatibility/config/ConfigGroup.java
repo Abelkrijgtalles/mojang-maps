@@ -1,5 +1,5 @@
 /*
- * mojang_maps.fabric.main
+ * mojang_maps.common.main
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.fabric;
+package nl.abelkrijgtalles.mojangmaps.common.compatibility.config;
 
-import net.fabricmc.api.ModInitializer;
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import java.util.List;
 
-public class FabricMain implements ModInitializer {
+public class ConfigGroup extends ConfigObject {
 
-    @Override
-    public void onInitialize() {
+    private final String name;
+    private final List<ConfigObject> children;
 
-        MojangMaps.init(new LoaderInfoFabric());
+    public ConfigGroup(String name, String comment, List<ConfigObject> children) {
+
+        super(comment);
+
+        this.name = name;
+        this.children = children;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public List<ConfigObject> getChildren() {
+
+        return children;
     }
 
 }

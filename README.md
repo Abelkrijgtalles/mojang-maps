@@ -11,7 +11,8 @@ View more information on [the Mojang Maps wiki](https://mojangmaps.abelkrijgtall
 
 # Roadmap
 
-Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl) and [#14](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14).
+Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl)
+and [#14](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14).
 
 # Commands
 
@@ -45,9 +46,12 @@ Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl) and [#14]
 - https://bstats.org/plugin/bukkit/Mojang%20Maps/19295, The bStats of Mojang Maps.
 - https://mojangmaps.abelkrijgtalles.nl, The wiki of Mojang Maps.
 
-# Credits
+# Credits/Code I used
 
-- [SamJakob](https://github.com/SamJakob) and [all these people](https://github.com/SamJakob/SpiGUI/graphs/contributors)
-  for creating SpiGUI.
+- [thebuildcraft](https://github.com/thebuildcraft) which made a multi-platform & multi-version mod template (based on
+  scripts from [Distant Horizons](https://gitlab.com/jeseibel/distant-horizons)). I did delete a few things for my
+  smooth brain, but it's still largely based on this template.
+- [Simple Config](https://github.com/magistermaks/fabric-simplelibs/tree/master/simple-config) made
+  by [magistermaks](https://github.com/magistermaks).
 
 > NOT AN OFFICIAL MINECRAFT/MOJANG PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.

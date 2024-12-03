@@ -18,7 +18,9 @@
 
 package nl.abelkrijgtalles.mojangmaps.forge;
 
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
 @Mod(MojangMaps.MOD_ID)
@@ -26,7 +28,9 @@ public class ForgeMain {
 
     public ForgeMain() {
 
-        MojangMaps.init();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.CONFIG);
+
+        MojangMaps.init(new LoaderInfoForge());
     }
 
 }
