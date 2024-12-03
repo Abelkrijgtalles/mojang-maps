@@ -49,3 +49,5 @@ Moved to [the Mojang Maps wiki](https://mojangmaps.abelkrijgtalles.nl) and [#14]
 
 - [SamJakob](https://github.com/SamJakob) and [all these people](https://github.com/SamJakob/SpiGUI/graphs/contributors)
   for creating SpiGUI.
+
+> NOT AN OFFICIAL MINECRAFT/MOJANG PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.
