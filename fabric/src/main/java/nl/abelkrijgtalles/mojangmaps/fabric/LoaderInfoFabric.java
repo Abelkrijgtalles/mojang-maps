@@ -21,17 +21,17 @@ package nl.abelkrijgtalles.mojangmaps.fabric;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigGroup;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigObject;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.YamlLikeConfigGenerator;
 
 public class LoaderInfoFabric implements LoaderInfo {
 
-    private SimpleConfig.Wrapper config;
+    private final SimpleConfig.Wrapper config;
+    private final YamlLikeConfigGenerator yamlLikeConfigGenerator;
 
     public LoaderInfoFabric() {
 
         config = new SimpleConfig.Wrapper("mojang_maps", this::defaultConfig);
+        yamlLikeConfigGenerator = new YamlLikeConfigGenerator(":", null, ": ", "# ");
 
     }
 
@@ -43,75 +43,7 @@ public class LoaderInfoFabric implements LoaderInfo {
 
     public String defaultConfig(String filename) {
 
-        StringBuilder config = new StringBuilder();
-
-        for (ConfigObject object : MojangMaps.getDefaultConfig()) {
-
-            if (object instanceof ConfigItem item) {
-
-                config.append(renderItem(item));
-
-            } else {
-                ConfigGroup group = (ConfigGroup) object;
-                config.append(renderGroup(group));
-            }
-
-        }
-
-        return config.toString();
-
-    }
-
-    private String renderItem(ConfigItem item) {
-
-        StringBuilder itemString = new StringBuilder();
-
-        if (!item.getComment().isEmpty()) {
-            itemString.append("# ");
-            itemString.append(item.getComment());
-            itemString.append('\n');
-        }
-        itemString.append(item.getKey());
-        itemString.append(": ");
-        itemString.append(item.getValue());
-        itemString.append("\n\n");
-
-        return itemString.toString();
-
-    }
-
-    private String renderGroup(ConfigGroup group) {
-
-        StringBuilder groupString = new StringBuilder();
-
-        if (!group.getComment().isEmpty()) {
-            groupString.append("# ");
-            groupString.append(group.getComment());
-            groupString.append('\n');
-        }
-        groupString.append(group.getName());
-        groupString.append(":");
-        groupString.append("\n\n");
-
-        for (ConfigObject object : group.getChildren()) {
-
-            if (object instanceof ConfigItem item) {
-
-                groupString.append('\t');
-                groupString.append(renderItem(item));
-
-            } else {
-
-                ConfigGroup nestedGroup = (ConfigGroup) object;
-                groupString.append("\t");
-                groupString.append(renderGroup(nestedGroup));
-                groupString.append("\n\n");
-
-            }
-
-        }
-
-        return groupString.toString();
+        return yamlLikeConfigGenerator.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 
