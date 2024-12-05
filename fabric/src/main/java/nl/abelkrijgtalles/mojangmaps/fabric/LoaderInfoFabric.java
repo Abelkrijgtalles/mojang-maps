@@ -26,12 +26,10 @@ import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.YamlLikeConfigG
 public class LoaderInfoFabric implements LoaderInfo {
 
     private final SimpleConfig.Wrapper config;
-    private final YamlLikeConfigGenerator yamlLikeConfigGenerator;
 
     public LoaderInfoFabric() {
 
         config = new SimpleConfig.Wrapper("mojang_maps", this::defaultConfig);
-        yamlLikeConfigGenerator = new YamlLikeConfigGenerator(":", null, ": ", "# ");
 
     }
 
@@ -43,7 +41,7 @@ public class LoaderInfoFabric implements LoaderInfo {
 
     public String defaultConfig(String filename) {
 
-        return yamlLikeConfigGenerator.renderConfig(MojangMaps.getDefaultConfig());
+        return YamlLikeConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 
