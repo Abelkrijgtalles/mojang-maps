@@ -21,7 +21,6 @@ package nl.abelkrijgtalles.mojangmaps.common;
 import java.util.List;
 import net.minecraft.DetectedVersion;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigGroup;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigItem;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigObject;
 import org.apache.logging.log4j.LogManager;
@@ -38,18 +37,15 @@ public class MojangMaps {
         MojangMaps.loaderInfo = loaderInfo;
 
         LOGGER.info("Running Mojang Maps on Minecraft version {}.", DetectedVersion.tryDetectVersion().getName());
+        LOGGER.info(loaderInfo.getConfig().get("message"));
 
     }
 
     public static List<ConfigObject> getDefaultConfig() {
 
         return List.of(
-                new ConfigItem("test", "true", "Idk or something"),
-                new ConfigGroup("CoolGroup", "Very cool", List.of(
-                        new ConfigItem("cool", "false", ""),
-                        new ConfigGroup("idk", "Hello how are you?", List.of(
-                                new ConfigItem("name", "Mojang maps", "pls no change")
-                        )))));
+                new ConfigItem("message", "Hello you are cool :)", "Very cool")
+        );
     }
 
 }
