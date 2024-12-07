@@ -111,6 +111,7 @@ public class SpongeConfig {
         public Wrapper(Path configPath, String defaultConfig) {
 
             config = new SpongeConfig(configPath, defaultConfig);
+            config.loadConfig();
 
         }
 

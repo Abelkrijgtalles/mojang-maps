@@ -43,6 +43,7 @@ public class SpongeMain {
     @Listener
     public void onServerStart(final StartedEngineEvent<Server> event) {
 
+        MojangMaps.LOGGER.info(defaultConfig);
         MojangMaps.init(new LoaderInfoSponge(defaultConfig));
 
     }

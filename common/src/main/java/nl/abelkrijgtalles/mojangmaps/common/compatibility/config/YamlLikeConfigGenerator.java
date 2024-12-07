@@ -117,7 +117,7 @@ public class YamlLikeConfigGenerator {
 
         // adding toml in the future could be a nice thing, wouldn't know why I would add it, + it has to change more stuff and makes it even more abstract.
         public static final YamlLikeConfigGenerator PURE_YAML = new YamlLikeConfigGenerator(":", null, ": ", "# ");
-        public static final YamlLikeConfigGenerator SPONGE = new YamlLikeConfigGenerator("{", "}", " = ", "# ");
+        public static final YamlLikeConfigGenerator SPONGE = new YamlLikeConfigGenerator(" {", "}", " = ", "# ");
 
     }
 
