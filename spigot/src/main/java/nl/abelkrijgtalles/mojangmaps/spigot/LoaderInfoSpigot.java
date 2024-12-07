@@ -19,17 +19,28 @@
 package nl.abelkrijgtalles.mojangmaps.spigot;
 
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import org.bukkit.plugin.java.JavaPlugin;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.YamlLikeConfigGenerator;
 
-public class SpigotPlugin extends JavaPlugin {
+public class LoaderInfoSpigot implements LoaderInfo {
 
-    public static JavaPlugin Instance;
+    private final SpigotConfig config;
+
+    public LoaderInfoSpigot() {
+
+        this.config = new SpigotConfig(getDefaultConfig());
+    }
 
     @Override
-    public void onEnable() {
+    public Config getConfig() {
 
-        Instance = this;
-        MojangMaps.init(new LoaderInfoSpigot());
+        return config;
+    }
+
+    private String getDefaultConfig() {
+
+        return YamlLikeConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 
