@@ -18,32 +18,30 @@
 
 package nl.abelkrijgtalles.mojangmaps.sponge;
 
-import com.google.inject.Inject;
 import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import org.spongepowered.api.Server;
-import org.spongepowered.api.config.DefaultConfig;
-import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.loader.ConfigurationLoader;
-import org.spongepowered.plugin.builtin.jvm.Plugin;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.YamlLikeConfigGenerator;
 
-@Plugin(MojangMaps.MOD_ID)
-public class SpongeMain {
+public class LoaderInfoSponge implements LoaderInfo {
 
-    @Inject
-    @DefaultConfig(sharedRoot = true)
-    private Path defaultConfig;
+    private final SpongeConfig.Wrapper config;
 
-    @Inject
-    @DefaultConfig(sharedRoot = true)
-    private ConfigurationLoader<CommentedConfigurationNode> configLoader;
+    public LoaderInfoSponge(Path configPath) {
 
-    @Listener
-    public void onServerStart(final StartedEngineEvent<Server> event) {
+        config = new SpongeConfig.Wrapper(configPath, getDefaultConfig());
+    }
 
-        MojangMaps.init(new LoaderInfoSponge(defaultConfig));
+    @Override
+    public Config getConfig() {
+
+        return null;
+    }
+
+    private String getDefaultConfig() {
+
+        return YamlLikeConfigGenerator.Defaults.SPONGE.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 

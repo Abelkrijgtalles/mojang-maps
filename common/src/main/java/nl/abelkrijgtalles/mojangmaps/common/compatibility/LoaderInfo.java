@@ -22,6 +22,11 @@ import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
 
 public interface LoaderInfo {
 
+    /**
+     * Returns the {@link Config}.
+     *
+     * @return The Mojang Maps {@link Config}
+     */
     Config getConfig();
 
 }

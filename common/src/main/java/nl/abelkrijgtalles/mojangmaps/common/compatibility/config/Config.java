@@ -20,6 +20,12 @@ package nl.abelkrijgtalles.mojangmaps.common.compatibility.config;
 
 public interface Config {
 
+    /**
+     * Gets a value from the config.
+     *
+     * @param key The key to get the value from. Seperated with a dot when accessing in a group.
+     * @return The value of the key in the config. Returns null if it doesn't exist.
+     */
     String get(String key);
 
 }
