@@ -18,21 +18,25 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.compatibility.config;
 
+import java.util.ArrayList;
 import java.util.List;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.util.RecursiveItem;
 
 public class YamlLikeConfigGenerator {
 
     // all include needed spaces
     private final String groupDefineBeginSymbol;
     private final String groupDefineEndSymbol;
+    private final Boolean groupDotNotation;
     private final String valueDefineSymbol;
     private final String commentDefineSymbol;
 
-    public YamlLikeConfigGenerator(String groupDefineBeginSymbol, String groupDefineEndSymbol, String valueDefineSymbol, String commentDefineSymbol) {
+    public YamlLikeConfigGenerator(String groupDefineBeginSymbol, String groupDefineEndSymbol, Boolean groupDotNotation, String valueDefineSymbol, String commentDefineSymbol) {
 
         this.groupDefineBeginSymbol = groupDefineBeginSymbol;
         this.groupDefineEndSymbol = groupDefineEndSymbol;
+        this.groupDotNotation = groupDotNotation;
         this.valueDefineSymbol = valueDefineSymbol;
         this.commentDefineSymbol = commentDefineSymbol;
     }
@@ -45,7 +49,7 @@ public class YamlLikeConfigGenerator {
 
             if (object instanceof ConfigItem item) {
 
-                configString.append(renderItem(item));
+                configString.append(renderItem(item, true));
 
             } else {
                 ConfigGroup group = (ConfigGroup) object;
@@ -58,11 +62,11 @@ public class YamlLikeConfigGenerator {
 
     }
 
-    private String renderItem(ConfigItem item) {
+    private String renderItem(ConfigItem item, boolean includeComment) {
 
         StringBuilder itemString = new StringBuilder();
 
-        if (!item.getComment().isEmpty()) {
+        if (!item.getComment().isEmpty() && includeComment) {
             itemString.append(commentDefineSymbol);
             itemString.append(item.getComment());
             itemString.append('\n');
@@ -77,6 +81,8 @@ public class YamlLikeConfigGenerator {
     }
 
     private String renderGroup(ConfigGroup group) {
+
+        if (groupDotNotation) return renderGroupWithDotAnnotation(group);
 
         StringBuilder groupString = new StringBuilder();
 
@@ -94,7 +100,7 @@ public class YamlLikeConfigGenerator {
             if (object instanceof ConfigItem item) {
 
                 groupString.append('\t');
-                groupString.append(renderItem(item));
+                groupString.append(renderItem(item, true));
 
             } else {
 
@@ -113,11 +119,76 @@ public class YamlLikeConfigGenerator {
 
     }
 
+    private String renderGroupWithDotAnnotation(ConfigGroup group) {
+
+        StringBuilder groupString = new StringBuilder();
+        List<RecursiveItem> allNestedChildren = getAllNestedChildrenFromGroup(group, new ArrayList<>());
+
+        for (RecursiveItem item : allNestedChildren) {
+
+            if (item.additionalData() instanceof String comments && !comments.isEmpty()) {
+                groupString.append(comments);
+                groupString.append('\n');
+
+            }
+
+            groupString.append(item);
+            groupString.append(valueDefineSymbol);
+            groupString.append(item.value());
+            groupString.append("\n\n");
+
+        }
+
+        return groupString.toString();
+
+    }
+
+    private List<RecursiveItem> getAllNestedChildrenFromGroup(ConfigGroup group, List<String> path) {
+
+        List<RecursiveItem> children = new ArrayList<>();
+        boolean commentAdded = false;
+        path.add(group.getName());
+
+        for (ConfigObject object : group.getChildren()) {
+
+            if (object instanceof ConfigItem item) {
+
+                StringBuilder comment = new StringBuilder();
+                if (!commentAdded && !group.getComment().isEmpty()) {
+
+                    comment.append(commentDefineSymbol);
+                    comment.append(group.getComment());
+
+                    if (!item.getComment().isEmpty()) {
+                        comment.append('\n');
+                        comment.append(commentDefineSymbol);
+                        comment.append(item.getComment());
+                    }
+
+                    commentAdded = true;
+
+                }
+
+                children.add(new RecursiveItem(item.getKey(), item.getValue(), comment.toString(), path));
+
+            } else {
+
+                ConfigGroup nestedGroup = (ConfigGroup) object;
+                children.addAll(getAllNestedChildrenFromGroup(nestedGroup, path));
+
+            }
+
+        }
+
+        return children;
+    }
+
     public static class Defaults {
 
         // adding toml in the future could be a nice thing, wouldn't know why I would add it, + it has to change more stuff and makes it even more abstract.
-        public static final YamlLikeConfigGenerator PURE_YAML = new YamlLikeConfigGenerator(":", null, ": ", "# ");
-        public static final YamlLikeConfigGenerator SPONGE = new YamlLikeConfigGenerator(" {", "}", " = ", "# ");
+        public static final YamlLikeConfigGenerator PURE_YAML = new YamlLikeConfigGenerator(":", null, false, ": ", "# ");
+        public static final YamlLikeConfigGenerator SPONGE = new YamlLikeConfigGenerator(" {", "}", false, " = ", "# ");
+        public static final YamlLikeConfigGenerator FABRIC = new YamlLikeConfigGenerator(null, null, true, " = ", "# ");
 
     }
 

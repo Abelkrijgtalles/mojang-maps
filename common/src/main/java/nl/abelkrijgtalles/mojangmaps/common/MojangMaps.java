@@ -46,9 +46,10 @@ public class MojangMaps {
         return List.of(
                 new ConfigItem("test", "true", "Idk or something"),
                 new ConfigGroup("CoolGroup", "Very cool", List.of(
-                        new ConfigItem("cool", "false", "")
-                ))
-        );
+                        new ConfigItem("cool", "false", ""),
+                        new ConfigGroup("idk", "Hello how are you?", List.of(
+                                new ConfigItem("name", "Mojang maps", "pls no change")
+                        )))));
     }
 
 }

@@ -41,7 +41,7 @@ public class LoaderInfoFabric implements LoaderInfo {
 
     private String defaultConfig(String filename) {
 
-        return YamlLikeConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
+        return YamlLikeConfigGenerator.Defaults.FABRIC.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 
