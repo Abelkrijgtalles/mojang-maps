@@ -26,7 +26,7 @@ import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
 
 public class SpigotConfig implements Config {
 
-    File defaultConfigPath = new File(SpigotPlugin.Instance.getDataFolder(), "config.yml");
+    File defaultConfigPath = new File(MojangMapsSpigot.Instance.getDataFolder(), "config.yml");
 
     public SpigotConfig(String defaultConfig) {
 
@@ -37,9 +37,9 @@ public class SpigotConfig implements Config {
     private void createConfig(String defaultConfig) {
 
         try {
-            Files.createDirectories(SpigotPlugin.Instance.getDataPath());
+            Files.createDirectories(MojangMapsSpigot.Instance.getDataPath());
         } catch (IOException e) {
-            MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(SpigotPlugin.Instance.getDataFolder()));
+            MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(MojangMapsSpigot.Instance.getDataFolder()));
             throw new RuntimeException(e);
         }
         try {
@@ -60,7 +60,7 @@ public class SpigotConfig implements Config {
     @Override
     public String get(String key) {
 
-        return (String) SpigotPlugin.Instance.getConfig().get(key);
+        return (String) MojangMapsSpigot.Instance.getConfig().get(key);
 
     }
 

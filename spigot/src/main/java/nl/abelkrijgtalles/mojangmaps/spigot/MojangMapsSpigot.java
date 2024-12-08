@@ -21,7 +21,7 @@ package nl.abelkrijgtalles.mojangmaps.spigot;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SpigotPlugin extends JavaPlugin {
+public class MojangMapsSpigot extends JavaPlugin {
 
     public static JavaPlugin Instance;
 

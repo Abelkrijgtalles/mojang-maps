@@ -30,7 +30,7 @@ import org.spongepowered.configurate.loader.ConfigurationLoader;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
 @Plugin(MojangMaps.MOD_ID)
-public class SpongeMain {
+public class MojangMapsSponge {
 
     @Inject
     @DefaultConfig(sharedRoot = true)

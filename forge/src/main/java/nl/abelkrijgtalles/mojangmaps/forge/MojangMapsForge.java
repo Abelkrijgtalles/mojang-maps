@@ -24,9 +24,9 @@ import net.minecraftforge.fml.config.ModConfig;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
 @Mod(MojangMaps.MOD_ID)
-public class ForgeMain {
+public class MojangMapsForge {
 
-    public ForgeMain() {
+    public MojangMapsForge() {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.CONFIG);
 

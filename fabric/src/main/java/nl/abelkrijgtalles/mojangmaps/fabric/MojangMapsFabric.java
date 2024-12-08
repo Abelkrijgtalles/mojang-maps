@@ -21,7 +21,7 @@ package nl.abelkrijgtalles.mojangmaps.fabric;
 import net.fabricmc.api.ModInitializer;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
-public class FabricMain implements ModInitializer {
+public class MojangMapsFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {

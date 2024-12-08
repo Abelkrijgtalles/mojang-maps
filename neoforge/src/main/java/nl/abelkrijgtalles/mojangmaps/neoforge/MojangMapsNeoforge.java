@@ -23,9 +23,9 @@ import net.neoforged.fml.common.Mod;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
 @Mod(MojangMaps.MOD_ID)
-public class NeoforgeMain {
+public class MojangMapsNeoforge {
 
-    public NeoforgeMain() {
+    public MojangMapsNeoforge() {
 
         MojangMaps.init(new LoaderInfoNeoforge());
     }
