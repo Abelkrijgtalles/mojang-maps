@@ -34,9 +34,15 @@ public class LoaderInfoSponge implements LoaderInfo {
     }
 
     @Override
+    public boolean isBstatsNative() {
+
+        return false;
+    }
+
+    @Override
     public Config getConfig() {
 
-        return null;
+        return config;
     }
 
     private String getDefaultConfig() {

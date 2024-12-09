@@ -81,6 +81,10 @@ dependencies {
         modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
     }
 
+    shadowMe(project(":bstats-metrics:base")) {
+        transitive = true
+    }
+
     //use addModJar() to include a library
     //addModJar(fabricApi.module("fabric-lifecycle-events-v1", rootProject.fabric_api_version))
 

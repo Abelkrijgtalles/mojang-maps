@@ -324,7 +324,15 @@ subprojects { p ->
             if (findProject(":fabricLike") && p != project(":fabricLike")) {
                 configurations.push(project.configurations.shadowFabricLike) // Shadow the fabricLike subproject
                 //FIXME relocate "de.the_build_craft.mojang_maps.fabriclike", "loaderCommon.${p.name}.de.the_build_craft.mojang_maps.fabriclike" // Move the loader files to a different location
+
             }
+
+            if (p == project(":fabric") || p == project(":forge") || p == project(":neoforge")) {
+
+                relocate "org.bstats", "nl.abelkrijgtalles.mojangmaps.lib.bstats"
+
+            }
+
         }
         def librariesLocation = rootProject.mod_id + ".libraries"
 

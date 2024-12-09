@@ -279,6 +279,12 @@ public class SimpleConfig {
             return simpleConfig.get(key);
         }
 
+        @Override
+        public Boolean getBoolean(String key) {
+
+            return Boolean.valueOf(get(key));
+        }
+
     }
 
 }

@@ -23,6 +23,11 @@ import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
 public interface LoaderInfo {
 
     /**
+     * Whether bstats is supported on the loader/server software. If not, a bstats group will be added to the configuration file.
+     */
+    boolean isBstatsNative();
+
+    /**
      * Returns the {@link Config}.
      *
      * @return The Mojang Maps {@link Config}

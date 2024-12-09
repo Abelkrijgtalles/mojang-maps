@@ -31,6 +31,12 @@ public class LoaderInfoNeoforge implements LoaderInfo {
     }
 
     @Override
+    public boolean isBstatsNative() {
+
+        return false;
+    }
+
+    @Override
     public Config getConfig() {
 
         return config;

@@ -33,6 +33,12 @@ public class LoaderInfoSpigot implements LoaderInfo {
     }
 
     @Override
+    public boolean isBstatsNative() {
+
+        return true;
+    }
+
+    @Override
     public Config getConfig() {
 
         return config;

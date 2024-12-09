@@ -116,6 +116,11 @@ for (loader in ((String) gradle.builds_for).split(",")) {
     def loaderName = loader.strip() // Strip it in case a space is added before or after the comma
     println "Adding loader " + loaderName
     include(loaderName)
+
+    if (loader == "fabric" || loader == "forge" || loader == "neoforge") {
+        include "bstats-metrics:base"
+    }
+
 }
 
 rootProject.name = "mojang_maps"

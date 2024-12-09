@@ -1,0 +1,3 @@
+[submodule "bstats-metrics"]
+	path = bstats-metrics
+	url = https://github.com/Bastian/bstats-metrics

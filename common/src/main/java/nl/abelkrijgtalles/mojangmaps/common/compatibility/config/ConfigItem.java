@@ -31,6 +31,14 @@ public class ConfigItem extends ConfigObject {
         this.value = value;
     }
 
+    public ConfigItem(String key, String value) {
+
+        super("");
+
+        this.key = key;
+        this.value = value;
+    }
+
     public String getKey() {
 
         return key;

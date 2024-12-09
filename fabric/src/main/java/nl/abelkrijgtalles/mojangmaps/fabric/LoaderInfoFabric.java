@@ -34,6 +34,12 @@ public class LoaderInfoFabric implements LoaderInfo {
     }
 
     @Override
+    public boolean isBstatsNative() {
+
+        return false;
+    }
+
+    @Override
     public Config getConfig() {
 
         return config;

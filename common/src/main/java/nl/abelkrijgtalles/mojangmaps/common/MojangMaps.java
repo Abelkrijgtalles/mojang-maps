@@ -18,9 +18,12 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.minecraft.DetectedVersion;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigGroup;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigItem;
 import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigObject;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +33,12 @@ public class MojangMaps {
 
     public static final String MOD_ID = "mojang_maps";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    private static final String bstatsMessage = """
+            bStats (https://bStats.org) collects some basic information for plugin authors, like how
+            many people use their plugin and their total player count. It's recommended to keep bStats
+            enabled, but if you're not comfortable with this, you can turn this setting off. There is no
+            performance penalty associated with having metrics enabled, and data sent to bStats is fully
+            anonymous.""";
     public static LoaderInfo loaderInfo;
 
     public static void init(LoaderInfo loaderInfo) {
@@ -43,9 +52,24 @@ public class MojangMaps {
 
     public static List<ConfigObject> getDefaultConfig() {
 
-        return List.of(
-                new ConfigItem("message", "Hello you are cool :)", "Very cool")
-        );
+        List<ConfigObject> config = new ArrayList<>(List.of(
+                new ConfigItem("message", "Hello you are cool :)", "Very cool")));
+
+        if (!loaderInfo.isBstatsNative()) {
+
+            config.addAll(0, List.of(
+                    new ConfigGroup("bstats", bstatsMessage, List.of(
+                            new ConfigItem("enabled", "true"),
+                            new ConfigItem("serverUuid", UUID.randomUUID().toString()),
+                            new ConfigItem("logFailedRequests", "false"),
+                            new ConfigItem("logSentData", "false"),
+                            new ConfigItem("logResponseData", "false")
+                    ))
+            ));
+
+        }
+
+        return config;
     }
 
 }

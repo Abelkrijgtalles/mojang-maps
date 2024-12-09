@@ -19,14 +19,27 @@
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
 public class MojangMapsFabric implements ModInitializer {
 
+    public static MinecraftServer SERVER;
+
     @Override
     public void onInitialize() {
 
-        MojangMaps.init(new LoaderInfoFabric());
+        LoaderInfoFabric loaderInfo = new LoaderInfoFabric();
+
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+
+            SERVER = server;
+            new Metrics(new LoaderInfoFabric(), 19295);
+
+        });
+
+        MojangMaps.init(loaderInfo);
     }
 
 }

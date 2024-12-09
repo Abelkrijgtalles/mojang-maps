@@ -28,4 +28,12 @@ public interface Config {
      */
     String get(String key);
 
+    /**
+     * Gets a boolean from the config.
+     *
+     * @param key The key to get the boolean from. Seperated with a dot when accessing in a group.
+     * @return The value of the key in the config. Returns null if it doesn't exist or isn't a boolean.
+     */
+    Boolean getBoolean(String key);
+
 }
