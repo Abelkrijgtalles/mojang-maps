@@ -1,5 +1,5 @@
 /*
- * mojang_maps.fabric
+ * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  */
 
 plugins {
-    id "fabric-loom" version "1.6-SNAPSHOT"
+    id "fabric-loom" version "1.9-SNAPSHOT"
 }
 
 loom {
