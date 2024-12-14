@@ -16,31 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.compatibility.config;
+package nl.abelkrijgtalles.mojangmaps.common.platform.config;
 
-import java.util.List;
+public class ConfigItem extends ConfigObject {
 
-public class ConfigGroup extends ConfigObject {
+    private final String key;
+    private final String value;
 
-    private final String name;
-    private final List<ConfigObject> children;
-
-    public ConfigGroup(String name, String comment, List<ConfigObject> children) {
+    public ConfigItem(String key, String value, String comment) {
 
         super(comment);
 
-        this.name = name;
-        this.children = children;
+        this.key = key;
+        this.value = value;
     }
 
-    public String getName() {
+    public String getKey() {
 
-        return name;
+        return key;
     }
 
-    public List<ConfigObject> getChildren() {
+    public String getValue() {
 
-        return children;
+        return value;
     }
 
 }

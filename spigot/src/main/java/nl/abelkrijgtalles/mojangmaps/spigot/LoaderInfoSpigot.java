@@ -19,9 +19,9 @@
 package nl.abelkrijgtalles.mojangmaps.spigot;
 
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.YamlLikeConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.YamlLikeConfigGenerator;
 
 public class LoaderInfoSpigot implements LoaderInfo {
 

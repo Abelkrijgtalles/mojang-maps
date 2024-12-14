@@ -20,9 +20,9 @@ package nl.abelkrijgtalles.mojangmaps.common;
 
 import java.util.List;
 import net.minecraft.DetectedVersion;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigObject;
+import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

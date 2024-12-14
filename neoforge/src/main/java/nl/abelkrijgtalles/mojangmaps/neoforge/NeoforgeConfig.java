@@ -21,10 +21,10 @@ package nl.abelkrijgtalles.mojangmaps.neoforge;
 import java.util.HashMap;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigGroup;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.ConfigObject;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigGroup;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
 
 public class NeoforgeConfig {
 

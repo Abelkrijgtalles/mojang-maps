@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 
 public class SpigotConfig implements Config {
 

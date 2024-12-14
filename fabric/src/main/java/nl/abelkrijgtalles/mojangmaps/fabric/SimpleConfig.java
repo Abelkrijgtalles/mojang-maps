@@ -1,5 +1,5 @@
 /*
- * mojang_maps.fabric.main
+ * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import net.fabricmc.loader.api.FabricLoader;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 
 public class SimpleConfig {
 

@@ -18,8 +18,8 @@
 
 package nl.abelkrijgtalles.mojangmaps.forge;
 
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 
 public class LoaderInfoForge implements LoaderInfo {
 

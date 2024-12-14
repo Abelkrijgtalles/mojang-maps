@@ -16,17 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.compatibility;
+package nl.abelkrijgtalles.mojangmaps.common.platform.config;
 
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
-
-public interface LoaderInfo {
+public interface Config {
 
     /**
-     * Returns the {@link Config}.
+     * Gets a value from the config.
      *
-     * @return The Mojang Maps {@link Config}
+     * @param key The key to get the value from. Seperated with a dot when accessing in a group.
+     * @return The value of the key in the config. Returns null if it doesn't exist.
      */
-    Config getConfig();
+    String get(String key);
 
 }

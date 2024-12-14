@@ -16,16 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.compatibility.config;
+package nl.abelkrijgtalles.mojangmaps.common.platform.config;
 
-public interface Config {
+import java.util.List;
 
-    /**
-     * Gets a value from the config.
-     *
-     * @param key The key to get the value from. Seperated with a dot when accessing in a group.
-     * @return The value of the key in the config. Returns null if it doesn't exist.
-     */
-    String get(String key);
+public class ConfigGroup extends ConfigObject {
+
+    private final String name;
+    private final List<ConfigObject> children;
+
+    public ConfigGroup(String name, String comment, List<ConfigObject> children) {
+
+        super(comment);
+
+        this.name = name;
+        this.children = children;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public List<ConfigObject> getChildren() {
+
+        return children;
+    }
 
 }

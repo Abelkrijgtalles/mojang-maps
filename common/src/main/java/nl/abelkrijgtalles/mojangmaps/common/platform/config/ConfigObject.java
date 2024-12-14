@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.compatibility.config;
+package nl.abelkrijgtalles.mojangmaps.common.platform.config;
 
 public class ConfigObject {
 

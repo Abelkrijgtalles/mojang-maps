@@ -1,5 +1,5 @@
 /*
- * mojang_maps.fabric.main
+ * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.compatibility.config.YamlLikeConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.YamlLikeConfigGenerator;
 
 public class LoaderInfoFabric implements LoaderInfo {
 
