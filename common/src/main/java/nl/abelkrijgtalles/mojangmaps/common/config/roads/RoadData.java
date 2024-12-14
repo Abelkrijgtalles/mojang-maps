@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.config.roads;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,6 +28,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.Deflater;
 import net.minecraft.core.Position;
 import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
@@ -64,7 +66,7 @@ public class RoadData {
 
         public void generateRoadData(List<Road> roads) {
 
-            List<Byte> bytes = new ArrayList<>(Arrays.asList(ArrayUtils.toObject(MESSAGE.getBytes(StandardCharsets.UTF_8))));
+            List<Byte> bytes = new ArrayList<>();
 
             bytes.add((byte) 0x01);
 
@@ -114,9 +116,23 @@ public class RoadData {
                     Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().createNewFile();
                 }
 
+                Deflater deflater = new Deflater();
+                deflater.setInput(byteArray);
+                deflater.finish();
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                while (!deflater.finished()) {
+
+                    int compressedSize = deflater.deflate(buffer);
+                    byteArrayOutputStream.write(buffer, 0, compressedSize);
+
+                }
+
                 OutputStream outputStream = new FileOutputStream(Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile());
-                outputStream.write(byteArray);
+                outputStream.write(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8), ArrayUtils.addAll(byteArrayOutputStream.toByteArray())));
                 outputStream.close();
+
             } catch (IOException e) {
                 MojangMaps.LOGGER.error("Couldn't generate roads.mmd.");
                 throw new RuntimeException(e);
