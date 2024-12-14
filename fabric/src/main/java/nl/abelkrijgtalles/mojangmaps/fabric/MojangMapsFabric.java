@@ -1,5 +1,5 @@
 /*
- * mojang_maps.fabric.main
+ * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify

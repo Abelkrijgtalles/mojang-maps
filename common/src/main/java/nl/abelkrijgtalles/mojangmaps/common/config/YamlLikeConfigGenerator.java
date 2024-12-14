@@ -16,11 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.platform.config;
+package nl.abelkrijgtalles.mojangmaps.common.config;
 
 import java.util.ArrayList;
 import java.util.List;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigGroup;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
+import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
 import nl.abelkrijgtalles.mojangmaps.common.util.RecursiveItem;
 
 public class YamlLikeConfigGenerator {

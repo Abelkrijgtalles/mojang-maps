@@ -20,9 +20,9 @@ package nl.abelkrijgtalles.mojangmaps.sponge;
 
 import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.config.YamlLikeConfigGenerator;
 import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.YamlLikeConfigGenerator;
 
 public class LoaderInfoSponge implements LoaderInfo {
 
