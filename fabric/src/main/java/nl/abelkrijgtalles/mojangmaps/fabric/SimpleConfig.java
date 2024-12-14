@@ -279,6 +279,12 @@ public class SimpleConfig {
             return simpleConfig.get(key);
         }
 
+        @Override
+        public Path getDataDirectory() {
+
+            return Path.of(String.valueOf(FabricLoader.getInstance().getConfigDir()), MojangMaps.MOD_ID);
+        }
+
     }
 
 }

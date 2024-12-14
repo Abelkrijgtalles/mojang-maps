@@ -1,5 +1,5 @@
 /*
- * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
+ * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.test
  * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.fabric;
+package nl.abelkrijgtalles.mojangmaps.common.config.roads;
 
-import net.fabricmc.api.ModInitializer;
+import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.fabric.MojangMapsFabric;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class MojangMapsFabric implements ModInitializer {
+public class RoadDataTest {
 
-    public static void init() {
+    @Test
+    void generateRoadData() {
 
-        MojangMaps.init(new LoaderInfoFabric());
+        MojangMaps.LOGGER.info("Generating the roads data in {}", Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toString());
+        RoadData.Generator generator = new RoadData.Generator();
+        generator.generateRoadData(RoadData.roads);
 
     }
 
-    @Override
-    public void onInitialize() {
+    @BeforeEach
+    void setup() {
 
-        init();
+        MojangMapsFabric.init();
+
     }
 
 }

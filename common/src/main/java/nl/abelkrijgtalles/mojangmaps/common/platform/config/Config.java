@@ -18,6 +18,8 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.platform.config;
 
+import java.nio.file.Path;
+
 public interface Config {
 
     /**
@@ -27,5 +29,10 @@ public interface Config {
      * @return The value of the key in the config. Returns null if it doesn't exist.
      */
     String get(String key);
+
+    /**
+     * @return The directory which contains all the data files for Mojang Maps.
+     */
+    Path getDataDirectory();
 
 }
