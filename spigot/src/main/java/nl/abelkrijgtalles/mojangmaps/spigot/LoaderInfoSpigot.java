@@ -26,10 +26,12 @@ import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 public class LoaderInfoSpigot implements LoaderInfo {
 
     private final SpigotConfig config;
+    private final boolean runningTests;
 
-    public LoaderInfoSpigot() {
+    public LoaderInfoSpigot(boolean runningTests) {
 
         this.config = new SpigotConfig(getDefaultConfig());
+        this.runningTests = runningTests;
     }
 
     @Override
@@ -42,6 +44,12 @@ public class LoaderInfoSpigot implements LoaderInfo {
 
         return YamlLikeConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
 
+    }
+
+    @Override
+    public boolean isRunningTests() {
+
+        return runningTests;
     }
 
 }

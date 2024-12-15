@@ -28,9 +28,9 @@ public class MojangMapsForge {
 
     public MojangMapsForge() {
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ForgeConfig.CONFIG);
 
-        MojangMaps.init(new LoaderInfoForge());
+        MojangMaps.init(new LoaderInfoForge(false));
     }
 
 }

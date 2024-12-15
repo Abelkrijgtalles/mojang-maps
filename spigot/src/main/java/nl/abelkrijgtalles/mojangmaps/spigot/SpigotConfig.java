@@ -21,6 +21,7 @@ package nl.abelkrijgtalles.mojangmaps.spigot;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 
@@ -62,6 +63,12 @@ public class SpigotConfig implements Config {
 
         return (String) MojangMapsSpigot.Instance.getConfig().get(key);
 
+    }
+
+    @Override
+    public Path getDataDirectory() {
+
+        return MojangMapsSpigot.Instance.getDataPath();
     }
 
 }

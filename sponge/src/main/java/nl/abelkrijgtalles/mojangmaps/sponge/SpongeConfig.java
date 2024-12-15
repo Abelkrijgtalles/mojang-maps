@@ -121,6 +121,12 @@ public class SpongeConfig {
             return config.getString(key, null);
         }
 
+        @Override
+        public Path getDataDirectory() {
+
+            return Path.of(config.configPath.getParent().toString(), MojangMaps.MOD_ID);
+        }
+
     }
 
 }

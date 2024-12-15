@@ -29,7 +29,7 @@ public class MojangMapsSpigot extends JavaPlugin {
     public void onEnable() {
 
         Instance = this;
-        MojangMaps.init(new LoaderInfoSpigot());
+        MojangMaps.init(new LoaderInfoSpigot(false));
 
     }
 

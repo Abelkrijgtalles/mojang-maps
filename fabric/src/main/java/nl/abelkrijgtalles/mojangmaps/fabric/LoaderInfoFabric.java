@@ -26,10 +26,12 @@ import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 public class LoaderInfoFabric implements LoaderInfo {
 
     private final SimpleConfig.Wrapper config;
+    private final boolean runningTests;
 
-    public LoaderInfoFabric() {
+    public LoaderInfoFabric(boolean runningTests) {
 
         config = new SimpleConfig.Wrapper("mojang_maps", this::defaultConfig);
+        this.runningTests = runningTests;
 
     }
 
@@ -37,6 +39,12 @@ public class LoaderInfoFabric implements LoaderInfo {
     public Config getConfig() {
 
         return config;
+    }
+
+    @Override
+    public boolean isRunningTests() {
+
+        return runningTests;
     }
 
     private String defaultConfig(String filename) {

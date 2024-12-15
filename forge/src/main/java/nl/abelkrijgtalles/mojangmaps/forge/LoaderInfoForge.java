@@ -24,16 +24,24 @@ import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 public class LoaderInfoForge implements LoaderInfo {
 
     private final Config config;
+    private final boolean runningTests;
 
-    public LoaderInfoForge() {
+    public LoaderInfoForge(boolean runningTests) {
 
         config = new ForgeConfig.Wrapper();
+        this.runningTests = runningTests;
     }
 
     @Override
     public Config getConfig() {
 
         return config;
+    }
+
+    @Override
+    public boolean isRunningTests() {
+
+        return runningTests;
     }
 
 }

@@ -19,15 +19,19 @@
 package nl.abelkrijgtalles.mojangmaps.neoforge;
 
 
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
 @Mod(MojangMaps.MOD_ID)
 public class MojangMapsNeoforge {
 
-    public MojangMapsNeoforge() {
+    public MojangMapsNeoforge(ModContainer modContainer) {
 
-        MojangMaps.init(new LoaderInfoNeoforge());
+        modContainer.registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
+
+        MojangMaps.init(new LoaderInfoNeoforge(false));
     }
 
 }

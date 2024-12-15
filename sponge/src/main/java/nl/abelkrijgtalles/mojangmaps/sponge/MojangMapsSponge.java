@@ -44,7 +44,7 @@ public class MojangMapsSponge {
     public void onServerStart(final StartedEngineEvent<Server> event) {
 
         MojangMaps.LOGGER.info(defaultConfig);
-        MojangMaps.init(new LoaderInfoSponge(defaultConfig));
+        MojangMaps.init(new LoaderInfoSponge(defaultConfig, false));
 
     }
 

@@ -56,7 +56,7 @@ public class RoadDataTest {
     @BeforeEach
     void setup() {
 
-        MojangMapsFabric.init();
+        MojangMapsFabric.init(true);
 
     }
 

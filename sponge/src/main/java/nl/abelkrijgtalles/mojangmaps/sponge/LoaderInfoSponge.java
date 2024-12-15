@@ -27,22 +27,30 @@ import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 public class LoaderInfoSponge implements LoaderInfo {
 
     private final SpongeConfig.Wrapper config;
+    private final boolean runningTests;
 
-    public LoaderInfoSponge(Path configPath) {
+    public LoaderInfoSponge(Path configPath, boolean runningTests) {
 
         config = new SpongeConfig.Wrapper(configPath, getDefaultConfig());
+        this.runningTests = runningTests;
     }
 
     @Override
     public Config getConfig() {
 
-        return null;
+        return config;
     }
 
     private String getDefaultConfig() {
 
         return YamlLikeConfigGenerator.Defaults.SPONGE.renderConfig(MojangMaps.getDefaultConfig());
 
+    }
+
+    @Override
+    public boolean isRunningTests() {
+
+        return runningTests;
     }
 
 }

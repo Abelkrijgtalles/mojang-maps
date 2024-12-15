@@ -23,16 +23,16 @@ import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 
 public class MojangMapsFabric implements ModInitializer {
 
-    public static void init() {
+    public static void init(boolean isRunningTests) {
 
-        MojangMaps.init(new LoaderInfoFabric());
+        MojangMaps.init(new LoaderInfoFabric(isRunningTests));
 
     }
 
     @Override
     public void onInitialize() {
 
-        init();
+        init(false);
     }
 
 }

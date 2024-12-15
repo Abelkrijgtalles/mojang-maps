@@ -27,4 +27,9 @@ public interface LoaderInfo {
      */
     Config getConfig();
 
+    /**
+     * @return Whether Mojang Maps is being run through unit tests.
+     */
+    boolean isRunningTests();
+
 }
