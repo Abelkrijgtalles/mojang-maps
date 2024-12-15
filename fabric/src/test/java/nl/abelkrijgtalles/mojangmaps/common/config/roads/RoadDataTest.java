@@ -30,7 +30,7 @@ public class RoadDataTest {
     void generateRoadData() {
 
         MojangMaps.LOGGER.info("Generating the roads data in {}", Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toString());
-        RoadData.Generator generator = new RoadData.Generator();
+        RoadData generator = new RoadData();
         generator.generateRoadData(RoadData.roads);
 
     }

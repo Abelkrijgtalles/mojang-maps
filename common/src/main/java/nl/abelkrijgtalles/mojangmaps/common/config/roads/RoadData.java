@@ -39,6 +39,13 @@ public class RoadData {
 
     // To see the specs for roads.mmd, see roads.mmd_spec.md in this folder/package.
 
+    private final static String MESSAGE = """
+            ---
+            DO NOT DELETE THIS FILE!!!
+            This rest of this file may look like gibberish, but it's not. This stores all the road data for Mojang Maps.
+            If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.
+            ---
+            """;
     public static List<Road> roads = List.of(
             new Road("Test road", "world", List.of(
                     new Vec3(0, 60, 0),
@@ -54,141 +61,129 @@ public class RoadData {
             ))
     );
 
-    public static class Generator {
+    public void generateRoadData(List<Road> roads) {
 
-        private final static String MESSAGE = """
-                ---
-                DO NOT DELETE THIS FILE!!!
-                This rest of this file may look like gibberish, but it's not. This stores all the road data for Mojang Maps.
-                If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.
-                ---
-                """;
+        List<Byte> bytes = new ArrayList<>();
 
-        public void generateRoadData(List<Road> roads) {
+        List<Byte> roadsDataBytes = new ArrayList<>();
 
-            List<Byte> bytes = new ArrayList<>();
+        for (Road road : roads) {
 
-            List<Byte> roadsDataBytes = new ArrayList<>();
+            List<Byte> roadBytes = new ArrayList<>();
 
-            for (Road road : roads) {
+            roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getName()));
+            roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getWorldName()));
 
-                List<Byte> roadBytes = new ArrayList<>();
+            List<Byte> waypointBytes = new ArrayList<>();
 
-                roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getName()));
-                roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getWorldName()));
+            for (Position waypoint : road.getWaypoints()) {
 
-                List<Byte> waypointBytes = new ArrayList<>();
-
-                for (Position waypoint : road.getWaypoints()) {
-
-                    waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.x()).array()));
-                    waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.y()).array()));
-                    waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.z()).array()));
-
-                }
-
-                roadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(waypointBytes.size()).array()));
-                roadBytes.addAll(waypointBytes);
-
-                roadsDataBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(roadBytes.size()).array()));
-                roadsDataBytes.addAll(roadBytes);
+                waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.x()).array()));
+                waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.y()).array()));
+                waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.z()).array()));
 
             }
 
-            bytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(roadsDataBytes.size()).array()));
-            bytes.addAll(roadsDataBytes);
+            roadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(waypointBytes.size()).array()));
+            roadBytes.addAll(waypointBytes);
 
-            // To file conversion
+            roadsDataBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(roadBytes.size()).array()));
+            roadsDataBytes.addAll(roadBytes);
 
-            byte[] byteArray = new byte[bytes.size()];
-            for (int i = 0; i < bytes.size(); i++) {
-                byteArray[i] = bytes.get(i);
-            }
-
-            try {
-                if (!MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().exists()) {
-                    MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().mkdirs();
-                }
-
-                if (Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().exists()) {
-                    Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().createNewFile();
-                }
-
-                Deflater deflater = new Deflater();
-                deflater.setInput(byteArray);
-                deflater.finish();
-
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                while (!deflater.finished()) {
-
-                    int compressedSize = deflater.deflate(buffer);
-                    byteArrayOutputStream.write(buffer, 0, compressedSize);
-
-                }
-
-                OutputStream outputStream = new FileOutputStream(Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile());
-                outputStream.write(
-                        ArrayUtils.addAll(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8),
-                                        // version marking
-                                        new byte[]{0x06, 0x01, 0x07}),
-                                ArrayUtils.addAll(byteArrayOutputStream.toByteArray())));
-                outputStream.close();
-
-            } catch (IOException e) {
-                MojangMaps.LOGGER.error("Couldn't generate roads.mmd.");
-                throw new RuntimeException(e);
-            }
         }
 
-        private byte generateByteThatIsntUsed(List<Byte> bytes) {
+        bytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(roadsDataBytes.size()).array()));
+        bytes.addAll(roadsDataBytes);
 
-            if (!bytes.contains((byte) 0x69)) return (byte) 0x69;
+        // To file conversion
 
-            byte currentByte = (byte) 0x00;
-            while (true) {
+        byte[] byteArray = new byte[bytes.size()];
+        for (int i = 0; i < bytes.size(); i++) {
+            byteArray[i] = bytes.get(i);
+        }
 
-                currentByte += 1;
-                if (!bytes.contains(currentByte)) return currentByte;
-                if (currentByte == Byte.MAX_VALUE) {
+        try {
+            if (!MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().exists()) {
+                MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().mkdirs();
+            }
 
-                    // TODO: maybe add multiple bytes in this case?
-                    MojangMaps.LOGGER.error("Could not find an unused byte.");
-                    throw new RuntimeException();
+            if (Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().exists()) {
+                Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().createNewFile();
+            }
 
-                }
+            Deflater deflater = new Deflater();
+            deflater.setInput(byteArray);
+            deflater.finish();
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            while (!deflater.finished()) {
+
+                int compressedSize = deflater.deflate(buffer);
+                byteArrayOutputStream.write(buffer, 0, compressedSize);
+
+            }
+
+            OutputStream outputStream = new FileOutputStream(Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile());
+            outputStream.write(
+                    ArrayUtils.addAll(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8),
+                                    // version marking
+                                    new byte[]{0x06, 0x01, 0x07}),
+                            ArrayUtils.addAll(byteArrayOutputStream.toByteArray())));
+            outputStream.close();
+
+        } catch (IOException e) {
+            MojangMaps.LOGGER.error("Couldn't generate roads.mmd.");
+            throw new RuntimeException(e);
+        }
+    }
+
+    private byte generateByteThatIsntUsed(List<Byte> bytes) {
+
+        if (!bytes.contains((byte) 0x69)) return (byte) 0x69;
+
+        byte currentByte = (byte) 0x00;
+        while (true) {
+
+            currentByte += 1;
+            if (!bytes.contains(currentByte)) return currentByte;
+            if (currentByte == Byte.MAX_VALUE) {
+
+                // TODO: maybe add multiple bytes in this case?
+                MojangMaps.LOGGER.error("Could not find an unused byte.");
+                throw new RuntimeException();
 
             }
 
         }
 
-        private List<Byte> generateByteListOfStringWithDividingBit(String string) {
+    }
 
-            List<Byte> bytes = new ArrayList<>();
+    private List<Byte> generateByteListOfStringWithDividingBit(String string) {
 
-            List<Byte> stringBytes = Arrays.asList(ArrayUtils.toObject(string.getBytes(StandardCharsets.UTF_8)));
-            byte dividingBit = generateByteThatIsntUsed(stringBytes);
-            bytes.add(dividingBit);
-            bytes.addAll(stringBytes);
-            bytes.add(dividingBit);
+        List<Byte> bytes = new ArrayList<>();
 
-            return bytes;
+        List<Byte> stringBytes = Arrays.asList(ArrayUtils.toObject(string.getBytes(StandardCharsets.UTF_8)));
+        byte dividingBit = generateByteThatIsntUsed(stringBytes);
+        bytes.add(dividingBit);
+        bytes.addAll(stringBytes);
+        bytes.add(dividingBit);
+
+        return bytes;
+
+    }
+
+    private List<Byte> byteArrayToByteList(byte[] array) {
+
+        List<Byte> bytes = new ArrayList<>();
+
+        for (byte byyte : array) {
+
+            bytes.add(byyte);
 
         }
 
-        private List<Byte> byteArrayToByteList(byte[] array) {
-
-            List<Byte> bytes = new ArrayList<>();
-
-            for (byte byyte : array) {
-
-                bytes.add(byyte);
-
-            }
-
-            return bytes;
-        }
-
+        return bytes;
     }
 
 }
