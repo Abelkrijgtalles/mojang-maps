@@ -24,11 +24,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 import net.minecraft.core.Position;
 import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
@@ -39,6 +42,20 @@ public class RoadData {
 
     // To see the specs for roads.mmd, see roads.mmd_spec.md in this folder/package.
 
+    public final static List<Road> roads = List.of(
+            new Road("Test road", "world", List.of(
+                    new Vec3(0, 60, 0),
+                    new Vec3(0, 60, 5)
+            )),
+            new Road("Unnamed Road", "world", List.of(
+                    new Vec3(1, 2, 3),
+                    new Vec3(4, 5, 6)
+            )),
+            new Road("Exploring the nether or something like that", "world_nether", List.of(
+                    new Vec3(46, 62, 56),
+                    new Vec3(6, 60, 55555)
+            ))
+    );
     private final static String MESSAGE = """
             ---
             DO NOT DELETE THIS FILE!!!
@@ -46,20 +63,7 @@ public class RoadData {
             If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.
             ---
             """;
-    public static List<Road> roads = List.of(
-            new Road("Test road", "world", List.of(
-                    new Vec3(0, 60, 0),
-                    new Vec3(0, 60, 5)
-            )),
-            new Road("Unnamed Road", "world", List.of(
-                    new Vec3(0, 60, 0),
-                    new Vec3(0, 60, 5)
-            )),
-            new Road("Exploring the nether or something like that", "world_nether", List.of(
-                    new Vec3(0, 60, 0),
-                    new Vec3(0, 60, 5)
-            ))
-    );
+    private final static Path FILE_PATH = Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
 
     public void generateRoadData(List<Road> roads) {
 
@@ -107,8 +111,8 @@ public class RoadData {
                 MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().mkdirs();
             }
 
-            if (Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().exists()) {
-                Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile().createNewFile();
+            if (FILE_PATH.toFile().exists()) {
+                FILE_PATH.toFile().createNewFile();
             }
 
             Deflater deflater = new Deflater();
@@ -124,7 +128,7 @@ public class RoadData {
 
             }
 
-            OutputStream outputStream = new FileOutputStream(Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile());
+            OutputStream outputStream = new FileOutputStream(FILE_PATH.toFile());
             outputStream.write(
                     ArrayUtils.addAll(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8),
                                     // version marking
@@ -184,6 +188,143 @@ public class RoadData {
         }
 
         return bytes;
+    }
+
+    public List<Road> readRoadData() {
+
+        byte[] files;
+
+        try {
+            files = Files.readAllBytes(FILE_PATH);
+        } catch (IOException e) {
+            MojangMaps.LOGGER.error("Couldn't read {}.", FILE_PATH);
+            throw new RuntimeException(e);
+        }
+
+        int version = 0;
+        byte[] compressedArray = null;
+
+        for (int i = 0; i < files.length; i++) {
+
+            switch (files[i]) {
+
+                case 0x06:
+                    version = files[i + 1];
+                case 0x07:
+                    compressedArray = Arrays.copyOfRange(files, i + 1, files.length);
+
+            }
+
+
+        }
+
+        assert version != 0;
+
+        MojangMaps.LOGGER.info("{} is version {}.", FILE_PATH, version);
+
+        Inflater inflater = new Inflater();
+        inflater.setInput(compressedArray);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+
+        while (!inflater.finished()) {
+            int decompressedSize = 0;
+            try {
+                decompressedSize = inflater.inflate(buffer);
+            } catch (DataFormatException e) {
+                MojangMaps.LOGGER.error("Couldn't inflate/decompress {}", FILE_PATH);
+                throw new RuntimeException(e);
+            }
+            outputStream.write(buffer, 0, decompressedSize);
+        }
+
+        byte[] uncompressedData = outputStream.toByteArray();
+        MojangMaps.LOGGER.info("Uncompressed Data size {}", uncompressedData.length);
+        int roadsDataSize = ByteBuffer.wrap(getFirstNBytes(uncompressedData, 0, 4)).getInt();
+        MojangMaps.LOGGER.info("Road data size {}", roadsDataSize);
+
+        byte[] roadData = Arrays.copyOfRange(uncompressedData, 4, roadsDataSize);
+        MojangMaps.LOGGER.info("Retrieved road Data size {}", roadData.length);
+
+        // i very dumb so claude go help me
+        int offset = 0;
+        List<Road> roads = new ArrayList<>();
+
+        while (offset < roadData.length) {
+            // Road data size (4 bytes)
+            int roadDataSize = ByteBuffer.wrap(Arrays.copyOfRange(roadData, offset, offset + 4)).getInt();
+            offset += 4;
+
+            // Road name begin byte
+            byte roadNameBegin = roadData[offset];
+            offset++;
+
+            // Road name
+            List<Byte> roadNameBytes = new ArrayList<>();
+            while (roadData[offset] != roadNameBegin) {
+                roadNameBytes.add(roadData[offset]);
+                offset++;
+            }
+            String roadName = new String(convertByteListToArray(roadNameBytes), StandardCharsets.UTF_8);
+            offset++; // skip road name end byte
+
+            // Road world begin byte
+            byte roadWorldBegin = roadData[offset];
+            offset++;
+
+            // Road world identification
+            List<Byte> roadWorldBytes = new ArrayList<>();
+            while (roadData[offset] != roadWorldBegin) {
+                roadWorldBytes.add(roadData[offset]);
+                offset++;
+            }
+            String roadWorld = new String(convertByteListToArray(roadWorldBytes), StandardCharsets.UTF_8);
+            offset++; // skip road world end byte
+
+            // Waypoints data size
+            int waypointsDataSize = ByteBuffer.wrap(Arrays.copyOfRange(roadData, offset, offset + 4)).getInt();
+            offset += 4;
+
+            // Parse waypoints
+            List<Position> waypoints = new ArrayList<>();
+            int waypointOffset = 0;
+            while (waypointOffset < waypointsDataSize) {
+                double x = ByteBuffer.wrap(Arrays.copyOfRange(roadData, offset + waypointOffset, offset + waypointOffset + 8)).getDouble();
+                waypointOffset += 8;
+                double y = ByteBuffer.wrap(Arrays.copyOfRange(roadData, offset + waypointOffset, offset + waypointOffset + 8)).getDouble();
+                waypointOffset += 8;
+                double z = ByteBuffer.wrap(Arrays.copyOfRange(roadData, offset + waypointOffset, offset + waypointOffset + 8)).getDouble();
+                waypointOffset += 8;
+
+                waypoints.add(new Vec3(x, y, z));
+            }
+            offset += waypointsDataSize;
+
+            roads.add(new Road(roadName, roadWorld, waypoints));
+        }
+
+        return roads;
+
+    }
+
+    private byte[] getFirstNBytes(byte[] bytes, int index, int first) {
+
+        byte[] firstBytes = new byte[first];
+        System.arraycopy(bytes, index, firstBytes, 0, first);
+
+        return firstBytes;
+
+    }
+
+    private byte[] convertByteListToArray(List<Byte> byteList) {
+
+        byte[] byteArray = new byte[byteList.size()];
+        for (int i = 0; i < byteList.size(); i++) {
+            byteArray[i] = byteList.get(i);
+        }
+        return byteArray;
+
     }
 
 }

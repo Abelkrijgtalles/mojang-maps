@@ -19,7 +19,9 @@
 package nl.abelkrijgtalles.mojangmaps.common.config.roads;
 
 import java.nio.file.Path;
+import java.util.List;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.model.Road;
 import nl.abelkrijgtalles.mojangmaps.fabric.MojangMapsFabric;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,22 @@ public class RoadDataTest {
         MojangMaps.LOGGER.info("Generating the roads data in {}", Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toString());
         RoadData generator = new RoadData();
         generator.generateRoadData(RoadData.roads);
+
+    }
+
+    @Test
+    void readRoadData() {
+
+        MojangMaps.LOGGER.info("Reading roads data in {}", Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toString());
+        RoadData generator = new RoadData();
+        List<Road> roads = generator.readRoadData();
+        for (Road road : roads) {
+
+            MojangMaps.LOGGER.info(road.getName());
+            MojangMaps.LOGGER.info(road.getWorldName());
+            MojangMaps.LOGGER.info(road.getWaypoints());
+
+        }
 
     }
 
