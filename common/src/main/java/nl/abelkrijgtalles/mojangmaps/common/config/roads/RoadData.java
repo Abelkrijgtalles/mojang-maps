@@ -220,8 +220,6 @@ public class RoadData {
 
         assert version != 0;
 
-        MojangMaps.LOGGER.info("{} is version {}.", FILE_PATH, version);
-
         Inflater inflater = new Inflater();
         inflater.setInput(compressedArray);
 
@@ -240,12 +238,9 @@ public class RoadData {
         }
 
         byte[] uncompressedData = outputStream.toByteArray();
-        MojangMaps.LOGGER.info("Uncompressed Data size {}", uncompressedData.length);
         int roadsDataSize = ByteBuffer.wrap(getFirstNBytes(uncompressedData, 0, 4)).getInt();
-        MojangMaps.LOGGER.info("Road data size {}", roadsDataSize);
-
+        if (roadsDataSize == 0) return new ArrayList<>();
         byte[] roadData = Arrays.copyOfRange(uncompressedData, 4, roadsDataSize);
-        MojangMaps.LOGGER.info("Retrieved road Data size {}", roadData.length);
 
         // i very dumb so claude go help me
         int offset = 0;
