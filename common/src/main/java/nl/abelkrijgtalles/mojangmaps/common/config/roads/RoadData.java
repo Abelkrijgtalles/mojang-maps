@@ -68,8 +68,6 @@ public class RoadData {
 
             List<Byte> bytes = new ArrayList<>();
 
-            bytes.add((byte) 0x01);
-
             List<Byte> roadsDataBytes = new ArrayList<>();
 
             for (Road road : roads) {
@@ -130,7 +128,7 @@ public class RoadData {
                 }
 
                 OutputStream outputStream = new FileOutputStream(Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toFile());
-                outputStream.write(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8), ArrayUtils.addAll(byteArrayOutputStream.toByteArray())));
+                outputStream.write(ArrayUtils.addAll(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8), new byte[]{0x01}), ArrayUtils.addAll(byteArrayOutputStream.toByteArray())));
                 outputStream.close();
 
             } catch (IOException e) {
