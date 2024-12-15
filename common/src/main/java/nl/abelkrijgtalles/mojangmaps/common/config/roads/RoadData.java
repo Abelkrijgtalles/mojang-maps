@@ -65,6 +65,11 @@ public class RoadData {
             """;
     private final static Path FILE_PATH = Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
 
+    /**
+     * Overwrite (or create) roads.mmd with the provided roads. This will completely reset roads.mmd.
+     *
+     * @param roads The {@link Road}s to use.
+     */
     public void generateRoadData(List<Road> roads) {
 
         List<Byte> bytes = new ArrayList<>();
@@ -190,6 +195,11 @@ public class RoadData {
         return bytes;
     }
 
+    /**
+     * Read roads.mmd.
+     *
+     * @return The list of {@link Road} in roads.mmd
+     */
     public List<Road> readRoadData() {
 
         byte[] files;
@@ -322,6 +332,11 @@ public class RoadData {
 
     }
 
+    /**
+     * Read or create roads.mmd depending on its existence.
+     *
+     * @return The {@link Road}s in roads.mmd. If it didn't exist or doesn't contain any roads, it returns an empty {@link ArrayList}.
+     */
     public List<Road> setupRoadData() {
 
         if (FILE_PATH.toFile().exists()) return readRoadData();

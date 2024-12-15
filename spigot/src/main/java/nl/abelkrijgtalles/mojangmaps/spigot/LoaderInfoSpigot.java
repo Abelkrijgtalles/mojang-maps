@@ -19,7 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.spigot;
 
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.config.YamlLikeConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
 import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 
@@ -42,7 +42,7 @@ public class LoaderInfoSpigot implements LoaderInfo {
 
     private String getDefaultConfig() {
 
-        return YamlLikeConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
+        return ConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 

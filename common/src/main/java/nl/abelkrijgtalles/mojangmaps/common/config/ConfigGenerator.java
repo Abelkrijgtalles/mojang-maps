@@ -26,7 +26,7 @@ import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
 import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
 import nl.abelkrijgtalles.mojangmaps.common.util.RecursiveItem;
 
-public class YamlLikeConfigGenerator {
+public class ConfigGenerator {
 
     // all include needed spaces
     private final String groupDefineBeginSymbol;
@@ -35,7 +35,27 @@ public class YamlLikeConfigGenerator {
     private final String valueDefineSymbol;
     private final String commentDefineSymbol;
 
-    public YamlLikeConfigGenerator(String groupDefineBeginSymbol, String groupDefineEndSymbol, Boolean groupDotNotation, String valueDefineSymbol, String commentDefineSymbol) {
+    /**
+     * Create a Config generator.
+     * All parameters include spacing, except for groupDefineEndSymbol.
+     * The parameters have examples, with the actual argument between "[]".
+     * Example 1:
+     * // A random group
+     * group {
+     * cool: true
+     * }
+     * Example two:
+     * # A random group
+     * group:
+     * cool = true
+     *
+     * @param groupDefineBeginSymbol 1: group[ {] 2: group[:]
+     * @param groupDefineEndSymbol   1: [}] 2: nothing
+     * @param groupDotNotation       Whether to use dot notation. The examples would be group.cool: true. groupDefineBegin- and groupDefineEndSymbol are ignored if set to true.
+     * @param valueDefineSymbol      1: cool[: ]true 2: cool[ = ]true
+     * @param commentDefineSymbol    1: [// ]A random group 2: [# ]A random group
+     */
+    public ConfigGenerator(String groupDefineBeginSymbol, String groupDefineEndSymbol, Boolean groupDotNotation, String valueDefineSymbol, String commentDefineSymbol) {
 
         this.groupDefineBeginSymbol = groupDefineBeginSymbol;
         this.groupDefineEndSymbol = groupDefineEndSymbol;
@@ -44,6 +64,12 @@ public class YamlLikeConfigGenerator {
         this.commentDefineSymbol = commentDefineSymbol;
     }
 
+    /**
+     * Render a config with set parameters in the constructor.
+     *
+     * @param config The config to render.
+     * @return The rendered config as a {@link String}
+     */
     public String renderConfig(List<ConfigObject> config) {
 
         StringBuilder configString = new StringBuilder();
@@ -189,9 +215,10 @@ public class YamlLikeConfigGenerator {
     public static class Defaults {
 
         // adding toml in the future could be a nice thing, wouldn't know why I would add it, + it has to change more stuff and makes it even more abstract.
-        public static final YamlLikeConfigGenerator PURE_YAML = new YamlLikeConfigGenerator(":", null, false, ": ", "# ");
-        public static final YamlLikeConfigGenerator SPONGE = new YamlLikeConfigGenerator(" {", "}", false, " = ", "# ");
-        public static final YamlLikeConfigGenerator FABRIC = new YamlLikeConfigGenerator(null, null, true, " = ", "# ");
+        // please don't use null, as this literally sets "null" for the values
+        public static final ConfigGenerator PURE_YAML = new ConfigGenerator(":", "", false, ": ", "# ");
+        public static final ConfigGenerator SPONGE = new ConfigGenerator(" {", "}", false, " = ", "# ");
+        public static final ConfigGenerator FABRIC = new ConfigGenerator("", "", true, " = ", "# ");
 
     }
 

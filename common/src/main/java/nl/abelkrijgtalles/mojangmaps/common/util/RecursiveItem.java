@@ -23,9 +23,9 @@ import java.util.List;
 public record RecursiveItem(Object value, String key, Object additionalData, List<String> path) {
 
     /**
-     * Returns the path & key as a {@link String}
+     * Returns the path and key as a {@link String}
      *
-     * @return The path & key divided by dots.
+     * @return The path and key divided by dots.
      */
     public String toString() {
 

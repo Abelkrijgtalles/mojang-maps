@@ -19,7 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.config.YamlLikeConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
 import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 
@@ -49,7 +49,7 @@ public class LoaderInfoFabric implements LoaderInfo {
 
     private String defaultConfig(String filename) {
 
-        return YamlLikeConfigGenerator.Defaults.FABRIC.renderConfig(MojangMaps.getDefaultConfig());
+        return ConfigGenerator.Defaults.FABRIC.renderConfig(MojangMaps.getDefaultConfig());
 
     }
 

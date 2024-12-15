@@ -33,6 +33,11 @@ public class MojangMaps {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static LoaderInfo loaderInfo;
 
+    /**
+     * Initialize Mojang Maps
+     *
+     * @param loaderInfo The loader specific info.
+     */
     public static void init(LoaderInfo loaderInfo) {
 
         MojangMaps.loaderInfo = loaderInfo;
