@@ -18,38 +18,45 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.config.roads;
 
-import java.nio.file.Path;
+import com.github.javafaker.Faker;
+import java.util.ArrayList;
 import java.util.List;
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import java.util.Random;
+import net.minecraft.core.Position;
+import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
 import nl.abelkrijgtalles.mojangmaps.fabric.MojangMapsFabric;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.RepetitionInfo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoadDataTest {
 
-    @Test
-    void generateRoadData() {
+    @RepeatedTest(5)
+    void testGeneratingRoadData(RepetitionInfo repetitionInfo) {
 
-        MojangMaps.LOGGER.info("Generating the roads data in {}", Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toString());
-        RoadData generator = new RoadData();
-        generator.generateRoadData(RoadData.roads);
+        List<Road> roads = new ArrayList<>();
+        Random rand = new Random();
+        Faker faker = new Faker();
+        RoadData roadData = new RoadData();
 
-    }
+        for (int i = 0; i < repetitionInfo.getCurrentRepetition(); i++) {
 
-    @Test
-    void readRoadData() {
+            List<Position> waypoints = new ArrayList<>();
 
-        MojangMaps.LOGGER.info("Reading roads data in {}", Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd").toString());
-        RoadData generator = new RoadData();
-        List<Road> roads = generator.readRoadData();
-        for (Road road : roads) {
+            for (int j = 0; j < repetitionInfo.getCurrentRepetition(); j++) {
 
-            MojangMaps.LOGGER.info(road.getName());
-            MojangMaps.LOGGER.info(road.getWorldName());
-            MojangMaps.LOGGER.info(road.getWaypoints());
+                waypoints.add(new Vec3(rand.nextDouble(1000), rand.nextDouble(256), rand.nextDouble(1000)));
+
+            }
+
+            roads.add(new Road(faker.address().streetName(), "world", waypoints));
 
         }
+
+        roadData.generateRoadData(roads);
+        assertEquals(roads, roadData.readRoadData());
 
     }
 

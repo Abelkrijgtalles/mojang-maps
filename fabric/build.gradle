@@ -87,6 +87,7 @@ dependencies {
     //addMod can be used, to control it via the version.property
     //addMod("example.maven:some_mod:${rootProject.some_mod_version}", rootProject.enable_some_mod)
     testImplementation "net.fabricmc:fabric-loader-junit:${rootProject.fabric_loader_version}"
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
 task deleteResources(type: Delete) {
