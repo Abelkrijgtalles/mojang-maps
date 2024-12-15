@@ -322,4 +322,16 @@ public class RoadData {
 
     }
 
+    public List<Road> setupRoadData() {
+
+        if (FILE_PATH.toFile().exists()) return readRoadData();
+        else {
+
+            generateRoadData(new ArrayList<>());
+            return new ArrayList<>();
+
+        }
+
+    }
+
 }
