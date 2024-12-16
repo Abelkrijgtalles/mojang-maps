@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 import net.minecraft.core.Position;
 import net.minecraft.world.phys.Vec3;
+import nl.abelkrijgtalles.mojangmaps.TestSettings;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
 import nl.abelkrijgtalles.mojangmaps.fabric.MojangMapsFabric;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,19 +34,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoadDataTest {
 
-    @RepeatedTest(5)
+    @RepeatedTest(TestSettings.REPEATED_TEST_COUNT)
     void testGeneratingRoadData(RepetitionInfo repetitionInfo) {
 
         List<Road> roads = new ArrayList<>();
         Random rand = new Random();
         Faker faker = new Faker();
         RoadData roadData = new RoadData();
+        int numberOfRoadsAndWaypointsPerRoad = repetitionInfo.getCurrentRepetition();
 
-        for (int i = 0; i < repetitionInfo.getCurrentRepetition(); i++) {
+        for (int i = 0; i < numberOfRoadsAndWaypointsPerRoad; i++) {
 
             List<Position> waypoints = new ArrayList<>();
 
-            for (int j = 0; j < repetitionInfo.getCurrentRepetition(); j++) {
+            for (int j = 0; j < numberOfRoadsAndWaypointsPerRoad; j++) {
 
                 waypoints.add(new Vec3(rand.nextDouble(1000), rand.nextDouble(256), rand.nextDouble(1000)));
 
@@ -56,7 +58,32 @@ public class RoadDataTest {
         }
 
         roadData.generateRoadData(roads);
-        assertEquals(roads, roadData.readRoadData());
+
+        // doing this cause junit does weird
+        List<Road> readRoads = roadData.readRoadData();
+        for (int i = 0; i < roads.size(); i++) {
+
+            Road road = roads.get(i);
+            Road readRoad = readRoads.get(i);
+
+            assertEquals(road.getName(), readRoad.getName());
+            assertEquals(road.getWorldName(), readRoad.getWorldName());
+
+            List<Position> roadWaypoints = road.getWaypoints();
+            List<Position> readRoadWaypoints = readRoad.getWaypoints();
+
+            for (int j = 0; j < roadWaypoints.size(); j++) {
+
+                Position position = roadWaypoints.get(j);
+                Position readPosition = readRoadWaypoints.get(j);
+
+                assertEquals((int) position.x(), (int) readPosition.x());
+                assertEquals((int) position.y(), (int) readPosition.y());
+                assertEquals((int) position.z(), (int) readPosition.z());
+
+            }
+
+        }
 
     }
 

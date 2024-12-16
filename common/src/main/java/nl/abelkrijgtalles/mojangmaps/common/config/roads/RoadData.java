@@ -61,6 +61,7 @@ public class RoadData {
             DO NOT DELETE THIS FILE!!!
             This rest of this file may look like gibberish, but it's not. This stores all the road data for Mojang Maps.
             If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.
+            Even editing this file, or this message, will brick Mojang Maps.
             ---
             """;
     private final static Path FILE_PATH = Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
@@ -116,7 +117,7 @@ public class RoadData {
                 MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().mkdirs();
             }
 
-            if (FILE_PATH.toFile().exists()) {
+            if (!FILE_PATH.toFile().exists()) {
                 FILE_PATH.toFile().createNewFile();
             }
 
@@ -219,9 +220,13 @@ public class RoadData {
             switch (files[i]) {
 
                 case 0x06:
+                    if (i + 2 > files.length - 1) continue;
+                    if (files[i + 2] != 0x07) continue;
                     version = files[i + 1];
                 case 0x07:
-                    compressedArray = Arrays.copyOfRange(files, i + 1, files.length);
+                    if (files[i - 2] != 0x06) continue;
+                    compressedArray = Arrays.copyOfRange(files, MESSAGE.getBytes(StandardCharsets.UTF_8).length + 3, files.length);
+                    break;
 
             }
 
