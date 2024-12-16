@@ -22,10 +22,10 @@ index 814a17928ccd5b8dff3786678120c339d27015c4..00000000000000000000000000000000
 -/target/
 diff --git a/build.gradle b/build.gradle
 new file mode 100644
-index 0000000000000000000000000000000000000000..07c65d23fedac8738672d42ed91340f6b7a93e82
+index 0000000000000000000000000000000000000000..915e78ddbcfa22f8ffc7441989c1daac6aaa95c4
 --- /dev/null
 +++ b/build.gradle
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,25 @@
 +/*
 + * mojang_maps.pathfinding
 + * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
@@ -48,13 +48,8 @@ index 0000000000000000000000000000000000000000..07c65d23fedac8738672d42ed91340f6
 +    id "org.spongepowered.gradle.vanilla" version "0.2.1-SNAPSHOT"
 +}
 +
-+repositories {
-+    mavenCentral()
-+    maven { url 'https://repo.spongepowered.org/repository' }
-+}
-+
 +minecraft {
-+    version("1.21.4")
++    version(rootProject.minecraft_version)
 +}
 \ No newline at end of file
 diff --git a/pom.xml b/pom.xml
