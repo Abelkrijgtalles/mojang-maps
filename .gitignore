@@ -44,3 +44,4 @@ desktop.ini
 cache
 fabric/logs
 fabric/config
+/pathfinding

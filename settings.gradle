@@ -111,6 +111,7 @@ loadProperties()
 
 // sub-projects
 include("common")
+include("pathfinding")
 // Enables or disables the subprojects depending on whats in the versionProperties/mcVer.properties
 for (loader in ((String) gradle.builds_for).split(",")) {
     def loaderName = loader.strip() // Strip it in case a space is added before or after the comma

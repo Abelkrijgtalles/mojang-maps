@@ -30,6 +30,9 @@ plugins {
 
     // Architectury is used here only as a replacement for forge's own loom
     id "dev.architectury.loom" version "1.9-SNAPSHOT" apply false
+
+    // algorithm patches so we have a solid base
+    id 'ca.stellardrift.gitpatcher' version '1.1.0'
 }
 
 
@@ -247,7 +250,7 @@ subprojects { p ->
         forgeRuntimeLibrary.extendsFrom(forgeShadowMe)
 
 
-        if (isMinecraftSubProject && p != project(":common")) {
+        if (isMinecraftSubProject && p != project(":common") && p != project(":pathfinding")) {
             // Shadow common
             common
             shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
@@ -297,7 +300,7 @@ subprojects { p ->
         ///////
 
         // Add common
-        if (isMinecraftSubProject && p != project(":common")) {
+        if (isMinecraftSubProject && p != project(":common") && p != project(":pathfinding")) {
             // Common
             common(project(":common")) { transitive false }
             shadowCommon(project(":common")) { transitive false }
@@ -317,7 +320,7 @@ subprojects { p ->
 
     shadowJar {
         configurations = [project.configurations.shadowMe]
-        if (isMinecraftSubProject && p != project(":common")) {
+        if (isMinecraftSubProject && p != project(":common") && p != project(":pathfinding")) {
             configurations.push(project.configurations.shadowCommon) // Shadow the common subproject
             //FIXME relocate "de.the_build_craft.mojang_maps.common", "loaderCommon.${p.name}.de.the_build_craft.mojang_maps.common" // Move the loader files to a different location
 
@@ -585,3 +588,11 @@ task cleanMergedJars() {
 }
 // add cleanMergedJars to the end of the "clean" task
 tasks["clean"].finalizedBy(cleanMergedJars)
+
+gitPatcher.patchedRepos {
+    'pathfinding' {
+        submodule = 'lib/pathfinding'
+        target = file('pathfinding')
+        patches = file('patches/pathfinding')
+    }
+}

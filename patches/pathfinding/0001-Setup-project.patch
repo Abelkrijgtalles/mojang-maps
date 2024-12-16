@@ -1,0 +1,124 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Abel <abelvanhulst@gmail.com>
+Date: Mon, 16 Dec 2024 19:37:33 +0100
+Subject: [PATCH] Setup project
+
+
+diff --git a/.gitignore b/.gitignore
+deleted file mode 100644
+index 814a17928ccd5b8dff3786678120c339d27015c4..0000000000000000000000000000000000000000
+--- a/.gitignore
++++ /dev/null
+@@ -1,10 +0,0 @@
+-bin/
+-.idea/
+-
+-*.classpath
+-.project
+-*.prefs
+-*.launch
+-*.jardesc
+-build.xml
+-/target/
+diff --git a/build.gradle b/build.gradle
+new file mode 100644
+index 0000000000000000000000000000000000000000..07c65d23fedac8738672d42ed91340f6b7a93e82
+--- /dev/null
++++ b/build.gradle
+@@ -0,0 +1,30 @@
++/*
++ * mojang_maps.pathfinding
++ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++plugins {
++    id "org.spongepowered.gradle.vanilla" version "0.2.1-SNAPSHOT"
++}
++
++repositories {
++    mavenCentral()
++    maven { url 'https://repo.spongepowered.org/repository' }
++}
++
++minecraft {
++    version("1.21.4")
++}
+\ No newline at end of file
+diff --git a/pom.xml b/pom.xml
+deleted file mode 100644
+index 67829e30d467f1d08b661a03cdb90815e6a07c82..0000000000000000000000000000000000000000
+--- a/pom.xml
++++ /dev/null
+@@ -1,47 +0,0 @@
+-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+-
+-	<modelVersion>4.0.0</modelVersion>
+-	<groupId>com.domisum</groupId>
+-	<artifactId>Pathfinding</artifactId>
+-	<version>0.0.1</version>
+-
+-	<properties>
+-
+-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+-		<maven.compiler.source>1.8</maven.compiler.source>
+-		<maven.compiler.target>1.8</maven.compiler.target>
+-
+-	</properties>
+-
+-	<repositories>
+-
+-		<repository>
+-			<id>spigot-repo</id>
+-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+-		</repository>
+-
+-		<repository>
+-			<id>bukkit-repo</id>
+-			<url>https://repo.bukkit.org/content/groups/public/</url>
+-		</repository>
+-
+-	</repositories>
+-
+-	<dependencies>
+-
+-		<dependency>
+-			<groupId>org.spigotmc</groupId>
+-			<artifactId>spigot-api</artifactId>
+-			<version>1.8.8-R0.1-SNAPSHOT</version>
+-		</dependency>
+-
+-		<dependency>
+-			<groupId>org.bukkit</groupId>
+-			<artifactId>craftbukkit</artifactId>
+-			<version>1.8.8-R0.1-SNAPSHOT</version>
+-		</dependency>
+-
+-	</dependencies>
+-
+-</project>
+\ No newline at end of file
+diff --git a/src/main/resources/plugin.yml b/src/main/resources/plugin.yml
+deleted file mode 100644
+index fb48c79341aa81056a0e3fcb8397135b5c30e759..0000000000000000000000000000000000000000
+--- a/src/main/resources/plugin.yml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-name: Pathfinding
+-version: 0.1
+-author: domisum
+-main: main.Pathfinding
+\ No newline at end of file

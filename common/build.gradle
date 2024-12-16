@@ -28,6 +28,7 @@ minecraft {
 dependencies {
     // So mixins can be written in common
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+    implementation project(":pathfinding")
 }
 
 
@@ -44,4 +45,3 @@ publishing {
         // Add repositories to publish to here.
     }
 }
-

@@ -1,0 +1,3 @@
+[submodule "Pathfinding"]
+	path = lib/pathfinding
+	url = https://github.com/domisum/Pathfinding
