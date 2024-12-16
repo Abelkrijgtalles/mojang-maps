@@ -20,7 +20,21 @@ package nl.abelkrijgtalles.mojangmaps.common.util;
 
 import java.util.List;
 
-public record RecursiveItem(Object value, String key, Object additionalData, List<String> path) {
+public final class RecursiveItem {
+
+    // don't convert to record, as it isn't supported in java 8 (1.16.5)
+    private final Object value;
+    private final String key;
+    private final Object additionalData;
+    private final List<String> path;
+
+    public RecursiveItem(Object value, String key, Object additionalData, List<String> path) {
+
+        this.value = value;
+        this.key = key;
+        this.additionalData = additionalData;
+        this.path = path;
+    }
 
     /**
      * Returns the path and key as a {@link String}
@@ -41,5 +55,26 @@ public record RecursiveItem(Object value, String key, Object additionalData, Lis
         return pathString.toString();
 
     }
+
+    public Object value() {
+
+        return value;
+    }
+
+    public String key() {
+
+        return key;
+    }
+
+    public Object additionalData() {
+
+        return additionalData;
+    }
+
+    public List<String> path() {
+
+        return path;
+    }
+
 
 }

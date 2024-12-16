@@ -19,8 +19,10 @@
 package nl.abelkrijgtalles.mojangmaps.sponge;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -76,7 +78,7 @@ public class SpongeConfig {
     private void saveDefaultConfig() {
 
         try {
-            Files.writeString(configPath, defaultConfig);
+            Files.write(configPath, defaultConfig.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             MojangMaps.LOGGER.error("Unable to save default Sponge configuration for Mojang Maps.");
             throw new RuntimeException(e);
@@ -94,7 +96,7 @@ public class SpongeConfig {
         try {
             rootNode.node((Object[]) key.split("\\.")).set(value);
         } catch (SerializationException e) {
-            MojangMaps.LOGGER.error("Unable to set key %s to %s for the Mojang Maps Sponge configuration.".formatted(key, value));
+            MojangMaps.LOGGER.error("Unable to set key {} to {} for the Mojang Maps Sponge configuration.", key, value);
             throw new RuntimeException(e);
         }
     }
@@ -124,7 +126,7 @@ public class SpongeConfig {
         @Override
         public Path getDataDirectory() {
 
-            return Path.of(config.configPath.getParent().toString(), MojangMaps.MOD_ID);
+            return Paths.get(config.configPath.getParent().toString(), MojangMaps.MOD_ID);
         }
 
     }

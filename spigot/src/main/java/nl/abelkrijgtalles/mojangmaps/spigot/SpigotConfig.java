@@ -38,7 +38,7 @@ public class SpigotConfig implements Config {
     private void createConfig(String defaultConfig) {
 
         try {
-            Files.createDirectories(MojangMapsSpigot.Instance.getDataPath());
+            Files.createDirectories(MojangMaps.loaderInfo.getConfig().getDataDirectory());
         } catch (IOException e) {
             MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(MojangMapsSpigot.Instance.getDataFolder()));
             throw new RuntimeException(e);
@@ -68,7 +68,11 @@ public class SpigotConfig implements Config {
     @Override
     public Path getDataDirectory() {
 
+        #if MC_VER > MC_1_20_6
         return MojangMapsSpigot.Instance.getDataPath();
+        #else
+        return MojangMapsSpigot.Instance.getDataFolder().toPath();
+        #endif
     }
 
 }

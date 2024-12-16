@@ -19,6 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.forge;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -93,7 +94,7 @@ public class ForgeConfig {
         @Override
         public Path getDataDirectory() {
 
-            return Path.of(FMLPaths.CONFIGDIR.toString(), MojangMaps.MOD_ID);
+            return Paths.get(FMLPaths.CONFIGDIR.toString(), MojangMaps.MOD_ID);
         }
 
     }

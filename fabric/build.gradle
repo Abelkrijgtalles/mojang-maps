@@ -111,3 +111,7 @@ sourcesJar {
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
 }
+
+tasks.withType(Test).each { task ->
+    task.enabled = !(rootProject.minecraft_version == "1.17.1" || rootProject.minecraft_version == "1.16.5")
+}

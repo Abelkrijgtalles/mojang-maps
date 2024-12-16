@@ -18,8 +18,14 @@
 
 package nl.abelkrijgtalles.mojangmaps.neoforge;
 
+#if MC_VER <= MC_1_20_4
+
+import net.neoforged.fml.ModLoadingContext;
+#else
 
 import net.neoforged.fml.ModContainer;
+#endif
+
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
@@ -27,9 +33,16 @@ import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 @Mod(MojangMaps.MOD_ID)
 public class MojangMapsNeoforge {
 
-    public MojangMapsNeoforge(ModContainer modContainer) {
+    public MojangMapsNeoforge(
+            #if MC_VER > MC_1_20_4
+            ModContainer modContainer
+            #endif ) {
 
+        #if MC_VER > MC_1_20_4
         modContainer.registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
+        #else
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
+        #endif
 
         MojangMaps.init(new LoaderInfoNeoforge(false));
     }

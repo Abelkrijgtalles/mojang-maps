@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
+import java.util.Collections;
 import java.util.List;
 import net.minecraft.DetectedVersion;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
@@ -50,7 +51,7 @@ public class MojangMaps {
 
     public static List<ConfigObject> getDefaultConfig() {
 
-        return List.of(
+        return Collections.singletonList(
                 new ConfigItem("message", "Hello you are cool :)", "Very cool")
         );
     }

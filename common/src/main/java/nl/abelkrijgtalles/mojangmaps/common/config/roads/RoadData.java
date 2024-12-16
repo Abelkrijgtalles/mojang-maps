@@ -26,6 +26,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,21 +42,15 @@ import org.apache.commons.lang3.ArrayUtils;
 public class RoadData {
 
     // To see the specs for roads.mmd, see roads.mmd_spec.md in this folder/package.
-
-    public final static List<Road> roads = List.of(
-            new Road("Test road", "world", List.of(
-                    new Vec3(0, 60, 0),
-                    new Vec3(0, 60, 5)
-            )),
-            new Road("Unnamed Road", "world", List.of(
-                    new Vec3(1, 2, 3),
-                    new Vec3(4, 5, 6)
-            )),
-            new Road("Exploring the nether or something like that", "world_nether", List.of(
-                    new Vec3(46, 62, 56),
-                    new Vec3(6, 60, 55555)
-            ))
-    );
+    #if MC_VER <= MC_1_16_5
+    private final static String MESSAGE =
+            "---\n" +
+                    "DO NOT DELETE THIS FILE!!!\n" +
+                    "This rest of this file may look like gibberish, but it's not. This stores all the road data for Mojang Maps.\n" +
+                    "If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.\n" +
+                    "Even editing this file, or this message, will brick Mojang Maps.\n" +
+                    "---\n";
+    #else
     private final static String MESSAGE = """
             ---
             DO NOT DELETE THIS FILE!!!
@@ -64,7 +59,8 @@ public class RoadData {
             Even editing this file, or this message, will brick Mojang Maps.
             ---
             """;
-    private final static Path FILE_PATH = Path.of(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
+    #endif
+    private final static Path FILE_PATH = Paths.get(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
 
     /**
      * Overwrite (or create) roads.mmd with the provided roads. This will completely reset roads.mmd.

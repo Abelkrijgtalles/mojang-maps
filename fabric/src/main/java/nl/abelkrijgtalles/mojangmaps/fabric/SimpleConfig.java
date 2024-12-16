@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
 import net.fabricmc.loader.api.FabricLoader;
@@ -282,7 +283,7 @@ public class SimpleConfig {
         @Override
         public Path getDataDirectory() {
 
-            return Path.of(String.valueOf(FabricLoader.getInstance().getConfigDir()), MojangMaps.MOD_ID);
+            return Paths.get(String.valueOf(FabricLoader.getInstance().getConfigDir()), MojangMaps.MOD_ID);
         }
 
     }

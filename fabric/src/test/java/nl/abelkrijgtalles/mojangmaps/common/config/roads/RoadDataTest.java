@@ -49,7 +49,7 @@ public class RoadDataTest {
 
             for (int j = 0; j < numberOfRoadsAndWaypointsPerRoad; j++) {
 
-                waypoints.add(new Vec3(rand.nextDouble(1000), rand.nextDouble(256), rand.nextDouble(1000)));
+                waypoints.add(new Vec3(rand.nextDouble() * 1000, rand.nextDouble() * 256, rand.nextDouble() * 1000));
 
             }
 
