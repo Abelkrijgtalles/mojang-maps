@@ -20,6 +20,8 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Setup Git
+        run: apt install git
       - name: Apply patches
         run: ./gradlew applyPatches
       - name: Build Mojang Maps for all versions
