@@ -5,12 +5,12 @@ Subject: [PATCH] Cleanup codebase
 
 
 diff --git a/src/main/java/pathfinding/AStar.java b/src/main/java/pathfinding/AStar.java
-index 94112ecb51e5a07b88670d8e616cf31df84987f1..54dc29b35d0492253fec43d625449aadc69f31bc 100644
+index 5942736af10a44929cbbcc60c72a651a02f6b2a9..cefe4aeeb2744b11dc8b5e705d2d56ebe850f913 100644
 --- a/src/main/java/pathfinding/AStar.java
 +++ b/src/main/java/pathfinding/AStar.java
-@@ -25,20 +25,17 @@ import pathfinding.platform.Location;
+@@ -27,20 +27,17 @@ public class AStar {
  
- public class AStar {
+     // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
  
 -    private Location startLocation;
 -    private Location endLocation;
@@ -34,7 +34,7 @@ index 94112ecb51e5a07b88670d8e616cf31df84987f1..54dc29b35d0492253fec43d625449aad
      // ---
      // CONSTRUCTORS
      // ---
-@@ -76,7 +73,7 @@ public class AStar {
+@@ -78,7 +75,7 @@ public class AStar {
          uncheckedNodes.add(startNode);
  
          // cycle through untested nodes until a exit condition is fulfilled
@@ -43,7 +43,7 @@ index 94112ecb51e5a07b88670d8e616cf31df84987f1..54dc29b35d0492253fec43d625449aad
              Node n = uncheckedNodes.get(0);
              for (Node nt : uncheckedNodes)
                  if (nt.getEstimatedFinalExpense() < n.getEstimatedFinalExpense())
-@@ -138,10 +135,7 @@ public class AStar {
+@@ -140,10 +137,7 @@ public class AStar {
  
      public boolean isObstructed(Location loc) {
  
@@ -55,7 +55,7 @@ index 94112ecb51e5a07b88670d8e616cf31df84987f1..54dc29b35d0492253fec43d625449aad
      }
  
      // ---
-@@ -301,9 +295,7 @@ public class AStar {
+@@ -303,9 +297,7 @@ public class AStar {
  
          public Node addFallNode(Location loc, double expense) {
  
@@ -68,10 +68,10 @@ index 94112ecb51e5a07b88670d8e616cf31df84987f1..54dc29b35d0492253fec43d625449aad
      }
 diff --git a/src/main/java/pathfinding/AStarRaw.java b/src/main/java/pathfinding/AStarRaw.java
 deleted file mode 100644
-index 43ebd84915435f7758b54251ffaba2c8596d1d16..0000000000000000000000000000000000000000
+index c6c20880689a11e3c5ed19e83c2785b5ca243c72..0000000000000000000000000000000000000000
 --- a/src/main/java/pathfinding/AStarRaw.java
 +++ /dev/null
-@@ -1,155 +0,0 @@
+@@ -1,157 +0,0 @@
 -/*
 - * mojang_maps.pathfinding.main
 - * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
@@ -97,6 +97,8 @@ index 43ebd84915435f7758b54251ffaba2c8596d1d16..00000000000000000000000000000000
 -import pathfinding.platform.Location;
 -
 -public class AStarRaw {
+-
+-    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
 -
 -    private int maxNodeTests;
 -    private boolean canClimbLadders;
@@ -229,10 +231,10 @@ index 43ebd84915435f7758b54251ffaba2c8596d1d16..00000000000000000000000000000000
 -}
 diff --git a/src/main/java/pathfinding/JPS.java b/src/main/java/pathfinding/JPS.java
 deleted file mode 100644
-index b5504b40bdcf8aa8ae130b067eecb01b74d4d7a3..0000000000000000000000000000000000000000
+index b3a08a25eb087b37b8fcbe21196145e2f3647b44..0000000000000000000000000000000000000000
 --- a/src/main/java/pathfinding/JPS.java
 +++ /dev/null
-@@ -1,313 +0,0 @@
+@@ -1,315 +0,0 @@
 -/*
 - * mojang_maps.pathfinding.main
 - * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
@@ -259,6 +261,8 @@ index b5504b40bdcf8aa8ae130b067eecb01b74d4d7a3..00000000000000000000000000000000
 -import pathfinding.platform.Location;
 -
 -public class JPS {
+-
+-    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
 -
 -    private Location startLocation;
 -    private Location endLocation;

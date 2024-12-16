@@ -1,0 +1,1763 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Abel <abelvanhulst@gmail.com>
+Date: Mon, 16 Dec 2024 21:13:51 +0100
+Subject: [PATCH] Add copyright notice
+
+
+diff --git a/src/main/java/main/Pathfinding.java b/src/main/java/main/Pathfinding.java
+index 0add3515af4482a34fb5c9810b5e31200b75384a..f1b5e1cd67a7dea63e5d4244f74f1ce2324b47ee 100644
+--- a/src/main/java/main/Pathfinding.java
++++ b/src/main/java/main/Pathfinding.java
+@@ -1,3 +1,21 @@
++/*
++ * mojang_maps.pathfinding.main
++ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
+ package main;
+ 
+ import org.bukkit.Bukkit;
+@@ -5,70 +23,68 @@ import org.bukkit.Location;
+ import org.bukkit.Material;
+ import org.bukkit.event.Listener;
+ import org.bukkit.plugin.java.JavaPlugin;
+-
+ import pathfinding.AStar;
+ 
+-public class Pathfinding extends JavaPlugin implements Listener
+-{
+-	
+-	@Override
+-	public void onEnable()
+-	{
+-		System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " enabled!");
+-		
+-		test();
+-	}
+-	
+-	@Override
+-	public void onDisable()
+-	{
+-		//resetTest();
+-		
+-		System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " disabled!");
+-	}
+-	
+-	Location[] path;
+-	Material[] mat;
+-	Byte[] data;
+- 	@SuppressWarnings("deprecation")
+-	public void test()
+-	{
+- 		
+- 		
+-		Location start = new Location(Bukkit.getWorlds().get(0), 0, 4, 0);
+-		Location end = new Location(Bukkit.getWorlds().get(0), 20, 4, 0);
+-		
+-		AStar a = new AStar(start, end, 10000, true, 5);
+-		path = a.getPath();
+-		
+-		mat = new Material[path.length];
+-		data = new Byte[path.length];
+-		
+-		for(int i = 0; i < path.length; i++)
+-		{
+-			mat[i] = path[i].getBlock().getType();
+-			data[i] = path[i].getBlock().getData();
+-			
+-			path[i].getBlock().setType(Material.GLASS);
+-		}
+-		
+-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+-			@Override
+-			public void run()
+-			{
+-				resetTest();
+-			}
+-		}, 80L);
+-	}
+-	
+-	@SuppressWarnings("deprecation")
+-	public void resetTest()
+-	{
+-		for(int i = 0; i < path.length; i++)
+-		{
+-			path[i].getBlock().setType(mat[i]);
+-			path[i].getBlock().setData(data[i]);
+-		}
+-	}
+-	
++public class Pathfinding extends JavaPlugin implements Listener {
++
++    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
++
++    Location[] path;
++    Material[] mat;
++    Byte[] data;
++
++    @Override
++    public void onEnable() {
++
++        System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " enabled!");
++
++        test();
++    }
++
++    @Override
++    public void onDisable() {
++        //resetTest();
++
++        System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " disabled!");
++    }
++
++    @SuppressWarnings("deprecation")
++    public void test() {
++
++
++        Location start = new Location(Bukkit.getWorlds().get(0), 0, 4, 0);
++        Location end = new Location(Bukkit.getWorlds().get(0), 20, 4, 0);
++
++        AStar a = new AStar(start, end, 10000, true, 5);
++        path = a.getPath();
++
++        mat = new Material[path.length];
++        data = new Byte[path.length];
++
++        for (int i = 0; i < path.length; i++) {
++            mat[i] = path[i].getBlock().getType();
++            data[i] = path[i].getBlock().getData();
++
++            path[i].getBlock().setType(Material.GLASS);
++        }
++
++        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
++
++            @Override
++            public void run() {
++
++                resetTest();
++            }
++        }, 80L);
++    }
++
++    @SuppressWarnings("deprecation")
++    public void resetTest() {
++
++        for (int i = 0; i < path.length; i++) {
++            path[i].getBlock().setType(mat[i]);
++            path[i].getBlock().setData(data[i]);
++        }
++    }
++
+ }
+diff --git a/src/main/java/pathfinding/AStar.java b/src/main/java/pathfinding/AStar.java
+index 23740e887d7bec398f1831876e0ebe5bf7e339d9..1178754a9d15353759530b4d3b2177779fbf7a5b 100644
+--- a/src/main/java/pathfinding/AStar.java
++++ b/src/main/java/pathfinding/AStar.java
+@@ -1,319 +1,324 @@
++/*
++ * mojang_maps.pathfinding.main
++ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
+ package pathfinding;
+ 
+ import java.util.ArrayList;
+-
+ import org.bukkit.Bukkit;
+ import org.bukkit.ChatColor;
+ import org.bukkit.Location;
+ import org.bukkit.Material;
+ 
+-public class AStar
+-{
+-	
+-	private Location startLocation;
+-	private Location endLocation;
+-	
+-	private Node startNode;
+-	private Node endNode;
+-	
+-	private boolean pathFound = false;
+-	private ArrayList<Node> checkedNodes = new ArrayList<Node>();
+-	private ArrayList<Node> uncheckedNodes = new ArrayList<Node>();
+-	
+-	private int maxNodeTests;
+-	private boolean canClimbLadders;
+-	private double maxFallDistance;
+-	
+-	// ---
+-	// CONSTRUCTORS
+-	// ---
+-	
+-	public AStar(Location start, Location end, int maxNodeTests, boolean canClimbLadders, double maxFallDistance)
+-	{
+-		this.startLocation = start;
+-		this.endLocation = end;
+-		
+-		startNode = new Node(startLocation, 0, null);
+-		endNode = new Node(endLocation, 0, null);
+-		
+-		this.maxNodeTests = maxNodeTests;
+-		this.canClimbLadders = canClimbLadders;
+-		this.maxFallDistance = maxFallDistance;
+-	}
+-	
+-	public AStar(Location start, Location end)
+-	{
+-		this(start, end, 1000, false, 1);
+-	}
+-	
+-	// ---
+-	// PATHFINDING
+-	// ---
+-	
+-	public Location[] getPath()
+-	{
+-		// check if player could stand at start and endpoint, if not return empty path
+-		if(!(canStandAt(startLocation) && canStandAt(endLocation)))
+-			return new Location[0];
+-		
+-		// time for benchmark
+-		long nsStart = System.nanoTime();
+-		
+-		uncheckedNodes.add(startNode);
+-		
+-		// cycle through untested nodes until a exit condition is fulfilled
+-		while(checkedNodes.size() < maxNodeTests && pathFound == false && uncheckedNodes.size() > 0)
+-		{
+-			Node n = uncheckedNodes.get(0);
+-			for(Node nt : uncheckedNodes)
+-				if(nt.getEstimatedFinalExpense() < n.getEstimatedFinalExpense())
+-					n = nt;
+-			
+-			if(n.estimatedExpenseLeft < 1)
+-			{
+-				pathFound = true;
+-				endNode = n;
+-				
+-				// print information about last node
+-				Bukkit.broadcastMessage(uncheckedNodes.size() + "uc " + checkedNodes.size() + "c " + round(n.expense) + "cne " + round(n.getEstimatedFinalExpense()) + "cnee ");
+-				
+-				break;
+-			}
+-			
+-			n.getReachableLocations();
+-			uncheckedNodes.remove(n);
+-			checkedNodes.add(n);
+-		}
+-		
+-		// returning if no path has been found
+-		if(!pathFound)
+-		{
+-			float duration = (System.nanoTime() - nsStart) / 1000000f;
+-			Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to not find a path.");
+-			
+-			return new Location[0];
+-		}
+-		
+-		// get length of path to create array, 1 because of start
+-		int length = 1;
+-		Node n = endNode;
+-		while(n.origin != null)
+-		{
+-			n = n.origin;
+-			length++;
+-		}
+-		
+-		Location[] locations = new Location[length];
+-		
+-		//fill Array
+-		n = endNode;
+-		for(int i = length - 1; i > 0; i --)
+-		{
+-			locations[i] = n.getLocation();
+-			n = n.origin;
+-		}
+-		
+-		locations[0] = startNode.getLocation();
+-		
+-		// outputting benchmark result
+-		float duration = (System.nanoTime() - nsStart) / 1000000f;
+-		Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
+-		
+-		return locations;
+-	}
+-	
+-	private Node getNode(Location loc)
+-	{
+-		Node test = new Node(loc, 0, null);
+-		
+-		for(Node n : checkedNodes)
+-			if(n.id == test.id)
+-				return n;
+-		
+-		return test;
+-	}
+-	
+-	// ---
+-	// NODE
+-	// ---
+-	
+-	public class Node
+-	{
+-		private Location location;
+-		public double id;
+-		
+-		public Node origin;
+-		
+-		public double expense;
+-		private double estimatedExpenseLeft = -1;
+-		
+-		// ---
+-		// CONSTRUCTORS
+-		// ---
+-		
+-		public Node(Location loc, double expense, Node origin)
+-		{
+-			location = loc;
+-			id = loc.getBlockX() + 30000000d * loc.getBlockY() + 30000000d * 30000000d * loc.getBlockZ();
+-			
+-			this.origin = origin;
+-			
+-			this.expense = expense;
+-		}
+-		
+-		// ---
+-		// GETTERS
+-		// ---
+-		
+-		public Location getLocation()
+-		{
+-			return location;
+-		}
+-		
+-		public double getEstimatedFinalExpense()
+-		{
+-			if(estimatedExpenseLeft == -1)
+-				estimatedExpenseLeft = distanceTo(location, endLocation);
+-			
+-			return expense + 1.5 * estimatedExpenseLeft;
+-		}
+-		
+-		// ---
+-		// PATHFINDING
+-		// ---
+-		
+-		public void getReachableLocations()
+-		{
+-			//trying to get all possibly walkable blocks
+-			for(int x = -1; x <= 1; x++)
+-				for(int z = -1; z <= 1; z++)
+-					if(!(x == 0 && z == 0) && x * z == 0)
+-					{
+-						Location loc = new Location(Bukkit.getWorlds().get(0), location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z);
+-						
+-						// usual unchanged y
+-						if(canStandAt(loc))
+-							reachNode(loc, expense + 1);
+-						
+-						// one block up
+-						if(!isObstructed(loc.clone().add(-x, 2, -z))) // block above current tile, thats why subtracting x and z
+-						{
+-							Location nLoc = loc.clone().add(0, 1, 0);
+-							if(canStandAt(nLoc))
+-								reachNode(nLoc, expense + 1.4142);
+-						}
+-						
+-						// one block down or falling multiple blocks down
+-						if(!isObstructed(loc.clone().add(0, 1, 0))) // block above possible new tile
+-						{
+-							Location nLoc = loc.clone().add(0, -1, 0);
+-							if(canStandAt(nLoc)) // one block down
+-								reachNode(nLoc, expense + 1.4142);
+-							else if(!isObstructed(nLoc) && !isObstructed(nLoc.clone().add(0, 1, 0))) // fall
+-							{
+-								int drop = 1;
+-								while(drop <= maxFallDistance && !isObstructed(loc.clone().add(0, -drop, 0)))
+-								{
+-									Location locF = loc.clone().add(0, -drop, 0);
+-									if(canStandAt(locF))
+-									{
+-										Node fallNode = addFallNode(loc,  expense + 1);
+-										fallNode.reachNode(locF, expense + drop * 2);
+-									}
+-									
+-									drop ++;
+-								}
+-							}
+-						}
+-						
+-						//ladder
+-						if(canClimbLadders)
+-							if(loc.clone().add(-x, 0, -z).getBlock().getType() == Material.LADDER)
+-							{
+-								Location nLoc = loc.clone().add(-x, 0, -z);
+-								int up = 1;
+-								while(nLoc.clone().add(0, up, 0).getBlock().getType() == Material.LADDER)
+-									up++;
+-								
+-								reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
+-							}
+-					}
+-		}
+-		
+-		public void reachNode(Location locThere, double expenseThere)
+-		{
+-			Node nt = getNode(locThere);
+-			
+-			if(nt.origin == null && nt != startNode) // new node
+-			{
+-				nt.expense = expenseThere;
+-				nt.origin = this;
+-				
+-				uncheckedNodes.add(nt);
+-				
+-				return;
+-			}
+-			
+-			// no new node
+-			if(nt.expense > expenseThere) // this way is faster to go there
+-			{
+-				nt.expense = expenseThere;
+-				nt.origin = this;
+-			}
+-		}
+-		
+-		public Node addFallNode(Location loc, double expense)
+-		{
+-			Node n = new Node(loc, expense, this);
+-			
+-			return n;
+-		}
+-		
+-	}
+-	
+-	// ---
+-	// CHECKS
+-	// ---
+-	
+-	public boolean isObstructed(Location loc)
+-	{
+-		if(loc.getBlock().getType().isSolid())
+-			return true;
+-		
+-		return false;
+-	}
+-	
+-	public boolean canStandAt(Location loc)
+-	{
+-		return !(isObstructed(loc) || isObstructed(loc.clone().add(0, 1, 0)) || !isObstructed(loc.clone().add(0, -1, 0)));
+-	}
+-	
+-	// ---
+-	// UTIL
+-	// ---
+-	
+-	public double distanceTo(Location loc1, Location loc2)
+-	{
+-		if(loc1.getWorld() != loc2.getWorld())
+-			return Double.MAX_VALUE;
+-		
+-		double deltaX = Math.abs(loc1.getX() - loc2.getX());
+-		double deltaY = Math.abs(loc1.getY() - loc2.getY());
+-		double deltaZ = Math.abs(loc1.getZ() - loc2.getZ());
+-		
+-		// euclidean distance
+-		double distance2d = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+-		double distance3d = Math.sqrt(distance2d * distance2d + deltaY * deltaY);
+-		
+-		return distance3d;
+-		
+-		// manhattan distance
+-		//return deltaX + deltaY + deltaZ;
+-	}
+-	
+-	public double round(double d)
+-	{
+-		return ((int) (d * 100)) / 100d;
+-	}
+-	
++public class AStar {
++
++    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
++
++    private Location startLocation;
++    private Location endLocation;
++
++    private Node startNode;
++    private Node endNode;
++
++    private boolean pathFound = false;
++    private ArrayList<Node> checkedNodes = new ArrayList<Node>();
++    private ArrayList<Node> uncheckedNodes = new ArrayList<Node>();
++
++    private int maxNodeTests;
++    private boolean canClimbLadders;
++    private double maxFallDistance;
++
++    // ---
++    // CONSTRUCTORS
++    // ---
++
++    public AStar(Location start, Location end, int maxNodeTests, boolean canClimbLadders, double maxFallDistance) {
++
++        this.startLocation = start;
++        this.endLocation = end;
++
++        startNode = new Node(startLocation, 0, null);
++        endNode = new Node(endLocation, 0, null);
++
++        this.maxNodeTests = maxNodeTests;
++        this.canClimbLadders = canClimbLadders;
++        this.maxFallDistance = maxFallDistance;
++    }
++
++    public AStar(Location start, Location end) {
++
++        this(start, end, 1000, false, 1);
++    }
++
++    // ---
++    // PATHFINDING
++    // ---
++
++    public Location[] getPath() {
++        // check if player could stand at start and endpoint, if not return empty path
++        if (!(canStandAt(startLocation) && canStandAt(endLocation)))
++            return new Location[0];
++
++        // time for benchmark
++        long nsStart = System.nanoTime();
++
++        uncheckedNodes.add(startNode);
++
++        // cycle through untested nodes until a exit condition is fulfilled
++        while (checkedNodes.size() < maxNodeTests && pathFound == false && uncheckedNodes.size() > 0) {
++            Node n = uncheckedNodes.get(0);
++            for (Node nt : uncheckedNodes)
++                if (nt.getEstimatedFinalExpense() < n.getEstimatedFinalExpense())
++                    n = nt;
++
++            if (n.estimatedExpenseLeft < 1) {
++                pathFound = true;
++                endNode = n;
++
++                // print information about last node
++                Bukkit.broadcastMessage(uncheckedNodes.size() + "uc " + checkedNodes.size() + "c " + round(n.expense) + "cne " + round(n.getEstimatedFinalExpense()) + "cnee ");
++
++                break;
++            }
++
++            n.getReachableLocations();
++            uncheckedNodes.remove(n);
++            checkedNodes.add(n);
++        }
++
++        // returning if no path has been found
++        if (!pathFound) {
++            float duration = (System.nanoTime() - nsStart) / 1000000f;
++            Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to not find a path.");
++
++            return new Location[0];
++        }
++
++        // get length of path to create array, 1 because of start
++        int length = 1;
++        Node n = endNode;
++        while (n.origin != null) {
++            n = n.origin;
++            length++;
++        }
++
++        Location[] locations = new Location[length];
++
++        //fill Array
++        n = endNode;
++        for (int i = length - 1; i > 0; i--) {
++            locations[i] = n.getLocation();
++            n = n.origin;
++        }
++
++        locations[0] = startNode.getLocation();
++
++        // outputting benchmark result
++        float duration = (System.nanoTime() - nsStart) / 1000000f;
++        Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
++
++        return locations;
++    }
++
++    private Node getNode(Location loc) {
++
++        Node test = new Node(loc, 0, null);
++
++        for (Node n : checkedNodes)
++            if (n.id == test.id)
++                return n;
++
++        return test;
++    }
++
++    // ---
++    // NODE
++    // ---
++
++    public boolean isObstructed(Location loc) {
++
++        if (loc.getBlock().getType().isSolid())
++            return true;
++
++        return false;
++    }
++
++    // ---
++    // CHECKS
++    // ---
++
++    public boolean canStandAt(Location loc) {
++
++        return !(isObstructed(loc) || isObstructed(loc.clone().add(0, 1, 0)) || !isObstructed(loc.clone().add(0, -1, 0)));
++    }
++
++    public double distanceTo(Location loc1, Location loc2) {
++
++        if (loc1.getWorld() != loc2.getWorld())
++            return Double.MAX_VALUE;
++
++        double deltaX = Math.abs(loc1.getX() - loc2.getX());
++        double deltaY = Math.abs(loc1.getY() - loc2.getY());
++        double deltaZ = Math.abs(loc1.getZ() - loc2.getZ());
++
++        // euclidean distance
++        double distance2d = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
++        double distance3d = Math.sqrt(distance2d * distance2d + deltaY * deltaY);
++
++        return distance3d;
++
++        // manhattan distance
++        //return deltaX + deltaY + deltaZ;
++    }
++
++    // ---
++    // UTIL
++    // ---
++
++    public double round(double d) {
++
++        return ((int) (d * 100)) / 100d;
++    }
++
++    public class Node {
++
++        public double id;
++        public Node origin;
++        public double expense;
++        private Location location;
++        private double estimatedExpenseLeft = -1;
++
++        // ---
++        // CONSTRUCTORS
++        // ---
++
++        public Node(Location loc, double expense, Node origin) {
++
++            location = loc;
++            id = loc.getBlockX() + 30000000d * loc.getBlockY() + 30000000d * 30000000d * loc.getBlockZ();
++
++            this.origin = origin;
++
++            this.expense = expense;
++        }
++
++        // ---
++        // GETTERS
++        // ---
++
++        public Location getLocation() {
++
++            return location;
++        }
++
++        public double getEstimatedFinalExpense() {
++
++            if (estimatedExpenseLeft == -1)
++                estimatedExpenseLeft = distanceTo(location, endLocation);
++
++            return expense + 1.5 * estimatedExpenseLeft;
++        }
++
++        // ---
++        // PATHFINDING
++        // ---
++
++        public void getReachableLocations() {
++            //trying to get all possibly walkable blocks
++            for (int x = -1; x <= 1; x++)
++                for (int z = -1; z <= 1; z++)
++                    if (!(x == 0 && z == 0) && x * z == 0) {
++                        Location loc = new Location(Bukkit.getWorlds().get(0), location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z);
++
++                        // usual unchanged y
++                        if (canStandAt(loc))
++                            reachNode(loc, expense + 1);
++
++                        // one block up
++                        if (!isObstructed(loc.clone().add(-x, 2, -z))) // block above current tile, thats why subtracting x and z
++                        {
++                            Location nLoc = loc.clone().add(0, 1, 0);
++                            if (canStandAt(nLoc))
++                                reachNode(nLoc, expense + 1.4142);
++                        }
++
++                        // one block down or falling multiple blocks down
++                        if (!isObstructed(loc.clone().add(0, 1, 0))) // block above possible new tile
++                        {
++                            Location nLoc = loc.clone().add(0, -1, 0);
++                            if (canStandAt(nLoc)) // one block down
++                                reachNode(nLoc, expense + 1.4142);
++                            else if (!isObstructed(nLoc) && !isObstructed(nLoc.clone().add(0, 1, 0))) // fall
++                            {
++                                int drop = 1;
++                                while (drop <= maxFallDistance && !isObstructed(loc.clone().add(0, -drop, 0))) {
++                                    Location locF = loc.clone().add(0, -drop, 0);
++                                    if (canStandAt(locF)) {
++                                        Node fallNode = addFallNode(loc, expense + 1);
++                                        fallNode.reachNode(locF, expense + drop * 2);
++                                    }
++
++                                    drop++;
++                                }
++                            }
++                        }
++
++                        //ladder
++                        if (canClimbLadders)
++                            if (loc.clone().add(-x, 0, -z).getBlock().getType() == Material.LADDER) {
++                                Location nLoc = loc.clone().add(-x, 0, -z);
++                                int up = 1;
++                                while (nLoc.clone().add(0, up, 0).getBlock().getType() == Material.LADDER)
++                                    up++;
++
++                                reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
++                            }
++                    }
++        }
++
++        public void reachNode(Location locThere, double expenseThere) {
++
++            Node nt = getNode(locThere);
++
++            if (nt.origin == null && nt != startNode) // new node
++            {
++                nt.expense = expenseThere;
++                nt.origin = this;
++
++                uncheckedNodes.add(nt);
++
++                return;
++            }
++
++            // no new node
++            if (nt.expense > expenseThere) // this way is faster to go there
++            {
++                nt.expense = expenseThere;
++                nt.origin = this;
++            }
++        }
++
++        public Node addFallNode(Location loc, double expense) {
++
++            Node n = new Node(loc, expense, this);
++
++            return n;
++        }
++
++    }
++
+ }
+diff --git a/src/main/java/pathfinding/AStarRaw.java b/src/main/java/pathfinding/AStarRaw.java
+index a56f0db828894b411019a6600e5659de7f130536..0468b84dcda14c726f61b8932632aac8e0111b6c 100644
+--- a/src/main/java/pathfinding/AStarRaw.java
++++ b/src/main/java/pathfinding/AStarRaw.java
+@@ -1,3 +1,21 @@
++/*
++ * mojang_maps.pathfinding.main
++ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
+ package pathfinding;
+ 
+ import org.bukkit.Bukkit;
+@@ -5,145 +23,144 @@ import org.bukkit.ChatColor;
+ import org.bukkit.Location;
+ import org.bukkit.Material;
+ 
+-public class AStarRaw
+-{
+-	
+-	private int maxNodeTests;
+-	private boolean canClimbLadders;
+-	private double maxFallDistance;
+-	
+-	private Location startLocation;
+-	private Location endLocation;
+-	private int baseX;
+-	private int baseY;
+-	private int baseZ;
+-	
+-	private boolean pathFound = false;
+-	private Material[][][] materials = new Material[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
+-	private byte[][][] walkability = new byte[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
+-	//  1 walkable
+-	//  0 untested
+-	// -1 base blocked
+-	// -2 head blocked
+-	// -3 no ground
+-	
+-	// ---
+-	// CONSTRUCTORS
+-	// ---
+-	
+-	public AStarRaw(Location start, Location end, int maxNodeTests, boolean canClimbLadders, double maxFallDistance)
+-	{
+-		this.startLocation = start;
+-		this.endLocation = end;
+-		
+-		baseX = startLocation.getBlockX();
+-		baseY = startLocation.getBlockY();
+-		baseZ = startLocation.getBlockZ();
+-		
+-		this.maxNodeTests = maxNodeTests;
+-		this.canClimbLadders = canClimbLadders;
+-		this.maxFallDistance = maxFallDistance;
+-	}
+-	
+-	public AStarRaw(Location start, Location end)
+-	{
+-		this(start, end, 1000, false, 1);
+-	}
+-	
+-	// ---
+-	// PATHFINDING
+-	// ---
+-	
+-	public Location[] getPath()
+-	{
+-		// check if player could stand at start and endpoint, if not return empty path
+-		if(!canStandAt(baseX, baseY, baseZ) || !canStandAt(endLocation.getBlockX(), endLocation.getBlockY(), endLocation.getBlockZ()))
+-			return new Location[0];
+-		
+-		// time for benchmark
+-		long nsStart = System.nanoTime();
+-		
+-		
+-		
+-		// outputting benchmark result
+-		float duration = (System.nanoTime() - nsStart) / 1000000f;
+-		Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
+-		
+-		return new Location[0]; // TODO
+-	}
+-	
+-	// ---
+-	// CHECKS
+-	// ---
+-	
+-	private Material getMaterial(int relX, int relY, int relZ)
+-	{
+-		if(materials[relX][relY][relZ] != null)
+-			return materials[relX][relY][relZ];
+-		
+-		Material mat = startLocation.getWorld().getBlockAt(baseX + relX, baseY + relY, baseZ + relZ).getType();
+-		materials[relX][relY][relZ] = mat;
+-		
+-		return mat;
+-	}
+-	
+-	private boolean canWalkThrough(Material mat)
+-	{
+-		return !mat.isSolid();
+-	}
+-	
+-	
+-	private byte getWalkability(int relX, int relY, int relZ)
+-	{
+-		if(!canWalkThrough(getMaterial(relX, relY, relZ)))
+-			return -1;
+-		
+-		if(!canWalkThrough(getMaterial(relX, relY + 1, relZ)))
+-			return -2;
+-		
+-		if(canWalkThrough(getMaterial(relX, relY - 1, relZ)))
+-			return -3;
+-		
+-		return 1;
+-	}
+-	
+-	private boolean canStandAt(int relX, int relY, int relZ)
+-	{
+-		if(walkability[relX][relY][relZ] != 0)
+-			return walkability[relX][relY][relZ] > 0;
+-		
+-		byte walk = getWalkability(relX, relY, relZ);
+-		walkability[relX][relY][relZ] = walk;
+-		
+-		return walk > 0;
+-	}
+-	
+-	// ---
+-	// UTIL
+-	// ---
+-	
+-	public double distanceTo(Location loc1, Location loc2)
+-	{
+-		if(loc1.getWorld() != loc2.getWorld())
+-			return Double.MAX_VALUE;
+-		
+-		double deltaX = Math.abs(loc1.getX() - loc2.getX());
+-		double deltaY = Math.abs(loc1.getY() - loc2.getY());
+-		double deltaZ = Math.abs(loc1.getZ() - loc2.getZ());
+-		
+-		// euclidean distance
+-		double distance2d = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+-		double distance3d = Math.sqrt(distance2d * distance2d + deltaY * deltaY);
+-		
+-		return distance3d;
+-		
+-		// manhattan distance
+-		//return deltaX + deltaY + deltaZ;
+-	}
+-	
+-	public double round(double d)
+-	{
+-		return ((int) (d * 100)) / 100d;
+-	}
+-	
++public class AStarRaw {
++
++    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
++
++    private int maxNodeTests;
++    private boolean canClimbLadders;
++    private double maxFallDistance;
++
++    private Location startLocation;
++    private Location endLocation;
++    private int baseX;
++    private int baseY;
++    private int baseZ;
++
++    private boolean pathFound = false;
++    private Material[][][] materials = new Material[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
++    private byte[][][] walkability = new byte[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
++    //  1 walkable
++    //  0 untested
++    // -1 base blocked
++    // -2 head blocked
++    // -3 no ground
++
++    // ---
++    // CONSTRUCTORS
++    // ---
++
++    public AStarRaw(Location start, Location end, int maxNodeTests, boolean canClimbLadders, double maxFallDistance) {
++
++        this.startLocation = start;
++        this.endLocation = end;
++
++        baseX = startLocation.getBlockX();
++        baseY = startLocation.getBlockY();
++        baseZ = startLocation.getBlockZ();
++
++        this.maxNodeTests = maxNodeTests;
++        this.canClimbLadders = canClimbLadders;
++        this.maxFallDistance = maxFallDistance;
++    }
++
++    public AStarRaw(Location start, Location end) {
++
++        this(start, end, 1000, false, 1);
++    }
++
++    // ---
++    // PATHFINDING
++    // ---
++
++    public Location[] getPath() {
++        // check if player could stand at start and endpoint, if not return empty path
++        if (!canStandAt(baseX, baseY, baseZ) || !canStandAt(endLocation.getBlockX(), endLocation.getBlockY(), endLocation.getBlockZ()))
++            return new Location[0];
++
++        // time for benchmark
++        long nsStart = System.nanoTime();
++
++
++        // outputting benchmark result
++        float duration = (System.nanoTime() - nsStart) / 1000000f;
++        Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
++
++        return new Location[0]; // TODO
++    }
++
++    // ---
++    // CHECKS
++    // ---
++
++    private Material getMaterial(int relX, int relY, int relZ) {
++
++        if (materials[relX][relY][relZ] != null)
++            return materials[relX][relY][relZ];
++
++        Material mat = startLocation.getWorld().getBlockAt(baseX + relX, baseY + relY, baseZ + relZ).getType();
++        materials[relX][relY][relZ] = mat;
++
++        return mat;
++    }
++
++    private boolean canWalkThrough(Material mat) {
++
++        return !mat.isSolid();
++    }
++
++
++    private byte getWalkability(int relX, int relY, int relZ) {
++
++        if (!canWalkThrough(getMaterial(relX, relY, relZ)))
++            return -1;
++
++        if (!canWalkThrough(getMaterial(relX, relY + 1, relZ)))
++            return -2;
++
++        if (canWalkThrough(getMaterial(relX, relY - 1, relZ)))
++            return -3;
++
++        return 1;
++    }
++
++    private boolean canStandAt(int relX, int relY, int relZ) {
++
++        if (walkability[relX][relY][relZ] != 0)
++            return walkability[relX][relY][relZ] > 0;
++
++        byte walk = getWalkability(relX, relY, relZ);
++        walkability[relX][relY][relZ] = walk;
++
++        return walk > 0;
++    }
++
++    // ---
++    // UTIL
++    // ---
++
++    public double distanceTo(Location loc1, Location loc2) {
++
++        if (loc1.getWorld() != loc2.getWorld())
++            return Double.MAX_VALUE;
++
++        double deltaX = Math.abs(loc1.getX() - loc2.getX());
++        double deltaY = Math.abs(loc1.getY() - loc2.getY());
++        double deltaZ = Math.abs(loc1.getZ() - loc2.getZ());
++
++        // euclidean distance
++        double distance2d = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
++        double distance3d = Math.sqrt(distance2d * distance2d + deltaY * deltaY);
++
++        return distance3d;
++
++        // manhattan distance
++        //return deltaX + deltaY + deltaZ;
++    }
++
++    public double round(double d) {
++
++        return ((int) (d * 100)) / 100d;
++    }
++
+ }
+diff --git a/src/main/java/pathfinding/JPS.java b/src/main/java/pathfinding/JPS.java
+index 78ab4f1bc48ef89ec57d1fdac4a5d9669751e577..617fa3de0a58bdcb07558a0085c0b043d046f010 100644
+--- a/src/main/java/pathfinding/JPS.java
++++ b/src/main/java/pathfinding/JPS.java
+@@ -1,323 +1,328 @@
++/*
++ * mojang_maps.pathfinding.main
++ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
+ package pathfinding;
+ 
+ import java.util.ArrayList;
+-
+ import org.bukkit.Bukkit;
+ import org.bukkit.ChatColor;
+ import org.bukkit.Location;
+ import org.bukkit.Material;
+ 
+-public class JPS
+-{
+-	
+-	private Location startLocation;
+-	private Location endLocation;
+-	
+-	private Node startNode;
+-	private Node endNode;
+-	
+-	private boolean pathFound = false;
+-	private ArrayList<Node> checkedNodes = new ArrayList<Node>();
+-	private ArrayList<Node> uncheckedNodes = new ArrayList<Node>();
+-	
+-	private int maxNodeTests;
+-	private boolean canClimbLadders;
+-	private double maxFallDistance;
+-	
+-	// ---
+-	// CONSTRUCTORS
+-	// ---
+-	
+-	public JPS(Location start, Location end, int maxNodeTests, boolean canClimbLadders, double maxFallDistance)
+-	{
+-		this.startLocation = start;
+-		this.endLocation = end;
+-		
+-		startNode = new Node(startLocation, 0, null);
+-		endNode = new Node(endLocation, 0, null);
+-		
+-		this.maxNodeTests = maxNodeTests;
+-		this.canClimbLadders = canClimbLadders;
+-		this.maxFallDistance = maxFallDistance;
+-	}
+-	
+-	public JPS(Location start, Location end)
+-	{
+-		this(start, end, 1000, false, 1);
+-	}
+-	
+-	// ---
+-	// PATHFINDING
+-	// ---
+-	
+-	public Location[] getPath()
+-	{
+-		// check if player could stand at start and endpoint, if not return empty path
+-		if(!(canStandAt(startLocation) && canStandAt(endLocation)))
+-			return new Location[0];
+-		
+-		// time for benchmark
+-		long nsStart = System.nanoTime();
+-		
+-		uncheckedNodes.add(startNode);
+-		
+-		// cycle through untested nodes until a exit condition is fulfilled
+-		while(checkedNodes.size() < maxNodeTests && pathFound == false && uncheckedNodes.size() > 0)
+-		{
+-			Node n = uncheckedNodes.get(0);
+-			for(Node nt : uncheckedNodes)
+-				if(nt.getEstimatedFinalExpense() < n.getEstimatedFinalExpense())
+-					n = nt;
+-			
+-			if(n.estimatedExpenseLeft < 1)
+-			{
+-				pathFound = true;
+-				endNode = n;
+-				
+-				// print information about last node
+-				Bukkit.broadcastMessage(uncheckedNodes.size() + "uc " + checkedNodes.size() + "c " + round(n.expense) + "cne " + round(n.getEstimatedFinalExpense()) + "cnee ");
+-				
+-				break;
+-			}
+-			
+-			n.getReachableLocations();
+-			uncheckedNodes.remove(n);
+-			checkedNodes.add(n);
+-		}
+-		
+-		// returning if no path has been found
+-		if(!pathFound)
+-		{
+-			float duration = (System.nanoTime() - nsStart) / 1000000f;
+-			Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to not find a path.");
+-			
+-			return new Location[0];
+-		}
+-		
+-		// get length of path to create array, 1 because of start
+-		int length = 1;
+-		Node n = endNode;
+-		while(n.origin != null)
+-		{
+-			n = n.origin;
+-			length++;
+-		}
+-		
+-		Location[] locations = new Location[length];
+-		
+-		//fill Array
+-		n = endNode;
+-		for(int i = length - 1; i > 0; i --)
+-		{
+-			locations[i] = n.getLocation();
+-			n = n.origin;
+-		}
+-		
+-		locations[0] = startNode.getLocation();
+-		
+-		// outputting benchmark result
+-		float duration = (System.nanoTime() - nsStart) / 1000000f;
+-		Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
+-		
+-		return locations;
+-	}
+-	
+-	private Node getNode(Location loc)
+-	{
+-		Node test = new Node(loc, 0, null);
+-		
+-		for(Node n : checkedNodes)
+-			if(n.x == test.x && n.y == test.y && n.z == test.z)
+-				return n;
+-		
+-		return test;
+-	}
+-	
+-	// ---
+-	// NODE
+-	// ---
+-	
+-	public class Node
+-	{
+-		private Location location;
+-		public int x;
+-		public int y;
+-		public int z;
+-		
+-		public Node origin;
+-		
+-		public double expense;
+-		private double estimatedExpenseLeft = -1;
+-		
+-		// ---
+-		// CONSTRUCTORS
+-		// ---
+-		
+-		public Node(Location loc, double expense, Node origin)
+-		{
+-			location = loc;
+-			x = loc.getBlockX();
+-			y = loc.getBlockY();
+-			z = loc.getBlockZ();
+-			
+-			this.origin = origin;
+-			
+-			this.expense = expense;
+-		}
+-		
+-		// ---
+-		// GETTERS
+-		// ---
+-		
+-		public Location getLocation()
+-		{
+-			return location;
+-		}
+-		
+-		public double getEstimatedFinalExpense()
+-		{
+-			if(estimatedExpenseLeft == -1)
+-				estimatedExpenseLeft = distanceTo(location, endLocation);
+-			
+-			return expense + 1.1 * estimatedExpenseLeft;
+-		}
+-		
+-		// ---
+-		// PATHFINDING
+-		// ---
+-		
+-		public void getReachableLocations()
+-		{
+-			//trying to get all possibly walkable blocks
+-			for(int x = -1; x <= 1; x++)
+-				for(int z = -1; z <= 1; z++)
+-					if(!(x == 0 && z == 0) && x * z == 0)
+-					{
+-						Location loc = new Location(Bukkit.getWorlds().get(0), location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z);
+-						
+-						// usual unchanged y
+-						if(canStandAt(loc))
+-							reachNode(loc, expense + 1);
+-						
+-						// one block up
+-						if(!isObstructed(loc.clone().add(-x, 2, -z))) // block above current tile, thats why subtracting x and z
+-						{
+-							Location nLoc = loc.clone().add(0, 1, 0);
+-							if(canStandAt(nLoc))
+-								reachNode(nLoc, expense + 1.4142);
+-						}
+-						
+-						// one block down or falling multiple blocks down
+-						if(!isObstructed(loc.clone().add(0, 1, 0))) // block above possible new tile
+-						{
+-							Location nLoc = loc.clone().add(0, -1, 0);
+-							if(canStandAt(nLoc)) // one block down
+-								reachNode(nLoc, expense + 1.4142);
+-							else if(!isObstructed(nLoc) && !isObstructed(nLoc.clone().add(0, 1, 0))) // fall
+-							{
+-								int drop = 1;
+-								while(drop <= maxFallDistance && !isObstructed(loc.clone().add(0, -drop, 0)))
+-								{
+-									Location locF = loc.clone().add(0, -drop, 0);
+-									if(canStandAt(locF))
+-									{
+-										Node fallNode = addFallNode(loc,  expense + 1);
+-										fallNode.reachNode(locF, expense + drop * 2);
+-									}
+-									
+-									drop ++;
+-								}
+-							}
+-						}
+-						
+-						//ladder
+-						if(canClimbLadders)
+-							if(loc.clone().add(-x, 0, -z).getBlock().getType() == Material.LADDER)
+-							{
+-								Location nLoc = loc.clone().add(-x, 0, -z);
+-								int up = 1;
+-								while(nLoc.clone().add(0, up, 0).getBlock().getType() == Material.LADDER)
+-									up++;
+-								
+-								reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
+-							}
+-					}
+-		}
+-		
+-		public void reachNode(Location locThere, double expenseThere)
+-		{
+-			Node nt = getNode(locThere);
+-			
+-			if(nt.origin == null && nt != startNode) // new node
+-			{
+-				nt.expense = expenseThere;
+-				nt.origin = this;
+-				
+-				uncheckedNodes.add(nt);
+-				
+-				return;
+-			}
+-			
+-			// no new node
+-			if(nt.expense > expenseThere) // this way is faster to go there
+-			{
+-				nt.expense = expenseThere;
+-				nt.origin = this;
+-			}
+-		}
+-		
+-		public Node addFallNode(Location loc, double expense)
+-		{
+-			Node n = new Node(loc, expense, this);
+-			
+-			return n;
+-		}
+-		
+-	}
+-	
+-	// ---
+-	// CHECKS
+-	// ---
+-	
+-	public boolean isObstructed(Location loc)
+-	{
+-		if(loc.getBlock().getType().isSolid())
+-			return true;
+-		
+-		return false;
+-	}
+-	
+-	public boolean canStandAt(Location loc)
+-	{
+-		return !(isObstructed(loc) || isObstructed(loc.clone().add(0, 1, 0)) || !isObstructed(loc.clone().add(0, -1, 0)));
+-	}
+-	
+-	// ---
+-	// UTIL
+-	// ---
+-	
+-	public double distanceTo(Location loc1, Location loc2)
+-	{
+-		if(loc1.getWorld() != loc2.getWorld())
+-			return Double.MAX_VALUE;
+-		
+-		double deltaX = Math.abs(loc1.getX() - loc2.getX());
+-		double deltaY = Math.abs(loc1.getY() - loc2.getY());
+-		double deltaZ = Math.abs(loc1.getZ() - loc2.getZ());
+-		
+-		// euclidean distance
+-		double distance2d = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+-		double distance3d = Math.sqrt(distance2d * distance2d + deltaY * deltaY);
+-		
+-		return distance3d;
+-		
+-		// manhattan distance
+-		//return deltaX + deltaY + deltaZ;
+-	}
+-	
+-	public double round(double d)
+-	{
+-		return ((int) (d * 100)) / 100d;
+-	}
+-	
++public class JPS {
++
++    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
++
++    private Location startLocation;
++    private Location endLocation;
++
++    private Node startNode;
++    private Node endNode;
++
++    private boolean pathFound = false;
++    private ArrayList<Node> checkedNodes = new ArrayList<Node>();
++    private ArrayList<Node> uncheckedNodes = new ArrayList<Node>();
++
++    private int maxNodeTests;
++    private boolean canClimbLadders;
++    private double maxFallDistance;
++
++    // ---
++    // CONSTRUCTORS
++    // ---
++
++    public JPS(Location start, Location end, int maxNodeTests, boolean canClimbLadders, double maxFallDistance) {
++
++        this.startLocation = start;
++        this.endLocation = end;
++
++        startNode = new Node(startLocation, 0, null);
++        endNode = new Node(endLocation, 0, null);
++
++        this.maxNodeTests = maxNodeTests;
++        this.canClimbLadders = canClimbLadders;
++        this.maxFallDistance = maxFallDistance;
++    }
++
++    public JPS(Location start, Location end) {
++
++        this(start, end, 1000, false, 1);
++    }
++
++    // ---
++    // PATHFINDING
++    // ---
++
++    public Location[] getPath() {
++        // check if player could stand at start and endpoint, if not return empty path
++        if (!(canStandAt(startLocation) && canStandAt(endLocation)))
++            return new Location[0];
++
++        // time for benchmark
++        long nsStart = System.nanoTime();
++
++        uncheckedNodes.add(startNode);
++
++        // cycle through untested nodes until a exit condition is fulfilled
++        while (checkedNodes.size() < maxNodeTests && pathFound == false && uncheckedNodes.size() > 0) {
++            Node n = uncheckedNodes.get(0);
++            for (Node nt : uncheckedNodes)
++                if (nt.getEstimatedFinalExpense() < n.getEstimatedFinalExpense())
++                    n = nt;
++
++            if (n.estimatedExpenseLeft < 1) {
++                pathFound = true;
++                endNode = n;
++
++                // print information about last node
++                Bukkit.broadcastMessage(uncheckedNodes.size() + "uc " + checkedNodes.size() + "c " + round(n.expense) + "cne " + round(n.getEstimatedFinalExpense()) + "cnee ");
++
++                break;
++            }
++
++            n.getReachableLocations();
++            uncheckedNodes.remove(n);
++            checkedNodes.add(n);
++        }
++
++        // returning if no path has been found
++        if (!pathFound) {
++            float duration = (System.nanoTime() - nsStart) / 1000000f;
++            Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to not find a path.");
++
++            return new Location[0];
++        }
++
++        // get length of path to create array, 1 because of start
++        int length = 1;
++        Node n = endNode;
++        while (n.origin != null) {
++            n = n.origin;
++            length++;
++        }
++
++        Location[] locations = new Location[length];
++
++        //fill Array
++        n = endNode;
++        for (int i = length - 1; i > 0; i--) {
++            locations[i] = n.getLocation();
++            n = n.origin;
++        }
++
++        locations[0] = startNode.getLocation();
++
++        // outputting benchmark result
++        float duration = (System.nanoTime() - nsStart) / 1000000f;
++        Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
++
++        return locations;
++    }
++
++    private Node getNode(Location loc) {
++
++        Node test = new Node(loc, 0, null);
++
++        for (Node n : checkedNodes)
++            if (n.x == test.x && n.y == test.y && n.z == test.z)
++                return n;
++
++        return test;
++    }
++
++    // ---
++    // NODE
++    // ---
++
++    public boolean isObstructed(Location loc) {
++
++        if (loc.getBlock().getType().isSolid())
++            return true;
++
++        return false;
++    }
++
++    // ---
++    // CHECKS
++    // ---
++
++    public boolean canStandAt(Location loc) {
++
++        return !(isObstructed(loc) || isObstructed(loc.clone().add(0, 1, 0)) || !isObstructed(loc.clone().add(0, -1, 0)));
++    }
++
++    public double distanceTo(Location loc1, Location loc2) {
++
++        if (loc1.getWorld() != loc2.getWorld())
++            return Double.MAX_VALUE;
++
++        double deltaX = Math.abs(loc1.getX() - loc2.getX());
++        double deltaY = Math.abs(loc1.getY() - loc2.getY());
++        double deltaZ = Math.abs(loc1.getZ() - loc2.getZ());
++
++        // euclidean distance
++        double distance2d = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
++        double distance3d = Math.sqrt(distance2d * distance2d + deltaY * deltaY);
++
++        return distance3d;
++
++        // manhattan distance
++        //return deltaX + deltaY + deltaZ;
++    }
++
++    // ---
++    // UTIL
++    // ---
++
++    public double round(double d) {
++
++        return ((int) (d * 100)) / 100d;
++    }
++
++    public class Node {
++
++        public int x;
++        public int y;
++        public int z;
++        public Node origin;
++        public double expense;
++        private Location location;
++        private double estimatedExpenseLeft = -1;
++
++        // ---
++        // CONSTRUCTORS
++        // ---
++
++        public Node(Location loc, double expense, Node origin) {
++
++            location = loc;
++            x = loc.getBlockX();
++            y = loc.getBlockY();
++            z = loc.getBlockZ();
++
++            this.origin = origin;
++
++            this.expense = expense;
++        }
++
++        // ---
++        // GETTERS
++        // ---
++
++        public Location getLocation() {
++
++            return location;
++        }
++
++        public double getEstimatedFinalExpense() {
++
++            if (estimatedExpenseLeft == -1)
++                estimatedExpenseLeft = distanceTo(location, endLocation);
++
++            return expense + 1.1 * estimatedExpenseLeft;
++        }
++
++        // ---
++        // PATHFINDING
++        // ---
++
++        public void getReachableLocations() {
++            //trying to get all possibly walkable blocks
++            for (int x = -1; x <= 1; x++)
++                for (int z = -1; z <= 1; z++)
++                    if (!(x == 0 && z == 0) && x * z == 0) {
++                        Location loc = new Location(Bukkit.getWorlds().get(0), location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z);
++
++                        // usual unchanged y
++                        if (canStandAt(loc))
++                            reachNode(loc, expense + 1);
++
++                        // one block up
++                        if (!isObstructed(loc.clone().add(-x, 2, -z))) // block above current tile, thats why subtracting x and z
++                        {
++                            Location nLoc = loc.clone().add(0, 1, 0);
++                            if (canStandAt(nLoc))
++                                reachNode(nLoc, expense + 1.4142);
++                        }
++
++                        // one block down or falling multiple blocks down
++                        if (!isObstructed(loc.clone().add(0, 1, 0))) // block above possible new tile
++                        {
++                            Location nLoc = loc.clone().add(0, -1, 0);
++                            if (canStandAt(nLoc)) // one block down
++                                reachNode(nLoc, expense + 1.4142);
++                            else if (!isObstructed(nLoc) && !isObstructed(nLoc.clone().add(0, 1, 0))) // fall
++                            {
++                                int drop = 1;
++                                while (drop <= maxFallDistance && !isObstructed(loc.clone().add(0, -drop, 0))) {
++                                    Location locF = loc.clone().add(0, -drop, 0);
++                                    if (canStandAt(locF)) {
++                                        Node fallNode = addFallNode(loc, expense + 1);
++                                        fallNode.reachNode(locF, expense + drop * 2);
++                                    }
++
++                                    drop++;
++                                }
++                            }
++                        }
++
++                        //ladder
++                        if (canClimbLadders)
++                            if (loc.clone().add(-x, 0, -z).getBlock().getType() == Material.LADDER) {
++                                Location nLoc = loc.clone().add(-x, 0, -z);
++                                int up = 1;
++                                while (nLoc.clone().add(0, up, 0).getBlock().getType() == Material.LADDER)
++                                    up++;
++
++                                reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
++                            }
++                    }
++        }
++
++        public void reachNode(Location locThere, double expenseThere) {
++
++            Node nt = getNode(locThere);
++
++            if (nt.origin == null && nt != startNode) // new node
++            {
++                nt.expense = expenseThere;
++                nt.origin = this;
++
++                uncheckedNodes.add(nt);
++
++                return;
++            }
++
++            // no new node
++            if (nt.expense > expenseThere) // this way is faster to go there
++            {
++                nt.expense = expenseThere;
++                nt.origin = this;
++            }
++        }
++
++        public Node addFallNode(Location loc, double expense) {
++
++            Node n = new Node(loc, expense, this);
++
++            return n;
++        }
++
++    }
++
+ }

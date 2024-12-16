@@ -1,0 +1,497 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Abel <abelvanhulst@gmail.com>
+Date: Mon, 16 Dec 2024 21:02:40 +0100
+Subject: [PATCH] Migrate to NMS/purely Minecraft code
+
+
+diff --git a/src/main/java/main/Pathfinding.java b/src/main/java/main/Pathfinding.java
+deleted file mode 100644
+index f1b5e1cd67a7dea63e5d4244f74f1ce2324b47ee..0000000000000000000000000000000000000000
+--- a/src/main/java/main/Pathfinding.java
++++ /dev/null
+@@ -1,90 +0,0 @@
+-/*
+- * mojang_maps.pathfinding.main
+- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+- *
+- * This program is free software: you can redistribute it and/or modify
+- * it under the terms of the GNU General Public License as published by
+- * the Free Software Foundation, either version 3 of the License, or
+- * (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-package main;
+-
+-import org.bukkit.Bukkit;
+-import org.bukkit.Location;
+-import org.bukkit.Material;
+-import org.bukkit.event.Listener;
+-import org.bukkit.plugin.java.JavaPlugin;
+-import pathfinding.AStar;
+-
+-public class Pathfinding extends JavaPlugin implements Listener {
+-
+-    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
+-
+-    Location[] path;
+-    Material[] mat;
+-    Byte[] data;
+-
+-    @Override
+-    public void onEnable() {
+-
+-        System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " enabled!");
+-
+-        test();
+-    }
+-
+-    @Override
+-    public void onDisable() {
+-        //resetTest();
+-
+-        System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " disabled!");
+-    }
+-
+-    @SuppressWarnings("deprecation")
+-    public void test() {
+-
+-
+-        Location start = new Location(Bukkit.getWorlds().get(0), 0, 4, 0);
+-        Location end = new Location(Bukkit.getWorlds().get(0), 20, 4, 0);
+-
+-        AStar a = new AStar(start, end, 10000, true, 5);
+-        path = a.getPath();
+-
+-        mat = new Material[path.length];
+-        data = new Byte[path.length];
+-
+-        for (int i = 0; i < path.length; i++) {
+-            mat[i] = path[i].getBlock().getType();
+-            data[i] = path[i].getBlock().getData();
+-
+-            path[i].getBlock().setType(Material.GLASS);
+-        }
+-
+-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+-
+-            @Override
+-            public void run() {
+-
+-                resetTest();
+-            }
+-        }, 80L);
+-    }
+-
+-    @SuppressWarnings("deprecation")
+-    public void resetTest() {
+-
+-        for (int i = 0; i < path.length; i++) {
+-            path[i].getBlock().setType(mat[i]);
+-            path[i].getBlock().setData(data[i]);
+-        }
+-    }
+-
+-}
+diff --git a/src/main/java/pathfinding/AStar.java b/src/main/java/pathfinding/AStar.java
+index 1178754a9d15353759530b4d3b2177779fbf7a5b..5942736af10a44929cbbcc60c72a651a02f6b2a9 100644
+--- a/src/main/java/pathfinding/AStar.java
++++ b/src/main/java/pathfinding/AStar.java
+@@ -19,10 +19,9 @@
+ package pathfinding;
+ 
+ import java.util.ArrayList;
+-import org.bukkit.Bukkit;
+-import org.bukkit.ChatColor;
+-import org.bukkit.Location;
+-import org.bukkit.Material;
++import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.phys.Vec3;
++import pathfinding.platform.Location;
+ 
+ public class AStar {
+ 
+@@ -89,9 +88,6 @@ public class AStar {
+                 pathFound = true;
+                 endNode = n;
+ 
+-                // print information about last node
+-                Bukkit.broadcastMessage(uncheckedNodes.size() + "uc " + checkedNodes.size() + "c " + round(n.expense) + "cne " + round(n.getEstimatedFinalExpense()) + "cnee ");
+-
+                 break;
+             }
+ 
+@@ -102,9 +98,6 @@ public class AStar {
+ 
+         // returning if no path has been found
+         if (!pathFound) {
+-            float duration = (System.nanoTime() - nsStart) / 1000000f;
+-            Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to not find a path.");
+-
+             return new Location[0];
+         }
+ 
+@@ -127,10 +120,6 @@ public class AStar {
+ 
+         locations[0] = startNode.getLocation();
+ 
+-        // outputting benchmark result
+-        float duration = (System.nanoTime() - nsStart) / 1000000f;
+-        Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
+-
+         return locations;
+     }
+ 
+@@ -151,7 +140,7 @@ public class AStar {
+ 
+     public boolean isObstructed(Location loc) {
+ 
+-        if (loc.getBlock().getType().isSolid())
++        if (loc.isSolidBlock())
+             return true;
+ 
+         return false;
+@@ -168,7 +157,7 @@ public class AStar {
+ 
+     public double distanceTo(Location loc1, Location loc2) {
+ 
+-        if (loc1.getWorld() != loc2.getWorld())
++        if (loc1.getLevel() != loc2.getLevel())
+             return Double.MAX_VALUE;
+ 
+         double deltaX = Math.abs(loc1.getX() - loc2.getX());
+@@ -242,7 +231,7 @@ public class AStar {
+             for (int x = -1; x <= 1; x++)
+                 for (int z = -1; z <= 1; z++)
+                     if (!(x == 0 && z == 0) && x * z == 0) {
+-                        Location loc = new Location(Bukkit.getWorlds().get(0), location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z);
++                        Location loc = new Location(new Vec3(location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z), location.getLevel());
+ 
+                         // usual unchanged y
+                         if (canStandAt(loc))
+@@ -279,10 +268,10 @@ public class AStar {
+ 
+                         //ladder
+                         if (canClimbLadders)
+-                            if (loc.clone().add(-x, 0, -z).getBlock().getType() == Material.LADDER) {
++                            if (loc.clone().add(-x, 0, -z).isTheSameBlock(Blocks.LADDER)) {
+                                 Location nLoc = loc.clone().add(-x, 0, -z);
+                                 int up = 1;
+-                                while (nLoc.clone().add(0, up, 0).getBlock().getType() == Material.LADDER)
++                                while (nLoc.clone().add(0, up, 0).isTheSameBlock(Blocks.LADDER))
+                                     up++;
+ 
+                                 reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
+diff --git a/src/main/java/pathfinding/AStarRaw.java b/src/main/java/pathfinding/AStarRaw.java
+index 0468b84dcda14c726f61b8932632aac8e0111b6c..c6c20880689a11e3c5ed19e83c2785b5ca243c72 100644
+--- a/src/main/java/pathfinding/AStarRaw.java
++++ b/src/main/java/pathfinding/AStarRaw.java
+@@ -18,10 +18,9 @@
+ 
+ package pathfinding;
+ 
+-import org.bukkit.Bukkit;
+-import org.bukkit.ChatColor;
+-import org.bukkit.Location;
+-import org.bukkit.Material;
++import net.minecraft.world.level.block.Block;
++import net.minecraft.world.level.block.state.BlockState;
++import pathfinding.platform.Location;
+ 
+ public class AStarRaw {
+ 
+@@ -38,7 +37,7 @@ public class AStarRaw {
+     private int baseZ;
+ 
+     private boolean pathFound = false;
+-    private Material[][][] materials = new Material[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
++    private BlockState[][][] materials = new BlockState[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
+     private byte[][][] walkability = new byte[maxNodeTests * 2][maxNodeTests * 2][maxNodeTests * 2];
+     //  1 walkable
+     //  0 untested
+@@ -78,14 +77,6 @@ public class AStarRaw {
+         if (!canStandAt(baseX, baseY, baseZ) || !canStandAt(endLocation.getBlockX(), endLocation.getBlockY(), endLocation.getBlockZ()))
+             return new Location[0];
+ 
+-        // time for benchmark
+-        long nsStart = System.nanoTime();
+-
+-
+-        // outputting benchmark result
+-        float duration = (System.nanoTime() - nsStart) / 1000000f;
+-        Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
+-
+         return new Location[0]; // TODO
+     }
+ 
+@@ -93,20 +84,20 @@ public class AStarRaw {
+     // CHECKS
+     // ---
+ 
+-    private Material getMaterial(int relX, int relY, int relZ) {
++    private BlockState getMaterial(int relX, int relY, int relZ) {
+ 
+         if (materials[relX][relY][relZ] != null)
+             return materials[relX][relY][relZ];
+ 
+-        Material mat = startLocation.getWorld().getBlockAt(baseX + relX, baseY + relY, baseZ + relZ).getType();
++        BlockState mat = startLocation.getBLockState();
+         materials[relX][relY][relZ] = mat;
+ 
+         return mat;
+     }
+ 
+-    private boolean canWalkThrough(Material mat) {
++    private boolean canWalkThrough(BlockState mat) {
+ 
+-        return !mat.isSolid();
++        return !Block.isShapeFullBlock(mat.getOcclusionShape());
+     }
+ 
+ 
+@@ -141,7 +132,7 @@ public class AStarRaw {
+ 
+     public double distanceTo(Location loc1, Location loc2) {
+ 
+-        if (loc1.getWorld() != loc2.getWorld())
++        if (loc1.getLevel() != loc2.getLevel())
+             return Double.MAX_VALUE;
+ 
+         double deltaX = Math.abs(loc1.getX() - loc2.getX());
+diff --git a/src/main/java/pathfinding/JPS.java b/src/main/java/pathfinding/JPS.java
+index 617fa3de0a58bdcb07558a0085c0b043d046f010..b3a08a25eb087b37b8fcbe21196145e2f3647b44 100644
+--- a/src/main/java/pathfinding/JPS.java
++++ b/src/main/java/pathfinding/JPS.java
+@@ -19,10 +19,9 @@
+ package pathfinding;
+ 
+ import java.util.ArrayList;
+-import org.bukkit.Bukkit;
+-import org.bukkit.ChatColor;
+-import org.bukkit.Location;
+-import org.bukkit.Material;
++import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.phys.Vec3;
++import pathfinding.platform.Location;
+ 
+ public class JPS {
+ 
+@@ -73,9 +72,6 @@ public class JPS {
+         if (!(canStandAt(startLocation) && canStandAt(endLocation)))
+             return new Location[0];
+ 
+-        // time for benchmark
+-        long nsStart = System.nanoTime();
+-
+         uncheckedNodes.add(startNode);
+ 
+         // cycle through untested nodes until a exit condition is fulfilled
+@@ -89,9 +85,6 @@ public class JPS {
+                 pathFound = true;
+                 endNode = n;
+ 
+-                // print information about last node
+-                Bukkit.broadcastMessage(uncheckedNodes.size() + "uc " + checkedNodes.size() + "c " + round(n.expense) + "cne " + round(n.getEstimatedFinalExpense()) + "cnee ");
+-
+                 break;
+             }
+ 
+@@ -102,8 +95,6 @@ public class JPS {
+ 
+         // returning if no path has been found
+         if (!pathFound) {
+-            float duration = (System.nanoTime() - nsStart) / 1000000f;
+-            Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to not find a path.");
+ 
+             return new Location[0];
+         }
+@@ -127,10 +118,6 @@ public class JPS {
+ 
+         locations[0] = startNode.getLocation();
+ 
+-        // outputting benchmark result
+-        float duration = (System.nanoTime() - nsStart) / 1000000f;
+-        Bukkit.broadcastMessage("A* took " + (duration > 50 ? ChatColor.RED : ChatColor.WHITE) + duration + "ms" + ChatColor.WHITE + " to find a path.");
+-
+         return locations;
+     }
+ 
+@@ -151,7 +138,7 @@ public class JPS {
+ 
+     public boolean isObstructed(Location loc) {
+ 
+-        if (loc.getBlock().getType().isSolid())
++        if (loc.isSolidBlock())
+             return true;
+ 
+         return false;
+@@ -168,7 +155,7 @@ public class JPS {
+ 
+     public double distanceTo(Location loc1, Location loc2) {
+ 
+-        if (loc1.getWorld() != loc2.getWorld())
++        if (loc1.getLevel() != loc2.getLevel())
+             return Double.MAX_VALUE;
+ 
+         double deltaX = Math.abs(loc1.getX() - loc2.getX());
+@@ -246,7 +233,7 @@ public class JPS {
+             for (int x = -1; x <= 1; x++)
+                 for (int z = -1; z <= 1; z++)
+                     if (!(x == 0 && z == 0) && x * z == 0) {
+-                        Location loc = new Location(Bukkit.getWorlds().get(0), location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z);
++                        Location loc = new Location(new Vec3(location.getBlockX() + x, location.getBlockY(), location.getBlockZ() + z), location.getLevel());
+ 
+                         // usual unchanged y
+                         if (canStandAt(loc))
+@@ -283,10 +270,10 @@ public class JPS {
+ 
+                         //ladder
+                         if (canClimbLadders)
+-                            if (loc.clone().add(-x, 0, -z).getBlock().getType() == Material.LADDER) {
++                            if (loc.clone().add(-x, 0, -z).isTheSameBlock(Blocks.LADDER)) {
+                                 Location nLoc = loc.clone().add(-x, 0, -z);
+                                 int up = 1;
+-                                while (nLoc.clone().add(0, up, 0).getBlock().getType() == Material.LADDER)
++                                while (nLoc.clone().add(0, up, 0).isTheSameBlock(Blocks.LADDER))
+                                     up++;
+ 
+                                 reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
+diff --git a/src/main/java/pathfinding/platform/Location.java b/src/main/java/pathfinding/platform/Location.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..ae6c69c5bb04231d1fda7dec2df88cd9bd30e203
+--- /dev/null
++++ b/src/main/java/pathfinding/platform/Location.java
+@@ -0,0 +1,126 @@
++/*
++ * mojang_maps.pathfinding.main
++ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
++ *
++ * This program is free software: you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation, either version 3 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++package pathfinding.platform;
++
++import net.minecraft.core.BlockPos;
++import net.minecraft.core.Position;
++import net.minecraft.world.level.Level;
++import net.minecraft.world.level.block.Block;
++import net.minecraft.world.level.block.state.BlockState;
++import net.minecraft.world.phys.Vec3;
++
++public class Location implements Cloneable {
++
++    private final Level level;
++    private Position position;
++
++    public Location(Position position, Level level) {
++
++        this.position = position;
++        this.level = level;
++    }
++
++    public Position getPosition() {
++
++        return position;
++    }
++
++    public Level getLevel() {
++
++        return level;
++    }
++
++    @Override
++    public Location clone() {
++
++        try {
++            return (Location) super.clone();
++        } catch (CloneNotSupportedException e) {
++            throw new AssertionError();
++        }
++    }
++
++    public Location add(double x, double y, double z) {
++
++        position = new Vec3(position.x(), position.y(), position.z()).add(x, y, z);
++        return this;
++
++    }
++
++    public double getX() {
++
++        return position.x();
++
++    }
++
++    public double getY() {
++
++        return position.y();
++
++    }
++
++    public double getZ() {
++
++        return position.z();
++
++    }
++
++    public int getBlockX() {
++
++        return (int) Math.floor(getX());
++
++    }
++
++    public int getBlockY() {
++
++        return (int) Math.floor(getY());
++
++    }
++
++    public int getBlockZ() {
++
++        return (int) Math.floor(getZ());
++
++    }
++
++    public Block getBlock() {
++
++        return level.getBlockState(new BlockPos(getBlockX(), getBlockY(), getBlockZ())).getBlock();
++
++    }
++
++    public BlockState getBLockState() {
++
++        return level.getBlockState(new BlockPos(getBlockX(), getBlockY(), getBlockZ()));
++
++    }
++
++    public boolean isTheSameBlock(Block block) {
++
++        return this.getBLockState().getBlock() == block;
++
++    }
++
++    public boolean isSolidBlock() {
++
++        return Block.isShapeFullBlock(this.getBLockState().getOcclusionShape());
++
++    }
++
++}
