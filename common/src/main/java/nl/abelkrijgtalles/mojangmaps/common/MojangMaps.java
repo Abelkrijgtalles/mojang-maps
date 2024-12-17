@@ -21,10 +21,9 @@ package nl.abelkrijgtalles.mojangmaps.common;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.DetectedVersion;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
-import nl.abelkrijgtalles.mojangmaps.common.platform.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

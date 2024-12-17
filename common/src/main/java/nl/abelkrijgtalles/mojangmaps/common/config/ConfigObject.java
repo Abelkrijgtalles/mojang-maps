@@ -16,23 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.platform.config;
+package nl.abelkrijgtalles.mojangmaps.common.config;
 
-import java.nio.file.Path;
+public class ConfigObject {
 
-public interface Config {
+    // very useful and totally not an empty class or anything like that
 
-    /**
-     * Gets a value from the config.
-     *
-     * @param key The key to get the value from. Seperated with a dot when accessing in a group.
-     * @return The value of the key in the config. Returns null if it doesn't exist.
-     */
-    String get(String key);
+    private final String comment;
 
-    /**
-     * @return The directory which contains all the data files for Mojang Maps.
-     */
-    Path getDataDirectory();
+    public ConfigObject(String comment) {
+
+        this.comment = comment;
+    }
+
+    public String getComment() {
+
+        return comment;
+    }
 
 }

@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import net.fabricmc.loader.api.FabricLoader;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 
 public class SimpleConfig {
 

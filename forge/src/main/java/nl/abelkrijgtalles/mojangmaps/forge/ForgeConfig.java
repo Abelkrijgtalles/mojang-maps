@@ -24,10 +24,10 @@ import java.util.HashMap;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigGroup;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
+import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGroup;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
 
 public class ForgeConfig {
 

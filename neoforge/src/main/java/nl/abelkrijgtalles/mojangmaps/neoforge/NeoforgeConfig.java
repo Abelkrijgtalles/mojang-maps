@@ -23,10 +23,10 @@ import java.util.HashMap;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigGroup;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.platform.config.ConfigObject;
+import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGroup;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
 
 public class NeoforgeConfig {
 

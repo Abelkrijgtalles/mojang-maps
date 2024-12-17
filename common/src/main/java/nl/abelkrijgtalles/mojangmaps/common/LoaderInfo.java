@@ -16,29 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.platform.config;
+package nl.abelkrijgtalles.mojangmaps.common;
 
-public class ConfigItem extends ConfigObject {
+import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 
-    private final String key;
-    private final String value;
+public interface LoaderInfo {
 
-    public ConfigItem(String key, String value, String comment) {
+    /**
+     * @return The Mojang Maps {@link Config}
+     */
+    Config getConfig();
 
-        super(comment);
-
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-
-        return key;
-    }
-
-    public String getValue() {
-
-        return value;
-    }
+    /**
+     * @return Whether Mojang Maps is being run through unit tests.
+     */
+    boolean isRunningTests();
 
 }
