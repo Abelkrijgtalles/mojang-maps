@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Abel <abelvanhulst@gmail.com>
+Date: Wed, 18 Dec 2024 19:32:02 +0100
+Subject: [PATCH] Add Location#getPositionAsBlockPosition()
+
+
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
+index 43f78ad2a412d2563aa0311cd2248c96787fe34c..4ab3fa0545e8dcacfd1481a37234503e2dd2acf4 100644
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
++++ b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
+@@ -101,13 +101,13 @@ public class Location implements Cloneable {
+ 
+     public Block getBlock() {
+ 
+-        return level.getBlockState(new BlockPos(getBlockX(), getBlockY(), getBlockZ())).getBlock();
++        return level.getBlockState(getPositionAsBlockPos()).getBlock();
+ 
+     }
+ 
+     public BlockState getBLockState() {
+ 
+-        return level.getBlockState(new BlockPos(getBlockX(), getBlockY(), getBlockZ()));
++        return level.getBlockState(getPositionAsBlockPos());
+ 
+     }
+ 
+@@ -134,4 +134,10 @@ public class Location implements Cloneable {
+ 
+     }
+ 
++    public BlockPos getPositionAsBlockPos() {
++
++        return new BlockPos(getBlockX(), getBlockY(), getBlockZ());
++
++    }
++
+ }

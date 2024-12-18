@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Abel <abelvanhulst@gmail.com>
+Date: Wed, 18 Dec 2024 19:27:15 +0100
+Subject: [PATCH] Add Location#toString()
+
+
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
+index 34164f4b8ce232fdfcf32f04dbf7e34779cd1a6a..43f78ad2a412d2563aa0311cd2248c96787fe34c 100644
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
++++ b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
+@@ -128,4 +128,10 @@ public class Location implements Cloneable {
+ 
+     }
+ 
++    public String toString() {
++
++        return String.format("%s in X: %s Y: %s Z: %s", getBlock().getName().getString(), getX(), getY(), getZ());
++
++    }
++
+ }
