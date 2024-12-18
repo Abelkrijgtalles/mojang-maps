@@ -31,9 +31,7 @@ import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 public class Commands {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public void register() {
-
-        CommandDispatcher<CommandSourceStack> dispatcher = new CommandDispatcher();
+    public void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
         dispatcher.register((LiteralArgumentBuilder)
                 literal("test")

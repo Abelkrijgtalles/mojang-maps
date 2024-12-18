@@ -18,10 +18,15 @@
 
 package nl.abelkrijgtalles.mojangmaps.forge;
 
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 
 @Mod(MojangMaps.MOD_ID)
 public class MojangMapsForge {
@@ -31,6 +36,16 @@ public class MojangMapsForge {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ForgeConfig.CONFIG);
 
         MojangMaps.init(new LoaderInfoForge(false));
+    }
+
+    @SubscribeEvent
+    public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
+
+        Commands commands = new Commands();
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+
+        commands.register(dispatcher);
+
     }
 
 }

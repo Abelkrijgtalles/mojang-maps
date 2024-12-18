@@ -19,6 +19,8 @@
 package nl.abelkrijgtalles.mojangmaps.spigot;
 
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
+import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MojangMapsSpigot extends JavaPlugin {
@@ -30,6 +32,10 @@ public class MojangMapsSpigot extends JavaPlugin {
 
         Instance = this;
         MojangMaps.init(new LoaderInfoSpigot(false));
+
+        Commands commands = new Commands();
+        CraftServer craftServer = (CraftServer) getServer();
+        commands.register(craftServer.getServer().resources.managers().commands.getDispatcher());
 
     }
 

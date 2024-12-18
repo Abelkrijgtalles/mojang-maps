@@ -18,33 +18,40 @@
 
 package nl.abelkrijgtalles.mojangmaps.neoforge;
 
-#if MC_VER <= MC_1_20_4
-
-import net.neoforged.fml.ModLoadingContext;
-#else
-
-import net.neoforged.fml.ModContainer;
-#endif
-
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 
 @Mod(MojangMaps.MOD_ID)
 public class MojangMapsNeoforge {
 
     public MojangMapsNeoforge(
             #if MC_VER > MC_1_20_4
-            ModContainer modContainer
+            net.neoforged.fml.ModContainer modContainer
             #endif ) {
 
         #if MC_VER > MC_1_20_4
         modContainer.registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
         #else
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
+        net.neoforged.fml.ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
         #endif
 
         MojangMaps.init(new LoaderInfoNeoforge(false));
+    }
+
+    @SubscribeEvent
+    public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
+
+        Commands commands = new Commands();
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+
+        commands.register(dispatcher);
+
     }
 
 }

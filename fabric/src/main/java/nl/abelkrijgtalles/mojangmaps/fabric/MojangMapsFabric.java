@@ -19,7 +19,9 @@
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 
 public class MojangMapsFabric implements ModInitializer {
 
@@ -31,6 +33,13 @@ public class MojangMapsFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+
+        CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> {
+
+            Commands commands = new Commands();
+            commands.register(commandDispatcher);
+
+        });
 
         init(false);
     }
