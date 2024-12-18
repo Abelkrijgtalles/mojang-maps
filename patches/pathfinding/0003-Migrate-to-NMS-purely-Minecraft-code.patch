@@ -269,10 +269,10 @@ index a2e3ec2792228a81a872f532189923ffb690b52f..d7e987438bee385ad054b94490da59a3
                                  reachNode(nLoc.clone().add(0, up, 0), expense + up * 2);
 diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..b401cf6c0da7ff679a17cd87dcf605b1aeaa0040
+index 0000000000000000000000000000000000000000..34164f4b8ce232fdfcf32f04dbf7e34779cd1a6a
 --- /dev/null
 +++ b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
-@@ -0,0 +1,126 @@
+@@ -0,0 +1,131 @@
 +/*
 + * mojang_maps.pathfinding.main
 + * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
@@ -394,7 +394,12 @@ index 0000000000000000000000000000000000000000..b401cf6c0da7ff679a17cd87dcf605b1
 +
 +    public boolean isSolidBlock() {
 +
-+        return Block.isShapeFullBlock(this.getBLockState().getOcclusionShape());
++        return Block.isShapeFullBlock(this.getBLockState().getOcclusionShape(
++                #if MC_VER <= MC_1_21_0
++                level,
++                new BlockPos(getBlockX(), getBlockY(), getBlockZ())
++                #endif
++        ));
 +
 +    }
 +
