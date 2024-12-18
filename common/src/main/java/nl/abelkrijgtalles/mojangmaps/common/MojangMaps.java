@@ -21,7 +21,6 @@ package nl.abelkrijgtalles.mojangmaps.common;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.DetectedVersion;
-import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
@@ -46,9 +45,6 @@ public class MojangMaps {
 
         RoadData roadData = new RoadData();
         if (!loaderInfo.isRunningTests()) roadData.setupRoadData();
-
-        Commands commands = new Commands();
-        commands.register();
 
     }
 
