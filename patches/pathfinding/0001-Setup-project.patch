@@ -1,25 +1,19 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Abel <abelvanhulst@gmail.com>
-Date: Mon, 16 Dec 2024 19:37:33 +0100
+Date: Wed, 18 Dec 2024 18:32:51 +0100
 Subject: [PATCH] Setup project
 
 
 diff --git a/.gitignore b/.gitignore
-deleted file mode 100644
-index 814a17928ccd5b8dff3786678120c339d27015c4..0000000000000000000000000000000000000000
+index 814a17928ccd5b8dff3786678120c339d27015c4..99c83af0d98dd43bd13652715911461b18ee2401 100644
 --- a/.gitignore
-+++ /dev/null
-@@ -1,10 +0,0 @@
--bin/
--.idea/
--
--*.classpath
--.project
--*.prefs
--*.launch
--*.jardesc
--build.xml
--/target/
++++ b/.gitignore
+@@ -8,3 +8,4 @@ bin/
+ *.jardesc
+ build.xml
+ /target/
++/build
+\ No newline at end of file
 diff --git a/build.gradle b/build.gradle
 new file mode 100644
 index 0000000000000000000000000000000000000000..915e78ddbcfa22f8ffc7441989c1daac6aaa95c4
