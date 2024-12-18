@@ -290,6 +290,7 @@ subprojects { p ->
 
         // Log4j
         //implementation("org.apache.logging.log4j:log4j-api:${rootProject.log4j_version}")
+        //implementation("org.apache.logging.log4j:log4j-api:${rootProject.log4j_version}")
         //implementation("org.apache.logging.log4j:log4j-core:${rootProject.log4j_version}")
 
         // Remember, for lwjgl dependencies that arent included in Minecraft, you need to also need to add it to the ShadowJar thing

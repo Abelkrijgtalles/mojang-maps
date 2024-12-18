@@ -214,7 +214,6 @@ public class ConfigGenerator {
         // adding toml in the future could be a nice thing, wouldn't know why I would add it, + it has to change more stuff and makes it even more abstract.
         // please don't use null, as this literally sets "null" for the values
         public static final ConfigGenerator PURE_YAML = new ConfigGenerator(":", "", false, ": ", "# ");
-        public static final ConfigGenerator SPONGE = new ConfigGenerator(" {", "}", false, " = ", "# ");
         public static final ConfigGenerator FABRIC = new ConfigGenerator("", "", true, " = ", "# ");
 
     }
