@@ -4,13 +4,107 @@ Date: Mon, 16 Dec 2024 21:05:36 +0100
 Subject: [PATCH] Cleanup codebase
 
 
-diff --git a/src/main/java/pathfinding/AStar.java b/src/main/java/pathfinding/AStar.java
-index 5942736af10a44929cbbcc60c72a651a02f6b2a9..cefe4aeeb2744b11dc8b5e705d2d56ebe850f913 100644
---- a/src/main/java/pathfinding/AStar.java
-+++ b/src/main/java/pathfinding/AStar.java
-@@ -27,20 +27,17 @@ public class AStar {
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/main/Pathfinding.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/main/Pathfinding.java
+deleted file mode 100644
+index 639b0b12d55898a1b9763d4b55ccc57c791a6d59..0000000000000000000000000000000000000000
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/main/Pathfinding.java
++++ /dev/null
+@@ -1,88 +0,0 @@
+-/*
+- * mojang_maps.pathfinding.main
+- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+- *
+- * This program is free software: you can redistribute it and/or modify
+- * it under the terms of the GNU General Public License as published by
+- * the Free Software Foundation, either version 3 of the License, or
+- * (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- * GNU General Public License for more details.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-package nl.abelkrijgtalles.mojangmaps.main;
+-
+-import nl.abelkrijgtalles.pathfinding.AStar;
+-import org.bukkit.Bukkit;
+-import org.bukkit.Location;
+-import org.bukkit.Material;
+-import org.bukkit.event.Listener;
+-import org.bukkit.plugin.java.JavaPlugin;
+-
+-public class Pathfinding extends JavaPlugin implements Listener {
+-
+-    Location[] path;
+-    Material[] mat;
+-    Byte[] data;
+-
+-    @Override
+-    public void onEnable() {
+-
+-        System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " enabled!");
+-
+-        test();
+-    }
+-
+-    @Override
+-    public void onDisable() {
+-        //resetTest();
+-
+-        System.out.println("[" + this.getDescription().getName() + "] v" + this.getDescription().getVersion() + " disabled!");
+-    }
+-
+-    @SuppressWarnings("deprecation")
+-    public void test() {
+-
+-
+-        Location start = new Location(Bukkit.getWorlds().get(0), 0, 4, 0);
+-        Location end = new Location(Bukkit.getWorlds().get(0), 20, 4, 0);
+-
+-        AStar a = new AStar(start, end, 10000, true, 5);
+-        path = a.getPath();
+-
+-        mat = new Material[path.length];
+-        data = new Byte[path.length];
+-
+-        for (int i = 0; i < path.length; i++) {
+-            mat[i] = path[i].getBlock().getType();
+-            data[i] = path[i].getBlock().getData();
+-
+-            path[i].getBlock().setType(Material.GLASS);
+-        }
+-
+-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+-
+-            @Override
+-            public void run() {
+-
+-                resetTest();
+-            }
+-        }, 80L);
+-    }
+-
+-    @SuppressWarnings("deprecation")
+-    public void resetTest() {
+-
+-        for (int i = 0; i < path.length; i++) {
+-            path[i].getBlock().setType(mat[i]);
+-            path[i].getBlock().setData(data[i]);
+-        }
+-    }
+-
+-}
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStar.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStar.java
+index 0304258440e2b5b1a9a43a5895d184f07c438d87..ed5d5a7c7dce1eb409ebffaf3d77a9192caa55c8 100644
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStar.java
++++ b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStar.java
+@@ -25,20 +25,17 @@ import nl.abelkrijgtalles.mojangmaps.pathfinding.platform.Location;
  
-     // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
+ public class AStar {
  
 -    private Location startLocation;
 -    private Location endLocation;
@@ -34,7 +128,7 @@ index 5942736af10a44929cbbcc60c72a651a02f6b2a9..cefe4aeeb2744b11dc8b5e705d2d56eb
      // ---
      // CONSTRUCTORS
      // ---
-@@ -78,7 +75,7 @@ public class AStar {
+@@ -76,7 +73,7 @@ public class AStar {
          uncheckedNodes.add(startNode);
  
          // cycle through untested nodes until a exit condition is fulfilled
@@ -43,7 +137,7 @@ index 5942736af10a44929cbbcc60c72a651a02f6b2a9..cefe4aeeb2744b11dc8b5e705d2d56eb
              Node n = uncheckedNodes.get(0);
              for (Node nt : uncheckedNodes)
                  if (nt.getEstimatedFinalExpense() < n.getEstimatedFinalExpense())
-@@ -140,10 +137,7 @@ public class AStar {
+@@ -138,10 +135,7 @@ public class AStar {
  
      public boolean isObstructed(Location loc) {
  
@@ -55,7 +149,7 @@ index 5942736af10a44929cbbcc60c72a651a02f6b2a9..cefe4aeeb2744b11dc8b5e705d2d56eb
      }
  
      // ---
-@@ -303,9 +297,7 @@ public class AStar {
+@@ -301,9 +295,7 @@ public class AStar {
  
          public Node addFallNode(Location loc, double expense) {
  
@@ -66,12 +160,12 @@ index 5942736af10a44929cbbcc60c72a651a02f6b2a9..cefe4aeeb2744b11dc8b5e705d2d56eb
          }
  
      }
-diff --git a/src/main/java/pathfinding/AStarRaw.java b/src/main/java/pathfinding/AStarRaw.java
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStarRaw.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStarRaw.java
 deleted file mode 100644
-index c6c20880689a11e3c5ed19e83c2785b5ca243c72..0000000000000000000000000000000000000000
---- a/src/main/java/pathfinding/AStarRaw.java
+index df9c3ed069151ebdce2bf568181eece0ee4a1de9..0000000000000000000000000000000000000000
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/AStarRaw.java
 +++ /dev/null
-@@ -1,157 +0,0 @@
+@@ -1,155 +0,0 @@
 -/*
 - * mojang_maps.pathfinding.main
 - * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
@@ -90,15 +184,13 @@ index c6c20880689a11e3c5ed19e83c2785b5ca243c72..00000000000000000000000000000000
 - * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - */
 -
--package pathfinding;
+-package nl.abelkrijgtalles.mojangmaps.pathfinding;
 -
 -import net.minecraft.world.level.block.Block;
 -import net.minecraft.world.level.block.state.BlockState;
--import pathfinding.platform.Location;
+-import nl.abelkrijgtalles.mojangmaps.pathfinding.platform.Location;
 -
 -public class AStarRaw {
--
--    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
 -
 -    private int maxNodeTests;
 -    private boolean canClimbLadders;
@@ -229,12 +321,12 @@ index c6c20880689a11e3c5ed19e83c2785b5ca243c72..00000000000000000000000000000000
 -    }
 -
 -}
-diff --git a/src/main/java/pathfinding/JPS.java b/src/main/java/pathfinding/JPS.java
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/JPS.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/JPS.java
 deleted file mode 100644
-index b3a08a25eb087b37b8fcbe21196145e2f3647b44..0000000000000000000000000000000000000000
---- a/src/main/java/pathfinding/JPS.java
+index d7e987438bee385ad054b94490da59a3f4c30521..0000000000000000000000000000000000000000
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/JPS.java
 +++ /dev/null
-@@ -1,315 +0,0 @@
+@@ -1,313 +0,0 @@
 -/*
 - * mojang_maps.pathfinding.main
 - * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
@@ -253,16 +345,14 @@ index b3a08a25eb087b37b8fcbe21196145e2f3647b44..00000000000000000000000000000000
 - * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - */
 -
--package pathfinding;
+-package nl.abelkrijgtalles.mojangmaps.pathfinding;
 -
 -import java.util.ArrayList;
 -import net.minecraft.world.level.block.Blocks;
 -import net.minecraft.world.phys.Vec3;
--import pathfinding.platform.Location;
+-import nl.abelkrijgtalles.mojangmaps.pathfinding.platform.Location;
 -
 -public class JPS {
--
--    // This code is originally from https://github.com/domisum/Pathfinding, which is licensed under the GPLv3 license. Please ignore above copyright notice.
 -
 -    private Location startLocation;
 -    private Location endLocation;

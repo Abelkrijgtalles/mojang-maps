@@ -193,7 +193,7 @@ forgix {
         if (mergeSpigot) {
             custom {
                 projectName = "spigot"
-                jarLocation = "build/libs/${rootProject.mod_id}-spigot-${rootProject.versionStr}.jar"
+                jarLocation = "build/libs/${rootProject.mod_id}-spigot-${rootProject.versionStr}-dev-all.jar"
             }
         }
     }
@@ -302,8 +302,8 @@ subprojects { p ->
         // Add common
         if (isMinecraftSubProject && p != project(":common") && p != project(":pathfinding")) {
             // Common
-            common(project(":common")) { transitive false }
-            shadowCommon(project(":common")) { transitive false }
+            common(project(":common"))
+            shadowCommon(project(":common"))
 
             // FabricLike
             if (findProject(":fabricLike") && p != project(":fabricLike")) {

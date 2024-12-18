@@ -4,10 +4,10 @@ Date: Wed, 18 Dec 2024 13:14:06 +0100
 Subject: [PATCH] Support all versions
 
 
-diff --git a/src/main/java/pathfinding/platform/Location.java b/src/main/java/pathfinding/platform/Location.java
-index ae6c69c5bb04231d1fda7dec2df88cd9bd30e203..9dad1b7a4e20838570f28d0e15e60effbcef5967 100644
---- a/src/main/java/pathfinding/platform/Location.java
-+++ b/src/main/java/pathfinding/platform/Location.java
+diff --git a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
+index b401cf6c0da7ff679a17cd87dcf605b1aeaa0040..34164f4b8ce232fdfcf32f04dbf7e34779cd1a6a 100644
+--- a/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
++++ b/src/main/java/nl/abelkrijgtalles/mojangmaps/pathfinding/platform/Location.java
 @@ -119,7 +119,12 @@ public class Location implements Cloneable {
  
      public boolean isSolidBlock() {
