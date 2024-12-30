@@ -5,6 +5,14 @@ Subject: [PATCH] Setup project
 
 This patch migrates the codebase away from bukkit and sets up gradle.
 
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000000000000000000000000000000000000..42afabfd2abebf31384ca7797186a27a4b7dbee8
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1 @@
++/build
+\ No newline at end of file
 diff --git a/README.md b/README.md
 deleted file mode 100644
 index 1db9fdd74e5afce4473b06c349d95a3e8f629c1a..0000000000000000000000000000000000000000
@@ -276,16 +284,14 @@ index 0000000000000000000000000000000000000000..c5f9a80206677bbf0bd7b44d9c093152
 \ No newline at end of file
 diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/platform/Location.java b/src/main/java/nl/abelkrijgtalles/pathfinding/platform/Location.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..dc2d94a37f83a6b4bf7ef7194de282e3b71b5105
+index 0000000000000000000000000000000000000000..c5044f51d59b54a6e64e7160262eacc94c3e58f4
 --- /dev/null
 +++ b/src/main/java/nl/abelkrijgtalles/pathfinding/platform/Location.java
-@@ -0,0 +1,63 @@
+@@ -0,0 +1,57 @@
 +package nl.abelkrijgtalles.pathfinding.platform;
 +
 +import net.minecraft.core.BlockPos;
-+import net.minecraft.core.Vec3i;
 +import net.minecraft.world.phys.Vec3;
-+import org.joml.Vector3f;
 +
 +public class Location extends Vec3 implements Cloneable {
 +
@@ -294,14 +300,10 @@ index 0000000000000000000000000000000000000000..dc2d94a37f83a6b4bf7ef7194de282e3
 +        super($$0, $$1, $$2);
 +    }
 +
-+    public Location(Vector3f $$0) {
++    public Location(Vec3 vec3) {
 +
-+        super($$0);
-+    }
++        super(vec3.toVector3f());
 +
-+    public Location(Vec3i $$0) {
-+
-+        super($$0);
 +    }
 +
 +    @SuppressWarnings("MethodDoesntCallSuperMethod")
@@ -327,7 +329,7 @@ index 0000000000000000000000000000000000000000..dc2d94a37f83a6b4bf7ef7194de282e3
 +    @Override
 +    public Location add(double $$0, double $$1, double $$2) {
 +
-+        return (Location) super.add($$0, $$1, $$2);
++        return new Location(super.add($$0, $$1, $$2));
 +    }
 +
 +    public BlockPos asBlockPos() {

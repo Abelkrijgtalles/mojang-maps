@@ -21,11 +21,8 @@ package nl.abelkrijgtalles.mojangmaps.common.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.Vec3;
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.pathfinding.AStar;
-import nl.abelkrijgtalles.mojangmaps.pathfinding.platform.Location;
+import nl.abelkrijgtalles.pathfinding.AStar;
+import nl.abelkrijgtalles.pathfinding.platform.Location;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 public class Commands {
@@ -37,18 +34,9 @@ public class Commands {
                 literal("test")
                         .executes(context -> {
                             CommandSourceStack source = (CommandSourceStack) context.getSource();
-                            AStar aStar = new AStar(new Location(
-                                    new Vec3(0, 60, 0), source.getLevel()
-                            ), new Location(
-                                    new Vec3(2, 60, 30), source.getLevel()
-                            ));
+                            AStar aStar = new AStar();
 
-                            for (Location location : aStar.getPath()) {
-
-                                MojangMaps.LOGGER.info(location.toString());
-                                location.getLevel().setBlock(location.getPositionAsBlockPos(), Blocks.GLASS.defaultBlockState(), 3);
-
-                            }
+                            aStar.computePath(new Location(0, 100, 0), new Location(20, 100, 20), source.getLevel());
 
                             return 1;
                         })
