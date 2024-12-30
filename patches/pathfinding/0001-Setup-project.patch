@@ -1,43 +1,32 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Abel <abelvanhulst@gmail.com>
-Date: Wed, 18 Dec 2024 18:32:51 +0100
+Date: Mon, 30 Dec 2024 20:31:43 +0100
 Subject: [PATCH] Setup project
 
+This patch migrates the codebase away from bukkit and sets up gradle.
 
-diff --git a/.gitignore b/.gitignore
-index 814a17928ccd5b8dff3786678120c339d27015c4..99c83af0d98dd43bd13652715911461b18ee2401 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -8,3 +8,4 @@ bin/
- *.jardesc
- build.xml
- /target/
-+/build
-\ No newline at end of file
+diff --git a/README.md b/README.md
+deleted file mode 100644
+index 1db9fdd74e5afce4473b06c349d95a3e8f629c1a..0000000000000000000000000000000000000000
+--- a/README.md
++++ /dev/null
+@@ -1,10 +0,0 @@
+-# A* Algorithm MC
+-A* Algorithm implementation in minecraft.
+-A* is a shortest path algorithm amongst a collection of nodes and weighted edges in a graph. 
+-This is a server side plugin. 
+-
+-# Commands 
+-- /pos1 - Sets the start node of the path. 
+-- /pos2 - Sets the end node of the path. 
+-- /setmat (material) - Sets the path's material.
+-- /calcpath - Calculates the most optimal path between the start and end node and creates a visual path. 
 diff --git a/build.gradle b/build.gradle
 new file mode 100644
-index 0000000000000000000000000000000000000000..915e78ddbcfa22f8ffc7441989c1daac6aaa95c4
+index 0000000000000000000000000000000000000000..dab9379f40c2702110d67af90f47942c69e72a71
 --- /dev/null
 +++ b/build.gradle
-@@ -0,0 +1,25 @@
-+/*
-+ * mojang_maps.pathfinding
-+ * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
-+ *
-+ * This program is free software: you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation, either version 3 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
+@@ -0,0 +1,7 @@
 +plugins {
 +    id "org.spongepowered.gradle.vanilla" version "0.2.1-SNAPSHOT"
 +}
@@ -45,69 +34,759 @@ index 0000000000000000000000000000000000000000..915e78ddbcfa22f8ffc7441989c1daac
 +minecraft {
 +    version(rootProject.minecraft_version)
 +}
+diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/AStar.java b/src/main/java/nl/abelkrijgtalles/pathfinding/AStar.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..64e4b91ef4cfa8421ef58f6916f3b7eb21dad386
+--- /dev/null
++++ b/src/main/java/nl/abelkrijgtalles/pathfinding/AStar.java
+@@ -0,0 +1,102 @@
++package nl.abelkrijgtalles.pathfinding; // Setup project
++
++import java.util.HashSet;
++import java.util.PriorityQueue;
++import java.util.Set;
++
++public class AStar {
++
++    private Node begin;
++    private Node goal;
++    private net.minecraft.world.level.block.Block mat = net.minecraft.world.level.block.Blocks.GLASS; // Setup project
++
++    private void computeNodes(nl.abelkrijgtalles.pathfinding.platform.Location start, nl.abelkrijgtalles.pathfinding.platform.Location end, net.minecraft.world.level.Level level) { // Setup project
++
++        this.begin = new Node(start, level, 0); // Setup project
++        this.goal = new Node(end, level, 0); // Setup project
++    }
++
++    public void computePath(nl.abelkrijgtalles.pathfinding.platform.Location start, nl.abelkrijgtalles.pathfinding.platform.Location end, net.minecraft.world.level.Level level) { // Setup project
++
++        computeNodes(start, end, level); // Setup project
++
++        PriorityQueue<Node> openList = new PriorityQueue<>();
++        PriorityQueue<Node> closedList = new PriorityQueue<>();
++
++        Set<nl.abelkrijgtalles.pathfinding.platform.Location> oLocation = new HashSet<>(); // Setup project
++        Set<nl.abelkrijgtalles.pathfinding.platform.Location> cLocation = new HashSet<>(); // Setup project
++
++        begin.totalCost = begin.cost + begin.calcHeuristics(goal);
++
++        begin.estimatedCost = begin.calcHeuristics(goal);
++
++        openList.add(begin);
++
++        oLocation.add(begin.loc.getBlockPosition()); // Setup project
++
++        final Node[] listnode = {null};
++
++        new Thread(new Runnable() { // Setup project
++
++            @Override
++            public void run() {
++
++                Node n = openList.peek();
++
++                n.getBlocksAround(goal);
++
++                openList.remove(n);
++                closedList.add(n);
++
++                oLocation.remove(n.loc.getBlockPosition()); // Setup project
++                cLocation.add(n.loc.getBlockPosition()); // Setup project
++
++                for (Node m : n.neighbors) {
++                    double totalWeight = n.cost + n.calcHeuristics(m);
++                    if (!oLocation.contains(m.loc.getBlockPosition()) && !cLocation.contains(m.loc.getBlockPosition())) { // Setup project
++                        m.parent = n;
++                        m.cost = totalWeight;
++                        //The *1.5 is to add weight to the distance, optimizes algorithm.
++                        m.totalCost = m.cost + 1.5 * m.calcHeuristics(goal);
++
++                        openList.add(m);
++                        oLocation.add(m.loc.getBlockPosition()); // Setup project
++                    } else {
++                        if (totalWeight < m.cost) {
++                            m.parent = n;
++                            m.cost = totalWeight;
++                            m.totalCost = m.cost + 1.5 * m.calcHeuristics(goal);
++                            if (closedList.contains(m)) {
++                                closedList.remove(m);
++                                openList.add(m);
++
++                                cLocation.remove(m.loc.getBlockPosition()); // Setup project
++                                oLocation.add(m.loc.getBlockPosition()); // Setup project
++                            }
++                        }
++                    }
++                }
++                if (n.loc.equals(goal.loc)) { // Setup project
++                    Thread.currentThread().interrupt(); // Setup project
++                    listnode[0] = n;
++                    displayPath(listnode[0], level);
++                }
++            }
++        }).start(); // Setup project
++
++    }
++
++    private void displayPath(Node n, net.minecraft.world.level.Level level) {
++
++        while (n != null) {
++            level.setBlock(n.loc.clone().add(0, 1, 0).asBlockPos(), this.mat.defaultBlockState(), 3); // Setup project
++            n = n.parent;
++        }
++    }
++
++    public void setMaterial(net.minecraft.world.level.block.Block m) { // Setup project
++
++        this.mat = m;
++    }
++
++}
+diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/Node.java b/src/main/java/nl/abelkrijgtalles/pathfinding/Node.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..c5f9a80206677bbf0bd7b44d9c093152cf7ae4f2
+--- /dev/null
++++ b/src/main/java/nl/abelkrijgtalles/pathfinding/Node.java
+@@ -0,0 +1,125 @@
++package nl.abelkrijgtalles.pathfinding; // Setup project
++
++import java.util.ArrayList;
++import java.util.List;
++
++public class Node implements Comparable<Node> {
++
++    public Node parent = null;
++
++    public List<Node> neighbors = new ArrayList<>();
++
++    public double totalCost = Double.MAX_VALUE;
++    public double cost;
++    public double estimatedCost;
++
++    public nl.abelkrijgtalles.pathfinding.platform.Location loc; // Setup project
++
++    private net.minecraft.world.level.Level level; // Setup project
++
++    public Node(nl.abelkrijgtalles.pathfinding.platform.Location l, net.minecraft.world.level.Level level, double c) { // Setup project
++
++        this.loc = l;
++        this.cost = c;
++        this.level = level; // Setup project
++    }
++
++    @Override
++    public int compareTo(Node n) {
++
++        return Double.compare(this.totalCost, n.totalCost);
++    }
++
++    //Similar to BFS
++    public void getBlocksAround(Node goal) {
++
++        // Start - Setup project
++        List<nl.abelkrijgtalles.pathfinding.platform.Location> locations = new ArrayList<>();
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc1 = this.loc.clone().add(1, 0, 0);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc2 = this.loc.clone().add(1, 1, 0);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc3 = this.loc.clone().add(1, -1, 0);
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc4 = this.loc.clone().add(-1, 0, 0);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc5 = this.loc.clone().add(-1, 1, 0);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc6 = this.loc.clone().add(-1, -1, 0);
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc7 = this.loc.clone().add(0, 0, 1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc8 = this.loc.clone().add(0, 1, 1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc9 = this.loc.clone().add(0, -1, 1);
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc10 = this.loc.clone().add(0, 0, -1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc11 = this.loc.clone().add(0, 1, -1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc12 = this.loc.clone().add(0, -1, -1);
++
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc13 = this.loc.clone().add(1, 0, 1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc14 = this.loc.clone().add(1, 1, 1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc15 = this.loc.clone().add(1, -1, 1);
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc16 = this.loc.clone().add(-1, 0, -1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc17 = this.loc.clone().add(-1, 1, -1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc18 = this.loc.clone().add(-1, -1, -1);
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc19 = this.loc.clone().add(-1, 0, 1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc20 = this.loc.clone().add(-1, 1, 1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc21 = this.loc.clone().add(-1, -1, 1);
++
++        nl.abelkrijgtalles.pathfinding.platform.Location loc22 = this.loc.clone().add(1, 0, -1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc23 = this.loc.clone().add(1, 1, -1);
++        nl.abelkrijgtalles.pathfinding.platform.Location loc24 = this.loc.clone().add(1, -1, -1);
++        // End - Setup project
++
++        locations.add(loc1);
++        locations.add(loc2);
++        locations.add(loc3);
++        locations.add(loc4);
++        locations.add(loc5);
++        locations.add(loc6);
++        locations.add(loc7);
++        locations.add(loc8);
++        locations.add(loc9);
++        locations.add(loc10);
++        locations.add(loc11);
++        locations.add(loc12);
++        locations.add(loc13);
++        locations.add(loc14);
++        locations.add(loc15);
++        locations.add(loc16);
++        locations.add(loc17);
++        locations.add(loc18);
++        locations.add(loc19);
++        locations.add(loc20);
++        locations.add(loc21);
++        locations.add(loc22);
++        locations.add(loc23);
++        locations.add(loc24);
++
++        for (nl.abelkrijgtalles.pathfinding.platform.Location l : locations) { // Setup project
++            if (isStandable(l) && isMoveable(l)) {
++                Node o = new Node(l, level, cost + 1.5); // Setup project
++                //The *1.5 is to add weight to the distance, optimizes algorithm.
++                o.totalCost = 1.5 * o.calcHeuristics(goal) + o.cost;
++                o.estimatedCost = o.calcHeuristics(goal);
++                neighbors.add(o);
++            }
++        }
++    }
++
++    public boolean isStandable(nl.abelkrijgtalles.pathfinding.platform.Location l) { // Setup project
++
++        return net.minecraft.world.level.block.Block.isShapeFullBlock(level.getBlockState(l.asBlockPos()).getOcclusionShape()); // Setup project
++    }
++
++    public boolean isMoveable(nl.abelkrijgtalles.pathfinding.platform.Location l) { // Setup project
++
++        return level.getBlockState(l.clone().add(0, 1, 0).asBlockPos()).getOcclusionShape().isEmpty() && level.getBlockState(l.clone().add(0, 2, 0).asBlockPos()).getOcclusionShape().isEmpty(); // Setup project
++    }
++
++
++    public double calcHeuristics(Node goal) {
++
++        return Math.sqrt(nl.abelkrijgtalles.pathfinding.utils.NumberConversion.square(loc.x - goal.loc.x) + nl.abelkrijgtalles.pathfinding.utils.NumberConversion.square(loc.y - goal.loc.y) + nl.abelkrijgtalles.pathfinding.utils.NumberConversion.square(loc.z - goal.loc.z)); // Setup project
++    }
++
++}
 \ No newline at end of file
-diff --git a/pom.xml b/pom.xml
+diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/platform/Location.java b/src/main/java/nl/abelkrijgtalles/pathfinding/platform/Location.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..dc2d94a37f83a6b4bf7ef7194de282e3b71b5105
+--- /dev/null
++++ b/src/main/java/nl/abelkrijgtalles/pathfinding/platform/Location.java
+@@ -0,0 +1,63 @@
++package nl.abelkrijgtalles.pathfinding.platform;
++
++import net.minecraft.core.BlockPos;
++import net.minecraft.core.Vec3i;
++import net.minecraft.world.phys.Vec3;
++import org.joml.Vector3f;
++
++public class Location extends Vec3 implements Cloneable {
++
++    public Location(double $$0, double $$1, double $$2) {
++
++        super($$0, $$1, $$2);
++    }
++
++    public Location(Vector3f $$0) {
++
++        super($$0);
++    }
++
++    public Location(Vec3i $$0) {
++
++        super($$0);
++    }
++
++    @SuppressWarnings("MethodDoesntCallSuperMethod")
++    @Override
++    public Location clone() {
++
++        return new Location(this.x, this.y, this.z);
++
++    }
++
++    @Override
++    public Location add(double $$0) {
++
++        return (Location) super.add($$0);
++    }
++
++    @Override
++    public Location add(Vec3 $$0) {
++
++        return (Location) super.add($$0);
++    }
++
++    @Override
++    public Location add(double $$0, double $$1, double $$2) {
++
++        return (Location) super.add($$0, $$1, $$2);
++    }
++
++    public BlockPos asBlockPos() {
++
++        return new BlockPos((int) x, (int) y, (int) z);
++
++    }
++
++    public Location getBlockPosition() {
++
++        return new Location(Math.floor(x), Math.floor(y), Math.floor(z));
++
++    }
++
++}
+diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/utils/NumberConversion.java b/src/main/java/nl/abelkrijgtalles/pathfinding/utils/NumberConversion.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..54acd718f699f9eea77cbf9528a7d236512b1157
+--- /dev/null
++++ b/src/main/java/nl/abelkrijgtalles/pathfinding/utils/NumberConversion.java
+@@ -0,0 +1,11 @@
++package nl.abelkrijgtalles.pathfinding.utils;
++
++public class NumberConversion {
++
++    public static double square(double value) {
++
++        return value * value;
++
++    }
++
++}
+diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/utils/PlayerSelectPoint.java b/src/main/java/nl/abelkrijgtalles/pathfinding/utils/PlayerSelectPoint.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..38f4dff2d5080fffe942620dd22fb6728fb88345
+--- /dev/null
++++ b/src/main/java/nl/abelkrijgtalles/pathfinding/utils/PlayerSelectPoint.java
+@@ -0,0 +1,36 @@
++package nl.abelkrijgtalles.pathfinding.utils; // Setup project
++
++public class PlayerSelectPoint {
++
++    private nl.abelkrijgtalles.pathfinding.platform.Location loc1 = null; // Setup project
++
++    private nl.abelkrijgtalles.pathfinding.platform.Location loc2 = null; // Setup project
++
++    private java.util.UUID player; // Setup project
++
++    public PlayerSelectPoint(java.util.UUID p) { // Setup project
++
++        this.player = p;
++    }
++
++    public nl.abelkrijgtalles.pathfinding.platform.Location getLoc1() { // Setup project
++
++        return this.loc1;
++    }
++
++    public void setLoc1(nl.abelkrijgtalles.pathfinding.platform.Location l) { // Setup project
++
++        this.loc1 = l;
++    }
++
++    public nl.abelkrijgtalles.pathfinding.platform.Location getLoc2() { // Setup project
++
++        return this.loc2;
++    }
++
++    public void setLoc2(nl.abelkrijgtalles.pathfinding.platform.Location l) { // Setup project
++
++        this.loc2 = l;
++    }
++
++}
+diff --git a/src/net/pathfinding/me/Main.java b/src/net/pathfinding/me/Main.java
 deleted file mode 100644
-index 67829e30d467f1d08b661a03cdb90815e6a07c82..0000000000000000000000000000000000000000
---- a/pom.xml
+index 3da55dd0dd6c97a03af3ec60be6a3abb6b9d0d60..0000000000000000000000000000000000000000
+--- a/src/net/pathfinding/me/Main.java
 +++ /dev/null
-@@ -1,47 +0,0 @@
--<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
--	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+@@ -1,82 +0,0 @@
+-package net.pathfinding.me;
 -
--	<modelVersion>4.0.0</modelVersion>
--	<groupId>com.domisum</groupId>
--	<artifactId>Pathfinding</artifactId>
--	<version>0.0.1</version>
+-import net.pathfinding.me.PathFinding.AStar;
+-import net.pathfinding.me.Utils.PlayerSelectPoint;
+-import org.bukkit.ChatColor;
+-import org.bukkit.Material;
+-import org.bukkit.command.Command;
+-import org.bukkit.command.CommandExecutor;
+-import org.bukkit.command.CommandSender;
+-import org.bukkit.entity.Player;
+-import org.bukkit.plugin.java.JavaPlugin;
 -
--	<properties>
+-import java.util.HashMap;
 -
--		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
--		<maven.compiler.source>1.8</maven.compiler.source>
--		<maven.compiler.target>1.8</maven.compiler.target>
+-public class Main extends JavaPlugin implements CommandExecutor {
 -
--	</properties>
+-    final private HashMap<Player, PlayerSelectPoint> pd = new HashMap<>();
 -
--	<repositories>
+-    private AStar shortpath;
 -
--		<repository>
--			<id>spigot-repo</id>
--			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
--		</repository>
+-    @Override
+-    public void onEnable(){
+-        this.shortpath = new AStar(this);
+-    }
 -
--		<repository>
--			<id>bukkit-repo</id>
--			<url>https://repo.bukkit.org/content/groups/public/</url>
--		</repository>
+-    @Override
+-    public void onDisable(){}
 -
--	</repositories>
+-    @Override
+-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+-        if(!(sender instanceof Player)){
+-            sender.sendMessage("Unable to execute command(s).");
+-            return false;
+-        }
 -
--	<dependencies>
+-        Player p = (Player) sender;
 -
--		<dependency>
--			<groupId>org.spigotmc</groupId>
--			<artifactId>spigot-api</artifactId>
--			<version>1.8.8-R0.1-SNAPSHOT</version>
--		</dependency>
+-        if(!(pd.containsKey(p))){
+-            pd.put(p, new PlayerSelectPoint(p));
+-        }
 -
--		<dependency>
--			<groupId>org.bukkit</groupId>
--			<artifactId>craftbukkit</artifactId>
--			<version>1.8.8-R0.1-SNAPSHOT</version>
--		</dependency>
+-        if(label.equalsIgnoreCase("pos1")){
+-            pd.get(p).setLoc1(p.getLocation());
+-            return true;
+-        }else if(label.equalsIgnoreCase("pos2")){
+-            pd.get(p).setLoc2(p.getLocation());
+-            return true;
+-        }else if(label.equalsIgnoreCase("setmat")){
+-            if(args.length>0){
+-                switch(args[0]){
+-                    case("em"):
+-                        shortpath.setMaterial(Material.EMERALD_BLOCK);
+-                        break;
+-                    case("glass"):
+-                        shortpath.setMaterial(Material.GLASS);
+-                        break;
+-                    case("dia"):
+-                        shortpath.setMaterial(Material.DIAMOND_BLOCK);
+-                        break;
+-                    case("ol"):
+-                        shortpath.setMaterial(Material.OAK_LEAVES);
+-                        break;
+-                    default:
+-                        p.sendMessage(ChatColor.GOLD + "Block Types: em:Emerald Block, glass:Glass, dia:Diamond Block, ol:Oak Leaves");
+-                        break;
+-                }
+-            }else{
+-                p.sendMessage(ChatColor.RED + "Correct Command Usage: /setmat <block>");
+-            }
+-            return true;
+-        }else if(label.equalsIgnoreCase("calcpath")){
+-            if(pd.get(p).getLoc1()==null || pd.get(p).getLoc2()==null){
+-                p.sendMessage(ChatColor.RED + "You must set the start and end node.");
+-                return true;
+-            }
+-            shortpath.computePath(pd.get(p).getLoc1(), pd.get(p).getLoc1());
+-            return true;
+-        }
 -
--	</dependencies>
--
--</project>
-\ No newline at end of file
-diff --git a/src/main/resources/plugin.yml b/src/main/resources/plugin.yml
+-        return false;
+-    }
+-}
+diff --git a/src/net/pathfinding/me/PathFinding/AStar.java b/src/net/pathfinding/me/PathFinding/AStar.java
 deleted file mode 100644
-index fb48c79341aa81056a0e3fcb8397135b5c30e759..0000000000000000000000000000000000000000
---- a/src/main/resources/plugin.yml
+index 54cec3c0a952c972b59c29037f6b98b2a7692c16..0000000000000000000000000000000000000000
+--- a/src/net/pathfinding/me/PathFinding/AStar.java
 +++ /dev/null
-@@ -1,4 +0,0 @@
--name: Pathfinding
--version: 0.1
--author: domisum
--main: main.Pathfinding
+@@ -1,109 +0,0 @@
+-package net.pathfinding.me.PathFinding;
+-
+-
+-import net.pathfinding.me.Main;
+-import org.bukkit.Location;
+-import org.bukkit.Material;
+-import org.bukkit.scheduler.BukkitRunnable;
+-
+-import java.util.*;
+-
+-public class AStar {
+-
+-    private Node begin;
+-
+-    private Node goal;
+-
+-    final private Main plugin;
+-
+-    private Material mat=Material.GLASS;
+-
+-    public AStar(Main pl){
+-        this.plugin = pl;
+-    }
+-
+-    private void computeNodes(Location start, Location end){
+-        this.begin = new Node(start, 0);
+-        this.goal = new Node(end, 0);
+-    }
+-
+-    public void computePath(Location start, Location end){
+-        computeNodes(start, end);
+-
+-        PriorityQueue<Node> openList = new PriorityQueue<>();
+-        PriorityQueue<Node> closedList = new PriorityQueue<>();
+-
+-        Set<Location> oLocation = new HashSet<>();
+-        Set<Location> cLocation = new HashSet<>();
+-
+-        begin.totalCost = begin.cost + begin.calcHeuristics(goal);
+-
+-        begin.estimatedCost = begin.calcHeuristics(goal);
+-
+-        openList.add(begin);
+-
+-        oLocation.add(begin.loc.getBlock().getLocation());
+-
+-        final Node[] listnode = {null};
+-
+-        new BukkitRunnable(){
+-
+-            @Override
+-            public void run() {
+-                Node n = openList.peek();
+-
+-                n.getBlocksAround(goal);
+-
+-                openList.remove(n);
+-                closedList.add(n);
+-
+-                oLocation.remove(n.loc.getBlock().getLocation());
+-                cLocation.add(n.loc.getBlock().getLocation());
+-
+-                for(Node m : n.neighbors){
+-                    double totalWeight = n.cost + n.calcHeuristics(m);
+-                    if(!oLocation.contains(m.loc.getBlock().getLocation()) && !cLocation.contains(m.loc.getBlock().getLocation())){
+-                        m.parent = n;
+-                        m.cost = totalWeight;
+-                        //The *1.5 is to add weight to the distance, optimizes algorithm.
+-                        m.totalCost = m.cost + 1.5*m.calcHeuristics(goal);
+-
+-                        openList.add(m);
+-                        oLocation.add(m.loc.getBlock().getLocation());
+-                    } else {
+-                        if(totalWeight < m.cost){
+-                            m.parent = n;
+-                            m.cost = totalWeight;
+-                            m.totalCost = m.cost + 1.5*m.calcHeuristics(goal);
+-                            if(closedList.contains(m)){
+-                                closedList.remove(m);
+-                                openList.add(m);
+-
+-                                cLocation.remove(m.loc.getBlock().getLocation());
+-                                oLocation.add(m.loc.getBlock().getLocation());
+-                            }
+-                        }
+-                    }
+-                }
+-                if(n.loc.getWorld().getBlockAt(n.loc).getLocation().equals(goal.loc.getWorld().getBlockAt(goal.loc).getLocation())){
+-                    cancel();
+-                    listnode[0] = n;
+-                    displayPath(listnode[0]);
+-                }
+-            }
+-        }.runTaskTimer(plugin, 0, 0);
+-
+-    }
+-
+-    private void displayPath(Node n){
+-        while(n!=null){
+-            n.loc.clone().add(0,1,0).getBlock().setType(this.mat);
+-            n=n.parent;
+-        }
+-    }
+-
+-    public void setMaterial(Material m){
+-        this.mat = m;
+-    }
+-
+-}
+diff --git a/src/net/pathfinding/me/PathFinding/Node.java b/src/net/pathfinding/me/PathFinding/Node.java
+deleted file mode 100644
+index f5c43354941d4a61341577b09d86f469edd68f19..0000000000000000000000000000000000000000
+--- a/src/net/pathfinding/me/PathFinding/Node.java
++++ /dev/null
+@@ -1,116 +0,0 @@
+-package net.pathfinding.me.PathFinding;
+-
+-import org.bukkit.Location;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public class Node implements Comparable<Node>{
+-
+-    public Node parent = null;
+-
+-    public List<Node> neighbors = new ArrayList<>();;
+-
+-    public double totalCost = Double.MAX_VALUE;
+-    public double cost;
+-    public double estimatedCost;
+-
+-    public Location loc;
+-
+-    public Node(Location l, double c){
+-        this.loc = l;
+-        this.cost = c;
+-    }
+-
+-    @Override
+-    public int compareTo(Node n) {
+-        return Double.compare(this.totalCost,n.totalCost);
+-    }
+-
+-    //Similar to BFS
+-    public void getBlocksAround(Node goal){
+-        List<Location> locations = new ArrayList<>();
+-
+-        Location loc1 = this.loc.clone().add(1,0,0);
+-        Location loc2 = this.loc.clone().add(1,1,0);
+-        Location loc3 = this.loc.clone().add(1,-1,0);
+-
+-        Location loc4 = this.loc.clone().add(-1,0,0);
+-        Location loc5 = this.loc.clone().add(-1,1,0);
+-        Location loc6 = this.loc.clone().add(-1,-1,0);
+-
+-        Location loc7 = this.loc.clone().add(0,0,1);
+-        Location loc8 = this.loc.clone().add(0,1,1);
+-        Location loc9 = this.loc.clone().add(0,-1,1);
+-
+-        Location loc10 = this.loc.clone().add(0,0,-1);
+-        Location loc11 = this.loc.clone().add(0,1,-1);
+-        Location loc12 = this.loc.clone().add(0,-1,-1);
+-
+-
+-        Location loc13 = this.loc.clone().add(1,0,1);
+-        Location loc14 = this.loc.clone().add(1,1,1);
+-        Location loc15 = this.loc.clone().add(1,-1,1);
+-
+-        Location loc16 = this.loc.clone().add(-1,0,-1);
+-        Location loc17 = this.loc.clone().add(-1,1,-1);
+-        Location loc18 = this.loc.clone().add(-1,-1,-1);
+-
+-        Location loc19 = this.loc.clone().add(-1,0,1);
+-        Location loc20 = this.loc.clone().add(-1,1,1);
+-        Location loc21 = this.loc.clone().add(-1,-1,1);
+-
+-        Location loc22 = this.loc.clone().add(1,0,-1);
+-        Location loc23 = this.loc.clone().add(1,1,-1);
+-        Location loc24 = this.loc.clone().add(1,-1,-1);
+-
+-        locations.add(loc1);
+-        locations.add(loc2);
+-        locations.add(loc3);
+-        locations.add(loc4);
+-        locations.add(loc5);
+-        locations.add(loc6);
+-        locations.add(loc7);
+-        locations.add(loc8);
+-        locations.add(loc9);
+-        locations.add(loc10);
+-        locations.add(loc11);
+-        locations.add(loc12);
+-        locations.add(loc13);
+-        locations.add(loc14);
+-        locations.add(loc15);
+-        locations.add(loc16);
+-        locations.add(loc17);
+-        locations.add(loc18);
+-        locations.add(loc19);
+-        locations.add(loc20);
+-        locations.add(loc21);
+-        locations.add(loc22);
+-        locations.add(loc23);
+-        locations.add(loc24);
+-
+-        for(Location l:locations){
+-            if(isStandable(l) && isMoveable(l)){
+-                Node o = new Node(l, cost+1.5);
+-                //The *1.5 is to add weight to the distance, optimizes algorithm.
+-                o.totalCost = 1.5*o.calcHeuristics(goal) + o.cost;
+-                o.estimatedCost = o.calcHeuristics(goal);
+-                neighbors.add(o);
+-            }
+-        }
+-    }
+-
+-    public boolean isStandable(Location l){
+-        return l.getBlock().getType().isSolid();
+-    }
+-
+-    public boolean isMoveable(Location l){
+-        return l.clone().add(0, 1, 0).getBlock().isPassable() && l.clone().add(0, 2,0).getBlock().isPassable();
+-    }
+-
+-
+-    public double calcHeuristics(Node goal){
+-        return this.loc.distance(goal.loc);
+-    }
+-
+-}
 \ No newline at end of file
+diff --git a/src/net/pathfinding/me/Utils/PlayerSelectPoint.java b/src/net/pathfinding/me/Utils/PlayerSelectPoint.java
+deleted file mode 100644
+index a9dc78b6517439a1e8575b7e16823cdecb746cff..0000000000000000000000000000000000000000
+--- a/src/net/pathfinding/me/Utils/PlayerSelectPoint.java
++++ /dev/null
+@@ -1,34 +0,0 @@
+-package net.pathfinding.me.Utils;
+-
+-import org.bukkit.Location;
+-import org.bukkit.entity.Player;
+-
+-public class PlayerSelectPoint {
+-
+-    private Location loc1=null;
+-
+-    private Location loc2=null;
+-
+-    private Player player;
+-
+-    public PlayerSelectPoint(Player p){
+-        this.player = p;
+-    }
+-
+-    public void setLoc1(Location l){
+-        this.loc1 = l;
+-    }
+-
+-    public void setLoc2(Location l){
+-        this.loc2 = l;
+-    }
+-
+-    public Location getLoc1(){
+-        return this.loc1;
+-    }
+-
+-    public Location getLoc2(){
+-        return this.loc2;
+-    }
+-
+-}
+diff --git a/src/plugin.yml b/src/plugin.yml
+deleted file mode 100644
+index 9f11fd4ace1c9df1f8f9c214b5f419e80ae21ed1..0000000000000000000000000000000000000000
+--- a/src/plugin.yml
++++ /dev/null
+@@ -1,16 +0,0 @@
+-main: net.pathfinding.me.Main
+-version: 1.0
+-author: v18
+-name: PathFinding
+-description: Implementation of A* Algorithm in Minecraft
+-api-version: 1.16
+-
+-commands:
+-  pos1:
+-    usage:
+-  pos2:
+-    usage:
+-  calcpath:
+-    useage:
+-  setmat:
+-    useage:
