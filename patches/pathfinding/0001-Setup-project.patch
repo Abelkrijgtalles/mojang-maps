@@ -360,48 +360,6 @@ index 0000000000000000000000000000000000000000..54acd718f699f9eea77cbf9528a7d236
 +    }
 +
 +}
-diff --git a/src/main/java/nl/abelkrijgtalles/pathfinding/utils/PlayerSelectPoint.java b/src/main/java/nl/abelkrijgtalles/pathfinding/utils/PlayerSelectPoint.java
-new file mode 100644
-index 0000000000000000000000000000000000000000..38f4dff2d5080fffe942620dd22fb6728fb88345
---- /dev/null
-+++ b/src/main/java/nl/abelkrijgtalles/pathfinding/utils/PlayerSelectPoint.java
-@@ -0,0 +1,36 @@
-+package nl.abelkrijgtalles.pathfinding.utils; // Setup project
-+
-+public class PlayerSelectPoint {
-+
-+    private nl.abelkrijgtalles.pathfinding.platform.Location loc1 = null; // Setup project
-+
-+    private nl.abelkrijgtalles.pathfinding.platform.Location loc2 = null; // Setup project
-+
-+    private java.util.UUID player; // Setup project
-+
-+    public PlayerSelectPoint(java.util.UUID p) { // Setup project
-+
-+        this.player = p;
-+    }
-+
-+    public nl.abelkrijgtalles.pathfinding.platform.Location getLoc1() { // Setup project
-+
-+        return this.loc1;
-+    }
-+
-+    public void setLoc1(nl.abelkrijgtalles.pathfinding.platform.Location l) { // Setup project
-+
-+        this.loc1 = l;
-+    }
-+
-+    public nl.abelkrijgtalles.pathfinding.platform.Location getLoc2() { // Setup project
-+
-+        return this.loc2;
-+    }
-+
-+    public void setLoc2(nl.abelkrijgtalles.pathfinding.platform.Location l) { // Setup project
-+
-+        this.loc2 = l;
-+    }
-+
-+}
 diff --git a/src/net/pathfinding/me/Main.java b/src/net/pathfinding/me/Main.java
 deleted file mode 100644
 index 3da55dd0dd6c97a03af3ec60be6a3abb6b9d0d60..0000000000000000000000000000000000000000
