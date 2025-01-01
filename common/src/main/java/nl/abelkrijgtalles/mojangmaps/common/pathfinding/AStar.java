@@ -18,17 +18,8 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.pathfinding;
 
-import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.Scorer;
+public class AStar {
 
-public class TwoDimensionalWaypointScorer implements Scorer<Waypoint> {
-
-    @Override
-    public double computeCost(Waypoint from, Waypoint to) {
-
-        double x = from.getPosition().x - to.getPosition().x;
-        double z = from.getPosition().z - to.getPosition().z;
-
-        return Math.sqrt(x * x + z * z);
-    }
+    // very empty...
 
 }

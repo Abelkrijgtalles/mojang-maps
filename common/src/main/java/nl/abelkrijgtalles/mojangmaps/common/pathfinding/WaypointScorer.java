@@ -20,8 +20,9 @@ package nl.abelkrijgtalles.mojangmaps.common.pathfinding;
 
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.Scorer;
 
-public class ThreeDimensionalWaypointScorer implements Scorer<Waypoint> {
+public class WaypointScorer implements Scorer<Waypoint> {
 
+    // TODO: ADD PENALTIES FOR UNCLIMBABLE HEIGHTS AND STUFF LIKE THAT
     @Override
     public double computeCost(Waypoint from, Waypoint to) {
 
