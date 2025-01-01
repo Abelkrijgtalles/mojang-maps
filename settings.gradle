@@ -1,6 +1,6 @@
 /*
  * MojangMaps
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,7 +111,6 @@ loadProperties()
 
 // sub-projects
 include("common")
-include("pathfinding")
 // Enables or disables the subprojects depending on whats in the versionProperties/mcVer.properties
 for (loader in ((String) gradle.builds_for).split(",")) {
     def loaderName = loader.strip() // Strip it in case a space is added before or after the comma

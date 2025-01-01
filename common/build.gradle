@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ minecraft {
 dependencies {
     // So mixins can be written in common
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
-    implementation project(":pathfinding")
 }
 
 

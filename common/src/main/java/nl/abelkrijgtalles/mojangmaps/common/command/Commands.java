@@ -21,7 +21,7 @@ package nl.abelkrijgtalles.mojangmaps.common.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
-import nl.abelkrijgtalles.pathfinding.AStar;
+import nl.abelkrijgtalles.mojangmaps.pathfinding.AStar;
 import nl.abelkrijgtalles.pathfinding.platform.Location;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 

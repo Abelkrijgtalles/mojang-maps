@@ -1,6 +1,6 @@
 /*
  * MojangMaps
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,9 +30,6 @@ plugins {
 
     // Architectury is used here only as a replacement for forge's own loom
     id "dev.architectury.loom" version "1.9-SNAPSHOT" apply false
-
-    // algorithm patches so we have a solid base
-    id 'ca.stellardrift.gitpatcher' version '1.1.0'
 }
 
 
@@ -589,11 +586,3 @@ task cleanMergedJars() {
 }
 // add cleanMergedJars to the end of the "clean" task
 tasks["clean"].finalizedBy(cleanMergedJars)
-
-gitPatcher.patchedRepos {
-    'pathfinding' {
-        submodule = 'lib/pathfinding'
-        target = file('pathfinding')
-        patches = file('patches/pathfinding')
-    }
-}
