@@ -21,9 +21,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Apply patches
-        run: ./gradlew updateSubmodules && ./gradlew applyPatches
-
         # These are hardcoded, as it makes it easier to see on actions and probably fails the whole action when one fails.
 
       - name: Build Minecraft 1.16.5

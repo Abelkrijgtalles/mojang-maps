@@ -1,3 +1,0 @@
-[submodule "lib/pathfinding"]
-	path = lib/pathfinding
-	url = https://github.com/vmad18/astar-mc
