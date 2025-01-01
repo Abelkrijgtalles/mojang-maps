@@ -10,6 +10,7 @@ All sizes are the amount of bytes it takes to store a certain thing.
 DO NOT DELETE THIS FILE!!!
 This rest of this file may look like gibberish, but it's not. This stores all the road data for Mojang Maps.
 If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.
+Even editing this file, or this message, will brick Mojang Maps.
 ---
 [version byte surrounded in 0x06 & 0x07 - currently 0x01]
 [begin compression]
