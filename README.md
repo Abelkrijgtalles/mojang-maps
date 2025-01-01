@@ -1,5 +1,7 @@
 # Mojang Maps
 
+> DISCLAIMER: NOT AN OFFICIAL MINECRAFT/MOJANG PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.
+
 ## Status: I really don't know what I'm going to do. It's been dead since February. Maybe I'll make a cross-platform & cross-version rewrite, or maybe I'll leave it to die.
 
 A Google Maps like navigation system for Minecraft.
@@ -53,5 +55,3 @@ and [#14](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14).
   smooth brain, but it's still largely based on this template.
 - [Simple Config](https://github.com/magistermaks/fabric-simplelibs/tree/master/simple-config) made
   by [magistermaks](https://github.com/magistermaks).
-
-> NOT AN OFFICIAL MINECRAFT/MOJANG PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.
