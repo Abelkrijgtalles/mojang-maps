@@ -12,7 +12,7 @@ This rest of this file may look like gibberish, but it's not. This stores all th
 If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.
 Even editing this file, or this message, will brick Mojang Maps.
 ---
-[version byte surrounded in 0x06 & 0x07 - currently 0x01]
+[version byte surrounded in 0x06 & 0x07 - currently 0x02]
 [begin compression]
     [road data begins]
         [roads data size in bytes as int - 4 bytes]
@@ -30,6 +30,16 @@ Even editing this file, or this message, will brick Mojang Maps.
                 [y as double - 8 bytes]
                 [z as double - 8 bytes]
             [end repetition for waypoints]
+            [raw road data size in bytes]
+            [the following block will be repeated for every waypoint - in order of the last loop]
+                [the blocks in this loop will be ordered as block from the first waypoint to the last]
+                [example: waypoint1 -> waypoint2 -> waypoint3 = 0,0,0 0,0,1 endwaypoint 0,0,1 0,0,2 0,0,3 endwaypoint]
+                [optional begin waypoint byte, only required when it's the first block between two waypoints - randomly generated so it doesn't conflict, defaults to 0x69]
+                    [x as double - 8 bytes]
+                    [y as double - 8 bytes]
+                    [z as double - 8 bytes]
+                [optional end waypoint byte, only required when it's the last block between two waypoints - randomly generated so it doesn't conflict, defaults to 0x69]
+            [end repetition for raw road data size]
         [end repetition for roads]
     [road data ends]
 [end compression]

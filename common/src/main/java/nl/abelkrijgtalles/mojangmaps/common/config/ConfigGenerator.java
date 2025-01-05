@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,6 +150,12 @@ public class ConfigGenerator {
         StringBuilder groupString = new StringBuilder();
         List<RecursiveItem> allNestedChildren = getAllNestedChildrenFromGroup(group, new ArrayList<>());
 
+        groupString.append(commentDefineSymbol);
+        groupString.append(group.getName());
+        groupString.append(": ");
+        groupString.append(group.getComment());
+        groupString.append('\n');
+
         for (RecursiveItem item : allNestedChildren) {
 
             if (item.additionalData() instanceof String comments && !comments.isEmpty()) {
@@ -183,6 +189,8 @@ public class ConfigGenerator {
                 if (!commentAdded && !group.getComment().isEmpty()) {
 
                     comment.append(commentDefineSymbol);
+                    comment.append(group.getName());
+                    comment.append(": ");
                     comment.append(group.getComment());
 
                     if (!item.getComment().isEmpty()) {

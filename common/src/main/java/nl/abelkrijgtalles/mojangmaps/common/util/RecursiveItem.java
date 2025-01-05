@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ public final class RecursiveItem {
     private final Object additionalData;
     private final List<String> path;
 
-    public RecursiveItem(Object value, String key, Object additionalData, List<String> path) {
+    public RecursiveItem(String key, Object value, Object additionalData, List<String> path) {
 
         this.value = value;
         this.key = key;

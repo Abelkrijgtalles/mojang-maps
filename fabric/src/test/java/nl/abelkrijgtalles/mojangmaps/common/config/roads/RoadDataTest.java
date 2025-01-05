@@ -1,6 +1,6 @@
 /*
  * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.test
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public class RoadDataTest {
 
         for (int i = 0; i < numberOfRoadsAndWaypointsPerRoad; i++) {
 
-            List<Position> waypoints = new ArrayList<>();
+            List<Vec3> waypoints = new ArrayList<>();
 
             for (int j = 0; j < numberOfRoadsAndWaypointsPerRoad; j++) {
 
@@ -69,8 +69,8 @@ public class RoadDataTest {
             assertEquals(road.getName(), readRoad.getName());
             assertEquals(road.getWorldName(), readRoad.getWorldName());
 
-            List<Position> roadWaypoints = road.getWaypoints();
-            List<Position> readRoadWaypoints = readRoad.getWaypoints();
+            List<Vec3> roadWaypoints = road.getWaypoints();
+            List<Vec3> readRoadWaypoints = readRoad.getWaypoints();
 
             for (int j = 0; j < roadWaypoints.size(); j++) {
 

@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,16 +27,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 import net.minecraft.core.Position;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigPaths;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
+import nl.abelkrijgtalles.mojangmaps.common.pathfinding.Waypoint;
+import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.Graph;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class RoadData {
@@ -61,6 +64,10 @@ public class RoadData {
             """;
     #endif
     private final static Path FILE_PATH = Paths.get(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
+    private final static byte VERSION = 0x02;
+    // Only used for debugging
+    // TODO: change to true if false
+    private final static boolean COMPRESSION = true;
 
     /**
      * Overwrite (or create) roads.mmd with the provided roads. This will completely reset roads.mmd.
@@ -87,6 +94,19 @@ public class RoadData {
                 waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.x()).array()));
                 waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.y()).array()));
                 waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.z()).array()));
+
+            }
+
+            List<Byte> rawRoadDataBytes = new ArrayList<>();
+
+            for (int i = 0; i < road.getWaypoints().size(); i++) {
+
+                if (i == road.getWaypoints().size() - 1) break;
+
+                Vec3 from = road.getWaypoints().get(i);
+                Vec3 to = road.getWaypoints().get(i + 1);
+
+                int range = (int) from.distanceTo(to) + Integer.parseInt(ConfigPaths.get(ConfigPaths.PATHFINDING, ConfigPaths.COSTS, ConfigPaths.ADDITIONAL_PRE_CALCULATED_RANGE));
 
             }
 
@@ -117,24 +137,27 @@ public class RoadData {
                 FILE_PATH.toFile().createNewFile();
             }
 
-            Deflater deflater = new Deflater();
-            deflater.setInput(byteArray);
-            deflater.finish();
-
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            while (!deflater.finished()) {
+            if (COMPRESSION) {
+                Deflater deflater = new Deflater();
+                deflater.setInput(byteArray);
+                deflater.finish();
 
-                int compressedSize = deflater.deflate(buffer);
-                byteArrayOutputStream.write(buffer, 0, compressedSize);
 
-            }
+                byte[] buffer = new byte[1024];
+                while (!deflater.finished()) {
+
+                    int compressedSize = deflater.deflate(buffer);
+                    byteArrayOutputStream.write(buffer, 0, compressedSize);
+
+                }
+            } else byteArrayOutputStream.write(byteArray, 0, byteArray.length);
 
             OutputStream outputStream = new FileOutputStream(FILE_PATH.toFile());
             outputStream.write(
                     ArrayUtils.addAll(ArrayUtils.addAll(MESSAGE.getBytes(StandardCharsets.UTF_8),
                                     // version marking
-                                    new byte[]{0x06, 0x01, 0x07}),
+                                    new byte[]{0x06, VERSION, 0x07}),
                             ArrayUtils.addAll(byteArrayOutputStream.toByteArray())));
             outputStream.close();
 
@@ -231,22 +254,25 @@ public class RoadData {
 
         assert version != 0;
 
-        Inflater inflater = new Inflater();
-        inflater.setInput(compressedArray);
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
 
-        while (!inflater.finished()) {
-            int decompressedSize = 0;
-            try {
-                decompressedSize = inflater.inflate(buffer);
-            } catch (DataFormatException e) {
-                MojangMaps.LOGGER.error("Couldn't inflate/decompress {}", FILE_PATH);
-                throw new RuntimeException(e);
+        if (COMPRESSION) {
+            Inflater inflater = new Inflater();
+            inflater.setInput(compressedArray);
+
+            byte[] buffer = new byte[1024];
+
+            while (!inflater.finished()) {
+                int decompressedSize = 0;
+                try {
+                    decompressedSize = inflater.inflate(buffer);
+                } catch (DataFormatException e) {
+                    MojangMaps.LOGGER.error("Couldn't inflate/decompress {}", FILE_PATH);
+                    throw new RuntimeException(e);
+                }
+                outputStream.write(buffer, 0, decompressedSize);
             }
-            outputStream.write(buffer, 0, decompressedSize);
-        }
+        } else outputStream.write(compressedArray, 0, compressedArray.length);
 
         byte[] uncompressedData = outputStream.toByteArray();
         int roadsDataSize = ByteBuffer.wrap(getFirstNBytes(uncompressedData, 0, 4)).getInt();
@@ -293,7 +319,7 @@ public class RoadData {
             offset += 4;
 
             // Parse waypoints
-            List<Position> waypoints = new ArrayList<>();
+            List<Vec3> waypoints = new ArrayList<>();
             int waypointOffset = 0;
             while (waypointOffset < waypointsDataSize) {
                 double x = ByteBuffer.wrap(Arrays.copyOfRange(roadData, offset + waypointOffset, offset + waypointOffset + 8)).getDouble();
@@ -347,6 +373,117 @@ public class RoadData {
             return new ArrayList<>();
 
         }
+
+    }
+
+    private Graph<Waypoint> generateGraphOfHighestBlockInWorldWithRange(int additionalRange, Vec3 from, Vec3 to, Level level) {
+
+        Set<Waypoint> waypoints = new HashSet<>();
+        Map<UUID, Set<UUID>> connections = new HashMap<>();
+        double halvedRange = (double) additionalRange / 2;
+
+        for (double x = from.x - halvedRange; x < to.x + halvedRange + 1; x++) {
+            for (double z = from.z - halvedRange; z < to.z + halvedRange + 1; z++) {
+
+                // Generate UUIDs
+                UUID sameLoc = UUID.randomUUID();
+                UUID north = UUID.randomUUID();
+                UUID northEast = UUID.randomUUID();
+                UUID east = UUID.randomUUID();
+                UUID southEast = UUID.randomUUID();
+                UUID south = UUID.randomUUID();
+                UUID southWest = UUID.randomUUID();
+                UUID west = UUID.randomUUID();
+                UUID northWest = UUID.randomUUID();
+
+                // Add waypoints to set
+                // Same loc
+                waypoints.add(new Waypoint(sameLoc, new Vec3(x, getHeightAtLocation(level, x, z), z)));
+                // North
+                waypoints.add(new Waypoint(north, new Vec3(x, getHeightAtLocation(level, x, z - 1), z - 1)));
+                // North-east
+                waypoints.add(new Waypoint(northEast, new Vec3(x + 1, getHeightAtLocation(level, x + 1, z - 1), z - 1)));
+                // East
+                waypoints.add(new Waypoint(east, new Vec3(x + 1, getHeightAtLocation(level, x + 1, z), z)));
+                // South-east
+                waypoints.add(new Waypoint(southEast, new Vec3(x + 1, getHeightAtLocation(level, x + 1, z + 1), z + 1)));
+                // South
+                waypoints.add(new Waypoint(south, new Vec3(x, getHeightAtLocation(level, x, z + 1), z + 1)));
+                // South-west
+                waypoints.add(new Waypoint(southWest, new Vec3(x - 1, getHeightAtLocation(level, x - 1, z + 1), z + 1)));
+                // West
+                waypoints.add(new Waypoint(west, new Vec3(x - 1, getHeightAtLocation(level, x - 1, z), z)));
+                // North-west
+                waypoints.add(new Waypoint(northWest, new Vec3(x - 1, getHeightAtLocation(level, x - 1, z - 1), z - 1)));
+
+            }
+        }
+
+        // doing this because this is less error-prone
+        for (Waypoint waypoint : waypoints) {
+
+            connections.put(waypoint.getUUID(), getAllWaypointsAroundWaypoint(waypoint, waypoints, level));
+
+        }
+
+        return new Graph<>(waypoints, connections);
+
+    }
+
+    private int getHeightAtLocation(Level level, double x, double z) {
+
+        return level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(x), (int) Math.floor(z));
+
+    }
+
+    private Set<UUID> getAllWaypointsAroundWaypoint(Waypoint waypoint, Set<Waypoint> waypoints, Level level) {
+
+        Set<UUID> waypointset = new HashSet<>();
+        double x = waypoint.getPosition().x;
+        double z = waypoint.getPosition().z;
+
+        // North
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x, getHeightAtLocation(level, x, z - 1), z - 1)))
+                .findFirst().orElse(null).getUUID());
+        // North-east
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x + 1, getHeightAtLocation(level, x + 1, z - 1), z - 1)))
+                .findFirst().orElse(null).getUUID());
+        // East
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x + 1, getHeightAtLocation(level, x + 1, z), z)))
+                .findFirst().orElse(null).getUUID());
+        // South-east
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x + 1, getHeightAtLocation(level, x + 1, z + 1), z + 1)))
+                .findFirst().orElse(null).getUUID());
+        // South
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x, getHeightAtLocation(level, x, z + 1), z + 1)))
+                .findFirst().orElse(null).getUUID());
+        // South-west
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x - 1, getHeightAtLocation(level, x - 1, z + 1), z + 1)))
+                .findFirst().orElse(null).getUUID());
+        // West
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x - 1, getHeightAtLocation(level, x - 1, z), z)))
+                .findFirst().orElse(null).getUUID());
+        // North-west
+        waypointset.add(waypoints.stream().filter(
+                        waypoint1 ->
+                                waypoint1.getPosition().equals(new Vec3(x - 1, getHeightAtLocation(level, x - 1, z - 1), z - 1)))
+                .findFirst().orElse(null).getUUID());
+
+        return waypointset;
 
     }
 

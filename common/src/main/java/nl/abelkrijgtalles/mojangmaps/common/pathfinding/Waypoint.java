@@ -31,7 +31,12 @@ public class Waypoint implements GraphNode {
 
     public Waypoint(Vec3 position) {
 
-        this.uuid = UUID.randomUUID();
+        this(UUID.randomUUID(), position);
+    }
+
+    public Waypoint(UUID uuid, Vec3 position) {
+
+        this.uuid = uuid;
         this.position = position;
     }
 
@@ -50,6 +55,17 @@ public class Waypoint implements GraphNode {
     public String toString() {
 
         return "Waypoint of road %s on X %s Y %s Z %s with UUID %s".formatted(null, position.x, position.y, position.z, uuid);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (!(obj instanceof Waypoint waypoint)) return false;
+
+        if (uuid.equals(waypoint.getUUID())) return true;
+        else return position.equals(waypoint.position);
+
     }
 
 }

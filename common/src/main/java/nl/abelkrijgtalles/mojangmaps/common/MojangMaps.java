@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,14 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.DetectedVersion;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGroup;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigPaths;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,7 +54,11 @@ public class MojangMaps {
     public static List<ConfigObject> getDefaultConfig() {
 
         return Collections.singletonList(
-                new ConfigItem("message", "Hello you are cool :)", "Very cool")
+                new ConfigGroup(ConfigPaths.PATHFINDING, "All pathfinding related configurations.", Arrays.asList(
+                        new ConfigGroup(ConfigPaths.COSTS, "Please only edit these configurations if you know what you're doing. This directly impacts the performance and quality of the pathfinding.", Arrays.asList(
+                                new ConfigItem(ConfigPaths.ADDITIONAL_PRE_CALCULATED_RANGE, "5", "How many blocks have to be added to the range when pre-calculating paths between waypoints. This is three-dimensional.")
+                        ))
+                ))
         );
     }
 

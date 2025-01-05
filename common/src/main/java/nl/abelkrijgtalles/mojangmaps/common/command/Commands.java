@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,6 @@ package nl.abelkrijgtalles.mojangmaps.common.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
-import nl.abelkrijgtalles.mojangmaps.pathfinding.AStar;
-import nl.abelkrijgtalles.pathfinding.platform.Location;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 public class Commands {
@@ -34,9 +32,6 @@ public class Commands {
                 literal("test")
                         .executes(context -> {
                             CommandSourceStack source = (CommandSourceStack) context.getSource();
-                            AStar aStar = new AStar();
-
-                            aStar.computePath(new Location(0, 100, 0), new Location(20, 100, 20), source.getLevel());
 
                             return 1;
                         })

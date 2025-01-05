@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,23 +19,23 @@
 package nl.abelkrijgtalles.mojangmaps.common.model;
 
 import java.util.List;
-import net.minecraft.core.Position;
 import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.phys.Vec3;
 
 public class Road {
 
     private String name;
     private String worldName;
-    private List<Position> waypoints;
+    private List<Vec3> waypoints;
 
-    public Road(String name, String worldName, List<Position> waypoints) {
+    public Road(String name, String worldName, List<Vec3> waypoints) {
 
         this.name = name;
         this.worldName = worldName;
         this.waypoints = waypoints;
     }
 
-    public Road(String name, ServerLevelData worldData, List<Position> waypoints) {
+    public Road(String name, ServerLevelData worldData, List<Vec3> waypoints) {
 
         new Road(name, worldData.getLevelName(), waypoints);
     }
@@ -50,7 +50,7 @@ public class Road {
         return worldName;
     }
 
-    public List<Position> getWaypoints() {
+    public List<Vec3> getWaypoints() {
 
         return waypoints;
     }

@@ -1,6 +1,6 @@
 /*
  * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ public class SimpleConfig {
         if (!entry.isEmpty() && !entry.startsWith("#")) {
             String[] parts = entry.split("=", 2);
             if (parts.length == 2) {
-                config.put(parts[0], parts[1]);
+                config.put(parts[0].strip(), parts[1].strip());
             } else {
                 throw new RuntimeException("Syntax error in config file on line " + line + "!");
             }
