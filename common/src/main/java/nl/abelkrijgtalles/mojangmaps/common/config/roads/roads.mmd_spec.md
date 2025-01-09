@@ -31,6 +31,7 @@ Even editing this file, or this message, will brick Mojang Maps.
                 [z as double - 8 bytes]
             [end repetition for waypoints]
             [raw road data size in bytes]
+            [raw road data version byte]
             [the following block will be repeated for every waypoint - in order of the last loop]
                 [the blocks in this loop will be ordered as block from the first waypoint to the last]
                 [example: waypoint1 -> waypoint2 -> waypoint3 = 0,0,0 0,0,1 endwaypoint 0,0,1 0,0,2 0,0,3 endwaypoint]

@@ -68,4 +68,22 @@ public class Waypoint implements GraphNode {
 
     }
 
+    public double getX() {
+
+        return position.x;
+
+    }
+
+    public double getY() {
+
+        return position.y;
+
+    }
+
+    public double getZ() {
+
+        return position.z;
+
+    }
+
 }

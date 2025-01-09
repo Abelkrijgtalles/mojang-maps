@@ -19,6 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.common.model;
 
 import java.util.List;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.phys.Vec3;
 
@@ -53,6 +54,12 @@ public class Road {
     public List<Vec3> getWaypoints() {
 
         return waypoints;
+    }
+
+    public Level getLevel() {
+
+        return null;
+
     }
 
 }

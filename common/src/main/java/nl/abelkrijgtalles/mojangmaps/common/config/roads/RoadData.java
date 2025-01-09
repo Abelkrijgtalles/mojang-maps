@@ -39,7 +39,9 @@ import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigPaths;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.Waypoint;
+import nl.abelkrijgtalles.mojangmaps.common.pathfinding.WaypointScorer;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.Graph;
+import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.RouteFinder;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class RoadData {
@@ -65,6 +67,7 @@ public class RoadData {
     #endif
     private final static Path FILE_PATH = Paths.get(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
     private final static byte VERSION = 0x02;
+    private final static byte RAW_ROAD_DATA_VERSION = 0x01;
     // Only used for debugging
     // TODO: change to true if false
     private final static boolean COMPRESSION = true;
@@ -97,7 +100,12 @@ public class RoadData {
 
             }
 
+            roadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(waypointBytes.size()).array()));
+            roadBytes.addAll(waypointBytes);
+
             List<Byte> rawRoadDataBytes = new ArrayList<>();
+
+            rawRoadDataBytes.add(RAW_ROAD_DATA_VERSION);
 
             for (int i = 0; i < road.getWaypoints().size(); i++) {
 
@@ -106,12 +114,38 @@ public class RoadData {
                 Vec3 from = road.getWaypoints().get(i);
                 Vec3 to = road.getWaypoints().get(i + 1);
 
-                int range = (int) from.distanceTo(to) + Integer.parseInt(ConfigPaths.get(ConfigPaths.PATHFINDING, ConfigPaths.COSTS, ConfigPaths.ADDITIONAL_PRE_CALCULATED_RANGE));
+                Graph<Waypoint> graph = generateGraphOfHighestBlockInWorldWithRange(Integer.parseInt(ConfigPaths.get(ConfigPaths.PATHFINDING, ConfigPaths.COSTS, ConfigPaths.ADDITIONAL_PRE_CALCULATED_RANGE)), from, to, road.getLevel());
+                RouteFinder<Waypoint> routeFinder = new RouteFinder<>(graph, new WaypointScorer(), new WaypointScorer());
+
+                List<Waypoint> route = routeFinder.findRoute(new Waypoint(from), new Waypoint(to));
+                if (route.isEmpty()) {
+
+                    for (Vec3 vec3 : getLineBetweenTwoVec3s(from, to)) {
+
+                        route.add(new Waypoint(vec3));
+
+                    }
+
+                }
+
+                List<Byte> rawRoadBytes = new ArrayList<>();
+
+                for (Waypoint waypoint : route) {
+
+                    rawRoadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.getX()).array()));
+                    rawRoadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.getY()).array()));
+                    rawRoadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.getZ()).array()));
+
+                }
+
+                rawRoadDataBytes.add(generateByteThatIsntUsed(rawRoadBytes));
+                rawRoadDataBytes.addAll(rawRoadBytes);
+                rawRoadDataBytes.add(generateByteThatIsntUsed(rawRoadBytes));
 
             }
 
-            roadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(waypointBytes.size()).array()));
-            roadBytes.addAll(waypointBytes);
+            roadBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(rawRoadDataBytes.size()).array()));
+            roadBytes.addAll(rawRoadDataBytes);
 
             roadsDataBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(4).putInt(roadBytes.size()).array()));
             roadsDataBytes.addAll(roadBytes);
@@ -484,6 +518,54 @@ public class RoadData {
                 .findFirst().orElse(null).getUUID());
 
         return waypointset;
+
+    }
+
+    private List<Vec3> getLineBetweenTwoVec3s(Vec3 start, Vec3 end) {
+
+        // i very dumb so chatgpt help me pls
+
+        List<Vec3> points = new ArrayList<>();
+
+        double dx = Math.abs(end.x - start.x);
+        double dy = Math.abs(end.y - start.y);
+        double dz = Math.abs(end.z - start.z);
+
+        int sx = start.x < end.x ? 1 : -1;
+        int sy = start.y < end.y ? 1 : -1;
+        int sz = start.z < end.z ? 1 : -1;
+
+        double err1 = (Math.max(dx, dy)) / 2;
+        double err2 = err1;
+
+        // fixes cuz chatgpt is weird
+        double x = start.x;
+        double y = start.y;
+        double z = start.z;
+
+        while (true) {
+            points.add(new Vec3(x, y, z)); // Voeg het huidige punt toe aan de lijst
+
+            if (x == end.x && y == end.y && z == end.z) {
+                break; // Bereikt het eindpunt
+            }
+
+            double e2 = err1;
+            if (e2 >= -dx) {
+                err1 -= dy;
+                x += sx;
+            }
+            if (e2 <= dy) {
+                err1 += dx;
+                y += sy;
+            }
+            if (e2 <= dz) {
+                err2 += dx;
+                z += sz;
+            }
+        }
+
+        return points;
 
     }
 
