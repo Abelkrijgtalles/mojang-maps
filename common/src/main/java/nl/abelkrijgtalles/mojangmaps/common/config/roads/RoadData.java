@@ -32,6 +32,8 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 import net.minecraft.core.Position;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
@@ -88,7 +90,7 @@ public class RoadData {
             List<Byte> roadBytes = new ArrayList<>();
 
             roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getName()));
-            roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getWorldName()));
+            roadBytes.addAll(generateByteListOfStringWithDividingBit("%s/%s".formatted(road.getWorldKey().registryKey(), road.getWorldKey().registry())));
 
             List<Byte> waypointBytes = new ArrayList<>();
 
@@ -333,6 +335,7 @@ public class RoadData {
                 offset++;
             }
             String roadName = new String(convertByteListToArray(roadNameBytes), StandardCharsets.UTF_8);
+            ResourceKey<Level> roadKey = ResourceKey.create(ResourceKey.createRegistryKey(ResourceLocation.parse(roadName.split("/")[0])), ResourceLocation.parse(roadName.split("/")[1]));
             offset++; // skip road name end byte
 
             // Road world begin byte
@@ -367,7 +370,7 @@ public class RoadData {
             }
             offset += waypointsDataSize;
 
-            roads.add(new Road(roadName, roadWorld, waypoints));
+            roads.add(new Road(roadName, roadKey, waypoints));
         }
 
         return roads;

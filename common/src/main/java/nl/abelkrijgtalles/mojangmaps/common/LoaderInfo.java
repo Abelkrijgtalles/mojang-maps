@@ -38,4 +38,13 @@ public interface LoaderInfo {
      */
     MinecraftServer getMinecraftServer();
 
+    /**
+     * @return Whether all variables can actually be used.
+     */
+    default boolean isReady() {
+
+        return getMinecraftServer() != null;
+
+    }
+
 }

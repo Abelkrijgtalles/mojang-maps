@@ -25,18 +25,11 @@ import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 
-public class MojangMapsFabric implements DedicatedServerModInitializer, ServerTickEvents.EndTick {
+public class MojangMapsFabric implements DedicatedServerModInitializer {
 
     public static MinecraftServer MINECRAFT_SERVER = null;
 
     public static void init(boolean isRunningTests) {
-
-        MojangMaps.init(new LoaderInfoFabric(isRunningTests));
-
-    }
-
-    @Override
-    public void onInitializeServer() {
 
         CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> {
 
@@ -45,10 +38,18 @@ public class MojangMapsFabric implements DedicatedServerModInitializer, ServerTi
 
         });
 
-        init(false);
+        MojangMaps.init(new LoaderInfoFabric(isRunningTests));
+
     }
 
     @Override
+    public void onInitializeServer() {
+
+        ServerTickEvents.END_SERVER_TICK.register(this::onEndTick);
+
+        init(false);
+    }
+
     public void onEndTick(MinecraftServer minecraftServer) {
 
         MINECRAFT_SERVER = minecraftServer;

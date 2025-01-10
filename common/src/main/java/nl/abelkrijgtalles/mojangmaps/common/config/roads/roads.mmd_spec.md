@@ -22,7 +22,7 @@ Even editing this file, or this message, will brick Mojang Maps.
                 [road name]
             [road name end byte - randomly generated so it doesn't conflict, defaults to 0x69]
             [road world begin byte - randomly generated so it doesn't conflict, defaults to 0x69]
-                [road world identification - the name for now]
+                [road world identification - as resourcekey|resourcelocation]
             [road world end byte - randomly generated so it doesn't conflict, defaults to 0x69]
             [waypoints data size in bytes as int - 4 bytes]
             [the following block will be repeated for every waypoint]
