@@ -29,7 +29,7 @@ modId = "forge" #mandatory
 mandatory = true  # Forge syntax
 versionRange = "[0,)" #mandatory
 ordering = "NONE"
-side = "BOTH"
+side = "SERVER"
 
 [[dependencies.${ mod_id }]]
 modId = "minecraft"

@@ -15,7 +15,7 @@
   "accessWidener": "${mod_id}.accesswidener",
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "server": [
       "${group}.fabric.MojangMapsFabric"
     ]
   },

@@ -1,6 +1,6 @@
 /*
  * mojang_maps.neoforge.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,20 @@ package nl.abelkrijgtalles.mojangmaps.neoforge;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 
 @Mod(MojangMaps.MOD_ID)
 public class MojangMapsNeoforge {
+
+    public static MinecraftServer MINECRAFT_SERVER = null;
 
     public MojangMapsNeoforge(
             #if MC_VER > MC_1_20_4
@@ -41,6 +46,8 @@ public class MojangMapsNeoforge {
         net.neoforged.fml.ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
         #endif
 
+        NeoForge.EVENT_BUS.addListener(this::onServerStarting);
+
         MojangMaps.init(new LoaderInfoNeoforge(false));
     }
 
@@ -51,6 +58,12 @@ public class MojangMapsNeoforge {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
         commands.register(dispatcher);
+
+    }
+
+    private void onServerStarting(ServerStartedEvent event) {
+
+        MINECRAFT_SERVER = event.getServer();
 
     }
 

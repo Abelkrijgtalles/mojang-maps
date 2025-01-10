@@ -1,6 +1,6 @@
 /*
  * mojang_maps.spigot.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 
 public class SpigotConfig implements Config {
 
-    File defaultConfigPath = new File(MojangMapsSpigot.Instance.getDataFolder(), "config.yml");
+    File defaultConfigPath = new File(MojangMapsSpigot.INSTANCE.getDataFolder(), "config.yml");
 
     public SpigotConfig(String defaultConfig) {
 
@@ -40,7 +40,7 @@ public class SpigotConfig implements Config {
         try {
             Files.createDirectories(MojangMaps.loaderInfo.getConfig().getDataDirectory());
         } catch (IOException e) {
-            MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(MojangMapsSpigot.Instance.getDataFolder()));
+            MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(MojangMapsSpigot.INSTANCE.getDataFolder()));
             throw new RuntimeException(e);
         }
         try {
@@ -61,7 +61,7 @@ public class SpigotConfig implements Config {
     @Override
     public String get(String key) {
 
-        return (String) MojangMapsSpigot.Instance.getConfig().get(key);
+        return (String) MojangMapsSpigot.INSTANCE.getConfig().get(key);
 
     }
 
@@ -69,7 +69,7 @@ public class SpigotConfig implements Config {
     public Path getDataDirectory() {
 
         #if MC_VER > MC_1_20_6
-        return MojangMapsSpigot.Instance.getDataPath();
+        return MojangMapsSpigot.INSTANCE.getDataPath();
         #else
         return MojangMapsSpigot.Instance.getDataFolder().toPath();
         #endif

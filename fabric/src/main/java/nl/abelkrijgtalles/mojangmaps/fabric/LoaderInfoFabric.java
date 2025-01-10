@@ -1,6 +1,6 @@
 /*
  * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
+import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
@@ -45,6 +46,12 @@ public class LoaderInfoFabric implements LoaderInfo {
     public boolean isRunningTests() {
 
         return runningTests;
+    }
+
+    @Override
+    public MinecraftServer getMinecraftServer() {
+
+        return MojangMapsFabric.MINECRAFT_SERVER;
     }
 
     private String defaultConfig(String filename) {

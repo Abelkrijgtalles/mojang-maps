@@ -1,6 +1,6 @@
 /*
  * mojang_maps.forge.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,10 @@ package nl.abelkrijgtalles.mojangmaps.forge;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -31,9 +34,13 @@ import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 @Mod(MojangMaps.MOD_ID)
 public class MojangMapsForge {
 
+    public static MinecraftServer MINECRAFT_SERVER = null;
+
     public MojangMapsForge() {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ForgeConfig.CONFIG);
+
+        MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 
         MojangMaps.init(new LoaderInfoForge(false));
     }
@@ -45,6 +52,12 @@ public class MojangMapsForge {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
         commands.register(dispatcher);
+
+    }
+
+    private void onServerStarting(ServerStartedEvent event) {
+
+        MINECRAFT_SERVER = event.getServer();
 
     }
 

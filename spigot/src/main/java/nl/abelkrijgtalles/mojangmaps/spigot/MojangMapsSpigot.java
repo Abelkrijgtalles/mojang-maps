@@ -1,6 +1,6 @@
 /*
  * mojang_maps.spigot.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MojangMapsSpigot extends JavaPlugin {
 
-    public static JavaPlugin Instance;
+    public static JavaPlugin INSTANCE;
 
     @Override
     public void onEnable() {
 
-        Instance = this;
+        INSTANCE = this;
         MojangMaps.init(new LoaderInfoSpigot(false));
 
         Commands commands = new Commands();

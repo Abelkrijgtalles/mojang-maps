@@ -1,6 +1,6 @@
 /*
  * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,16 @@
 
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 
-public class MojangMapsFabric implements ModInitializer {
+public class MojangMapsFabric implements DedicatedServerModInitializer, ServerTickEvents.EndTick {
+
+    public static MinecraftServer MINECRAFT_SERVER = null;
 
     public static void init(boolean isRunningTests) {
 
@@ -32,7 +36,7 @@ public class MojangMapsFabric implements ModInitializer {
     }
 
     @Override
-    public void onInitialize() {
+    public void onInitializeServer() {
 
         CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> {
 
@@ -42,6 +46,13 @@ public class MojangMapsFabric implements ModInitializer {
         });
 
         init(false);
+    }
+
+    @Override
+    public void onEndTick(MinecraftServer minecraftServer) {
+
+        MINECRAFT_SERVER = minecraftServer;
+
     }
 
 }

@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,13 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
+import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 
 public interface LoaderInfo {
 
     /**
-     * @return The Mojang Maps {@link Config}
+     * @return The Mojang Maps {@link Config}.
      */
     Config getConfig();
 
@@ -31,5 +32,10 @@ public interface LoaderInfo {
      * @return Whether Mojang Maps is being run through unit tests.
      */
     boolean isRunningTests();
+
+    /**
+     * @return The current {@link MinecraftServer}.
+     */
+    MinecraftServer getMinecraftServer();
 
 }
