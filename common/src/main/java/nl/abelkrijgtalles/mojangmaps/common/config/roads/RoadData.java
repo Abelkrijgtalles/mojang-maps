@@ -72,7 +72,7 @@ public class RoadData {
     private final static byte RAW_ROAD_DATA_VERSION = 0x01;
     // Only used for debugging
     // TODO: change to true if false
-    private final static boolean COMPRESSION = true;
+    private final static boolean COMPRESSION = false;
 
     /**
      * Overwrite (or create) roads.mmd with the provided roads. This will completely reset roads.mmd.

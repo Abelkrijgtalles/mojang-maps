@@ -1,6 +1,6 @@
 /*
  * mojang_maps.spigot
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import java.util.stream.Collectors
+
+
 plugins {
     id "io.github.rancraftplayz.remapper" version "1.0.2"
     id 'io.papermc.paperweight.userdev' version '2.0.0-beta.8'
@@ -36,6 +40,19 @@ repositories {
 dependencies {
     paperweight.paperDevBundle(rootProject.spigot_api_version);
     implementation(project(":common"))
+
+    // 1.21.4 to 1.21 etc.
+    String majorMinecraftVersion = String.join(".", rootProject.minecraft_version.split("\\.").stream().limit(2).collect(Collectors.toList()))
+    testImplementation "org.mockbukkit.mockbukkit:mockbukkit-v${majorMinecraftVersion}:4.25.0"
+    implementation('com.github.javafaker:javafaker:1.0.2') {
+        exclude group: 'org.yaml', module: 'snakeyaml'
+    }
+    // small fix for faker
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '2.2'
+
+    // import the runtime
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 spigot {

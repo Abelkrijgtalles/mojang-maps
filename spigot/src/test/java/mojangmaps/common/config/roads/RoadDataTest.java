@@ -1,5 +1,5 @@
 /*
- * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.test
+ * mojang_maps.spigot.test
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.config.roads;
+package mojangmaps.common.config.roads;
+
+import com.github.javafaker.Faker;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import net.minecraft.world.phys.Vec3;
+import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
+import nl.abelkrijgtalles.mojangmaps.common.model.Road;
+import nl.abelkrijgtalles.mojangmaps.spigot.MojangMapsSpigot;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 
 public class RoadDataTest {
+
+    private ServerMock server;
+    private MojangMapsSpigot plugin;
 
     // they don't work at the moment but i'm going to fix them later
 //    @RepeatedTest(TestSettings.REPEATED_TEST_COUNT)
@@ -74,11 +92,45 @@ public class RoadDataTest {
 //
 //    }
 //
-//    @BeforeEach
-//    void setup() {
-//
-//        MojangMapsFabric.init(true);
-//
-//    }
+    @BeforeEach
+    void setup() {
+
+        server = MockBukkit.mock();
+        plugin = MockBukkit.load(MojangMapsSpigot.class);
+
+    }
+
+    @Test
+    void createRoadsMMD() {
+
+        List<Road> roads = new ArrayList<>();
+        Random rand = new Random();
+        Faker faker = new Faker();
+        RoadData roadData = new RoadData();
+        int numberOfRoadsAndWaypointsPerRoad = 3;
+
+        for (int i = 0; i < numberOfRoadsAndWaypointsPerRoad; i++) {
+
+            List<Vec3> waypoints = new ArrayList<>();
+
+            for (int j = 0; j < numberOfRoadsAndWaypointsPerRoad; j++) {
+
+                waypoints.add(new Vec3(rand.nextDouble() * 1000, rand.nextDouble() * 256, rand.nextDouble() * 1000));
+
+            }
+
+            roads.add(new Road(faker.address().streetName(), MojangMaps.loaderInfo.getMinecraftServer().overworld(), waypoints));
+
+        }
+
+        roadData.generateRoadData(roads);
+
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Stop the mock server
+        MockBukkit.unmock();
+    }
 
 }
