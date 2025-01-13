@@ -1,5 +1,5 @@
 /*
- * mojang_maps.neoforge.main
+ * mojang_maps.spigot.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.neoforge;
+package nl.abelkrijgtalles.mojangmaps.spigot.platform;
 
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.platform.Platform;
+import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
+import org.bukkit.craftbukkit.CraftServer;
 
-public class LoaderInfoNeoforge implements LoaderInfo {
+public class SpigotLoaderInfo implements LoaderInfo {
 
-    private final Config config;
+    private final SpigotConfig config;
     private final boolean runningTests;
 
-    public LoaderInfoNeoforge(boolean runningTests) {
+    public SpigotLoaderInfo(boolean runningTests) {
 
-        config = new NeoforgeConfig.Wrapper();
+        this.config = new SpigotConfig(getDefaultConfig());
         this.runningTests = runningTests;
     }
 
@@ -37,6 +42,12 @@ public class LoaderInfoNeoforge implements LoaderInfo {
     public Config getConfig() {
 
         return config;
+    }
+
+    private String getDefaultConfig() {
+
+        return ConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
+
     }
 
     @Override
@@ -48,7 +59,13 @@ public class LoaderInfoNeoforge implements LoaderInfo {
     @Override
     public MinecraftServer getMinecraftServer() {
 
-        return MojangMapsNeoforge.MINECRAFT_SERVER;
+        return ((CraftServer) SpigotMojangMaps.INSTANCE.getServer()).getServer();
+    }
+
+    @Override
+    public Platform getPlatform() {
+
+        return new SpigotPlatform();
     }
 
 }

@@ -20,6 +20,7 @@ package nl.abelkrijgtalles.mojangmaps.common;
 
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
 public interface LoaderInfo {
 
@@ -46,5 +47,10 @@ public interface LoaderInfo {
         return getMinecraftServer() != null;
 
     }
+
+    /**
+     * @return The {@link Platform} object, which contains most of the needed platform code. You can see it as the Bukkit class, but as an interface.
+     */
+    Platform getPlatform();
 
 }

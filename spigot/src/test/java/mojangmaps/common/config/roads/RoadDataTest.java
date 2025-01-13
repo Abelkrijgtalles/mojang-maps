@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
-import nl.abelkrijgtalles.mojangmaps.spigot.MojangMapsSpigot;
+import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ import org.mockbukkit.mockbukkit.ServerMock;
 public class RoadDataTest {
 
     private ServerMock server;
-    private MojangMapsSpigot plugin;
+    private SpigotMojangMaps plugin;
 
     // they don't work at the moment but i'm going to fix them later
 //    @RepeatedTest(TestSettings.REPEATED_TEST_COUNT)
@@ -96,7 +96,7 @@ public class RoadDataTest {
     void setup() {
 
         server = MockBukkit.mock();
-        plugin = MockBukkit.load(MojangMapsSpigot.class);
+        plugin = MockBukkit.load(SpigotMojangMaps.class);
 
     }
 

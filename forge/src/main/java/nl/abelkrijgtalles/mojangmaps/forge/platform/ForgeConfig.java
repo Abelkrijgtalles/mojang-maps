@@ -1,6 +1,6 @@
 /*
  * mojang_maps.forge.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.forge;
+package nl.abelkrijgtalles.mojangmaps.forge.platform;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

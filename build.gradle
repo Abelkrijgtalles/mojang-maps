@@ -202,6 +202,7 @@ subprojects { p ->
     // Does the same as "p == project(":common") || p == project(":fabric") || p == project(":quilt")  || p == project(":forge") || p == project("WhateverWeAddLaterOn")"
     // Useful later on so we dont have duplicated code
     def isMinecraftSubProject = true//p != project(":core") && p != project(":api")
+    def needsCommon = p != project(":common") && p != project(":platform") && p != project(":platform-nms")
 
 
     // Apply plugins
@@ -247,7 +248,7 @@ subprojects { p ->
         forgeRuntimeLibrary.extendsFrom(forgeShadowMe)
 
 
-        if (isMinecraftSubProject && p != project(":common")) {
+        if (isMinecraftSubProject && needsCommon) {
             // Shadow common
             common
             shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
@@ -298,7 +299,7 @@ subprojects { p ->
         ///////
 
         // Add common
-        if (isMinecraftSubProject && p != project(":common")) {
+        if (isMinecraftSubProject && needsCommon) {
             // Common
             common(project(":common"))
             shadowCommon(project(":common"))
@@ -309,6 +310,12 @@ subprojects { p ->
                 shadowFabricLike(project(path: ":fabricLike")) { transitive false }
             }
         }
+
+        if (p != project(":platform")) {
+
+            implementation project(":platform")
+
+        }
     }
 
     test {
@@ -318,7 +325,7 @@ subprojects { p ->
 
     shadowJar {
         configurations = [project.configurations.shadowMe]
-        if (isMinecraftSubProject && p != project(":common")) {
+        if (isMinecraftSubProject && needsCommon) {
             configurations.push(project.configurations.shadowCommon) // Shadow the common subproject
             //FIXME relocate "de.the_build_craft.mojang_maps.common", "loaderCommon.${p.name}.de.the_build_craft.mojang_maps.common" // Move the loader files to a different location
 

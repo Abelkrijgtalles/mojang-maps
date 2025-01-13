@@ -29,13 +29,16 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
+import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeConfig;
+import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeLoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSCommands;
 
 @Mod(MojangMaps.MOD_ID)
-public class MojangMapsNeoforge {
+public class NeoforgeMojangMaps {
 
     public static MinecraftServer MINECRAFT_SERVER = null;
 
-    public MojangMapsNeoforge(
+    public NeoforgeMojangMaps(
             #if MC_VER > MC_1_20_4
             net.neoforged.fml.ModContainer modContainer
             #endif ) {
@@ -48,16 +51,16 @@ public class MojangMapsNeoforge {
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
 
-        MojangMaps.init(new LoaderInfoNeoforge(false));
+        MojangMaps.init(new NeoforgeLoaderInfo(false));
     }
 
     @SubscribeEvent
     public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
 
-        Commands commands = new Commands();
+        NMSCommands commands = new NMSCommands();
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
-        commands.register(dispatcher);
+        commands.register(dispatcher, Commands.getCommands());
 
     }
 

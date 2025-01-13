@@ -21,14 +21,13 @@ import java.util.stream.Collectors
 
 plugins {
     id "io.github.rancraftplayz.remapper" version "1.0.2"
-    id 'io.papermc.paperweight.userdev' version '2.0.0-beta.8'
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 repositories {
     maven {
-        name "Spigot"
-        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        name = "Paper"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
@@ -38,8 +37,7 @@ repositories {
 //}
 
 dependencies {
-    paperweight.paperDevBundle(rootProject.spigot_api_version);
-    implementation(project(":common"))
+    compileOnly("io.papermc.paper:paper-api:${rootProject.spigot_api_version}")
 
     // 1.21.4 to 1.21 etc.
     String majorMinecraftVersion = String.join(".", rootProject.minecraft_version.split("\\.").stream().limit(2).collect(Collectors.toList()))
@@ -80,5 +78,3 @@ sourcesJar {
 shadowJar {
     dependsOn remapJar
 }
-
-paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.Companion.REOBF_PRODUCTION

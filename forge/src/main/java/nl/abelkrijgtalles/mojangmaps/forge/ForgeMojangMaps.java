@@ -30,28 +30,31 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
+import nl.abelkrijgtalles.mojangmaps.forge.platform.ForgeConfig;
+import nl.abelkrijgtalles.mojangmaps.forge.platform.ForgeLoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSCommands;
 
 @Mod(MojangMaps.MOD_ID)
-public class MojangMapsForge {
+public class ForgeMojangMaps {
 
     public static MinecraftServer MINECRAFT_SERVER = null;
 
-    public MojangMapsForge() {
+    public ForgeMojangMaps() {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ForgeConfig.CONFIG);
 
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 
-        MojangMaps.init(new LoaderInfoForge(false));
+        MojangMaps.init(new ForgeLoaderInfo(false));
     }
 
     @SubscribeEvent
     public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
 
-        Commands commands = new Commands();
+        NMSCommands commands = new NMSCommands();
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
-        commands.register(dispatcher);
+        commands.register(dispatcher, Commands.getCommands());
 
     }
 

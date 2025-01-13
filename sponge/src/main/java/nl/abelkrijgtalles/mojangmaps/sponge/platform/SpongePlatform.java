@@ -1,5 +1,5 @@
 /*
- * mojang_maps.spigot.main
+ * mojang_maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,26 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.spigot;
+package nl.abelkrijgtalles.mojangmaps.sponge.platform;
 
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.plugin.java.JavaPlugin;
+import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
-public class MojangMapsSpigot extends JavaPlugin {
+public class SpongePlatform implements Platform {
 
-    public static JavaPlugin INSTANCE;
+    private static String minecraftVersion = null;
 
     @Override
-    public void onEnable() {
+    public String getMinecraftVersion() {
 
-        INSTANCE = this;
-        MojangMaps.init(new LoaderInfoSpigot(false));
+        return minecraftVersion;
+    }
 
-        Commands commands = new Commands();
-        CraftServer craftServer = (CraftServer) getServer();
-        commands.register(craftServer.getServer().resources.managers().commands.getDispatcher());
+    public static void setMinecraftVersion(String minecraftVersion) {
+
+        if (SpongePlatform.minecraftVersion != null) {
+
+            throw new RuntimeException("Minecraft version is already initialized.");
+
+        }
+
+        SpongePlatform.minecraftVersion = minecraftVersion;
 
     }
 

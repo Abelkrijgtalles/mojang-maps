@@ -1,5 +1,5 @@
 /*
- * mojang_maps.spigot.main
+ * mojang_maps.forge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.spigot;
+package nl.abelkrijgtalles.mojangmaps.forge.platform;
 
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
-import org.bukkit.craftbukkit.CraftServer;
+import nl.abelkrijgtalles.mojangmaps.forge.ForgeMojangMaps;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
+import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
-public class LoaderInfoSpigot implements LoaderInfo {
+public class ForgeLoaderInfo implements LoaderInfo {
 
-    private final SpigotConfig config;
+    private final Config config;
     private final boolean runningTests;
 
-    public LoaderInfoSpigot(boolean runningTests) {
+    public ForgeLoaderInfo(boolean runningTests) {
 
-        this.config = new SpigotConfig(getDefaultConfig());
+        config = new ForgeConfig.Wrapper();
         this.runningTests = runningTests;
     }
 
@@ -40,12 +40,6 @@ public class LoaderInfoSpigot implements LoaderInfo {
     public Config getConfig() {
 
         return config;
-    }
-
-    private String getDefaultConfig() {
-
-        return ConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
-
     }
 
     @Override
@@ -57,7 +51,13 @@ public class LoaderInfoSpigot implements LoaderInfo {
     @Override
     public MinecraftServer getMinecraftServer() {
 
-        return ((CraftServer) MojangMapsSpigot.INSTANCE.getServer()).getServer();
+        return ForgeMojangMaps.MINECRAFT_SERVER;
+    }
+
+    @Override
+    public Platform getPlatform() {
+
+        return new NMSPlatform();
     }
 
 }

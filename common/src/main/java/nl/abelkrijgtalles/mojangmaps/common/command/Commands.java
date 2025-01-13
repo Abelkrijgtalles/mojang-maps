@@ -18,24 +18,19 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.command;
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.minecraft.commands.CommandSourceStack;
-import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
+import java.util.ArrayList;
+import java.util.List;
+import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
 
 public class Commands {
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static List<Command> getCommands() {
 
-        dispatcher.register((LiteralArgumentBuilder)
-                literal("test")
-                        .executes(context -> {
-                            CommandSourceStack source = (CommandSourceStack) context.getSource();
+        List<Command> commands = new ArrayList<>();
 
-                            return 1;
-                        })
-        );
+        commands.add(new TestCommand());
+
+        return commands;
 
     }
 

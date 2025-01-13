@@ -24,8 +24,10 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
+import nl.abelkrijgtalles.mojangmaps.fabric.platform.FabricLoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSCommands;
 
-public class MojangMapsFabric implements DedicatedServerModInitializer {
+public class FabricMojangMaps implements DedicatedServerModInitializer {
 
     public static MinecraftServer MINECRAFT_SERVER = null;
 
@@ -33,12 +35,12 @@ public class MojangMapsFabric implements DedicatedServerModInitializer {
 
         CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> {
 
-            Commands commands = new Commands();
-            commands.register(commandDispatcher);
+            NMSCommands commands = new NMSCommands();
+            commands.register(commandDispatcher, Commands.getCommands());
 
         });
 
-        MojangMaps.init(new LoaderInfoFabric(isRunningTests));
+        MojangMaps.init(new FabricLoaderInfo(isRunningTests));
 
     }
 

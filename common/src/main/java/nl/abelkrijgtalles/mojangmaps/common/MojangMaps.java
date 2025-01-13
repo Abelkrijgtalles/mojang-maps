@@ -21,7 +21,6 @@ package nl.abelkrijgtalles.mojangmaps.common;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.DetectedVersion;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGroup;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
@@ -44,7 +43,7 @@ public class MojangMaps {
     public static void init(LoaderInfo loaderInfo) {
 
         MojangMaps.loaderInfo = loaderInfo;
-        LOGGER.info("Running Mojang Maps on Minecraft version {}.", DetectedVersion.tryDetectVersion().getName());
+        LOGGER.info("Running Mojang Maps on Minecraft version {}.", loaderInfo.getPlatform().getMinecraftVersion());
 
         RoadData roadData = new RoadData();
         if (!loaderInfo.isRunningTests()) roadData.setupRoadData();

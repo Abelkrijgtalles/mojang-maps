@@ -16,20 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.fabric;
+package nl.abelkrijgtalles.mojangmaps.fabric.platform;
 
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.fabric.FabricMojangMaps;
+import nl.abelkrijgtalles.mojangmaps.fabric.SimpleConfig;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
+import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
-public class LoaderInfoFabric implements LoaderInfo {
+public class FabricLoaderInfo implements LoaderInfo {
 
     private final SimpleConfig.Wrapper config;
     private final boolean runningTests;
 
-    public LoaderInfoFabric(boolean runningTests) {
+    public FabricLoaderInfo(boolean runningTests) {
 
         config = new SimpleConfig.Wrapper("mojang_maps", this::defaultConfig);
         this.runningTests = runningTests;
@@ -51,7 +55,13 @@ public class LoaderInfoFabric implements LoaderInfo {
     @Override
     public MinecraftServer getMinecraftServer() {
 
-        return MojangMapsFabric.MINECRAFT_SERVER;
+        return FabricMojangMaps.MINECRAFT_SERVER;
+    }
+
+    @Override
+    public Platform getPlatform() {
+
+        return new NMSPlatform();
     }
 
     private String defaultConfig(String filename) {

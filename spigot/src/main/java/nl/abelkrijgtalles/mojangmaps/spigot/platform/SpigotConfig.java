@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.spigot;
+package nl.abelkrijgtalles.mojangmaps.spigot.platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,10 +24,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
 
 public class SpigotConfig implements Config {
 
-    File defaultConfigPath = new File(MojangMapsSpigot.INSTANCE.getDataFolder(), "config.yml");
+    File defaultConfigPath = new File(SpigotMojangMaps.INSTANCE.getDataFolder(), "config.yml");
 
     public SpigotConfig(String defaultConfig) {
 
@@ -40,7 +41,7 @@ public class SpigotConfig implements Config {
         try {
             Files.createDirectories(MojangMaps.loaderInfo.getConfig().getDataDirectory());
         } catch (IOException e) {
-            MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(MojangMapsSpigot.INSTANCE.getDataFolder()));
+            MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(SpigotMojangMaps.INSTANCE.getDataFolder()));
             throw new RuntimeException(e);
         }
         try {
@@ -61,7 +62,7 @@ public class SpigotConfig implements Config {
     @Override
     public String get(String key) {
 
-        return (String) MojangMapsSpigot.INSTANCE.getConfig().get(key);
+        return (String) SpigotMojangMaps.INSTANCE.getConfig().get(key);
 
     }
 
@@ -69,7 +70,7 @@ public class SpigotConfig implements Config {
     public Path getDataDirectory() {
 
         #if MC_VER > MC_1_20_6
-        return MojangMapsSpigot.INSTANCE.getDataPath();
+        return SpigotMojangMaps.INSTANCE.getDataPath();
         #else
         return MojangMapsSpigot.Instance.getDataFolder().toPath();
         #endif

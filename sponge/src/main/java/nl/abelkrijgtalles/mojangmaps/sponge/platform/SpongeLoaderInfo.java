@@ -1,5 +1,5 @@
 /*
- * mojang_maps.forge.main
+ * mojang_maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.forge;
+package nl.abelkrijgtalles.mojangmaps.sponge.platform;
 
-import net.minecraft.server.MinecraftServer;
+import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
+import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
-public class LoaderInfoForge implements LoaderInfo {
+public class SpongeLoaderInfo implements LoaderInfo {
 
-    private final Config config;
+    private final SpongeConfig.Wrapper config;
     private final boolean runningTests;
 
-    public LoaderInfoForge(boolean runningTests) {
+    public SpongeLoaderInfo(Path configPath, boolean runningTests) {
 
-        config = new ForgeConfig.Wrapper();
+        config = new SpongeConfig.Wrapper(configPath, getDefaultConfig());
         this.runningTests = runningTests;
     }
 
@@ -39,6 +42,12 @@ public class LoaderInfoForge implements LoaderInfo {
         return config;
     }
 
+    private String getDefaultConfig() {
+
+        return ConfigGenerator.Defaults.SPONGE.renderConfig(MojangMaps.getDefaultConfig());
+
+    }
+
     @Override
     public boolean isRunningTests() {
 
@@ -46,9 +55,9 @@ public class LoaderInfoForge implements LoaderInfo {
     }
 
     @Override
-    public MinecraftServer getMinecraftServer() {
+    public Platform getPlatform() {
 
-        return MojangMapsForge.MINECRAFT_SERVER;
+        return null;
     }
 
 }

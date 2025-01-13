@@ -1,6 +1,6 @@
 /*
- * MojangMaps
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * mojang_maps.forge
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,9 @@ dependencies {
 
     //addMod can be used, to control it via the version.property
     //addMod("example.maven:some_mod:${rootProject.some_mod_version}", rootProject.enable_some_mod)
+
+    implementation(project(":platform-nms"))
+
 }
 
 task deleteResources(type: Delete) {
