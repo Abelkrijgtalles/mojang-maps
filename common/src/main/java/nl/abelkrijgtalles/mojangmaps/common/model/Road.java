@@ -19,27 +19,26 @@
 package nl.abelkrijgtalles.mojangmaps.common.model;
 
 import java.util.List;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 
 public class Road {
 
     private String name;
-    private ResourceKey<Level> worldKey;
+    private String worldIdentifier;
     private List<Vec3> waypoints;
 
-    public Road(String name, ResourceKey<Level> worldKey, List<Vec3> waypoints) {
+    public Road(String name, String worldIdentifier, List<Vec3> waypoints) {
 
         this.name = name;
-        this.worldKey = worldKey;
+        this.worldIdentifier = worldIdentifier;
         this.waypoints = waypoints;
     }
 
-    public Road(String name, Level worldKey, List<Vec3> waypoints) {
+    public Road(String name, Level world, List<Vec3> waypoints) {
 
-        new Road(name, worldKey.dimension(), waypoints);
+        new Road(name, world.getIdentifier(), waypoints);
     }
 
     public String getName() {
@@ -47,9 +46,9 @@ public class Road {
         return name;
     }
 
-    public ResourceKey<Level> getWorldKey() {
+    public String getWorldIdentifier() {
 
-        return worldKey;
+        return worldIdentifier;
     }
 
     public List<Vec3> getWaypoints() {
@@ -59,12 +58,14 @@ public class Road {
 
     public Level getLevel() {
 
-        if (!MojangMaps.loaderInfo.isReady())
-            throw new IllegalStateException("Not all variables haven't been initialized yet.");
+        return MojangMaps.loaderInfo.getPlatform().getLevel(worldIdentifier);
 
+    }
 
-        return MojangMaps.loaderInfo.getMinecraftServer().getLevel(worldKey);
+    @Override
+    public String toString() {
 
+        return "%s in %s with %s waypoints.".formatted(name, worldIdentifier, waypoints.size());
     }
 
 }

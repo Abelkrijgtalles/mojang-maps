@@ -39,7 +39,7 @@ public class SpigotConfig implements Config {
     private void createConfig(String defaultConfig) {
 
         try {
-            Files.createDirectories(MojangMaps.loaderInfo.getConfig().getDataDirectory());
+            Files.createDirectories(getDataDirectory());
         } catch (IOException e) {
             MojangMaps.LOGGER.error("Unable to create folder %s.".formatted(SpigotMojangMaps.INSTANCE.getDataFolder()));
             throw new RuntimeException(e);
@@ -62,7 +62,7 @@ public class SpigotConfig implements Config {
     @Override
     public String get(String key) {
 
-        return (String) SpigotMojangMaps.INSTANCE.getConfig().get(key);
+        return (String) SpigotMojangMaps.INSTANCE.getConfig().getString(key);
 
     }
 

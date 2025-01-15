@@ -18,14 +18,11 @@
 
 package nl.abelkrijgtalles.mojangmaps.spigot.platform;
 
-import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
-import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
-import org.bukkit.craftbukkit.CraftServer;
 
 public class SpigotLoaderInfo implements LoaderInfo {
 
@@ -54,12 +51,6 @@ public class SpigotLoaderInfo implements LoaderInfo {
     public boolean isRunningTests() {
 
         return runningTests;
-    }
-
-    @Override
-    public MinecraftServer getMinecraftServer() {
-
-        return ((CraftServer) SpigotMojangMaps.INSTANCE.getServer()).getServer();
     }
 
     @Override

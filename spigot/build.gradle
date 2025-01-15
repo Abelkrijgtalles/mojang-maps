@@ -78,3 +78,7 @@ sourcesJar {
 shadowJar {
     dependsOn remapJar
 }
+
+runServer {
+    minecraftVersion(rootProject.minecraft_version)
+}

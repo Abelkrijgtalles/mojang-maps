@@ -18,10 +18,8 @@
 
 package nl.abelkrijgtalles.mojangmaps.neoforge.platform;
 
-import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
-import nl.abelkrijgtalles.mojangmaps.neoforge.NeoforgeMojangMaps;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
@@ -46,12 +44,6 @@ public class NeoforgeLoaderInfo implements LoaderInfo {
     public boolean isRunningTests() {
 
         return runningTests;
-    }
-
-    @Override
-    public MinecraftServer getMinecraftServer() {
-
-        return NeoforgeMojangMaps.MINECRAFT_SERVER;
     }
 
     @Override

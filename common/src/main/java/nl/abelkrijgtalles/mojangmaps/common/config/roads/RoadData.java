@@ -31,12 +31,6 @@ import java.util.*;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
-import net.minecraft.core.Position;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigPaths;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
@@ -44,6 +38,9 @@ import nl.abelkrijgtalles.mojangmaps.common.pathfinding.Waypoint;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.WaypointScorer;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.Graph;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.RouteFinder;
+import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class RoadData {
@@ -90,11 +87,11 @@ public class RoadData {
             List<Byte> roadBytes = new ArrayList<>();
 
             roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getName()));
-            roadBytes.addAll(generateByteListOfStringWithDividingBit("%s/%s".formatted(road.getWorldKey().registryKey(), road.getWorldKey().registry())));
+            roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getWorldIdentifier()));
 
             List<Byte> waypointBytes = new ArrayList<>();
 
-            for (Position waypoint : road.getWaypoints()) {
+            for (Vec3 waypoint : road.getWaypoints()) {
 
                 waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.x()).array()));
                 waypointBytes.addAll(byteArrayToByteList(ByteBuffer.allocate(8).putDouble(waypoint.y()).array()));
@@ -335,7 +332,6 @@ public class RoadData {
                 offset++;
             }
             String roadName = new String(convertByteListToArray(roadNameBytes), StandardCharsets.UTF_8);
-            ResourceKey<Level> roadKey = ResourceKey.create(ResourceKey.createRegistryKey(ResourceLocation.parse(roadName.split("/")[0])), ResourceLocation.parse(roadName.split("/")[1]));
             offset++; // skip road name end byte
 
             // Road world begin byte
@@ -370,7 +366,7 @@ public class RoadData {
             }
             offset += waypointsDataSize;
 
-            roads.add(new Road(roadName, roadKey, waypoints));
+            roads.add(new Road(roadName, roadWorld, waypoints));
         }
 
         return roads;
@@ -469,7 +465,7 @@ public class RoadData {
 
     private int getHeightAtLocation(Level level, double x, double z) {
 
-        return level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(x), (int) Math.floor(z));
+        return level.getHeightAtLocation(HeightMapType.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(x), (int) Math.floor(z));
 
     }
 

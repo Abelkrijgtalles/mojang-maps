@@ -18,12 +18,10 @@
 
 package nl.abelkrijgtalles.mojangmaps.fabric.platform;
 
-import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
-import nl.abelkrijgtalles.mojangmaps.fabric.FabricMojangMaps;
 import nl.abelkrijgtalles.mojangmaps.fabric.SimpleConfig;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
@@ -50,12 +48,6 @@ public class FabricLoaderInfo implements LoaderInfo {
     public boolean isRunningTests() {
 
         return runningTests;
-    }
-
-    @Override
-    public MinecraftServer getMinecraftServer() {
-
-        return FabricMojangMaps.MINECRAFT_SERVER;
     }
 
     @Override

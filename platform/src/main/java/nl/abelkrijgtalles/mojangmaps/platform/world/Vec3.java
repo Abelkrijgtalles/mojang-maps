@@ -53,4 +53,17 @@ public class Vec3 {
         return z;
     }
 
+    /**
+     * @param other The other {@link Vec3} to calculate the distance to.
+     * @return The distance between the two {@link Vec3}s.
+     */
+    public double distanceTo(Vec3 other) {
+
+        double x = other.x - this.x;
+        double y = other.y - this.y;
+        double z = other.z - this.z;
+
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
 }

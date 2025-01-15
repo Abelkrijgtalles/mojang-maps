@@ -39,6 +39,7 @@ import org.jetbrains.annotations.NotNull;
 public class SpigotMojangMaps extends JavaPlugin {
 
     public static JavaPlugin INSTANCE;
+    public static boolean isRunningTests;
 
     private static SimpleCommandMap scm;
     private SimplePluginManager spm;
@@ -52,29 +53,32 @@ public class SpigotMojangMaps extends JavaPlugin {
     public void onEnable() {
 
         INSTANCE = this;
-        MojangMaps.init(new SpigotLoaderInfo(false));
+        MojangMaps.init(new SpigotLoaderInfo(isRunningTests));
 
-        List<SpigotCommand> convertedCommands = new ArrayList<>();
-        for (Command command : Commands.getCommands()) {
+        if (!MojangMaps.loaderInfo.isRunningTests()) {
+            setupSimpleCommandMap();
+            List<SpigotCommand> convertedCommands = new ArrayList<>();
+            for (Command command : Commands.getCommands()) {
 
-            convertedCommands.add(new SpigotCommand(command.getCommand()) {
+                convertedCommands.add(new SpigotCommand(command.getCommand()) {
 
-                @Override
-                public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String @NotNull [] args) {
+                    @Override
+                    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String @NotNull [] args) {
 
-                    CommandSource source;
+                        CommandSource source;
 
-                    if (sender instanceof Player p)
-                        source = new CommandSource(new Permission(false), new SpigotLevel(p.getWorld()));
-                    else source = new CommandSource(new Permission(true));
+                        if (sender instanceof Player p)
+                            source = new CommandSource(new Permission(false), new SpigotLevel(p.getWorld()));
+                        else source = new CommandSource(new Permission(true));
 
-                    return command.run(source);
-                }
-            });
+                        return command.run(source);
+                    }
+                });
 
+            }
+
+            registerCommands(convertedCommands);
         }
-
-        registerCommands(convertedCommands);
 
     }
 

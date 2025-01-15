@@ -19,8 +19,8 @@
 package nl.abelkrijgtalles.mojangmaps.common.pathfinding;
 
 import java.util.UUID;
-import net.minecraft.world.phys.Vec3;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.GraphNode;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 
 public class Waypoint implements GraphNode {
 

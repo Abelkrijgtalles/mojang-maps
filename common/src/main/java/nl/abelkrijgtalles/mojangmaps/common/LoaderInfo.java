@@ -18,7 +18,6 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
-import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.config.Config;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
@@ -33,20 +32,6 @@ public interface LoaderInfo {
      * @return Whether Mojang Maps is being run through unit tests.
      */
     boolean isRunningTests();
-
-    /**
-     * @return The current {@link MinecraftServer}.
-     */
-    MinecraftServer getMinecraftServer();
-
-    /**
-     * @return Whether all variables can actually be used.
-     */
-    default boolean isReady() {
-
-        return getMinecraftServer() != null;
-
-    }
 
     /**
      * @return The {@link Platform} object, which contains most of the needed platform code. You can see it as the Bukkit class, but as an interface.

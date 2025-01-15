@@ -25,6 +25,8 @@ import nl.abelkrijgtalles.mojangmaps.common.util.RecursiveItem;
 
 public class ConfigGenerator {
 
+    // we can't use tabs in spigot
+    private static final String TAB_INDICATION = "    ";
     // all include needed spaces
     private final String groupDefineBeginSymbol;
     private final String groupDefineEndSymbol;
@@ -125,14 +127,29 @@ public class ConfigGenerator {
 
             if (object instanceof ConfigItem item) {
 
-                groupString.append('\t');
-                groupString.append(renderItem(item, true));
+                String renderedItem = renderItem(item, true);
+
+                renderedItem.lines().forEach(line -> {
+
+                    groupString.append(TAB_INDICATION);
+                    groupString.append(line);
+                    groupString.append('\n');
+
+                });
 
             } else {
 
                 ConfigGroup nestedGroup = (ConfigGroup) object;
-                groupString.append("\t");
-                groupString.append(renderGroup(nestedGroup));
+                String renderedNestedGroup = renderGroup(nestedGroup);
+
+                renderedNestedGroup.lines().forEach(line -> {
+
+                    groupString.append(TAB_INDICATION);
+                    groupString.append(line);
+                    groupString.append('\n');
+
+                });
+
                 groupString.append("\n\n");
 
             }

@@ -22,21 +22,23 @@ import com.github.javafaker.Faker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.world.phys.Vec3;
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
+import nl.abelkrijgtalles.mojangmaps.spigot.platform.world.SpigotLevel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.world.WorldMock;
 
 public class RoadDataTest {
 
     private ServerMock server;
     private SpigotMojangMaps plugin;
+    private WorldMock world;
 
     // they don't work at the moment but i'm going to fix them later
 //    @RepeatedTest(TestSettings.REPEATED_TEST_COUNT)
@@ -95,8 +97,11 @@ public class RoadDataTest {
     @BeforeEach
     void setup() {
 
+        SpigotMojangMaps.isRunningTests = true;
+
         server = MockBukkit.mock();
         plugin = MockBukkit.load(SpigotMojangMaps.class);
+        world = server.addSimpleWorld("world");
 
     }
 
@@ -119,7 +124,10 @@ public class RoadDataTest {
 
             }
 
-            roads.add(new Road(faker.address().streetName(), MojangMaps.loaderInfo.getMinecraftServer().overworld(), waypoints));
+            Road road = new Road(faker.address().streetName(), new SpigotLevel(world).getIdentifier(), waypoints);
+            System.out.println(waypoints);
+            System.out.println(road);
+            roads.add(road);
 
         }
 
