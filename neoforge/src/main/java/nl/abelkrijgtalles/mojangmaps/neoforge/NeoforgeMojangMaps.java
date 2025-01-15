@@ -31,7 +31,7 @@ import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeConfig;
 import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeLoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSCommands;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.command.NMSCommands;
 
 @Mod(MojangMaps.MOD_ID)
 public class NeoforgeMojangMaps {

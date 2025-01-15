@@ -25,7 +25,7 @@ import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.fabric.platform.FabricLoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSCommands;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.command.NMSCommands;
 
 public class FabricMojangMaps implements DedicatedServerModInitializer {
 

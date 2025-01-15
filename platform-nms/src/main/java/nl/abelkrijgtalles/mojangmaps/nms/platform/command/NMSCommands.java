@@ -16,12 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.nms.platform;
+package nl.abelkrijgtalles.mojangmaps.nms.platform.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import java.util.List;
 import net.minecraft.commands.CommandSourceStack;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.world.NMSLevel;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
 import nl.abelkrijgtalles.mojangmaps.platform.command.CommandSource;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Permission;
@@ -38,7 +39,8 @@ public class NMSCommands {
                     literal(command.getCommand())
                             .executes(context -> {
                                 CommandSourceStack nativeSource = (CommandSourceStack) context.getSource();
-                                CommandSource source = new CommandSource(new Permission(!nativeSource.isPlayer()));
+                                CommandSource source = new CommandSource(new Permission(!nativeSource.isPlayer()),
+                                        new NMSLevel(nativeSource.getLevel()));
 
                                 return command.run(source) ? 1 : 0;
 

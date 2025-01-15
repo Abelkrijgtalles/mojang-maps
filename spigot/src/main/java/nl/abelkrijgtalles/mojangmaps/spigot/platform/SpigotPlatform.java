@@ -19,7 +19,12 @@
 package nl.abelkrijgtalles.mojangmaps.spigot.platform;
 
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.spigot.platform.world.SpigotLevel;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SpigotPlatform implements Platform {
 
@@ -27,6 +32,15 @@ public class SpigotPlatform implements Platform {
     public String getMinecraftVersion() {
 
         return Bukkit.getMinecraftVersion();
+    }
+
+    @Override
+    public @Nullable Level getLevel(@NotNull String identifier) {
+
+        World bukkitWorld = Bukkit.getWorld(identifier);
+
+        if (bukkitWorld == null) return null;
+        return new SpigotLevel(bukkitWorld);
     }
 
 }

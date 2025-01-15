@@ -57,7 +57,7 @@ public class NeoforgeLoaderInfo implements LoaderInfo {
     @Override
     public Platform getPlatform() {
 
-        return new NMSPlatform();
+        return new NMSPlatform(new NeoforgeNMSUtils());
     }
 
 }

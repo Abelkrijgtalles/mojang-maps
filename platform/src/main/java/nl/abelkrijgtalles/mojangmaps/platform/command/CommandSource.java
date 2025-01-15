@@ -18,18 +18,35 @@
 
 package nl.abelkrijgtalles.mojangmaps.platform.command;
 
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import org.jetbrains.annotations.Nullable;
+
 public class CommandSource {
 
     private final Permission permission;
+    private final Level level;
+
+    public CommandSource(Permission permission, Level level) {
+
+        this.permission = permission;
+        this.level = level;
+    }
 
     public CommandSource(Permission permission) {
 
-        this.permission = permission;
+        this(permission, null);
+
     }
 
     public Permission getPermission() {
 
         return permission;
+    }
+
+    @Nullable
+    public Level getLevel() {
+
+        return level;
     }
 
 }

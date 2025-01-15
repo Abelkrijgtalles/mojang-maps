@@ -61,7 +61,7 @@ public class FabricLoaderInfo implements LoaderInfo {
     @Override
     public Platform getPlatform() {
 
-        return new NMSPlatform();
+        return new NMSPlatform(new FabricNMSUtils());
     }
 
     private String defaultConfig(String filename) {

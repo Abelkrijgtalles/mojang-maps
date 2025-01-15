@@ -26,8 +26,9 @@ import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
 import nl.abelkrijgtalles.mojangmaps.platform.command.CommandSource;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Permission;
-import nl.abelkrijgtalles.mojangmaps.spigot.platform.SpigotCommand;
 import nl.abelkrijgtalles.mojangmaps.spigot.platform.SpigotLoaderInfo;
+import nl.abelkrijgtalles.mojangmaps.spigot.platform.command.SpigotCommand;
+import nl.abelkrijgtalles.mojangmaps.spigot.platform.world.SpigotLevel;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
@@ -61,7 +62,11 @@ public class SpigotMojangMaps extends JavaPlugin {
                 @Override
                 public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String @NotNull [] args) {
 
-                    CommandSource source = new CommandSource(new Permission(!(sender instanceof Player)));
+                    CommandSource source;
+
+                    if (sender instanceof Player p)
+                        source = new CommandSource(new Permission(false), new SpigotLevel(p.getWorld()));
+                    else source = new CommandSource(new Permission(true));
 
                     return command.run(source);
                 }

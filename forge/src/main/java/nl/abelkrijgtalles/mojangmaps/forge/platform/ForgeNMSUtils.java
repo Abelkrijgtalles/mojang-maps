@@ -1,5 +1,5 @@
 /*
- * mojang_maps.spigot.main
+ * mojang_maps.forge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,25 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.spigot.platform;
+package nl.abelkrijgtalles.mojangmaps.forge.platform;
 
-import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
-import org.bukkit.command.Command;
-import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.server.MinecraftServer;
+import nl.abelkrijgtalles.mojangmaps.forge.ForgeMojangMaps;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSUtils;
 
-public abstract class SpigotCommand extends Command implements PluginIdentifiableCommand {
-
-    protected SpigotCommand(@NotNull String name) {
-
-        super(name);
-    }
+public class ForgeNMSUtils implements NMSUtils {
 
     @Override
-    public @NotNull Plugin getPlugin() {
+    public MinecraftServer getServer() {
 
-        return SpigotMojangMaps.INSTANCE;
+        return ForgeMojangMaps.MINECRAFT_SERVER;
     }
 
 }

@@ -19,14 +19,45 @@
 package nl.abelkrijgtalles.mojangmaps.nms.platform;
 
 import net.minecraft.DetectedVersion;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.world.NMSLevel;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class NMSPlatform implements Platform {
+
+    private static NMSUtils utils = null;
+
+    public NMSPlatform(NMSUtils utils) {
+
+        NMSPlatform.utils = utils;
+    }
+
+    @Nullable
+    public static NMSUtils getUtils() {
+
+        return utils;
+
+    }
 
     @Override
     public String getMinecraftVersion() {
 
         return DetectedVersion.tryDetectVersion().getName();
+    }
+
+    @Override
+    public Level getLevel(@NotNull String identifier) {
+
+        ResourceKey<net.minecraft.world.level.Level> resourceKey = ResourceKey.create(ResourceKey.createRegistryKey(ResourceLocation.parse(identifier.split("/")[0])), ResourceLocation.parse(identifier.split("/")[1]));
+        net.minecraft.world.level.Level nmsLevel = utils.getServer().getLevel(resourceKey);
+
+        if (nmsLevel == null) return null;
+        return new NMSLevel(nmsLevel);
+
     }
 
 }

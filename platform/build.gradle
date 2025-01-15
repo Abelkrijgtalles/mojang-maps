@@ -1,5 +1,5 @@
 /*
- * platform
+ * mojang_maps.platform
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,3 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+dependencies {
+    compileOnly 'org.jetbrains:annotations:26.0.1'
+}

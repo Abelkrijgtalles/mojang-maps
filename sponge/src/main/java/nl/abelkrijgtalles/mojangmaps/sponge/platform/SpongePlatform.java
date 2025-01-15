@@ -19,6 +19,11 @@
 package nl.abelkrijgtalles.mojangmaps.sponge.platform;
 
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.sponge.platform.world.SpongeLevel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.api.ResourceKey;
 
 public class SpongePlatform implements Platform {
 
@@ -40,6 +45,12 @@ public class SpongePlatform implements Platform {
 
         SpongePlatform.minecraftVersion = minecraftVersion;
 
+    }
+
+    @Override
+    public @Nullable Level getLevel(@NotNull String identifier) {
+
+        return new SpongeLevel(ResourceKey.resolve(identifier));
     }
 
 }

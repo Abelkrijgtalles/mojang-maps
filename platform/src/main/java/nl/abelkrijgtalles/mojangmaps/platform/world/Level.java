@@ -18,39 +18,23 @@
 
 package nl.abelkrijgtalles.mojangmaps.platform.world;
 
-public class Vec3 {
+import org.jetbrains.annotations.NotNull;
 
-    public final double x, y, z;
-
-    public Vec3(double x, double y, double z) {
-
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+public interface Level {
 
     /**
-     * @return The x-value.
+     * @return A string which can be used to identify a {@link Level}.
      */
-    public double x() {
-
-        return x;
-    }
+    String getIdentifier();
 
     /**
-     * @return The y-value.
+     * Gets the height at a specific location.
+     *
+     * @param type The {@link HeightMapType} used to get the highest location.
+     * @param x    X-coordinate.
+     * @param z    Z-coordinate.
+     * @return The height at the location.
      */
-    public double y() {
-
-        return y;
-    }
-
-    /**
-     * @return The z-value.
-     */
-    public double z() {
-
-        return z;
-    }
+    int getHeightAtLocation(@NotNull HeightMapType type, int x, int z);
 
 }

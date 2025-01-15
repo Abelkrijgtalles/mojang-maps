@@ -30,6 +30,7 @@ import nl.abelkrijgtalles.mojangmaps.platform.command.CommandSource;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Permission;
 import nl.abelkrijgtalles.mojangmaps.sponge.platform.SpongeLoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.sponge.platform.SpongePlatform;
+import nl.abelkrijgtalles.mojangmaps.sponge.platform.world.SpongeLevel;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.CommandCause;
 import org.spongepowered.api.command.CommandCompletion;
@@ -83,9 +84,13 @@ public class SpongeMojangMaps {
 
 
                 @Override
-                public CommandResult process(CommandCause cause, ArgumentReader.Mutable arguments) throws CommandException {
+                public CommandResult process(CommandCause cause, ArgumentReader.Mutable arguments) {
 
-                    CommandSource source = new CommandSource(new Permission(cause.first(ServerPlayer.class).isPresent()));
+                    CommandSource source;
+
+                    if (cause.first(ServerPlayer.class).isPresent())
+                        source = new CommandSource(new Permission(false), new SpongeLevel(cause.location().get().worldKey()));
+                    else source = new CommandSource(new Permission(true));
 
                     return command.run(source) ? CommandResult.success() : CommandResult.error(Component.text("Something went wrong when executing %s.".formatted(command.getCommand())));
                 }

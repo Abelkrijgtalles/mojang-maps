@@ -1,5 +1,5 @@
 /*
- * mojang_maps.platform.main
+ * mojang_maps.platform-nms.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,41 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.platform.world;
+package nl.abelkrijgtalles.mojangmaps.nms.platform;
 
-public class Vec3 {
+import net.minecraft.server.MinecraftServer;
 
-    public final double x, y, z;
-
-    public Vec3(double x, double y, double z) {
-
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+public interface NMSUtils {
 
     /**
-     * @return The x-value.
+     * @return The current {@link MinecraftServer}-instance.
      */
-    public double x() {
-
-        return x;
-    }
-
-    /**
-     * @return The y-value.
-     */
-    public double y() {
-
-        return y;
-    }
-
-    /**
-     * @return The z-value.
-     */
-    public double z() {
-
-        return z;
-    }
+    MinecraftServer getServer();
 
 }

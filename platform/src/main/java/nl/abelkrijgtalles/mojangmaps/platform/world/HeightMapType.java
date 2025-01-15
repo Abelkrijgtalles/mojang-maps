@@ -18,39 +18,8 @@
 
 package nl.abelkrijgtalles.mojangmaps.platform.world;
 
-public class Vec3 {
-
-    public final double x, y, z;
-
-    public Vec3(double x, double y, double z) {
-
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    /**
-     * @return The x-value.
-     */
-    public double x() {
-
-        return x;
-    }
-
-    /**
-     * @return The y-value.
-     */
-    public double y() {
-
-        return y;
-    }
-
-    /**
-     * @return The z-value.
-     */
-    public double z() {
-
-        return z;
-    }
+public enum HeightMapType {
+    // add more if needed and update in implementations
+    MOTION_BLOCKING_NO_LEAVES,
 
 }

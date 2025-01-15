@@ -18,11 +18,22 @@
 
 package nl.abelkrijgtalles.mojangmaps.platform;
 
+import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public interface Platform {
 
     /**
      * @return The Minecraft version. Example format: 1.21.4
      */
     String getMinecraftVersion();
+
+    /**
+     * @param identifier The identifier of the level. Can be requested with {@link Level#getIdentifier()}.
+     * @return The {@link Level} requested by the identifier.
+     */
+    @Nullable
+    Level getLevel(@NotNull String identifier);
 
 }
