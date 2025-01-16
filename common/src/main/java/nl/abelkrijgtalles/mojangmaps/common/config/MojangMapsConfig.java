@@ -1,6 +1,6 @@
 /*
  * mojang_maps.common.main
- * Copyright (C) 2024 Abel van Hulst/Abelkrijgtalles/Abelpro678
+ * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,14 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.config;
 
-public class ConfigItem extends ConfigObject {
+import de.exlll.configlib.Comment;
+import de.exlll.configlib.Configuration;
 
-    private final String key;
-    private final String value;
+@Configuration
+public class MojangMapsConfig {
 
-    public ConfigItem(String key, String value, String comment) {
-
-        super(comment);
-
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-
-        return key;
-    }
-
-    public String getValue() {
-
-        return value;
-    }
+    @Comment({"DO NOT CHANGE THESE SETTINGS UNLESS YOU KNOW WHAT YOU'RE DOING!!!",
+            "The extra range to use when calculating raw road paths. The higher this value is, the better the raw path can be, and the lower, the more worst it can be."})
+    public int extraPreCalculatedRange = 5;
 
 }

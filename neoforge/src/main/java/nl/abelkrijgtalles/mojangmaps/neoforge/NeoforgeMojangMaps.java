@@ -23,13 +23,11 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
-import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeConfig;
 import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeLoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.command.NMSCommands;
 
@@ -38,16 +36,7 @@ public class NeoforgeMojangMaps {
 
     public static MinecraftServer MINECRAFT_SERVER = null;
 
-    public NeoforgeMojangMaps(
-            #if MC_VER > MC_1_20_4
-            net.neoforged.fml.ModContainer modContainer
-            #endif ) {
-
-        #if MC_VER > MC_1_20_4
-        modContainer.registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
-        #else
-        net.neoforged.fml.ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, NeoforgeConfig.CONFIG);
-        #endif
+    public NeoforgeMojangMaps() {
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
 

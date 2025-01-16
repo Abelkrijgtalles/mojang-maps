@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "${group}.fabric.MojangMapsFabric"
+      "${group}.fabric.FabricMojangMaps"
     ]
   },
   "mixins": [

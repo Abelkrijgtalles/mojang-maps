@@ -18,30 +18,22 @@
 
 package nl.abelkrijgtalles.mojangmaps.fabric.platform;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import net.fabricmc.loader.api.FabricLoader;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
-import nl.abelkrijgtalles.mojangmaps.fabric.SimpleConfig;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
 public class FabricLoaderInfo implements LoaderInfo {
 
-    private final SimpleConfig.Wrapper config;
     private final boolean runningTests;
 
     public FabricLoaderInfo(boolean runningTests) {
 
-        config = new SimpleConfig.Wrapper("mojang_maps", this::defaultConfig);
         this.runningTests = runningTests;
 
-    }
-
-    @Override
-    public Config getConfig() {
-
-        return config;
     }
 
     @Override
@@ -56,10 +48,10 @@ public class FabricLoaderInfo implements LoaderInfo {
         return new NMSPlatform(new FabricNMSUtils());
     }
 
-    private String defaultConfig(String filename) {
+    @Override
+    public Path getDataDirectory() {
 
-        return ConfigGenerator.Defaults.FABRIC.renderConfig(MojangMaps.getDefaultConfig());
-
+        return Paths.get(String.valueOf(FabricLoader.getInstance().getConfigDir()), MojangMaps.MOD_ID);
     }
 
 }

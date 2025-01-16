@@ -18,13 +18,11 @@
 
 package nl.abelkrijgtalles.mojangmaps.common;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGroup;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigItem;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigObject;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigPaths;
+import de.exlll.configlib.NameFormatters;
+import de.exlll.configlib.YamlConfigurationProperties;
+import de.exlll.configlib.YamlConfigurations;
+import java.nio.file.Path;
+import nl.abelkrijgtalles.mojangmaps.common.config.MojangMapsConfig;
 import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +32,7 @@ public class MojangMaps {
     public static final String MOD_ID = "mojang_maps";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static LoaderInfo loaderInfo;
+    public static MojangMapsConfig config;
 
     /**
      * Initialize Mojang Maps
@@ -45,20 +44,14 @@ public class MojangMaps {
         MojangMaps.loaderInfo = loaderInfo;
         LOGGER.info("Running Mojang Maps on Minecraft version {}.", loaderInfo.getPlatform().getMinecraftVersion());
 
+        YamlConfigurationProperties configurationProperties = YamlConfigurationProperties.newBuilder()
+                .setNameFormatter(NameFormatters.LOWER_KEBAB_CASE)
+                .build();
+        config = YamlConfigurations.update(Path.of(loaderInfo.getDataDirectory().toString(), "config.yml"), MojangMapsConfig.class, configurationProperties);
+
         RoadData roadData = new RoadData();
         if (!loaderInfo.isRunningTests()) roadData.setupRoadData();
 
-    }
-
-    public static List<ConfigObject> getDefaultConfig() {
-
-        return Collections.singletonList(
-                new ConfigGroup(ConfigPaths.PATHFINDING, "All pathfinding related configurations.", Arrays.asList(
-                        new ConfigGroup(ConfigPaths.COSTS, "Please only edit these configurations if you know what you're doing. This directly impacts the performance and quality of the pathfinding.", Arrays.asList(
-                                new ConfigItem(ConfigPaths.ADDITIONAL_PRE_CALCULATED_RANGE, "5", "How many blocks have to be added to the range when pre-calculating paths between waypoints. This is three-dimensional.")
-                        ))
-                ))
-        );
     }
 
 }

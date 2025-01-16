@@ -19,33 +19,20 @@
 package nl.abelkrijgtalles.mojangmaps.sponge.platform;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
 public class SpongeLoaderInfo implements LoaderInfo {
 
-    private final SpongeConfig.Wrapper config;
     private final boolean runningTests;
+    private final Path configPath;
 
     public SpongeLoaderInfo(Path configPath, boolean runningTests) {
 
-        config = new SpongeConfig.Wrapper(configPath, getDefaultConfig());
         this.runningTests = runningTests;
-    }
-
-    @Override
-    public Config getConfig() {
-
-        return config;
-    }
-
-    private String getDefaultConfig() {
-
-        return ConfigGenerator.Defaults.SPONGE.renderConfig(MojangMaps.getDefaultConfig());
-
+        this.configPath = configPath;
     }
 
     @Override
@@ -58,6 +45,12 @@ public class SpongeLoaderInfo implements LoaderInfo {
     public Platform getPlatform() {
 
         return null;
+    }
+
+    @Override
+    public Path getDataDirectory() {
+
+        return Paths.get(configPath.getParent().toString(), MojangMaps.MOD_ID);
     }
 
 }

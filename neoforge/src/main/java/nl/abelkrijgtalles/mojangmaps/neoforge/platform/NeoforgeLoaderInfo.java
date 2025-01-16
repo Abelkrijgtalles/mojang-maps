@@ -18,26 +18,20 @@
 
 package nl.abelkrijgtalles.mojangmaps.neoforge.platform;
 
+import java.nio.file.Path;
+import net.neoforged.fml.loading.FMLPaths;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.config.Config;
+import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 
 public class NeoforgeLoaderInfo implements LoaderInfo {
 
-    private final Config config;
     private final boolean runningTests;
 
     public NeoforgeLoaderInfo(boolean runningTests) {
 
-        config = new NeoforgeConfig.Wrapper();
         this.runningTests = runningTests;
-    }
-
-    @Override
-    public Config getConfig() {
-
-        return config;
     }
 
     @Override
@@ -50,6 +44,12 @@ public class NeoforgeLoaderInfo implements LoaderInfo {
     public Platform getPlatform() {
 
         return new NMSPlatform(new NeoforgeNMSUtils());
+    }
+
+    @Override
+    public Path getDataDirectory() {
+
+        return Path.of(FMLPaths.CONFIGDIR.get().toString(), MojangMaps.MOD_ID);
     }
 
 }

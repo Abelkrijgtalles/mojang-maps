@@ -203,6 +203,7 @@ subprojects { p ->
     // Useful later on so we dont have duplicated code
     def isMinecraftSubProject = true//p != project(":core") && p != project(":api")
     def needsCommon = p != project(":common") && p != project(":platform") && p != project(":platform-nms")
+    def isNmsProject = p == project(":fabric") && p == project(":forge") && p == project(":neoforge")
 
 
     // Apply plugins

@@ -32,7 +32,6 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigPaths;
 import nl.abelkrijgtalles.mojangmaps.common.model.Road;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.Waypoint;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.WaypointScorer;
@@ -64,7 +63,7 @@ public class RoadData {
             ---
             """;
     #endif
-    private final static Path FILE_PATH = Paths.get(MojangMaps.loaderInfo.getConfig().getDataDirectory().toString(), "roads.mmd");
+    private final static Path FILE_PATH = Paths.get(MojangMaps.loaderInfo.getDataDirectory().toString(), "roads.mmd");
     private final static byte VERSION = 0x02;
     private final static byte RAW_ROAD_DATA_VERSION = 0x01;
     // Only used for debugging
@@ -113,7 +112,7 @@ public class RoadData {
                 Vec3 from = road.getWaypoints().get(i);
                 Vec3 to = road.getWaypoints().get(i + 1);
 
-                Graph<Waypoint> graph = generateGraphOfHighestBlockInWorldWithRange(Integer.parseInt(ConfigPaths.get(ConfigPaths.PATHFINDING, ConfigPaths.COSTS, ConfigPaths.ADDITIONAL_PRE_CALCULATED_RANGE)), from, to, road.getLevel());
+                Graph<Waypoint> graph = generateGraphOfHighestBlockInWorldWithRange(MojangMaps.config.extraPreCalculatedRange, from, to, road.getLevel());
                 RouteFinder<Waypoint> routeFinder = new RouteFinder<>(graph, new WaypointScorer(), new WaypointScorer());
 
                 List<Waypoint> route = routeFinder.findRoute(new Waypoint(from), new Waypoint(to));
@@ -162,8 +161,8 @@ public class RoadData {
         }
 
         try {
-            if (!MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().exists()) {
-                MojangMaps.loaderInfo.getConfig().getDataDirectory().toFile().mkdirs();
+            if (!MojangMaps.loaderInfo.getDataDirectory().toFile().exists()) {
+                MojangMaps.loaderInfo.getDataDirectory().toFile().mkdirs();
             }
 
             if (!FILE_PATH.toFile().exists()) {

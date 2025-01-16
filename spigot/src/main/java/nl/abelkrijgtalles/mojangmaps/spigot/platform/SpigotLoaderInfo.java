@@ -18,33 +18,18 @@
 
 package nl.abelkrijgtalles.mojangmaps.spigot.platform;
 
+import java.nio.file.Path;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
-import nl.abelkrijgtalles.mojangmaps.common.config.Config;
-import nl.abelkrijgtalles.mojangmaps.common.config.ConfigGenerator;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
+import nl.abelkrijgtalles.mojangmaps.spigot.SpigotMojangMaps;
 
 public class SpigotLoaderInfo implements LoaderInfo {
 
-    private final SpigotConfig config;
     private final boolean runningTests;
 
     public SpigotLoaderInfo(boolean runningTests) {
 
-        this.config = new SpigotConfig(getDefaultConfig());
         this.runningTests = runningTests;
-    }
-
-    @Override
-    public Config getConfig() {
-
-        return config;
-    }
-
-    private String getDefaultConfig() {
-
-        return ConfigGenerator.Defaults.PURE_YAML.renderConfig(MojangMaps.getDefaultConfig());
-
     }
 
     @Override
@@ -57,6 +42,16 @@ public class SpigotLoaderInfo implements LoaderInfo {
     public Platform getPlatform() {
 
         return new SpigotPlatform();
+    }
+
+    @Override
+    public Path getDataDirectory() {
+
+        #if MC_VER > MC_1_20_6
+        return SpigotMojangMaps.INSTANCE.getDataPath();
+        #else
+        return MojangMapsSpigot.Instance.getDataFolder().toPath();
+        #endif
     }
 
 }

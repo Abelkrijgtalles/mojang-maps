@@ -53,5 +53,5 @@ and [#14](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14).
 - [thebuildcraft](https://github.com/thebuildcraft) which made a multi-platform & multi-version mod template (based on
   scripts from [Distant Horizons](https://gitlab.com/jeseibel/distant-horizons)). I did delete a few things for my
   smooth brain, but it's still largely based on this template.
-- [Simple Config](https://github.com/magistermaks/fabric-simplelibs/tree/master/simple-config) made
-  by [magistermaks](https://github.com/magistermaks).
+- [ConfigLib](https://github.com/Exlll/ConfigLib) made by [Exlll](https://github.com/Exlll), so I don't have to
+  implement my own config system.
