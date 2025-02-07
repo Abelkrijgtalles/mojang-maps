@@ -18,13 +18,18 @@
 
 package nl.abelkrijgtalles.mojangmaps.nms.platform.world;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.level.levelgen.Heightmap;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
 import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class NMSLevel implements Level {
 
@@ -51,16 +56,19 @@ public class NMSLevel implements Level {
     @Override
     public int getHeightAtLocation(@NotNull HeightMapType type, int x, int z) {
 
-        if (getNMSLevel() == null)
-            throw new IllegalStateException("Level with identifier %s does not exist.".formatted(getIdentifier()));
-
         return getNMSLevel().getHeight(convertHeightMapType(type), x, z);
     }
 
-    @Nullable
+    @Override
+    public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
+
+        ParticleUtils.spawnParticles(getNMSLevel(), new BlockPos((int) Math.floor(location.x), (int) Math.floor(location.y), (int) Math.floor(location.z)), count, 3, 1, true, convertParticle(particle));
+    }
+
     private net.minecraft.world.level.Level getNMSLevel() {
 
-        if (NMSPlatform.getUtils() == null) return null;
+        if (getNMSLevel() == null)
+            throw new IllegalStateException("Level with identifier %s does not exist.".formatted(getIdentifier()));
 
         return NMSPlatform.getUtils().getServer().getLevel(resourceKey);
     }
@@ -92,6 +100,18 @@ public class NMSLevel implements Level {
             }
         }
 
+    }
+
+    private ParticleOptions convertParticle(@NotNull Particle particle) {
+
+        switch (particle) {
+            case SIGMA -> {
+                return ParticleTypes.ANGRY_VILLAGER;
+            }
+            case null, default -> {
+                throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
+            }
+        }
     }
 
 }

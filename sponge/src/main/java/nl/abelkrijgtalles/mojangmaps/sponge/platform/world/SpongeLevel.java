@@ -20,12 +20,17 @@ package nl.abelkrijgtalles.mojangmaps.sponge.platform.world;
 
 import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.api.ResourceKey;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.effect.particle.ParticleEffect;
+import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.world.HeightType;
 import org.spongepowered.api.world.HeightTypes;
 import org.spongepowered.api.world.server.ServerWorld;
+import org.spongepowered.math.vector.Vector3d;
 
 public class SpongeLevel implements Level {
 
@@ -54,10 +59,18 @@ public class SpongeLevel implements Level {
         return getWorld().height(convertHeightMapType(type), x, z);
     }
 
+    @Override
+    public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
+
+        getWorld().spawnParticles(convertParticle(particle), new Vector3d(location.x, location.y, location.z), count);
+
+    }
+
     private ServerWorld getWorld() {
 
         if (Sponge.game().server().worldManager().world(resourceKey).isEmpty())
-            throw new IllegalStateException("Level with identifier %s does not exist.".formatted(getIdentifier()));
+            throw new IllegalStateException("World with identifier %s does not exist.".formatted(getIdentifier()));
+
         return Sponge.game().server().worldManager().world(resourceKey).get();
 
     }
@@ -85,6 +98,19 @@ public class SpongeLevel implements Level {
             }
             case null, default -> {
                 throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
+            }
+        }
+
+    }
+
+    private ParticleEffect convertParticle(@NotNull Particle particle) {
+
+        switch (particle) {
+            case SIGMA -> {
+                return (ParticleEffect) ParticleTypes.ANGRY_VILLAGER;
+            }
+            case null, default -> {
+                throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
             }
         }
 

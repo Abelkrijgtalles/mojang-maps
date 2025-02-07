@@ -37,4 +37,13 @@ public interface Level {
      */
     int getHeightAtLocation(@NotNull HeightMapType type, int x, int z);
 
+    /**
+     * Spawns specific particles at a given location.
+     *
+     * @param particle The type of particle to use.
+     * @param location The location to spawn the particles at.
+     * @param count    The count of particles to spawn.
+     */
+    void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count);
+
 }

@@ -20,6 +20,8 @@ package nl.abelkrijgtalles.mojangmaps.spigot.platform.world;
 
 import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.HeightMap;
 import org.bukkit.World;
@@ -52,10 +54,17 @@ public class SpigotLevel implements Level {
         return getWorld().getHighestBlockYAt(x, z, convertHeightMapType(type));
     }
 
+    @Override
+    public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
+
+        getWorld().spawnParticle(convertParticle(particle), location.x, location.y, location.z, count);
+
+    }
+
     private World getWorld() {
 
         if (Bukkit.getWorld(worldName) == null)
-            throw new IllegalStateException("Level with identifier %s does not exist.".formatted(getIdentifier()));
+            throw new IllegalStateException("World with identifier %s does not exist.".formatted(getIdentifier()));
 
         return Bukkit.getWorld(worldName);
 
@@ -87,6 +96,18 @@ public class SpigotLevel implements Level {
             }
         }
 
+    }
+
+    private org.bukkit.Particle convertParticle(@NotNull Particle particle) {
+
+        switch (particle) {
+            case SIGMA -> {
+                return org.bukkit.Particle.ANGRY_VILLAGER;
+            }
+            case null, default -> {
+                throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
+            }
+        }
     }
 
 }
