@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class NMSLevel implements Level {
 
+    public static final String resourceKeyDivider = "\\";
     private final ResourceKey<net.minecraft.world.level.Level> resourceKey;
 
     public NMSLevel(ResourceKey<net.minecraft.world.level.Level> resourceKey) {
@@ -44,7 +45,7 @@ public class NMSLevel implements Level {
     @Override
     public String getIdentifier() {
 
-        return "%s/%s".formatted(resourceKey.registryKey(), resourceKey.registry());
+        return resourceKey.location().getNamespace() + resourceKeyDivider + resourceKey.location().getPath();
     }
 
     @Override
@@ -67,9 +68,25 @@ public class NMSLevel implements Level {
     private Heightmap.Types convertHeightMapType(@NotNull HeightMapType heightMapType) {
 
         switch (heightMapType) {
+            case WORLD_SURFACE_WG -> {
+                return Heightmap.Types.WORLD_SURFACE_WG;
+            }
+            case WORLD_SURFACE -> {
+                return Heightmap.Types.WORLD_SURFACE;
+            }
+            case OCEAN_FLOOR_WG -> {
+                return Heightmap.Types.OCEAN_FLOOR_WG;
+            }
+            case OCEAN_FLOOR -> {
+                return Heightmap.Types.OCEAN_FLOOR;
+            }
+            case MOTION_BLOCKING -> {
+                return Heightmap.Types.MOTION_BLOCKING;
+            }
             case MOTION_BLOCKING_NO_LEAVES -> {
                 return Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
             }
+
             case null, default -> {
                 throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
             }

@@ -26,6 +26,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.neoforge.platform.NeoforgeLoaderInfo;
@@ -38,9 +39,10 @@ public class NeoforgeMojangMaps {
 
     public NeoforgeMojangMaps() {
 
+        LoaderInfo loaderInfo = new NeoforgeLoaderInfo(false);
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
 
-        MojangMaps.init(new NeoforgeLoaderInfo(false));
+        MojangMaps.init(loaderInfo);
     }
 
     @SubscribeEvent

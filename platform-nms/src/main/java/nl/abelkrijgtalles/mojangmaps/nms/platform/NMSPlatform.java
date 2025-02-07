@@ -18,9 +18,9 @@
 
 package nl.abelkrijgtalles.mojangmaps.nms.platform;
 
+import java.util.Arrays;
 import net.minecraft.DetectedVersion;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.world.NMSLevel;
 import nl.abelkrijgtalles.mojangmaps.platform.Platform;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
@@ -52,11 +52,19 @@ public class NMSPlatform implements Platform {
     @Override
     public Level getLevel(@NotNull String identifier) {
 
-        ResourceKey<net.minecraft.world.level.Level> resourceKey = ResourceKey.create(ResourceKey.createRegistryKey(ResourceLocation.parse(identifier.split("/")[0])), ResourceLocation.parse(identifier.split("/")[1]));
-        net.minecraft.world.level.Level nmsLevel = utils.getServer().getLevel(resourceKey);
+        System.out.println(Arrays.toString(identifier.split("\\" + NMSLevel.resourceKeyDivider)));
 
-        if (nmsLevel == null) return null;
-        return new NMSLevel(nmsLevel);
+        String namespace = identifier.split("\\" + NMSLevel.resourceKeyDivider)[0];
+        String path = identifier.split("\\" + NMSLevel.resourceKeyDivider)[1];
+
+        for (ServerLevel level : utils.getServer().getAllLevels()) {
+
+            if (level.dimension().location().getNamespace().equals(namespace) && level.dimension().location().getPath().equals(path))
+                return new NMSLevel(level);
+
+        }
+
+        return null;
 
     }
 

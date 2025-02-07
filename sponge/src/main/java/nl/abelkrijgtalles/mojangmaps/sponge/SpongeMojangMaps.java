@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import net.kyori.adventure.text.Component;
+import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
@@ -43,8 +44,6 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.lifecycle.RegisterCommandEvent;
 import org.spongepowered.api.event.lifecycle.StartedEngineEvent;
 import org.spongepowered.api.event.server.query.QueryServerEvent;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.loader.ConfigurationLoader;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
@@ -56,15 +55,13 @@ public class SpongeMojangMaps {
     @Inject
     @DefaultConfig(sharedRoot = true)
     private Path defaultConfig;
-    @Inject
-    @DefaultConfig(sharedRoot = true)
-    private ConfigurationLoader<CommentedConfigurationNode> configLoader;
 
     @Listener
     public void onServerStart(final StartedEngineEvent<Server> event) {
 
-        MojangMaps.LOGGER.info(defaultConfig);
-        MojangMaps.init(new SpongeLoaderInfo(defaultConfig, false));
+        LoaderInfo loaderInfo = new SpongeLoaderInfo(defaultConfig, false);
+
+        MojangMaps.init(loaderInfo);
 
     }
 

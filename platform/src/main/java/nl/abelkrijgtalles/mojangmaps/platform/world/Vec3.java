@@ -66,4 +66,10 @@ public class Vec3 {
         return Math.sqrt(x * x + y * y + z * z);
     }
 
+    @Override
+    public String toString() {
+
+        return "X: %s Y: %s Z: %s".formatted(x, y, z);
+    }
+
 }

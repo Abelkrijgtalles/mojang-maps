@@ -27,7 +27,10 @@ public class Permission {
         this.console = console;
     }
 
-    public boolean allowsConsole() {
+    /**
+     * @return Whether the permission allows executing from the console. If this permission is used in {@link CommandSource}, it's whether it's executed from the console.
+     */
+    public boolean console() {
 
         return console;
     }
@@ -35,7 +38,7 @@ public class Permission {
     public boolean containsPermission(Permission permission) {
 
         if (console) return true;
-        return !permission.allowsConsole();
+        return !permission.console();
 
     }
 

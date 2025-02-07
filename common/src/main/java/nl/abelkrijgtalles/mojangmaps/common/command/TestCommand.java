@@ -18,18 +18,61 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.command;
 
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
+import nl.abelkrijgtalles.mojangmaps.common.model.Road;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
 import nl.abelkrijgtalles.mojangmaps.platform.command.CommandSource;
+import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 
 public class TestCommand implements Command {
+
 
     @Override
     public boolean run(CommandSource source) {
 
-        MojangMaps.LOGGER.info("omg");
+        if (source.getPermission().console()) return false;
+
+        List<Road> roads = new ArrayList<>();
+        Random rand = new Random();
+        RoadData roadData = new RoadData();
+
+//        for (int i = 0; i < 3; i++) {
+//
+//            List<Vec3> waypoints = new ArrayList<>();
+//
+//            for (int j = 0; j < 3; j++) {
+//
+//                waypoints.add(new Vec3((int) (rand.nextDouble() * 1000), (int) (rand.nextDouble() * 256), (int) (rand.nextDouble() * 1000)));
+//
+//            }
+//
+//            Road road = new Road("sigma", source.getLevel(), waypoints);
+//            roads.add(road);
+//
+//        }
+
+        List<Vec3> waypoints = Arrays.asList(new Vec3(29, source.getLevel().getHeightAtLocation(HeightMapType.MOTION_BLOCKING_NO_LEAVES, 29, -5), -5), new Vec3(34, source.getLevel().getHeightAtLocation(HeightMapType.MOTION_BLOCKING_NO_LEAVES, 34, -12), -12));
+        roads.add(new Road("Halo", source.getLevel(), waypoints));
+
+        for (Road road : roads) {
+
+            System.out.println(road.getName());
+
+        }
+
+        try {
+            roadData.generateRoadData(roads);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return true;
+
     }
 
     @Override

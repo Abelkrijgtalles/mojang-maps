@@ -20,35 +20,43 @@ package nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Graph<T extends GraphNode> {
 
     private final Set<T> nodes;
-    private final Map<UUID, Set<UUID>> connections;
+    private final Map<String, Set<String>> connections;
 
-    public Graph(Set<T> nodes, Map<UUID, Set<UUID>> connections) {
+    public Graph(Set<T> nodes, Map<String, Set<String>> connections) {
 
         this.nodes = nodes;
         this.connections = connections;
     }
 
-    public T getNode(UUID uuid) {
+    public T getNode(String identifier) {
 
         return nodes.stream()
-                .filter(node -> node.getUUID().equals(uuid))
+                .filter(node -> node.getIdentifier().equals(identifier))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No node found with UUID %s.".formatted(uuid)));
+                .orElseThrow(() -> new IllegalArgumentException("No node found with identifier %s.".formatted(identifier)));
 
     }
 
     public Set<T> getConnections(T node) {
 
-        return connections.get(node.getUUID()).stream()
+        System.out.println(connections.size());
+        System.out.println(connections);
+
+        return connections.get(node.getIdentifier()).stream()
                 .map(this::getNode)
                 .collect(Collectors.toSet());
 
+    }
+
+    @Override
+    public String toString() {
+
+        return "%s with connections %s".formatted(nodes, connections);
     }
 
 }

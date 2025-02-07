@@ -65,6 +65,21 @@ public class SpongeLevel implements Level {
     private HeightType convertHeightMapType(@NotNull HeightMapType heightMapType) {
 
         switch (heightMapType) {
+            case WORLD_SURFACE_WG -> {
+                return (HeightType) HeightTypes.WORLD_SURFACE_WG;
+            }
+            case WORLD_SURFACE -> {
+                return (HeightType) HeightTypes.WORLD_SURFACE;
+            }
+            case OCEAN_FLOOR_WG -> {
+                return (HeightType) HeightTypes.OCEAN_FLOOR_WG;
+            }
+            case OCEAN_FLOOR -> {
+                return (HeightType) HeightTypes.OCEAN_FLOOR;
+            }
+            case MOTION_BLOCKING -> {
+                return (HeightType) HeightTypes.MOTION_BLOCKING;
+            }
             case MOTION_BLOCKING_NO_LEAVES -> {
                 return (HeightType) HeightTypes.MOTION_BLOCKING_NO_LEAVES;
             }

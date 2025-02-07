@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -85,6 +86,7 @@ public class RoadData {
 
             List<Byte> roadBytes = new ArrayList<>();
 
+            System.out.println(road.getName());
             roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getName()));
             roadBytes.addAll(generateByteListOfStringWithDividingBit(road.getWorldIdentifier()));
 
@@ -114,6 +116,10 @@ public class RoadData {
 
                 Graph<Waypoint> graph = generateGraphOfHighestBlockInWorldWithRange(MojangMaps.config.extraPreCalculatedRange, from, to, road.getLevel());
                 RouteFinder<Waypoint> routeFinder = new RouteFinder<>(graph, new WaypointScorer(), new WaypointScorer());
+
+                System.out.println(graph);
+                System.out.println(from);
+                System.out.println(to);
 
                 List<Waypoint> route = routeFinder.findRoute(new Waypoint(from), new Waypoint(to));
                 if (route.isEmpty()) {
@@ -408,114 +414,9 @@ public class RoadData {
 
     }
 
-    private Graph<Waypoint> generateGraphOfHighestBlockInWorldWithRange(int additionalRange, Vec3 from, Vec3 to, Level level) {
-
-        Set<Waypoint> waypoints = new HashSet<>();
-        Map<UUID, Set<UUID>> connections = new HashMap<>();
-        double halvedRange = (double) additionalRange / 2;
-
-        for (double x = from.x - halvedRange; x < to.x + halvedRange + 1; x++) {
-            for (double z = from.z - halvedRange; z < to.z + halvedRange + 1; z++) {
-
-                // Generate UUIDs
-                UUID sameLoc = UUID.randomUUID();
-                UUID north = UUID.randomUUID();
-                UUID northEast = UUID.randomUUID();
-                UUID east = UUID.randomUUID();
-                UUID southEast = UUID.randomUUID();
-                UUID south = UUID.randomUUID();
-                UUID southWest = UUID.randomUUID();
-                UUID west = UUID.randomUUID();
-                UUID northWest = UUID.randomUUID();
-
-                // Add waypoints to set
-                // Same loc
-                waypoints.add(new Waypoint(sameLoc, new Vec3(x, getHeightAtLocation(level, x, z), z)));
-                // North
-                waypoints.add(new Waypoint(north, new Vec3(x, getHeightAtLocation(level, x, z - 1), z - 1)));
-                // North-east
-                waypoints.add(new Waypoint(northEast, new Vec3(x + 1, getHeightAtLocation(level, x + 1, z - 1), z - 1)));
-                // East
-                waypoints.add(new Waypoint(east, new Vec3(x + 1, getHeightAtLocation(level, x + 1, z), z)));
-                // South-east
-                waypoints.add(new Waypoint(southEast, new Vec3(x + 1, getHeightAtLocation(level, x + 1, z + 1), z + 1)));
-                // South
-                waypoints.add(new Waypoint(south, new Vec3(x, getHeightAtLocation(level, x, z + 1), z + 1)));
-                // South-west
-                waypoints.add(new Waypoint(southWest, new Vec3(x - 1, getHeightAtLocation(level, x - 1, z + 1), z + 1)));
-                // West
-                waypoints.add(new Waypoint(west, new Vec3(x - 1, getHeightAtLocation(level, x - 1, z), z)));
-                // North-west
-                waypoints.add(new Waypoint(northWest, new Vec3(x - 1, getHeightAtLocation(level, x - 1, z - 1), z - 1)));
-
-            }
-        }
-
-        // doing this because this is less error-prone
-        for (Waypoint waypoint : waypoints) {
-
-            connections.put(waypoint.getUUID(), getAllWaypointsAroundWaypoint(waypoint, waypoints, level));
-
-        }
-
-        return new Graph<>(waypoints, connections);
-
-    }
-
     private int getHeightAtLocation(Level level, double x, double z) {
 
         return level.getHeightAtLocation(HeightMapType.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(x), (int) Math.floor(z));
-
-    }
-
-    private Set<UUID> getAllWaypointsAroundWaypoint(Waypoint waypoint, Set<Waypoint> waypoints, Level level) {
-
-        Set<UUID> waypointset = new HashSet<>();
-        double x = waypoint.getPosition().x;
-        double z = waypoint.getPosition().z;
-
-        // North
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x, getHeightAtLocation(level, x, z - 1), z - 1)))
-                .findFirst().orElse(null).getUUID());
-        // North-east
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x + 1, getHeightAtLocation(level, x + 1, z - 1), z - 1)))
-                .findFirst().orElse(null).getUUID());
-        // East
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x + 1, getHeightAtLocation(level, x + 1, z), z)))
-                .findFirst().orElse(null).getUUID());
-        // South-east
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x + 1, getHeightAtLocation(level, x + 1, z + 1), z + 1)))
-                .findFirst().orElse(null).getUUID());
-        // South
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x, getHeightAtLocation(level, x, z + 1), z + 1)))
-                .findFirst().orElse(null).getUUID());
-        // South-west
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x - 1, getHeightAtLocation(level, x - 1, z + 1), z + 1)))
-                .findFirst().orElse(null).getUUID());
-        // West
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x - 1, getHeightAtLocation(level, x - 1, z), z)))
-                .findFirst().orElse(null).getUUID());
-        // North-west
-        waypointset.add(waypoints.stream().filter(
-                        waypoint1 ->
-                                waypoint1.getPosition().equals(new Vec3(x - 1, getHeightAtLocation(level, x - 1, z - 1), z - 1)))
-                .findFirst().orElse(null).getUUID());
-
-        return waypointset;
 
     }
 
@@ -564,6 +465,58 @@ public class RoadData {
         }
 
         return points;
+
+    }
+
+    private Graph<Waypoint> generateGraphOfHighestBlockInWorldWithRange(int extraSize, Vec3 from, Vec3 to, Level level) {
+
+        Set<Waypoint> waypoints = generateGrid(new Waypoint(from), new Waypoint(to), extraSize, level);
+        return new Graph<>(waypoints, findNeighboursForEachWaypoint(waypoints));
+
+    }
+
+    private Set<Waypoint> generateGrid(Waypoint from, Waypoint to, int extraSize, Level level) {
+
+        int minX = (int) (Math.min(from.getX(), to.getX()) - extraSize);
+        int maxX = (int) (Math.max(from.getX(), to.getX()) + extraSize);
+        int minY = (int) (Math.min(from.getZ(), to.getZ()) + extraSize);
+        int maxY = (int) (Math.max(from.getZ(), to.getZ()) + extraSize);
+
+        Set<Waypoint> waypoints = new HashSet<>();
+
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minY; z <= maxY; z++) {
+                waypoints.add(new Waypoint(new Vec3(x, getHeightAtLocation(level, x, z), z)));
+            }
+        }
+
+        return waypoints;
+
+    }
+
+    private Map<String, Set<String>> findNeighboursForEachWaypoint(Set<Waypoint> waypoints) {
+
+        // don't really know what this does, it's modified chatgpt code
+        Map<String, Waypoint> coordinateMap = waypoints.stream()
+                .collect(Collectors.toMap(p -> p.getX() + "," + p.getZ(), p -> p));
+
+        Map<String, Set<String>> connections = new HashMap<>();
+
+        for (Waypoint waypoint : waypoints) {
+            Set<String> neighbours = new HashSet<>();
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    if (dx == 0 && dz == 0) continue;
+                    String key = (waypoint.getX() + dx) + "," + (waypoint.getZ() + dz);
+                    Waypoint neighbour = coordinateMap.get(key);
+                    if (neighbour != null) {
+                        neighbours.add(neighbour.getIdentifier());
+                    }
+                }
+            }
+            connections.put(waypoint.getIdentifier(), neighbours);
+        }
+        return connections;
 
     }
 

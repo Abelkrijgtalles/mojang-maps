@@ -25,7 +25,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.common.Mod;
+import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
 import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.forge.platform.ForgeLoaderInfo;
@@ -36,11 +38,12 @@ public class ForgeMojangMaps {
 
     public static MinecraftServer MINECRAFT_SERVER = null;
 
-    public ForgeMojangMaps() {
+    public ForgeMojangMaps(ModContainer modContainer) {
 
+        LoaderInfo loaderInfo = new ForgeLoaderInfo(false);
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 
-        MojangMaps.init(new ForgeLoaderInfo(false));
+        MojangMaps.init(loaderInfo);
     }
 
     @SubscribeEvent

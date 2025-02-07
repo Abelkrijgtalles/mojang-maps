@@ -89,7 +89,7 @@ public class SpigotMojangMaps extends JavaPlugin {
 
     private void setupSimpleCommandMap() {
 
-        spm = (SimplePluginManager) this.getServer().getPluginManager();
+        spm = (SimplePluginManager) INSTANCE.getServer().getPluginManager();
         Field f = null;
         try {
             f = SimplePluginManager.class.getDeclaredField("commandMap");

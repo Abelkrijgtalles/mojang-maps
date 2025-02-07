@@ -18,7 +18,6 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.command;
 
-import java.util.ArrayList;
 import java.util.List;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
 
@@ -26,11 +25,9 @@ public class Commands {
 
     public static List<Command> getCommands() {
 
-        List<Command> commands = new ArrayList<>();
-
-        commands.add(new TestCommand());
-
-        return commands;
+        return List.of(
+                new TestCommand()
+        );
 
     }
 

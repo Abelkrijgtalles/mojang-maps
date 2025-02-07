@@ -19,7 +19,11 @@
 package nl.abelkrijgtalles.mojangmaps.platform.world;
 
 public enum HeightMapType {
-    // add more if needed and update in implementations
+    WORLD_SURFACE_WG,
+    WORLD_SURFACE,
+    OCEAN_FLOOR_WG,
+    OCEAN_FLOOR,
+    MOTION_BLOCKING,
     MOTION_BLOCKING_NO_LEAVES,
 
 }

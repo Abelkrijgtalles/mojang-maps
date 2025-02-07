@@ -38,7 +38,7 @@ public class Road {
 
     public Road(String name, Level world, List<Vec3> waypoints) {
 
-        new Road(name, world.getIdentifier(), waypoints);
+        this(name, world.getIdentifier(), waypoints);
     }
 
     public String getName() {
@@ -58,6 +58,7 @@ public class Road {
 
     public Level getLevel() {
 
+        System.out.println(worldIdentifier);
         return MojangMaps.loaderInfo.getPlatform().getLevel(worldIdentifier);
 
     }

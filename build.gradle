@@ -190,7 +190,7 @@ forgix {
         if (mergeSpigot) {
             custom {
                 projectName = "spigot"
-                jarLocation = "build/libs/${rootProject.mod_id}-spigot-${rootProject.versionStr}-dev-all.jar"
+                jarLocation = "build/libs/${rootProject.mod_id}-spigot-${rootProject.versionStr}-all.jar"
             }
         }
     }

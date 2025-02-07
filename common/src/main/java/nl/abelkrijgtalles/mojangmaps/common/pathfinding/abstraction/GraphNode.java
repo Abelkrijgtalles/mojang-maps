@@ -18,10 +18,8 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction;
 
-import java.util.UUID;
-
 public interface GraphNode {
 
-    UUID getUUID();
+    String getIdentifier();
 
 }

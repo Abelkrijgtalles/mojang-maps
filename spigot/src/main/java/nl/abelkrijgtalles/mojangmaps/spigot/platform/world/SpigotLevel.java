@@ -64,6 +64,21 @@ public class SpigotLevel implements Level {
     private HeightMap convertHeightMapType(@NotNull HeightMapType heightMapType) {
 
         switch (heightMapType) {
+            case WORLD_SURFACE_WG -> {
+                return HeightMap.WORLD_SURFACE_WG;
+            }
+            case WORLD_SURFACE -> {
+                return HeightMap.WORLD_SURFACE;
+            }
+            case OCEAN_FLOOR_WG -> {
+                return HeightMap.OCEAN_FLOOR_WG;
+            }
+            case OCEAN_FLOOR -> {
+                return HeightMap.OCEAN_FLOOR;
+            }
+            case MOTION_BLOCKING -> {
+                return HeightMap.MOTION_BLOCKING;
+            }
             case MOTION_BLOCKING_NO_LEAVES -> {
                 return HeightMap.MOTION_BLOCKING_NO_LEAVES;
             }

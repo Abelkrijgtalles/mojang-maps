@@ -57,6 +57,8 @@ public class RouteFinder<T extends GraphNode> {
 
             }
 
+            System.out.println(next.getCurrent());
+
             graph.getConnections(next.getCurrent()).forEach(connection -> {
                 RouteNode<T> nextNode = allNodes.getOrDefault(connection, new RouteNode<>(connection));
                 allNodes.put(connection, nextNode);

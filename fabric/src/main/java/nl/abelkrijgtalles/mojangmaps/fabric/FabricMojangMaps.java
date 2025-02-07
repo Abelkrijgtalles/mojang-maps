@@ -29,9 +29,10 @@ import nl.abelkrijgtalles.mojangmaps.nms.platform.command.NMSCommands;
 
 public class FabricMojangMaps implements DedicatedServerModInitializer {
 
+    private static final boolean isRunningTests = false;
     public static MinecraftServer MINECRAFT_SERVER = null;
 
-    public static void init(boolean isRunningTests) {
+    public static void init() {
 
         CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> {
 
@@ -49,7 +50,7 @@ public class FabricMojangMaps implements DedicatedServerModInitializer {
 
         ServerTickEvents.END_SERVER_TICK.register(this::onEndTick);
 
-        init(false);
+        init();
     }
 
     public void onEndTick(MinecraftServer minecraftServer) {

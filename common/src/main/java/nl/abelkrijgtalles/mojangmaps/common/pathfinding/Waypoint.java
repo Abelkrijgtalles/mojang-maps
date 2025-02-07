@@ -18,32 +18,24 @@
 
 package nl.abelkrijgtalles.mojangmaps.common.pathfinding;
 
-import java.util.UUID;
 import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.GraphNode;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
 
 public class Waypoint implements GraphNode {
 
-    private final UUID uuid;
     // TODO: include some sort of road specification
     // TODO if that is added: make more optimised version with road manager or some sorts. But if I use a index based system, and a road gets added, it could shift. Just don't forget that Abel. But maybe also it wouldn't if it got added to the back of the list, but if it was edited maybe it would idk I will see later.
     private final Vec3 position;
 
     public Waypoint(Vec3 position) {
 
-        this(UUID.randomUUID(), position);
-    }
-
-    public Waypoint(UUID uuid, Vec3 position) {
-
-        this.uuid = uuid;
         this.position = position;
     }
 
     @Override
-    public UUID getUUID() {
+    public String getIdentifier() {
 
-        return uuid;
+        return "%s, %s, %s".formatted(position.x, position.y, position.z);
     }
 
     public Vec3 getPosition() {
@@ -54,7 +46,7 @@ public class Waypoint implements GraphNode {
     @Override
     public String toString() {
 
-        return "Waypoint of road %s on X %s Y %s Z %s with UUID %s".formatted(null, position.x, position.y, position.z, uuid);
+        return "Waypoint on X %s Y %s Z %s".formatted(position.x, position.y, position.z);
     }
 
     @Override
@@ -63,7 +55,6 @@ public class Waypoint implements GraphNode {
         if (obj == null) return false;
         if (!(obj instanceof Waypoint waypoint)) return false;
 
-        if (uuid.equals(waypoint.getUUID())) return true;
         else return position.equals(waypoint.position);
 
     }
