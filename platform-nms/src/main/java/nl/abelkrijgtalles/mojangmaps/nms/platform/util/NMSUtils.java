@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.nms.platform;
+package nl.abelkrijgtalles.mojangmaps.nms.platform.util;
 
 import net.minecraft.server.MinecraftServer;
 

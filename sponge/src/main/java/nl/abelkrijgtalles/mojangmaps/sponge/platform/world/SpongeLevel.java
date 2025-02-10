@@ -22,13 +22,11 @@ import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.sponge.platform.util.SpongeConversion;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.api.ResourceKey;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.effect.particle.ParticleEffect;
-import org.spongepowered.api.effect.particle.ParticleTypes;
-import org.spongepowered.api.world.HeightType;
-import org.spongepowered.api.world.HeightTypes;
 import org.spongepowered.api.world.server.ServerWorld;
 import org.spongepowered.math.vector.Vector3d;
 
@@ -56,13 +54,17 @@ public class SpongeLevel implements Level {
     @Override
     public int getHeightAtLocation(@NotNull HeightMapType type, int x, int z) {
 
-        return getWorld().height(convertHeightMapType(type), x, z);
+        return getWorld().height(SpongeConversion.heightMapType(type), x, z);
     }
 
     @Override
     public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
 
-        getWorld().spawnParticles(convertParticle(particle), new Vector3d(location.x, location.y, location.z), count);
+        ParticleEffect effect = ParticleEffect.builder()
+                .type(SpongeConversion.particle(particle))
+                .quantity(count)
+                .build();
+        getWorld().spawnParticles(effect, new Vector3d(location.x, location.y, location.z));
 
     }
 
@@ -72,47 +74,6 @@ public class SpongeLevel implements Level {
             throw new IllegalStateException("World with identifier %s does not exist.".formatted(getIdentifier()));
 
         return Sponge.game().server().worldManager().world(resourceKey).get();
-
-    }
-
-    private HeightType convertHeightMapType(@NotNull HeightMapType heightMapType) {
-
-        switch (heightMapType) {
-            case WORLD_SURFACE_WG -> {
-                return (HeightType) HeightTypes.WORLD_SURFACE_WG;
-            }
-            case WORLD_SURFACE -> {
-                return (HeightType) HeightTypes.WORLD_SURFACE;
-            }
-            case OCEAN_FLOOR_WG -> {
-                return (HeightType) HeightTypes.OCEAN_FLOOR_WG;
-            }
-            case OCEAN_FLOOR -> {
-                return (HeightType) HeightTypes.OCEAN_FLOOR;
-            }
-            case MOTION_BLOCKING -> {
-                return (HeightType) HeightTypes.MOTION_BLOCKING;
-            }
-            case MOTION_BLOCKING_NO_LEAVES -> {
-                return (HeightType) HeightTypes.MOTION_BLOCKING_NO_LEAVES;
-            }
-            case null, default -> {
-                throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
-            }
-        }
-
-    }
-
-    private ParticleEffect convertParticle(@NotNull Particle particle) {
-
-        switch (particle) {
-            case SIGMA -> {
-                return (ParticleEffect) ParticleTypes.ANGRY_VILLAGER;
-            }
-            case null, default -> {
-                throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
-            }
-        }
 
     }
 

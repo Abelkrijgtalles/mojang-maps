@@ -22,8 +22,8 @@ import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.spigot.platform.util.SpigotConversion;
 import org.bukkit.Bukkit;
-import org.bukkit.HeightMap;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,13 +51,13 @@ public class SpigotLevel implements Level {
     @Override
     public int getHeightAtLocation(@NotNull HeightMapType type, int x, int z) {
 
-        return getWorld().getHighestBlockYAt(x, z, convertHeightMapType(type));
+        return getWorld().getHighestBlockYAt(x, z, SpigotConversion.heightMapType(type));
     }
 
     @Override
     public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
 
-        getWorld().spawnParticle(convertParticle(particle), location.x, location.y, location.z, count);
+        getWorld().spawnParticle(SpigotConversion.particle(particle), location.x, location.y, location.z, count);
 
     }
 
@@ -68,46 +68,6 @@ public class SpigotLevel implements Level {
 
         return Bukkit.getWorld(worldName);
 
-    }
-
-    private HeightMap convertHeightMapType(@NotNull HeightMapType heightMapType) {
-
-        switch (heightMapType) {
-            case WORLD_SURFACE_WG -> {
-                return HeightMap.WORLD_SURFACE_WG;
-            }
-            case WORLD_SURFACE -> {
-                return HeightMap.WORLD_SURFACE;
-            }
-            case OCEAN_FLOOR_WG -> {
-                return HeightMap.OCEAN_FLOOR_WG;
-            }
-            case OCEAN_FLOOR -> {
-                return HeightMap.OCEAN_FLOOR;
-            }
-            case MOTION_BLOCKING -> {
-                return HeightMap.MOTION_BLOCKING;
-            }
-            case MOTION_BLOCKING_NO_LEAVES -> {
-                return HeightMap.MOTION_BLOCKING_NO_LEAVES;
-            }
-            case null, default -> {
-                throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
-            }
-        }
-
-    }
-
-    private org.bukkit.Particle convertParticle(@NotNull Particle particle) {
-
-        switch (particle) {
-            case SIGMA -> {
-                return org.bukkit.Particle.ANGRY_VILLAGER;
-            }
-            case null, default -> {
-                throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
-            }
-        }
     }
 
 }

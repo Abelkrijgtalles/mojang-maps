@@ -19,12 +19,10 @@
 package nl.abelkrijgtalles.mojangmaps.nms.platform.world;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ParticleUtils;
-import net.minecraft.world.level.levelgen.Heightmap;
 import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSPlatform;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.util.NMSConversion;
 import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
@@ -56,13 +54,13 @@ public class NMSLevel implements Level {
     @Override
     public int getHeightAtLocation(@NotNull HeightMapType type, int x, int z) {
 
-        return getNMSLevel().getHeight(convertHeightMapType(type), x, z);
+        return getNMSLevel().getHeight(NMSConversion.heightMapType(type), x, z);
     }
 
     @Override
     public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
 
-        ParticleUtils.spawnParticles(getNMSLevel(), new BlockPos((int) Math.floor(location.x), (int) Math.floor(location.y), (int) Math.floor(location.z)), count, 3, 1, true, convertParticle(particle));
+        ParticleUtils.spawnParticles(getNMSLevel(), new BlockPos((int) Math.floor(location.x), (int) Math.floor(location.y), (int) Math.floor(location.z)), count, 3, 1, true, NMSConversion.particle(particle));
     }
 
     private net.minecraft.world.level.Level getNMSLevel() {
@@ -71,47 +69,6 @@ public class NMSLevel implements Level {
             throw new IllegalStateException("Level with identifier %s does not exist.".formatted(getIdentifier()));
 
         return NMSPlatform.getUtils().getServer().getLevel(resourceKey);
-    }
-
-    private Heightmap.Types convertHeightMapType(@NotNull HeightMapType heightMapType) {
-
-        switch (heightMapType) {
-            case WORLD_SURFACE_WG -> {
-                return Heightmap.Types.WORLD_SURFACE_WG;
-            }
-            case WORLD_SURFACE -> {
-                return Heightmap.Types.WORLD_SURFACE;
-            }
-            case OCEAN_FLOOR_WG -> {
-                return Heightmap.Types.OCEAN_FLOOR_WG;
-            }
-            case OCEAN_FLOOR -> {
-                return Heightmap.Types.OCEAN_FLOOR;
-            }
-            case MOTION_BLOCKING -> {
-                return Heightmap.Types.MOTION_BLOCKING;
-            }
-            case MOTION_BLOCKING_NO_LEAVES -> {
-                return Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
-            }
-
-            case null, default -> {
-                throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
-            }
-        }
-
-    }
-
-    private ParticleOptions convertParticle(@NotNull Particle particle) {
-
-        switch (particle) {
-            case SIGMA -> {
-                return ParticleTypes.ANGRY_VILLAGER;
-            }
-            case null, default -> {
-                throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
-            }
-        }
     }
 
 }

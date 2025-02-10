@@ -20,7 +20,7 @@ package nl.abelkrijgtalles.mojangmaps.fabric.platform;
 
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.fabric.FabricMojangMaps;
-import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSUtils;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.util.NMSUtils;
 
 public class FabricNMSUtils implements NMSUtils {
 

@@ -20,7 +20,7 @@ package nl.abelkrijgtalles.mojangmaps.neoforge.platform;
 
 import net.minecraft.server.MinecraftServer;
 import nl.abelkrijgtalles.mojangmaps.neoforge.NeoforgeMojangMaps;
-import nl.abelkrijgtalles.mojangmaps.nms.platform.NMSUtils;
+import nl.abelkrijgtalles.mojangmaps.nms.platform.util.NMSUtils;
 
 public class NeoforgeNMSUtils implements NMSUtils {
 
