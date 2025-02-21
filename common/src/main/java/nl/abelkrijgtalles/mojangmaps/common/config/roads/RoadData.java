@@ -1,5 +1,5 @@
 /*
- * mojang_maps.common.main
+ * mojang-maps.common.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,15 +46,6 @@ import org.apache.commons.lang3.ArrayUtils;
 public class RoadData {
 
     // To see the specs for roads.mmd, see roads.mmd_spec.md in this folder/package.
-    #if MC_VER <= MC_1_16_5
-    private final static String MESSAGE =
-            "---\n" +
-                    "DO NOT DELETE THIS FILE!!!\n" +
-                    "This rest of this file may look like gibberish, but it's not. This stores all the road data for Mojang Maps.\n" +
-                    "If you delete this file, you'll delete all your Mojang Maps data and essentially start from scratch.\n" +
-                    "Even editing this file, or this message, will brick Mojang Maps.\n" +
-                    "---\n";
-    #else
     private final static String MESSAGE = """
             ---
             DO NOT DELETE THIS FILE!!!
@@ -63,7 +54,6 @@ public class RoadData {
             Even editing this file, or this message, will brick Mojang Maps.
             ---
             """;
-    #endif
     private final static Path FILE_PATH = Paths.get(MojangMaps.loaderInfo.getDataDirectory().toString(), "roads.mmd");
     private final static byte VERSION = 0x02;
     private final static byte RAW_ROAD_DATA_VERSION = 0x01;

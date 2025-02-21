@@ -1,0 +1,31 @@
+{
+  "loader": {
+    "name": "java_plain",
+    "version": "1.0"
+  },
+  "license": "GPLv3",
+  "plugins": [
+    {
+      "id": "mojang_maps",
+      "name": "Mojang Maps",
+      "version": "${version}",
+      "entrypoint": "nl.abelkrijgtalles.mojangmaps.sponge.SpongeMojangMaps",
+      "description": "A Google Maps like navigation system for Minecraft.",
+      "links": {
+        "homepage": "https://github.com/Abelkrijgtalles/mojang-maps"
+      },
+      "contributors": [
+        {
+          "name": "Abelpro678",
+          "description": "Developer"
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "spongeapi",
+          "version": "${sponge_api}"
+        }
+      ]
+    }
+  ]
+}

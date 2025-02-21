@@ -1,5 +1,5 @@
 /*
- * mojang_maps.sponge.main
+ * mojang-maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 
 package nl.abelkrijgtalles.mojangmaps.sponge.platform.util;
 
-import nl.abelkrijgtalles.mojangmaps.common.MojangMaps;
 import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
 import org.jetbrains.annotations.NotNull;
@@ -72,8 +71,6 @@ public class SpongeConversion {
                 return ParticleTypes.DUST.get();
             }
             case GLOW -> {
-                particleTooNew("glow", );
-                ((ParticleEffect) ParticleTypes.INSTANT_EFFECT).option(ParticleOptions.COLOR.get())
                 return ParticleTypes.GLOW.get();
             }
             case GUST -> {
@@ -397,18 +394,6 @@ public class SpongeConversion {
             case null, default ->
                     throw new IllegalArgumentException("I don't know how, but somehow a Particle that doesn't exist has been passed.");
         }
-
-    }
-
-    private static void versionTooOldRevertingTo(String old, String revertingTo) {
-
-        MojangMaps.LOGGER.warn("This Sponge API version doesn't support %s, reverting to %s.".formatted(old, revertingTo));
-
-    }
-
-    private static void particleTooNew(String old, String newParticle) {
-
-        versionTooOldRevertingTo("particle " + old, "particle " + newParticle);
 
     }
 

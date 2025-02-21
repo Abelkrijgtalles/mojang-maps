@@ -1,0 +1,7 @@
+name: mojang_maps # the plugins name as it should appear in the plugin list /pl
+version: ${version} # the plugin's version
+authors: [ "Abelpro678", "Contributors" ]
+main: nl.abelkrijgtalles.mojangmaps.bukkit.BukkitMojangMaps
+api-version: ${bukkit_api} # the version of the API you want to use, required starting with 1.13
+description: A Google Maps like navigation system for Minecraft.
+website: https://github.com/Abelkrijgtalles/mojang-maps

@@ -1,0 +1,54 @@
+[versions]
+mojang_maps = "2.0-SNAPSHOT"
+minecraft-version = "1.21.4"
+minecraft-compatible = '["1.21.4"]'
+java = "21"
+
+# Bukkit
+bukkit-api-compatible = "1.21"
+
+# Fabric
+# https://fabricmc.net/develop/
+fabric-api = "0.118.0"
+
+# Forge
+# https://files.minecraftforge.net/net/minecraftforge/forge/
+forge = "54.1.1"
+
+# Neoforge
+# https://projects.neoforged.net/neoforged/neoforge
+neoforge = "21.4.94-beta"
+
+# Sponge
+# https://docs.spongepowered.org/stable/en/plugin/api-versions.html
+sponge-api = "14.0.0"
+
+[plugins]
+# https://github.com/GradleUp/shadow/releases
+shadow = { id = "com.gradleup.shadow", version = "8.3.6" }
+# https://repo.spongepowered.org/#browse/search=keyword%3Dorg.spongepowered.gradle.vanilla
+vanillagradle = { id = "org.spongepowered.gradle.vanilla", version = "0.2.1-SNAPSHOT" }
+# https://github.com/JetBrains/gradle-idea-ext-plugin/tags
+idea-ext = { id = "org.jetbrains.gradle.plugin.idea-ext", version = "1.1.10" }
+
+# Fabric
+# https://github.com/FabricMC/fabric-loom/releases
+fabric-loom = { id = "fabric-loom", version = "1.10-SNAPSHOT" }
+
+# Forge
+# https://projects.neoforged.net/neoforged/neoforge
+forge-gradle = { id = "net.minecraftforge.gradle", version = "6.0.30" }
+
+# Neoforge
+# https://projects.neoforged.net/neoforged/moddevgradle
+moddevgradle = { id = "net.neoforged.moddev", version = "2.0.78" }
+
+[libraries]
+# https://github.com/Exlll/ConfigLib/releases
+configlib = { group = "de.exlll", name = "configlib-yaml", version = "4.5.0" }
+# https://github.com/JetBrains/java-annotations/releases
+jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version = "26.0.2" }
+
+# Fabric
+# https://fabricmc.net/develop/
+fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version = "0.16.10" }

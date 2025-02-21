@@ -1,5 +1,5 @@
 /*
- * mojang_maps.common.main
+ * mojang-maps.common.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
