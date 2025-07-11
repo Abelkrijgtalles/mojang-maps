@@ -1,5 +1,5 @@
 /*
- * mojang_maps.platform.main
+ * mojang-maps.platform.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,5 +35,10 @@ public interface Platform {
      */
     @Nullable
     Level getLevel(@NotNull String identifier);
+
+    /**
+     * @return The number of {@link Level}s.
+     */
+    int getNumberOfLevels();
 
 }

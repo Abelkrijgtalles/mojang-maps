@@ -25,5 +25,5 @@ dependencies {
 }
 
 minecraft {
-    version("1.21.4")
+    version(libs.versions.minecraft.version.get())
 }

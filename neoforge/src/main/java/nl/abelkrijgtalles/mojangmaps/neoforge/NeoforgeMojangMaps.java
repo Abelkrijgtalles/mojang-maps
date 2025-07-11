@@ -1,5 +1,5 @@
 /*
- * mojang_maps.neoforge.main
+ * mojang-maps.neoforge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.neoforge;
 
 import com.mojang.brigadier.CommandDispatcher;
+import java.sql.SQLException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -42,7 +43,11 @@ public class NeoforgeMojangMaps {
         LoaderInfo loaderInfo = new NeoforgeLoaderInfo(false);
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
 
-        MojangMaps.init(loaderInfo);
+        try {
+            MojangMaps.init(loaderInfo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @SubscribeEvent

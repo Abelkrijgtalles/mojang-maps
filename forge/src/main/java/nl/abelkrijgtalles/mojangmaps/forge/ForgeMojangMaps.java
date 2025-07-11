@@ -1,5 +1,5 @@
 /*
- * mojang_maps.forge.main
+ * mojang-maps.forge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 package nl.abelkrijgtalles.mojangmaps.forge;
 
 import com.mojang.brigadier.CommandDispatcher;
+import java.sql.SQLException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.common.Mod;
 import nl.abelkrijgtalles.mojangmaps.common.LoaderInfo;
@@ -41,9 +41,12 @@ public class ForgeMojangMaps {
     public ForgeMojangMaps(ModContainer modContainer) {
 
         LoaderInfo loaderInfo = new ForgeLoaderInfo(false);
-        MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 
-        MojangMaps.init(loaderInfo);
+        try {
+            MojangMaps.init(loaderInfo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @SubscribeEvent
@@ -56,7 +59,8 @@ public class ForgeMojangMaps {
 
     }
 
-    private void onServerStarting(ServerStartedEvent event) {
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartedEvent event) {
 
         MINECRAFT_SERVER = event.getServer();
 

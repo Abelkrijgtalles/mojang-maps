@@ -1,5 +1,5 @@
 /*
- * mojang_maps.sponge.main
+ * mojang-maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package nl.abelkrijgtalles.mojangmaps.sponge;
 
 import com.google.inject.Inject;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import net.kyori.adventure.text.Component;
@@ -61,7 +62,11 @@ public class SpongeMojangMaps {
 
         LoaderInfo loaderInfo = new SpongeLoaderInfo(defaultConfig, false);
 
-        MojangMaps.init(loaderInfo);
+        try {
+            MojangMaps.init(loaderInfo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

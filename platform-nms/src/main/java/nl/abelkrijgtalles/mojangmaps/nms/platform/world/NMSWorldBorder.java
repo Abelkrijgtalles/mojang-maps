@@ -1,5 +1,5 @@
 /*
- * mojang_maps.common.main
+ * mojang-maps.platform-nms.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction;
+package nl.abelkrijgtalles.mojangmaps.nms.platform.world;
 
-public interface GraphNode {
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.platform.world.WorldBorder;
 
-    String getIdentifier();
+public class NMSWorldBorder implements WorldBorder {
+
+    private final net.minecraft.world.level.border.WorldBorder worldBorder;
+
+    public NMSWorldBorder(net.minecraft.world.level.border.WorldBorder worldBorder) {
+
+        this.worldBorder = worldBorder;
+    }
+
+    @Override
+    public Vec3 getCenter() {
+
+        return new Vec3(worldBorder.getCenterX(), 0, worldBorder.getCenterZ());
+    }
 
 }

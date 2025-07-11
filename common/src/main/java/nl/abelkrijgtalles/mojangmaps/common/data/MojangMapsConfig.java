@@ -16,19 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.command;
+package nl.abelkrijgtalles.mojangmaps.common.data;
 
-import java.util.List;
-import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
+import de.exlll.configlib.Comment;
+import de.exlll.configlib.Configuration;
 
-public class Commands {
+@Configuration
+public class MojangMapsConfig {
 
-    public static List<Command> getCommands() {
-
-        return List.of(
-                new NavigationTestCommand()
-        );
-
-    }
+    @Comment({"The database will be stored in the following path: [config folder]/[database path].db, where [config folder] is the folder where this file is located, and [database path] the following value."})
+    public String databasePath = "roads";
 
 }

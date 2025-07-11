@@ -19,6 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.bukkit;
 
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import nl.abelkrijgtalles.mojangmaps.bukkit.platform.BukkitLoaderInfo;
@@ -29,6 +30,7 @@ import nl.abelkrijgtalles.mojangmaps.common.command.Commands;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
 import nl.abelkrijgtalles.mojangmaps.platform.command.CommandSource;
 import nl.abelkrijgtalles.mojangmaps.platform.command.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
@@ -53,7 +55,11 @@ public class BukkitMojangMaps extends JavaPlugin {
     public void onEnable() {
 
         INSTANCE = this;
-        MojangMaps.init(new BukkitLoaderInfo(isRunningTests));
+        try {
+            MojangMaps.init(new BukkitLoaderInfo(isRunningTests));
+        } catch (SQLException e) {
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
 
         if (!MojangMaps.loaderInfo.isRunningTests()) {
             setupSimpleCommandMap();

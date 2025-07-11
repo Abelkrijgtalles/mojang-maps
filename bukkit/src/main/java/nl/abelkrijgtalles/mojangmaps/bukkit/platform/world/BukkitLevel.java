@@ -23,6 +23,7 @@ import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.platform.world.WorldBorder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
@@ -59,6 +60,12 @@ public class BukkitLevel implements Level {
 
         getWorld().spawnParticle(BukkitConversion.particle(particle), location.x, location.y, location.z, count);
 
+    }
+
+    @Override
+    public WorldBorder getWorldBorder() {
+
+        return new BukkitWorldBorder(getWorld().getWorldBorder());
     }
 
     private World getWorld() {

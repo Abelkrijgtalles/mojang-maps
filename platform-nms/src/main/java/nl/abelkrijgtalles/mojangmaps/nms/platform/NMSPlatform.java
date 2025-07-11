@@ -1,5 +1,5 @@
 /*
- * mojang_maps.platform-nms.main
+ * mojang-maps.platform-nms.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.mojangmaps.nms.platform;
 
+import com.google.common.collect.Iterators;
 import java.util.Arrays;
 import net.minecraft.DetectedVersion;
 import net.minecraft.server.level.ServerLevel;
@@ -47,7 +48,7 @@ public class NMSPlatform implements Platform {
     @Override
     public String getMinecraftVersion() {
 
-        return DetectedVersion.tryDetectVersion().getName();
+        return DetectedVersion.tryDetectVersion().name();
     }
 
     @Override
@@ -67,6 +68,12 @@ public class NMSPlatform implements Platform {
 
         return null;
 
+    }
+
+    @Override
+    public int getNumberOfLevels() {
+
+        return Iterators.size(utils.getServer().getAllLevels().iterator());
     }
 
 }

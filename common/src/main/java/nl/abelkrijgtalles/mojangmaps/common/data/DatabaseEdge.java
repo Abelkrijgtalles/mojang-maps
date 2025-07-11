@@ -1,5 +1,5 @@
 /*
- * mojang_maps.common.main
+ * mojang-maps.common.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,16 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.config;
+package nl.abelkrijgtalles.mojangmaps.common.data;
 
-import de.exlll.configlib.Comment;
-import de.exlll.configlib.Configuration;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
-@Configuration
-public class MojangMapsConfig {
+/**
+ * @see RoadDatabase
+ */
+@DatabaseTable(tableName = "edges")
+public class DatabaseEdge {
 
-    @Comment({"DO NOT CHANGE THESE SETTINGS UNLESS YOU KNOW WHAT YOU'RE DOING!!!",
-            "The extra range to use when calculating raw road paths. The higher this value is, the better the raw path can be, and the lower, the more worst it can be."})
-    public int extraPreCalculatedRange = 5;
+    @DatabaseField(id = true, unique = true, canBeNull = false)
+    private String edge;
+
+    @DatabaseField
+    private String name;
+
+    public String getEdge() {
+
+        return edge;
+    }
+
+    public void setEdge(String edge) {
+
+        this.edge = edge;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+    }
 
 }

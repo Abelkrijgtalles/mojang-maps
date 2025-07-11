@@ -1,23 +1,25 @@
 [versions]
 mojang_maps = "2.0-SNAPSHOT"
-minecraft-version = "1.21.4"
-minecraft-compatible = '["1.21.4"]'
+minecraft-version = "1.21.7"
+minecraft-compatible = '["1.21.7"]'
 java = "21"
+# See the graphhopper-core (https://mvnrepository.com/artifact/com.graphhopper/graphhopper-core) dependencies for the jackson-core version.
+jackson-core = "2.17.2"
 
 # Bukkit
 bukkit-api-compatible = "1.21"
 
 # Fabric
 # https://fabricmc.net/develop/
-fabric-api = "0.118.0"
+fabric-api = "0.129.0"
 
 # Forge
 # https://files.minecraftforge.net/net/minecraftforge/forge/
-forge = "54.1.1"
+forge = "57.0.2"
 
 # Neoforge
 # https://projects.neoforged.net/neoforged/neoforge
-neoforge = "21.4.94-beta"
+neoforge = "21.7.14-beta"
 
 # Sponge
 # https://docs.spongepowered.org/stable/en/plugin/api-versions.html
@@ -25,30 +27,37 @@ sponge-api = "14.0.0"
 
 [plugins]
 # https://github.com/GradleUp/shadow/releases
-shadow = { id = "com.gradleup.shadow", version = "8.3.6" }
+# Currently the newest version below 9.X.X, because of VanillaGradle #179 (https://github.com/SpongePowered/VanillaGradle/issues/179)
+shadow = { id = "com.gradleup.shadow", version = "8.3.8" }
 # https://repo.spongepowered.org/#browse/search=keyword%3Dorg.spongepowered.gradle.vanilla
 vanillagradle = { id = "org.spongepowered.gradle.vanilla", version = "0.2.1-SNAPSHOT" }
 # https://github.com/JetBrains/gradle-idea-ext-plugin/tags
 idea-ext = { id = "org.jetbrains.gradle.plugin.idea-ext", version = "1.1.10" }
 
 # Fabric
-# https://github.com/FabricMC/fabric-loom/releases
-fabric-loom = { id = "fabric-loom", version = "1.10-SNAPSHOT" }
+# https://fabricmc.net/develop/
+fabric-loom = { id = "fabric-loom", version = "1.11-SNAPSHOT" }
 
 # Forge
-# https://projects.neoforged.net/neoforged/neoforge
-forge-gradle = { id = "net.minecraftforge.gradle", version = "6.0.30" }
+# https://files.minecraftforge.net/net/minecraftforge/gradle/ForgeGradle/
+forge-gradle = { id = "net.minecraftforge.gradle", version = "6.0.36" }
 
 # Neoforge
 # https://projects.neoforged.net/neoforged/moddevgradle
-moddevgradle = { id = "net.neoforged.moddev", version = "2.0.78" }
+moddevgradle = { id = "net.neoforged.moddev", version = "2.0.99" }
 
 [libraries]
 # https://github.com/Exlll/ConfigLib/releases
-configlib = { group = "de.exlll", name = "configlib-yaml", version = "4.5.0" }
+configlib = { group = "de.exlll", name = "configlib-yaml", version = "4.6.1" }
+# https://github.com/graphhopper/graphhopper/releases
+graphhopper = { group = "com.graphhopper", name = "graphhopper-core", version = "10.2" }
 # https://github.com/JetBrains/java-annotations/releases
 jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version = "26.0.2" }
+# https://github.com/xerial/sqlite-jdbc/releases
+sqlite = { group = "org.xerial", name = "sqlite-jdbc", version = "3.50.2.0" }
+# https://ormlite.com/releases/
+ormlite = { group = "com.j256.ormlite", name = "ormlite-jdbc", version = "6.1" }
 
 # Fabric
 # https://fabricmc.net/develop/
-fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version = "0.16.10" }
+fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version = "0.16.14" }

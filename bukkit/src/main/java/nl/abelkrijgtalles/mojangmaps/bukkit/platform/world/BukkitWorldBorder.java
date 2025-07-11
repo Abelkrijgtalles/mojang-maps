@@ -1,5 +1,5 @@
 /*
- * mojang_maps.common.main
+ * mojang-maps.bukkit.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction;
+package nl.abelkrijgtalles.mojangmaps.bukkit.platform.world;
 
-public interface Scorer<T extends GraphNode> {
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.platform.world.WorldBorder;
+import org.bukkit.Location;
 
-    double computeCost(T from, T to);
+public class BukkitWorldBorder implements WorldBorder {
+
+    private final org.bukkit.WorldBorder worldBorder;
+
+    public BukkitWorldBorder(org.bukkit.WorldBorder worldBorder) {
+
+        this.worldBorder = worldBorder;
+    }
+
+    @Override
+    public Vec3 getCenter() {
+
+        Location center = worldBorder.getCenter();
+        return new Vec3(center.x(), 0, center.z());
+    }
 
 }

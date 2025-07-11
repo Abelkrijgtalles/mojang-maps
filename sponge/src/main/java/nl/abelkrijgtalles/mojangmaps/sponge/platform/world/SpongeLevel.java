@@ -1,5 +1,5 @@
 /*
- * mojang_maps.sponge.main
+ * mojang-maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.platform.world.WorldBorder;
 import nl.abelkrijgtalles.mojangmaps.sponge.platform.util.SpongeConversion;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.api.ResourceKey;
@@ -68,12 +69,18 @@ public class SpongeLevel implements Level {
 
     }
 
+    @Override
+    public WorldBorder getWorldBorder() {
+
+        return new SpongeWorldBorder(getWorld().border());
+    }
+
     private ServerWorld getWorld() {
 
-        if (Sponge.game().server().worldManager().world(resourceKey).isEmpty())
+        if (Sponge.server().worldManager().world(resourceKey).isEmpty())
             throw new IllegalStateException("World with identifier %s does not exist.".formatted(getIdentifier()));
 
-        return Sponge.game().server().worldManager().world(resourceKey).get();
+        return Sponge.server().worldManager().world(resourceKey).get();
 
     }
 

@@ -1,5 +1,5 @@
 /*
- * mojang_maps.common.main
+ * mojang-maps.platform.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.pathfinding;
+package nl.abelkrijgtalles.mojangmaps.platform.world;
 
-import nl.abelkrijgtalles.mojangmaps.common.pathfinding.abstraction.Scorer;
+public interface WorldBorder {
 
-public class WaypointScorer implements Scorer<Waypoint> {
-
-    // TODO: ADD PENALTIES FOR UNCLIMBABLE HEIGHTS AND STUFF LIKE THAT
-    @Override
-    public double computeCost(Waypoint from, Waypoint to) {
-
-        return from.getPosition().distanceTo(to.getPosition());
-    }
+    /**
+     * @return The centre of the {@link WorldBorder}. The y value of this {@link Vec3} will be 0.
+     */
+    Vec3 getCenter();
 
 }

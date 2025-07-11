@@ -1,5 +1,5 @@
 /*
- * nl.abelkrijgtalles.mojangmaps.mojang_maps.fabric.main
+ * mojang-maps.fabric.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package nl.abelkrijgtalles.mojangmaps.fabric;
 
+import java.sql.SQLException;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -41,7 +42,11 @@ public class FabricMojangMaps implements DedicatedServerModInitializer {
 
         });
 
-        MojangMaps.init(new FabricLoaderInfo(isRunningTests));
+        try {
+            MojangMaps.init(new FabricLoaderInfo(isRunningTests));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -58,5 +63,6 @@ public class FabricMojangMaps implements DedicatedServerModInitializer {
         MINECRAFT_SERVER = minecraftServer;
 
     }
+
 
 }

@@ -1,5 +1,5 @@
 /*
- * mojang_maps.sponge.main
+ * mojang-maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import nl.abelkrijgtalles.mojangmaps.sponge.platform.world.SpongeLevel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.api.ResourceKey;
+import org.spongepowered.api.Sponge;
 
 public class SpongePlatform implements Platform {
 
@@ -51,6 +52,12 @@ public class SpongePlatform implements Platform {
     public @Nullable Level getLevel(@NotNull String identifier) {
 
         return new SpongeLevel(ResourceKey.resolve(identifier));
+    }
+
+    @Override
+    public int getNumberOfLevels() {
+
+        return Sponge.server().worldManager().worlds().size();
     }
 
 }

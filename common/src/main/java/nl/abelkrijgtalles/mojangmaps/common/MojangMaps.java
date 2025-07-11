@@ -22,8 +22,9 @@ import de.exlll.configlib.NameFormatters;
 import de.exlll.configlib.YamlConfigurationProperties;
 import de.exlll.configlib.YamlConfigurations;
 import java.nio.file.Path;
-import nl.abelkrijgtalles.mojangmaps.common.config.MojangMapsConfig;
-import nl.abelkrijgtalles.mojangmaps.common.config.roads.RoadData;
+import java.sql.SQLException;
+import nl.abelkrijgtalles.mojangmaps.common.data.MojangMapsConfig;
+import nl.abelkrijgtalles.mojangmaps.common.data.RoadDatabase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,13 +34,14 @@ public class MojangMaps {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static LoaderInfo loaderInfo;
     public static MojangMapsConfig config;
+    public static RoadDatabase roadDatabase;
 
     /**
      * Initialize Mojang Maps
      *
-     * @param loaderInfo The loader specific info.
+     * @param loaderInfo The loader-specific info.
      */
-    public static void init(LoaderInfo loaderInfo) {
+    public static void init(LoaderInfo loaderInfo) throws SQLException {
 
         MojangMaps.loaderInfo = loaderInfo;
         LOGGER.info("Running Mojang Maps on Minecraft version {}.", loaderInfo.getPlatform().getMinecraftVersion());
@@ -47,11 +49,9 @@ public class MojangMaps {
         YamlConfigurationProperties configurationProperties = YamlConfigurationProperties.newBuilder()
                 .setNameFormatter(NameFormatters.LOWER_KEBAB_CASE)
                 .build();
-        config = YamlConfigurations.update(Path.of(loaderInfo.getDataDirectory().toString(), "config.yml"), MojangMapsConfig.class, configurationProperties);
+        config = YamlConfigurations.update(Path.of(loaderInfo.getDataDirectory().toString(), "data.yml"), MojangMapsConfig.class, configurationProperties);
 
-        RoadData roadData = new RoadData();
-        if (!loaderInfo.isRunningTests()) roadData.setupRoadData();
-
+        roadDatabase = new RoadDatabase();
     }
 
 }

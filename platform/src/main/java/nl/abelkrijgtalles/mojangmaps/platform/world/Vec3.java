@@ -1,5 +1,5 @@
 /*
- * mojang_maps.platform.main
+ * mojang-maps.platform.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -70,6 +70,18 @@ public class Vec3 {
     public String toString() {
 
         return "X: %s Y: %s Z: %s".formatted(x, y, z);
+    }
+
+    public String toCompactString() {
+
+        return "%s|%s|%s".formatted(x, y, z);
+
+    }
+
+    public String toCompactFlooredString() {
+
+        return "%s|%s|%s".formatted((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
+
     }
 
 }

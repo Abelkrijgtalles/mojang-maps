@@ -50,8 +50,7 @@ and [#14](https://github.com/Abelkrijgtalles/mojang-maps/discussions/14).
 
 # Credits/Code I used
 
-- [thebuildcraft](https://github.com/thebuildcraft) which made a multi-platform & multi-version mod template (based on
-  scripts from [Distant Horizons](https://gitlab.com/jeseibel/distant-horizons)). I did delete a few things for my
-  smooth brain, but it's still largely based on this template.
 - [ConfigLib](https://github.com/Exlll/ConfigLib) made by [Exlll](https://github.com/Exlll), so I don't have to
   implement my own config system.
+- [GraphHopper](https://github.com/graphhopper/graphhopper). Without this project, I wouldn't have been able to
+  implement navigation, as everytime I try to, it just doesn't work, but GraphHopper does just work.

@@ -21,9 +21,12 @@ plugins {
 }
 
 minecraft {
-    version("1.21.4")
+    version(libs.versions.minecraft.version.get())
 }
 
 dependencies {
     implementation(libs.configlib)
+    implementation(libs.graphhopper) { exclude(group = "com.fasterxml.jackson.core") }
+    implementation(libs.sqlite)
+    implementation(libs.ormlite)
 }

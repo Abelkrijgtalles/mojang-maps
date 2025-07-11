@@ -1,5 +1,5 @@
 /*
- * mojang_maps.platform-nms.main
+ * mojang-maps.platform-nms.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import nl.abelkrijgtalles.mojangmaps.platform.world.HeightMapType;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Level;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Particle;
 import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.platform.world.WorldBorder;
 import org.jetbrains.annotations.NotNull;
 
 public class NMSLevel implements Level {
@@ -61,6 +62,12 @@ public class NMSLevel implements Level {
     public void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count) {
 
         ParticleUtils.spawnParticles(getNMSLevel(), new BlockPos((int) Math.floor(location.x), (int) Math.floor(location.y), (int) Math.floor(location.z)), count, 3, 1, true, NMSConversion.particle(particle));
+    }
+
+    @Override
+    public WorldBorder getWorldBorder() {
+
+        return new NMSWorldBorder(getNMSLevel().getWorldBorder());
     }
 
     private net.minecraft.world.level.Level getNMSLevel() {

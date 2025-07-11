@@ -43,4 +43,10 @@ public class BukkitPlatform implements Platform {
         return new BukkitLevel(bukkitWorld);
     }
 
+    @Override
+    public int getNumberOfLevels() {
+
+        return Bukkit.getWorlds().size();
+    }
+
 }

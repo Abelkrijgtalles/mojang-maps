@@ -1,5 +1,5 @@
 /*
- * mojang_maps.platform.main
+ * mojang-maps.platform.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -45,5 +45,10 @@ public interface Level {
      * @param count    The count of particles to spawn.
      */
     void spawnParticle(@NotNull Particle particle, @NotNull Vec3 location, int count);
+
+    /**
+     * @return The {@link WorldBorder} of this {@link Level}.
+     */
+    WorldBorder getWorldBorder();
 
 }

@@ -1,5 +1,5 @@
 /*
- * mojang-maps.common.main
+ * mojang-maps.sponge.main
  * Copyright (C) 2025 Abel van Hulst/Abelkrijgtalles/Abelpro678
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,19 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package nl.abelkrijgtalles.mojangmaps.common.command;
+package nl.abelkrijgtalles.mojangmaps.sponge.platform.world;
 
-import java.util.List;
-import nl.abelkrijgtalles.mojangmaps.platform.command.Command;
+import nl.abelkrijgtalles.mojangmaps.platform.world.Vec3;
+import nl.abelkrijgtalles.mojangmaps.platform.world.WorldBorder;
 
-public class Commands {
+public class SpongeWorldBorder implements WorldBorder {
 
-    public static List<Command> getCommands() {
+    private final org.spongepowered.api.world.border.WorldBorder worldBorder;
 
-        return List.of(
-                new NavigationTestCommand()
-        );
+    public SpongeWorldBorder(org.spongepowered.api.world.border.WorldBorder worldBorder) {
 
+        this.worldBorder = worldBorder;
+    }
+
+    @Override
+    public Vec3 getCenter() {
+
+        return new Vec3(worldBorder.center().x(), 0, worldBorder.center().y());
     }
 
 }

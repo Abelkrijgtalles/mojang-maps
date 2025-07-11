@@ -26,6 +26,7 @@ plugins {
 }
 
 val projectsBeingAnnoyingWithShadow: Array<Project> = arrayOf(project("forge"))
+val projectsBeingAnnoyingWithJacksonCore: Array<Project> = arrayOf(project("neoforge"))
 
 allprojects.forEach { p ->
     p.apply(plugin = "java")
@@ -71,9 +72,10 @@ allprojects.forEach { p ->
         configurations = listOf(p.configurations.getByName("shadowMe"))
         archiveBaseName.set("mojang_maps-" + libs.versions.mojang.maps.get() + "-" + p.name)
         archiveClassifier.set("")
-        minimize()
         exclude("**/icon.svg")
         exclude("**/favicon.ico")
+
+        minimize()
 
         if (projectsBeingAnnoyingWithShadow.contains(p)) {
             finalizedBy("reobfShadowJar")
@@ -109,6 +111,17 @@ subprojects.forEach { p ->
                 implementation(project(":platform-nms"))
             }
         }
+    }
+
+    if (!projectsBeingAnnoyingWithJacksonCore.contains(p) && needsCommon) {
+
+        p.dependencies {
+
+            implementation("com.fasterxml.jackson.core:jackson-core:${libs.versions.jackson.core.get()}")
+            implementation("com.fasterxml.jackson.core:jackson-databind:${libs.versions.jackson.core.get()}")
+
+        }
+
     }
 
 }
