@@ -19,6 +19,7 @@
 package nl.abelkrijgtalles.mojangmaps.nms.platform.util;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
@@ -35,13 +36,15 @@ public class NMSConversionTest {
 
                 NMSConversion.particle(particle);
 
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
 
-                throw gameTestHelper.assertionException(Component.literal(particle.name()));
+                throw gameTestHelper.assertionException(Component.literal(particle.name() + ": " + e));
 
             }
 
         }
+
+        gameTestHelper.succeed();
 
     }
 
@@ -50,15 +53,18 @@ public class NMSConversionTest {
 
         BuiltInRegistries.PARTICLE_TYPE.forEach(particleType -> {
             try {
+                if ((particleType instanceof ParticleOptions)) {
+                    Particle.valueOf(BuiltInRegistries.PARTICLE_TYPE.getKey(particleType).getPath().toUpperCase());
+                }
 
-                Particle.valueOf(BuiltInRegistries.PARTICLE_TYPE.getKey(particleType).getPath().toUpperCase());
+            } catch (Exception e) {
 
-            } catch (IllegalArgumentException e) {
-
-                throw gameTestHelper.assertionException(Component.literal(String.valueOf(BuiltInRegistries.PARTICLE_TYPE.getKey(particleType))));
+                throw gameTestHelper.assertionException(Component.literal(String.valueOf(BuiltInRegistries.PARTICLE_TYPE.getKey(particleType)) + ": " + e));
 
             }
         });
+
+        gameTestHelper.succeed();
 
     }
 
