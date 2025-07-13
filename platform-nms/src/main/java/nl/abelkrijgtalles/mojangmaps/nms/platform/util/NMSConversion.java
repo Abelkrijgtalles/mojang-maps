@@ -370,28 +370,10 @@ public class NMSConversion {
 
     public static Heightmap.Types heightMapType(@NotNull HeightMapType heightMapType) {
 
-        switch (heightMapType) {
-            case WORLD_SURFACE_WG -> {
-                return Heightmap.Types.WORLD_SURFACE_WG;
-            }
-            case WORLD_SURFACE -> {
-                return Heightmap.Types.WORLD_SURFACE;
-            }
-            case OCEAN_FLOOR_WG -> {
-                return Heightmap.Types.OCEAN_FLOOR_WG;
-            }
-            case OCEAN_FLOOR -> {
-                return Heightmap.Types.OCEAN_FLOOR;
-            }
-            case MOTION_BLOCKING -> {
-                return Heightmap.Types.MOTION_BLOCKING;
-            }
-            case MOTION_BLOCKING_NO_LEAVES -> {
-                return Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
-            }
-
-            case null, default ->
-                    throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
+        try {
+            return Heightmap.Types.valueOf(heightMapType.name());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("I don't know how, but somehow a HeightMapType that doesn't exist has been passed.");
         }
 
     }

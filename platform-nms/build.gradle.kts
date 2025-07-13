@@ -22,6 +22,7 @@ plugins {
 
 dependencies {
     implementation(project(":platform"))
+    testCompileOnly("org.junit.jupiter:junit-jupiter-params:${libs.versions.junit.jupiter.get()}")
 }
 
 minecraft {

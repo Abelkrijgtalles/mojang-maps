@@ -5,6 +5,9 @@ minecraft-compatible = '["1.21.7"]'
 java = "21"
 # See the graphhopper-core (https://mvnrepository.com/artifact/com.graphhopper/graphhopper-core) dependencies for the jackson-core version.
 jackson-core = "2.17.2"
+# https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+# Currently on 5.X.X
+junit-jupiter = "5.13.3"
 
 # Bukkit
 bukkit-api-compatible = "1.21"

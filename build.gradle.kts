@@ -27,6 +27,7 @@ plugins {
 
 val projectsBeingAnnoyingWithShadow: Array<Project> = arrayOf(project("forge"))
 val projectsBeingAnnoyingWithJacksonCore: Array<Project> = arrayOf(project("neoforge"))
+val projectsWithTheirOwnJUnit: Array<Project> = arrayOf(project("fabric"))
 
 allprojects.forEach { p ->
     p.apply(plugin = "java")
@@ -122,6 +123,19 @@ subprojects.forEach { p ->
 
         }
 
+    }
+
+    if (!projectsWithTheirOwnJUnit.contains(p)) {
+
+        p.dependencies {
+            testImplementation("org.junit.jupiter:junit-jupiter:${libs.versions.junit.jupiter.get()}")
+            testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+        }
+
+    }
+
+    p.tasks.named<Test>("test") {
+        useJUnitPlatform()
     }
 
 }

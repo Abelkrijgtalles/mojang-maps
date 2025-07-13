@@ -26,6 +26,9 @@ dependencies {
     mappings(loom.officialMojangMappings())
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:${libs.versions.fabric.api.get()}+${libs.versions.minecraft.version.get()}")
+
+    testImplementation("net.fabricmc:fabric-loader-junit:${libs.fabric.loader.get().version}")
+    testCompileOnly("org.junit.jupiter:junit-jupiter-params:${libs.versions.junit.jupiter.get()}")
 }
 
 tasks.processResources {
@@ -35,5 +38,31 @@ tasks.processResources {
             "compatible_minecraft_versions" to libs.versions.minecraft.compatible.get(),
             "java_version" to libs.versions.java.get()
         )
+    }
+}
+
+fabricApi {
+    val choiceFile = layout.buildDirectory.file("EULA_choice").get().asFile
+    choiceFile.createNewFile()
+    val choice = choiceFile.readText()
+    if (choice.trim() != "true") {
+        println("By running these tests, you automatically agree to the Minecraft EULA.")
+        println("If not, please interrupt (Ctrl + C) or stop the build in 7 seconds.")
+        Thread.sleep(4_000)
+        println("3")
+        Thread.sleep(1_000)
+        println("2")
+        Thread.sleep(1_000)
+        println("1")
+        Thread.sleep(1_000)
+        println("Your choice to agree has been saved. Run the clean task to remove your choice.")
+        println("You can also delete this file: ${choiceFile.absolutePath}")
+        choiceFile.writeText("true")
+    }
+    configureTests {
+        createSourceSet = true
+        modId = "mojang_maps-test"
+        eula = true
+        enableClientGameTests = false
     }
 }

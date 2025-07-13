@@ -45,3 +45,4 @@ cache
 fabric/logs
 fabric/config
 /pathfinding
+logs/
